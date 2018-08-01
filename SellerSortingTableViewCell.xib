@@ -28,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="51.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view_list" translatesAutoresizingMaskIntoConstraints="NO" id="RDJ-5o-8r5">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sort_seller" translatesAutoresizingMaskIntoConstraints="NO" id="RDJ-5o-8r5">
                         <rect key="frame" x="297" y="19.5" width="13" height="13"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="13" id="pfd-Fm-auw"/>
@@ -125,12 +125,13 @@
             <connections>
                 <outlet property="priceSortButton" destination="OB3-7v-MSz" id="TYE-f8-gAy"/>
                 <outlet property="scoreButton" destination="8Od-DN-Qgc" id="u3N-FY-HKZ"/>
+                <outlet property="sellerSortIconView" destination="RDJ-5o-8r5" id="JFo-zq-nJ1"/>
                 <outlet property="timeSortButton" destination="lbY-sp-mar" id="8NG-TF-Hwe"/>
             </connections>
             <point key="canvasLocation" x="-536" y="-155"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="view_list" width="22" height="14"/>
+        <image name="sort_seller" width="28" height="20"/>
     </resources>
 </document>

@@ -17,6 +17,7 @@ protocol ProductReviewSummeryTableViewCellDelegate: class {
 
 class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
 
+    @IBOutlet private weak var userIcon: UIImageView!
     @IBOutlet private weak var averageRateLabel: UILabel!
     @IBOutlet private weak var baseAverageRateLabel: UILabel!
     @IBOutlet private weak var rateCountLabel: UILabel!
@@ -59,6 +60,9 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
         rateCountLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: Theme.color(kColorGray1))
         [writeCommentButton, moreCommentsButton].forEach{$0.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))}
         seperatorView.backgroundColor = Theme.color(kColorGray10)
+        
+        userIcon.image = #imageLiteral(resourceName: "ic_user_form").withRenderingMode(.alwaysTemplate)
+        userIcon.tintColor = Theme.color(kColorGray8)
     }
     
     override func update(withModel model: Any!) {

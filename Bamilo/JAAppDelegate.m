@@ -59,9 +59,8 @@
         kFontVariationLight: @"Light"
     }];
     [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
-
     ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
-        kColorBlue: [UIColor withRGBA:74 green:144 blue:226 alpha:1.0f],
+        kColorBlue: [UIColor withHexString:@"#00a4e2"],
         kColorBlue1: [UIColor withHexString:@"#1a365e"],
         kColorBlue2: [UIColor withHexString:@"#33466e"],
         kColorBlue6: [UIColor withHexString:@"#8c93ad"],

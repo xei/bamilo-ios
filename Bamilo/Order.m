@@ -48,27 +48,27 @@
         [obj mergeFromDictionary:[dict objectForKey:@"products"][idx] useKeyMapping:YES error:nil];
     }];
     
-    if ([dict objectForKey:@"order_number"]) {
+    if (VALID_NOTEMPTY([dict objectForKey:@"order_number"], NSString)) {
         self.orderId = [dict objectForKey:@"order_number"];
     }
-    if ([dict objectForKey:@"creation_date"] || [dict objectForKey:@"date"]) {
+    if (VALID_NOTEMPTY([dict objectForKey:@"creation_date"], NSString) || VALID_NOTEMPTY([dict objectForKey:@"date"], NSString)) {
         NSString *dateString = [dict objectForKey:@"creation_date"] ?: [dict objectForKey:@"date"];
         NSDateFormatter *df = [NSDateFormatter new];
         [df setDateFormat: [dict objectForKey:@"creation_date"] ? @"yyyy-MM-dd HH:mm:ss" : @"yyyy-MM-dd"];
         self.creationDate = [df dateFromString:dateString];
     }
-    if ([dict objectForKey:@"grand_total"]) {
+    if (VALID_NOTEMPTY([dict objectForKey:@"grand_total"], NSNumber)) {
         self.price = [[dict objectForKey:@"grand_total"] longLongValue];
     }
     
     if ([dict objectForKey:@"payment"]) {
-        if ([[dict objectForKey:@"payment"] objectForKey:@"label"]) {
+        if (VALID_NOTEMPTY([[dict objectForKey:@"payment"] objectForKey:@"label"], NSString)) {
             self.paymentMethod = [[dict objectForKey:@"payment"] objectForKey:@"label"];
         }
-        if ([[dict objectForKey:@"payment"] objectForKey:@"txnref"]) {
+        if (VALID_NOTEMPTY([[dict objectForKey:@"payment"] objectForKey:@"txnref"], NSString)) {
             self.paymentReference = [[dict objectForKey:@"payment"] objectForKey:@"txnref"];
         }
-        if ([[dict objectForKey:@"payment"] objectForKey:@"status_description"]) {
+        if (VALID_NOTEMPTY([[dict objectForKey:@"payment"] objectForKey:@"status_description"], NSString)) {
             self.paymentDescription = [[dict objectForKey:@"payment"] objectForKey:@"status_description"];
         }
     }

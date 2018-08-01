@@ -72,10 +72,10 @@ class BreadcrumbsView: BaseControlView {
         for (index, button) in self.buttons.enumerated() {
             let imageWidthAndAllMargins = offset == 0 ? buttonHorizontalMargin : buttonHorizontalMargin + imageHorizontalMargin * 2 + imageSize.width
             button.frame.origin.x = imageWidthAndAllMargins + offset
-            button.center.y = self.scrollview.center.y
+            button.center.y = self.contentHeight / 2
             if index < self.arrowImageViews.count {
                 self.arrowImageViews[index].frame = CGRect(origin: CGPoint(x: button.frame.maxX + buttonHorizontalMargin + imageHorizontalMargin, y: self.scrollview.center.y), size: imageSize)
-                self.arrowImageViews[index].center.y = self.scrollview.center.y
+                self.arrowImageViews[index].center.y = self.contentHeight / 2
             }
             offset += button.frame.width + imageWidthAndAllMargins
         }
@@ -111,8 +111,8 @@ class BreadcrumbsView: BaseControlView {
                 }
             }
         }
-        self.layoutIfNeeded()
         self.breadcrumbs = model
+        self.layoutIfNeeded()
     }
     
     func resetAndClear() {

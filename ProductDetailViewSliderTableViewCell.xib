@@ -49,6 +49,11 @@
                             <constraint firstAttribute="width" secondItem="65s-jA-YT0" secondAttribute="height" multiplier="1:1" id="tbI-oH-sew"/>
                         </constraints>
                         <state key="normal" image="share-icons"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                                <real key="value" value="0.59999999999999998"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                         <connections>
                             <action selector="shareButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="RJm-fZ-mTN"/>
                         </connections>
@@ -60,7 +65,7 @@
                             <constraint firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="g3M-af-xKD"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="addToWishlist_highlited"/>
+                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="addToWishlist"/>
                             <userDefinedRuntimeAttribute type="color" keyPath="imageColorOn">
                                 <color key="value" red="1" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
@@ -107,7 +112,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="addToWishlist_highlited" width="26" height="26"/>
+        <image name="addToWishlist" width="48" height="48"/>
         <image name="share-icons" width="48" height="48"/>
     </resources>
 </document>

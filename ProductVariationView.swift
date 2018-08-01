@@ -68,7 +68,7 @@ class ProductVariationView: BaseControlView {
         
         //variation type section
         self.carouselCollectionView.reloadData()
-        setProductVariation(visible: (product.OtherVariaionProducts?.count ?? 0) > 0)
+        setProductVariation(visible: (product.OtherVariaionProducts?.count ?? 0) > 1)
         
         //(size)Grid buttons
         gridButtons = product.sizeVariaionProducts?.map { (product) -> UIButton? in
@@ -153,6 +153,8 @@ extension ProductVariationView {
     }
     
     func createButtonGridInView(parentView: UIView, offset: Double = 5.0, spaceGap: Double = 5.0, withButtons buttons: [UIButton]) -> CGFloat {
+        
+        parentView.layoutIfNeeded()
         var x = 0.0, y = 0.0, row = 0.0
         // remove all subviews
         parentView.subviews.forEach { $0.removeFromSuperview() }

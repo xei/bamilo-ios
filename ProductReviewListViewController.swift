@@ -32,8 +32,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         submitReviewButton.setTitle(STRING_ADD_COMMENT, for: .normal)
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         
-        let image = #imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate)
-        submitReviewButton.setImage(image, for: .normal)
+        submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
         submitReviewButton.tintColor = .white
         
         

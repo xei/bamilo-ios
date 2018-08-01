@@ -154,6 +154,8 @@
 		615CFDFC20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CFDFA20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift */; };
 		615CFDFD20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615CFDFB20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib */; };
 		615CFE0420B43618003C6EAC /* BaseProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */; };
+		615E44B12115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615E44B02115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift */; };
+		615E44B32115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615E44B22115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib */; };
 		615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = 615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */; };
 		615EBA7A1FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615EBA781FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift */; };
 		615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615EBA791FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib */; };
@@ -1287,6 +1289,8 @@
 		615CFDFA20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewSliderTableViewCell.swift; sourceTree = "<group>"; };
 		615CFDFB20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailViewSliderTableViewCell.xib; sourceTree = "<group>"; };
 		615CFE0320B43618003C6EAC /* BaseProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProductTableViewCell.swift; sourceTree = "<group>"; };
+		615E44B02115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutualTitleWithDescriptionHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		615E44B22115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MutualTitleWithDescriptionHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		615E796A1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
 		615E796B1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
 		615EBA781FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCoverTableViewCell.swift; sourceTree = "<group>"; };
@@ -3424,6 +3428,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				615E44AC2115BBB000210C41 /* Checkout */,
 				61B80E6520F61AAA0028FA87 /* OtherSellerView */,
 				614927B820EB8DCA00B16B27 /* ProductReviewListView */,
 				6127EA0120B2E1E20064B291 /* ProductDetailView */,
@@ -3831,6 +3836,23 @@
 				6159573E20BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib */,
 			);
 			name = PrimaryInfo;
+			sourceTree = "<group>";
+		};
+		615E44AC2115BBB000210C41 /* Checkout */ = {
+			isa = PBXGroup;
+			children = (
+				615E44AD2115BBBA00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell */,
+			);
+			name = Checkout;
+			sourceTree = "<group>";
+		};
+		615E44AD2115BBBA00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				615E44B02115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift */,
+				615E44B22115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib */,
+			);
+			name = MutualTitleWithDescriptionHeaderTableViewCell;
 			sourceTree = "<group>";
 		};
 		615EBA7C1FEFE60100FB58DE /* CategoryCoverTableViewCell */ = {
@@ -8781,6 +8803,7 @@
 				CE9AE06F1AB6D78200D56481 /* JANewsletterComponent.xib in Resources */,
 				875743441EA60D8E001B518A /* Autumn-Small@2x.png in Resources */,
 				8757434D1EA60D8E001B518A /* Autumn-72.png in Resources */,
+				615E44B32115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib in Resources */,
 				6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */,
 				875743A21EA60DE0001B518A /* Ramadan-Small.png in Resources */,
 				875744251EA60E48001B518A /* Tragedy-72@2x.png in Resources */,
@@ -9379,6 +9402,7 @@
 				61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */,
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
 				61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */,
+				615E44B12115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift in Sources */,
 				611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */,
 				612AC4CB2106019000A14B3C /* ProductBreadCrumbTableViewCell.swift in Sources */,
 				CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */,
@@ -10245,7 +10269,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "03648867-8d47-4c6b-b7c0-c93ac43ec1f9";
+				PROVISIONING_PROFILE = "f911c9a7-56d2-40f8-8ed1-200e62cfd6cb";
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

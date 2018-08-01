@@ -46,9 +46,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         reviewCommentTextView.textAlignment = .right
         
-        
-        let image = #imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate)
-        submitReviewButton.setImage(image, for: .normal)
+        submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
         submitReviewButton.tintColor = .white
         
         rateStarControl.update(withModel: 0) //to set as 0 star

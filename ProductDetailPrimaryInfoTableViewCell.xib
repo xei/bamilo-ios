@@ -14,6 +14,9 @@
         <array key="Bamilosans Light.ttf">
             <string>Bamilo-Sans-Light</string>
         </array>
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
         <array key="‌Bamilosans Bold.ttf">
             <string>Bamilo-Sans-Bold</string>
         </array>
@@ -38,7 +41,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAH-t7-9ot" userLabel="RateViewContainer">
-                                <rect key="frame" x="181.5" y="48.5" width="157.5" height="21"/>
+                                <rect key="frame" x="181.5" y="61.5" width="157.5" height="21"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dQ-gY-v5c" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
                                         <rect key="frame" x="57.5" y="0.0" width="100" height="20"/>
@@ -79,6 +82,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bsh-73-oP8">
+                                        <rect key="frame" x="0.0" y="0.0" width="157.5" height="21"/>
+                                        <connections>
+                                            <action selector="seeAllCommentsButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UA3-5f-vnM"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -86,10 +95,14 @@
                                     <constraint firstItem="7dQ-gY-v5c" firstAttribute="top" secondItem="gAH-t7-9ot" secondAttribute="top" id="5WV-jO-z6P"/>
                                     <constraint firstItem="7dQ-gY-v5c" firstAttribute="width" secondItem="7dQ-gY-v5c" secondAttribute="height" multiplier="5:1" id="8Jy-bE-fFP"/>
                                     <constraint firstItem="rvG-uw-fy8" firstAttribute="centerY" secondItem="XvJ-Ih-ahy" secondAttribute="centerY" id="Alt-3U-g7N"/>
+                                    <constraint firstItem="Bsh-73-oP8" firstAttribute="top" secondItem="gAH-t7-9ot" secondAttribute="top" id="BNE-wl-1G7"/>
+                                    <constraint firstItem="Bsh-73-oP8" firstAttribute="leading" secondItem="gAH-t7-9ot" secondAttribute="leading" id="FKH-FL-vTh"/>
                                     <constraint firstItem="Do0-X9-O3B" firstAttribute="centerY" secondItem="XvJ-Ih-ahy" secondAttribute="centerY" id="G4q-re-UBf"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bsh-73-oP8" secondAttribute="trailing" id="GPT-TI-L72"/>
                                     <constraint firstItem="7dQ-gY-v5c" firstAttribute="centerY" secondItem="gAH-t7-9ot" secondAttribute="centerY" id="GmB-tf-Osv"/>
                                     <constraint firstItem="XvJ-Ih-ahy" firstAttribute="centerY" secondItem="a3U-7f-yAf" secondAttribute="centerY" id="PNX-4A-o30"/>
                                     <constraint firstItem="a3U-7f-yAf" firstAttribute="left" secondItem="XvJ-Ih-ahy" secondAttribute="right" constant="2" id="SI2-Zv-w7Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bsh-73-oP8" secondAttribute="bottom" id="ZOs-VQ-Fxb"/>
                                     <constraint firstItem="rvG-uw-fy8" firstAttribute="left" secondItem="Do0-X9-O3B" secondAttribute="right" constant="2" id="aH9-h0-Y0K"/>
                                     <constraint firstItem="a3U-7f-yAf" firstAttribute="centerY" secondItem="7dQ-gY-v5c" secondAttribute="centerY" id="bUU-LN-deI"/>
                                     <constraint firstItem="XvJ-Ih-ahy" firstAttribute="left" secondItem="rvG-uw-fy8" secondAttribute="right" constant="2" id="efT-y3-fwW"/>
@@ -100,7 +113,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r1c-fr-HPl" customClass="IconButton">
-                                <rect key="frame" x="145" y="35" width="48" height="48"/>
+                                <rect key="frame" x="145" y="48" width="48" height="48"/>
                                 <state key="normal" image="ProductComment"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
@@ -112,38 +125,38 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhh-1D-hUK" userLabel="seperator">
-                                <rect key="frame" x="8" y="89.5" width="338" height="1"/>
+                                <rect key="frame" x="8" y="102.5" width="338" height="1"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="gdY-BM-ewJ"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۵،۴۰۴،۱۳۲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdC-j7-hlx">
-                                <rect key="frame" x="229.5" y="94.5" width="116.5" height="43.5"/>
+                                <rect key="frame" x="229.5" y="107.5" width="116.5" height="43.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="24"/>
                                 <color key="textColor" red="0.99607843137254903" green="0.41960784313725491" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oob-Ko-Qfr">
-                                <rect key="frame" x="203" y="106" width="20.5" height="22"/>
+                                <rect key="frame" x="203" y="119" width="20.5" height="22"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" ۱۷،۳۰۰،۳۲۱ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LXo-ty-u5d">
-                                <rect key="frame" x="272.5" y="140" width="73.5" height="20"/>
+                                <rect key="frame" x="272.5" y="153" width="73.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                 <color key="textColor" red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="سود شما:‌ در حال محاسبه" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMD-I4-WnO">
-                                <rect key="frame" x="15" y="140.5" width="114" height="20"/>
+                                <rect key="frame" x="15" y="153.5" width="114" height="20"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="11"/>
                                 <color key="textColor" red="0.45882352939999999" green="0.45882352939999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORc-N1-YD0">
-                                <rect key="frame" x="15" y="105.5" width="52" height="23"/>
+                                <rect key="frame" x="15" y="118.5" width="52" height="23"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jc-g8-zuB">
                                         <rect key="frame" x="5" y="1" width="42" height="21"/>
@@ -161,27 +174,50 @@
                                 </constraints>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="هنوز امتیازی ثبت نشده است" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBM-8F-fMf">
-                                <rect key="frame" x="198" y="48" width="141" height="22"/>
+                                <rect key="frame" x="198" y="61" width="141" height="22"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="برند" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1VL-yd-OwW">
+                                <rect key="frame" x="322" y="41.5" width="17" height="19.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                                <color key="textColor" red="0.45882352939999999" green="0.45882352939999999" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEM-xn-qkR">
+                                <rect key="frame" x="294" y="41.5" width="23" height="19.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuX-6r-MTS">
+                                <rect key="frame" x="294" y="36" width="45" height="30"/>
+                                <connections>
+                                    <action selector="brandButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Cb3-or-XLm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LXo-ty-u5d" firstAttribute="right" secondItem="gdC-j7-hlx" secondAttribute="right" id="1ZF-1t-Aol"/>
                             <constraint firstItem="gdC-j7-hlx" firstAttribute="top" secondItem="xhh-1D-hUK" secondAttribute="bottom" constant="4" id="6JA-uB-as5"/>
-                            <constraint firstItem="gAH-t7-9ot" firstAttribute="top" secondItem="a6P-FB-khf" secondAttribute="bottom" constant="12" id="ChA-mz-J0e"/>
+                            <constraint firstItem="1VL-yd-OwW" firstAttribute="left" secondItem="IEM-xn-qkR" secondAttribute="right" constant="5" id="CIk-Yb-23c"/>
+                            <constraint firstItem="gAH-t7-9ot" firstAttribute="top" secondItem="a6P-FB-khf" secondAttribute="bottom" constant="25" id="ChA-mz-J0e"/>
                             <constraint firstItem="LXo-ty-u5d" firstAttribute="top" secondItem="gdC-j7-hlx" secondAttribute="bottom" priority="750" constant="2" id="DNC-8L-4Y7"/>
                             <constraint firstItem="GMD-I4-WnO" firstAttribute="left" secondItem="a6P-FB-khf" secondAttribute="left" id="G2U-dc-odT"/>
                             <constraint firstItem="gAH-t7-9ot" firstAttribute="right" secondItem="a6P-FB-khf" secondAttribute="right" id="KDs-xr-nbu"/>
+                            <constraint firstItem="FuX-6r-MTS" firstAttribute="left" secondItem="IEM-xn-qkR" secondAttribute="left" id="Lsx-SZ-zkZ"/>
+                            <constraint firstItem="FuX-6r-MTS" firstAttribute="right" secondItem="1VL-yd-OwW" secondAttribute="right" id="PPS-qJ-lbj"/>
                             <constraint firstItem="lBM-8F-fMf" firstAttribute="left" secondItem="r1c-fr-HPl" secondAttribute="right" constant="5" id="QVK-2j-jbS"/>
                             <constraint firstAttribute="bottom" secondItem="gdC-j7-hlx" secondAttribute="bottom" priority="250" constant="12" id="QoB-tb-Qr0"/>
                             <constraint firstItem="a6P-FB-khf" firstAttribute="left" secondItem="fyF-2K-ujH" secondAttribute="left" constant="15" id="XkS-wp-NDv"/>
                             <constraint firstItem="lBM-8F-fMf" firstAttribute="right" secondItem="gAH-t7-9ot" secondAttribute="right" id="bBu-CU-Fzz"/>
+                            <constraint firstItem="FuX-6r-MTS" firstAttribute="centerY" secondItem="IEM-xn-qkR" secondAttribute="centerY" id="bCN-jk-sG5"/>
                             <constraint firstItem="gdC-j7-hlx" firstAttribute="right" secondItem="xhh-1D-hUK" secondAttribute="right" id="bUh-di-WkR"/>
                             <constraint firstItem="xhh-1D-hUK" firstAttribute="top" secondItem="gAH-t7-9ot" secondAttribute="bottom" constant="20" id="cKY-p9-2SN"/>
                             <constraint firstItem="r1c-fr-HPl" firstAttribute="centerY" secondItem="lBM-8F-fMf" secondAttribute="centerY" id="cVc-hH-RUt"/>
+                            <constraint firstItem="gAH-t7-9ot" firstAttribute="right" secondItem="1VL-yd-OwW" secondAttribute="right" id="dRq-aH-UXQ"/>
                             <constraint firstItem="ORc-N1-YD0" firstAttribute="centerY" secondItem="gdC-j7-hlx" secondAttribute="centerY" id="ehb-Vk-lsC"/>
                             <constraint firstAttribute="right" secondItem="a6P-FB-khf" secondAttribute="right" constant="15" id="enu-Qr-SzY"/>
                             <constraint firstItem="xhh-1D-hUK" firstAttribute="centerX" secondItem="fyF-2K-ujH" secondAttribute="centerX" id="h1I-dC-Nu1"/>
@@ -189,9 +225,11 @@
                             <constraint firstItem="GMD-I4-WnO" firstAttribute="centerY" secondItem="LXo-ty-u5d" secondAttribute="centerY" id="lub-zh-DCA"/>
                             <constraint firstItem="ORc-N1-YD0" firstAttribute="left" secondItem="GMD-I4-WnO" secondAttribute="left" id="lx8-KC-OdK"/>
                             <constraint firstItem="Oob-Ko-Qfr" firstAttribute="centerY" secondItem="gdC-j7-hlx" secondAttribute="centerY" id="nrN-E0-Jeh"/>
+                            <constraint firstItem="gAH-t7-9ot" firstAttribute="top" secondItem="1VL-yd-OwW" secondAttribute="bottom" id="p5j-ZV-TOP"/>
                             <constraint firstItem="xhh-1D-hUK" firstAttribute="left" secondItem="fyF-2K-ujH" secondAttribute="left" constant="8" id="qW3-Vl-C1Z"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LXo-ty-u5d" secondAttribute="bottom" constant="12" id="qkF-6W-O19"/>
                             <constraint firstItem="a6P-FB-khf" firstAttribute="top" secondItem="fyF-2K-ujH" secondAttribute="top" constant="13" id="tj8-TE-Osa"/>
+                            <constraint firstItem="IEM-xn-qkR" firstAttribute="centerY" secondItem="1VL-yd-OwW" secondAttribute="centerY" id="y8S-bK-VGA"/>
                             <constraint firstItem="lBM-8F-fMf" firstAttribute="centerY" secondItem="gAH-t7-9ot" secondAttribute="centerY" id="zkD-c9-PsZ"/>
                         </constraints>
                     </view>
@@ -205,6 +243,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="brandlabel" destination="IEM-xn-qkR" id="aqs-z8-QNr"/>
                 <outlet property="calculatedBenefitLabel" destination="GMD-I4-WnO" id="EDR-oF-24r"/>
                 <outlet property="containerBoxView" destination="fyF-2K-ujH" id="exH-Ka-Y7t"/>
                 <outlet property="currencyLabel" destination="Oob-Ko-Qfr" id="8we-Vn-ftP"/>
@@ -222,12 +261,13 @@
                 <outlet property="rateViewControl" destination="7dQ-gY-v5c" id="yg7-EW-Rds"/>
                 <outlet property="ratingCountLabel" destination="dxu-ZS-Oxt" id="pfs-gb-ggo"/>
                 <outlet property="seperatorLineView" destination="xhh-1D-hUK" id="GlP-mH-cRZ"/>
+                <outlet property="userIcon" destination="Do0-X9-O3B" id="6t9-3q-uYd"/>
             </connections>
             <point key="canvasLocation" x="-342" y="-295"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ProductComment" width="48" height="48"/>
-        <image name="ic_user_form" width="20" height="22"/>
+        <image name="ic_user_form" width="48" height="48"/>
     </resources>
 </document>

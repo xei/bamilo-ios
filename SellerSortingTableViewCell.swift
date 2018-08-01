@@ -20,9 +20,10 @@ enum SellerSortingMethod {
 
 class SellerSortingTableViewCell: BaseTableViewCell {
 
-    @IBOutlet weak var scoreButton: UIButton!
-    @IBOutlet weak var timeSortButton: UIButton!
-    @IBOutlet weak var priceSortButton: UIButton!
+    @IBOutlet private weak var sellerSortIconView: UIImageView!
+    @IBOutlet private weak var scoreButton: UIButton!
+    @IBOutlet private weak var timeSortButton: UIButton!
+    @IBOutlet private weak var priceSortButton: UIButton!
     var delegate: SellerSortingTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -37,6 +38,9 @@ class SellerSortingTableViewCell: BaseTableViewCell {
             $0?.setImage(nil, for: .selected)
             $0?.backgroundColor = .clear
         }
+        
+        sellerSortIconView.image = #imageLiteral(resourceName: "sort_seller").withRenderingMode(.alwaysTemplate)
+        sellerSortIconView.tintColor = Theme.color(kColorGray5)
     }
 
     @IBAction func priceSortingButtonTapped(_ sender: UIButton) {

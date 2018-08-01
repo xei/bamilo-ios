@@ -45,7 +45,7 @@
     //Header And Footer Cells
     [self.tableView registerNib:[UINib nibWithNibName:[PlainTableViewHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[PlainTableViewHeaderCell nibName]];
     
-    [self.tableView registerNib:[UINib nibWithNibName:[MutualTitleHeaderCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[MutualTitleHeaderCell nibName]];
+    [self.tableView registerNib:[UINib nibWithNibName:[MutualTitleWithDescriptionHeaderTableViewCell nibName] bundle:nil]  forHeaderFooterViewReuseIdentifier:[MutualTitleWithDescriptionHeaderTableViewCell nibName]];
     
     //DiscountSwitcherView
     [self.tableView registerNib:[UINib nibWithNibName:[DiscountSwitcherView nibName] bundle:nil]  forCellReuseIdentifier:[DiscountSwitcherView nibName]];
@@ -224,7 +224,6 @@
             }
         }
         break;
-        
         default: {
             if (_cellIndexPath.section <= 2 + _packages.count) {
                 CartListItemTableViewCell *cartListItemTableViewCell = [tableView dequeueReusableCellWithIdentifier:[CartListItemTableViewCell nibName] forIndexPath:indexPath];
@@ -241,14 +240,21 @@
         }
         break;
     }
-    
     return nil;
 }
 
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
+    return 90;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) return 0;
-    return [PlainTableViewHeaderCell cellHeight];
+    if (section <= 2 || section == _packages.count + 3) {
+        return [PlainTableViewHeaderCell cellHeight];
+    } else {
+        return UITableViewAutomaticDimension;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -270,9 +276,10 @@
         }
         return plainTableViewHeaderCell;
     } else {
-        MutualTitleHeaderCell *mutualTitleHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[MutualTitleHeaderCell nibName]];
+        MutualTitleWithDescriptionHeaderTableViewCell *mutualTitleHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[MutualTitleWithDescriptionHeaderTableViewCell nibName]];
         mutualTitleHeader.leftTitleString = [NSString stringWithFormat:@"%@ : %@", STRING_DELIVERY_TIME, _packages[section - 3].deliveryTime];
         mutualTitleHeader.titleString = [_packages[section - 3].title numbersToPersian];
+        [mutualTitleHeader updateWithDescription:_packages[section - 3].deliveryTypeDesc];
         return mutualTitleHeader;
     }
 }

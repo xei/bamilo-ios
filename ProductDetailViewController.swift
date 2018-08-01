@@ -57,6 +57,7 @@ extension UIImageView: DisplaceableView {}
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.clipsToBounds = true
+        
         self.view.backgroundColor = Theme.color(kColorGray)
         self.tableView.backgroundColor = Theme.color(kColorGray)
         self.tableView.dataSource = self
@@ -150,7 +151,7 @@ extension UIImageView: DisplaceableView {}
             //Variation of product
             if let sizeProducts = product.sizeVariaionProducts, sizeProducts.count > 0 {
                 self.sectionNames[self.availableSections.count] = STRING_OPTIONS
-            } else if let otherVariationProducts = product.OtherVariaionProducts, otherVariationProducts.count > 0 {
+            } else if let otherVariationProducts = product.OtherVariaionProducts, otherVariationProducts.count > 1 {
                 self.sectionNames[self.availableSections.count] = STRING_OPTIONS
             }
             
@@ -230,11 +231,15 @@ extension UIImageView: DisplaceableView {}
             let selectedSize = sizeVariations?.products?.filter { $0.isSelected }.first
             if let selectedSizeSimpleSku = selectedSize?.simpleSku {
                 requestAddToCart(simpleSku: selectedSizeSimpleSku, inViewCtrl: self)
+                return
             } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0 {
                 self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
-            } else if let simpleSku = self.product?.simpleSku {
-                requestAddToCart(simpleSku: simpleSku, inViewCtrl: self)
+                return
             }
+        }
+        
+        if let simpleSku = self.product?.simpleSku {
+            requestAddToCart(simpleSku: simpleSku, inViewCtrl: self)
         }
     }
     
@@ -388,6 +393,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
         return 0
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 600
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let name = self.sectionNames[section] {
             let header = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellIdentifier) as! TransparentHeaderHeaderTableView
@@ -515,6 +524,11 @@ extension ProductDetailViewController: AddToCartViewControllerDelegate {
 extension ProductDetailViewController: ProductDetailPrimaryInfoTableViewCellDelegate {
     func rateButtonTapped() {
         writeCommentButtonTapped()
+    }
+    
+    func brandButtonTapped() {
+        guard let brand = product?.brand else { return }
+        (self.navigationController as? JACenterNavigationController)?.openScreenTarget(RITarget.getTarget(.CATALOG_BRAND, node: brand), purchaseInfo: nil, currentScreenName: getScreenName())
     }
 }
 

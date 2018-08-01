@@ -16,9 +16,11 @@ protocol ProductVariationTableViewCellDelegate: class {
 
 class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationViewDelegate {
 
-    @IBOutlet private weak var productSpecificationButton: UIButton!
-    @IBOutlet private weak var descriptionButton: UIButton!
+    @IBOutlet var buttonViewWrapper: [UIView]!
+    @IBOutlet private weak var productSpecificationButton: IconButton!
+    @IBOutlet private weak var descriptionButton: IconButton!
     @IBOutlet private weak var productVariationViewControl: ProductVariationViewControl!
+    @IBOutlet private weak var buttonsToVariationViewVerticalConstrint: NSLayoutConstraint!
     
     private var product: NewProduct?
     weak var delegate: ProductVariationTableViewCellDelegate?
@@ -32,7 +34,13 @@ class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationV
     }
     
     func applyStyle() {
-        [descriptionButton,  productSpecificationButton].forEach { $0.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorBlue)) }
+        buttonViewWrapper.forEach { view in
+            view.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
+            view.layer.cornerRadius = 3
+        }
+        [descriptionButton,  productSpecificationButton].forEach {
+            $0.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1)) 
+        }
     }
     
     @IBAction func moreDescriptionButtonTapped(_ sender: Any) {
@@ -47,6 +55,15 @@ class ProductVariationTableViewCell: BaseProductTableViewCell, ProductVariationV
         if let product = model as? NewProduct {
             self.product = product
             self.productVariationViewControl.update(withModel: product)
+            
+            
+            if let sizeProducts = product.sizeVariaionProducts, sizeProducts.count > 0 {
+                buttonsToVariationViewVerticalConstrint.constant = 8
+            } else if let otherVariationProducts = product.OtherVariaionProducts, otherVariationProducts.count > 1 {
+                buttonsToVariationViewVerticalConstrint.constant = 8
+            } else {
+                buttonsToVariationViewVerticalConstrint.constant = 0
+            }
         }
     }
     

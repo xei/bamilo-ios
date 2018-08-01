@@ -18,7 +18,7 @@
     
     FormEntity *formEntity = [[FormEntity alloc] init];
     
-    if ([dict objectForKey:@"type"]) {
+    if (VALID_NOTEMPTY([dict objectForKey:@"type"], NSString)) {
         NSString* type = [dict objectForKey:@"type"];
         if (VALID_NOTEMPTY(type, NSString)) {
             if ([type isEqualToString:@"multistep_payment_method"]) {

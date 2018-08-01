@@ -19,6 +19,10 @@ extension String {
         return "\u{200F}".appending(self)
     }
     
+    func replace(target: String, withString: String) -> String {
+        return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
+    }
+    
     func convertTo(language: LocalLang) -> String {
         var converted: String = ""
         for character in self {

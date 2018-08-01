@@ -62,7 +62,7 @@ import UIKit
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = .clear
-        self.sellerNameLabel.textColor = Theme.color(kColorGray1)
+        self.sellerNameLabel.textColor = Theme.color(kColorBlue)
         self.sellerOrderCounts.textColor = Theme.color(kColorGray1)
         self.guaranteeLabel.textColor = Theme.color(kColorGray1)
         self.precenseDurationLabel.textColor = Theme.color(kColorGray1)

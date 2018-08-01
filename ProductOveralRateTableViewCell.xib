@@ -153,16 +153,16 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAl-Hg-DcD">
-                        <rect key="frame" x="323" y="58.5" width="58" height="25.5"/>
+                        <rect key="frame" x="319" y="58.5" width="58" height="25.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user_form" translatesAutoresizingMaskIntoConstraints="NO" id="8Zg-Tg-AEg">
-                        <rect key="frame" x="385.5" y="63" width="16" height="16"/>
+                        <rect key="frame" x="381.5" y="61" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="8Zg-Tg-AEg" secondAttribute="height" multiplier="1:1" id="BMb-BC-I0W"/>
-                            <constraint firstAttribute="width" constant="16" id="i9f-pZ-poO"/>
+                            <constraint firstAttribute="width" constant="20" id="i9f-pZ-poO"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -218,12 +218,13 @@
                 <outlet property="threeStarViewControl" destination="Jwt-1B-dLj" id="Poc-SL-fbF"/>
                 <outlet property="twoStarProgress" destination="5Nm-Ko-Mzc" id="fcH-bT-uF2"/>
                 <outlet property="twoStarViewControl" destination="S37-07-SiV" id="z4i-LY-k3k"/>
+                <outlet property="userIcon" destination="8Zg-Tg-AEg" id="aby-un-7EL"/>
             </connections>
             <point key="canvasLocation" x="-357.5" y="-55"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ProductRateFullStar" width="120" height="120"/>
-        <image name="ic_user_form" width="20" height="22"/>
+        <image name="ic_user_form" width="48" height="48"/>
     </resources>
 </document>

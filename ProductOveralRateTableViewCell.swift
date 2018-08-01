@@ -10,6 +10,7 @@ import UIKit
 
 class ProductOveralRateTableViewCell: BaseTableViewCell {
 
+    @IBOutlet private weak var userIcon: UIImageView!
     @IBOutlet private weak var averageRateLabel: UILabel!
     @IBOutlet private weak var baseRateLabel: UILabel!
     @IBOutlet private weak var rateCountLabel: UILabel!
@@ -64,6 +65,8 @@ class ProductOveralRateTableViewCell: BaseTableViewCell {
         singleStarImageView.image = #imageLiteral(resourceName: "ProductRateFullStar").withRenderingMode(.alwaysTemplate)
         singleStarImageView.tintColor = Theme.color(kColorOrange)
         
+        userIcon.image = #imageLiteral(resourceName: "ic_user_form").withRenderingMode(.alwaysTemplate)
+        userIcon.tintColor = Theme.color(kColorGray8)
     }
 
     override func update(withModel model: Any!) {

@@ -26,7 +26,7 @@ const int numberOfColumns = 2;
     [self setWidgetBacgkround:[UIColor clearColor]];
     self.collectionView.backgroundColor = [UIColor clearColor];
     [self.moreButton applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorBlue]];
-    [self.moreButton setTitle:STRING_RELATED_ITEMS forState:UIControlStateNormal];
+    [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %@", STRING_ALL, STRING_RELATED_ITEMS] forState:UIControlStateNormal];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
 }
 
@@ -39,8 +39,9 @@ const int numberOfColumns = 2;
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
         [super updateWithModel:arrayModel];
+        CGFloat contentWidth = UIScreen.mainScreen.bounds.size.width - 8 * 2;
         self.collectionViewHeightConstraint.constant = [self collectionViewHeightWithContentModel: arrayModel
-                                                                                       boundWidth: self.frame.size.width];
+                                                                                       boundWidth: contentWidth];
     }
 }
 

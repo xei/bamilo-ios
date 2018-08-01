@@ -14,6 +14,9 @@
         <array key="Bamilosans Light.ttf">
             <string>Bamilo-Sans-Light</string>
         </array>
+        <array key="Bamilosans Reg.ttf">
+            <string>Bamilo-Sans</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -63,16 +66,16 @@
                     <rect key="frame" x="16" y="131" width="288" height="171.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۴/۶" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4Y-qu-ZwL">
-                            <rect key="frame" x="208" y="46" width="80" height="55"/>
+                            <rect key="frame" x="208" y="45" width="80" height="57.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="E3F-Tw-gXe"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="30"/>
+                            <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="30"/>
                             <color key="textColor" red="0.0" green="0.69019607839999997" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="از ۵ امتیاز" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kcr-BH-5Kd">
-                            <rect key="frame" x="223" y="111" width="50" height="22"/>
+                            <rect key="frame" x="223" y="112.5" width="50" height="22"/>
                             <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

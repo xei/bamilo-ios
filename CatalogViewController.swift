@@ -23,6 +23,7 @@ import SwiftyJSON
                                     SearchViewControllerDelegate,
                                     BreadcrumbsViewDelegate {
     
+    @IBOutlet private weak var noResultContainerBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeaderContainer: UIView!
     @IBOutlet private weak var catalogHeaderContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
@@ -121,6 +122,7 @@ import SwiftyJSON
         
         if let tabBar = self.tabBarController?.tabBar {
             self.initialTabBarHeight = tabBar.frame.height
+            noResultContainerBottomConstraint.constant = self.initialTabBarHeight
         }
         self.productCountLabelHeight.constant = self.productCountViewHeight
     }

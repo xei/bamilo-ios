@@ -22,7 +22,7 @@ class ProductRecommendationWidgetTableViewCell: BaseProductTableViewCell {
         widgetView.backgroundColor = .clear
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        
+
         if let recommendItems = model as? [RecommendItem] {
             widgetView.widgetView.update(withModel: recommendItems)
         }

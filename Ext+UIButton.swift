@@ -13,6 +13,8 @@ extension UIButton {
     func applyStyle(font: UIFont, color: UIColor) {
         self.titleLabel?.font = font
         self.setTitleColor(color, for: .normal)
+        self.setImage(self.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.tintColor = color
     }
     
 }

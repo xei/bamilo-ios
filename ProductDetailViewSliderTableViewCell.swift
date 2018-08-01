@@ -31,7 +31,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        shareButton.setImage( #imageLiteral(resourceName: "share-icons").withRenderingMode(.alwaysTemplate), for: .normal)
+        shareButton.setImage(#imageLiteral(resourceName: "share-icons").withRenderingMode(.alwaysTemplate), for: .normal)
         shareButton.imageView?.tintColor = Theme.color(kColorGray9)
         
         self.contentView.backgroundColor = .white
@@ -91,8 +91,10 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
                 self.sliderView.reloadData()
             }
             self.product = product
+            if wishListButton.isSelected != product.isInWishList {
+                wishListButton.image = product.isInWishList ? #imageLiteral(resourceName: "addToWishlist_highlited") : #imageLiteral(resourceName: "addToWishlist")
+            }
             self.wishListButton.isSelected = product.isInWishList
-            
         }
     }
     
@@ -102,8 +104,10 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
     
     @IBAction func addToWishListButtonTapped(_ sender: DOFavoriteButton) {
         if sender.isSelected {
+            sender.image = #imageLiteral(resourceName: "addToWishlist")
             sender.deselect()
         } else {
+            sender.image = #imageLiteral(resourceName: "addToWishlist_highlited")
             sender.select()
         }
         if let avaiableProduct = self.product {

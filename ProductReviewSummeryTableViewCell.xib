@@ -44,14 +44,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user_form" translatesAutoresizingMaskIntoConstraints="NO" id="LJC-vG-4Ta">
-                                <rect key="frame" x="269.5" y="49" width="10" height="10"/>
+                                <rect key="frame" x="259.5" y="44" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="10" id="NVY-X0-Ksx"/>
+                                    <constraint firstAttribute="width" constant="20" id="NVY-X0-Ksx"/>
                                     <constraint firstAttribute="width" secondItem="LJC-vG-4Ta" secondAttribute="height" multiplier="1:1" id="jmC-BL-3gl"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAj-o9-8yW">
-                                <rect key="frame" x="207.5" y="41.5" width="58" height="25.5"/>
+                                <rect key="frame" x="197.5" y="41.5" width="58" height="25.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -148,6 +148,7 @@
                 <outlet property="rateCountLabel" destination="lAj-o9-8yW" id="Lji-Q1-aKn"/>
                 <outlet property="reviewCollectionView" destination="EIM-0F-Zph" id="xIN-kV-dBa"/>
                 <outlet property="seperatorView" destination="gBg-qb-gs5" id="u5T-Ig-vwd"/>
+                <outlet property="userIcon" destination="LJC-vG-4Ta" id="1VH-BL-Uhh"/>
                 <outlet property="writeCommentButton" destination="biO-e3-1h9" id="T9L-01-hep"/>
             </connections>
             <point key="canvasLocation" x="-204.5" y="17"/>
@@ -155,6 +156,6 @@
     </objects>
     <resources>
         <image name="ProductRateFullStar" width="120" height="120"/>
-        <image name="ic_user_form" width="20" height="22"/>
+        <image name="ic_user_form" width="48" height="48"/>
     </resources>
 </document>

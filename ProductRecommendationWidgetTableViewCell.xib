@@ -49,7 +49,7 @@
                 <outlet property="horizontalSpacingConstraint" destination="nwU-tu-6ks" id="noA-wh-pIb"/>
                 <outlet property="widgetView" destination="qzd-Wd-mWY" id="ed6-k6-6DH"/>
             </connections>
-            <point key="canvasLocation" x="-700" y="-270"/>
+            <point key="canvasLocation" x="-1536" y="-447"/>
         </tableViewCell>
     </objects>
 </document>
