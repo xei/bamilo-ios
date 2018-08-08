@@ -29,7 +29,7 @@ class MinimalProductTableViewCell: BaseProductTableViewCell {
     }
     
     func applyStyle() {
-        titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
+        titleLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
         productImageView.layer.cornerRadius = 2
         productImageShadowView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
     }

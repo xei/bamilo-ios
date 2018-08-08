@@ -22,7 +22,6 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var rateTitleLabel: UILabel!
     @IBOutlet weak private var rateValueLabel: UILabel!
     @IBOutlet weak private var ratingCountLabel: UILabel!
-    @IBOutlet weak private var noRateLabel: UILabel!
     @IBOutlet weak private var seperatorLineView: UIView!
     @IBOutlet weak private var priceLabel: UILabel!
     @IBOutlet weak private var currencyLabel: UILabel!
@@ -32,7 +31,9 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var discountPercentageContainerView: UIView!
     @IBOutlet weak private var ratePresentorContainerView: UIView!
     @IBOutlet weak private var brandlabel: UILabel!
-    @IBOutlet weak private var rateItButton: IconButton!
+    @IBOutlet weak private var rateViewContainerToSeperatorVerticalConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak private var brandButtonToSeperatorVerticalConstraint: NSLayoutConstraint!
     weak var delegate: ProductDetailPrimaryInfoTableViewCellDelegate?
     
     override func awakeFromNib() {
@@ -53,7 +54,6 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
         [rateTitleLabel, ratingCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
         priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 25), color: Theme.color(kColorOrange1))
-        noRateLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray3))
         
         discountPercentageContainerView.backgroundColor = Theme.color(kColorOrange1)
         discountPercentageContainerView.layer.cornerRadius = 4
@@ -63,11 +63,9 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         discountPercentageLabel.textAlignment = .center
         discountPercentageLabel.clipsToBounds = false
         
-        rateItButton.setTitle(STRING_RATE_IT, for: .normal)
-        rateItButton.applyStyle(font: Theme.font(kFontVariationLight, size: 13), color: Theme.color(kColorBlue))
+        
+        
         brandlabel.applyStyle(font: Theme.font(kFontVariationLight, size: 10), color: Theme.color(kColorBlue))
-        rateItButton.setImage( #imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
-        rateItButton.imageView?.tintColor = Theme.color(kColorBlue)
         userIcon.image = #imageLiteral(resourceName: "ic_user_form").withRenderingMode(.alwaysTemplate)
         userIcon.tintColor = Theme.color(kColorGray8)
     }
@@ -83,20 +81,20 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
             discountPercentageContainerView.isHidden = (product.price?.discountPercentage ?? 0) == 0
             brandlabel.text = product.brand
             if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average , rateCount != 0 {
-                noRateLabel.isHidden = true
-                self.rateItButton.isHidden = true
                 ratePresentorContainerView.isHidden = false
                 rateValueLabel?.isHidden = false
                 rateViewControl?.isHidden = false
                 rateValueLabel?.text = Utility.formatScoreValue(score: rateAverage)
                 ratingCountLabel.text = "(\(rateCount)".convertTo(language: .arabic)
                 rateViewControl?.update(withModel: rateAverage)
+                rateViewContainerToSeperatorVerticalConstraint.priority = .defaultHigh
+                brandButtonToSeperatorVerticalConstraint.priority = .defaultLow
             } else {
                 rateValueLabel?.isHidden = true
                 rateViewControl?.isHidden = true
-                noRateLabel.isHidden = false
                 ratePresentorContainerView.isHidden = true
-                self.rateItButton.isHidden = false
+                rateViewContainerToSeperatorVerticalConstraint.priority = .defaultLow
+                brandButtonToSeperatorVerticalConstraint.priority = .defaultHigh
             }
         }
     }

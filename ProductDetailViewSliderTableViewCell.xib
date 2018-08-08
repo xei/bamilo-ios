@@ -59,9 +59,9 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWz-MF-llw" customClass="DOFavoriteButton" customModule="Bamilo" customModuleProvider="target">
-                        <rect key="frame" x="405" y="183.5" width="40" height="40"/>
+                        <rect key="frame" x="395" y="178.5" width="50" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="YS6-Vk-WhS"/>
+                            <constraint firstAttribute="width" constant="50" id="YS6-Vk-WhS"/>
                             <constraint firstAttribute="width" secondItem="CWz-MF-llw" secondAttribute="height" multiplier="1:1" id="g3M-af-xKD"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

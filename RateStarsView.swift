@@ -26,7 +26,7 @@ class RateStarsView: BaseControlView {
         self.colorButtons(rateValue: rateValue)
     }
     
-    func colorButtons(rateValue: Double, color: UIColor = Theme.color(kColorOrange), disabledColor: UIColor = Theme.color(kColorGray9)) {
+    func colorButtons(rateValue: Double, color: UIColor = Theme.color(kColorGold), disabledColor: UIColor = Theme.color(kColorGray9)) {
         let roundedRate = rateValue.roundByStep(step: 0.5)
         ThreadManager.execute {
             self.starButtons.forEach { (button) in

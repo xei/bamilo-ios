@@ -25,6 +25,7 @@ NSString *const cFontVariationNone = @"";
 NSString *const cPrimaryPalette = @"Bamilo-Palette";
 
 //PALETTE COLORS
+NSString *const kColorGold = @"ColorGold";
 NSString *const kColorGreen = @"ColorGreen";
 NSString *const kColorBlue = @"ColorBlue";
 NSString *const kColorBlue1 = @"blue_1";

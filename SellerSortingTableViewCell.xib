@@ -11,9 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Bamilosans Light.ttf">
-            <string>Bamilo-Sans-Light</string>
-        </array>
         <array key="Bamilosans Reg.ttf">
             <string>Bamilo-Sans</string>
         </array>
@@ -42,12 +39,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbY-sp-mar">
-                        <rect key="frame" x="5" y="11" width="75" height="30"/>
+                        <rect key="frame" x="5" y="13.5" width="75" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="75" id="AB5-Mr-BWa"/>
-                            <constraint firstAttribute="height" constant="30" id="sBb-S7-HL6"/>
+                            <constraint firstAttribute="height" constant="25" id="sBb-S7-HL6"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                         <state key="normal" title="زمان ارسال">
                             <color key="titleColor" red="0.098039215686274508" green="0.18823529411764706" blue="0.32549019607843138" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
@@ -56,7 +53,7 @@
                         </state>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="15"/>
+                                <real key="value" value="11"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                         <connections>
@@ -64,32 +61,11 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OB3-7v-MSz">
-                        <rect key="frame" x="82" y="11" width="50" height="30"/>
+                        <rect key="frame" x="82" y="13.5" width="50" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="LVq-ip-fb7"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
-                        <state key="normal" title="قیمت">
-                            <color key="titleColor" red="0.098039215690000001" green="0.18823529410000001" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <state key="selected" title="قیمت">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="15"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="priceSortingButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZxV-0c-T68"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Od-DN-Qgc">
-                        <rect key="frame" x="134" y="9" width="50" height="34"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="TEO-Ju-5OS"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                         <state key="normal" title="امتیاز">
                             <color key="titleColor" red="0.098039215690000001" green="0.18823529410000001" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
@@ -98,16 +74,38 @@
                         </state>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="15"/>
+                                <real key="value" value="11"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <action selector="scoreButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4WB-oM-EwM"/>
+                            <action selector="scoreButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="g0S-UZ-yPK"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Od-DN-Qgc">
+                        <rect key="frame" x="134" y="13.5" width="50" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="TEO-Ju-5OS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
+                        <state key="normal" title="قیمت">
+                            <color key="titleColor" red="0.098039215690000001" green="0.18823529410000001" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <state key="selected" title="قیمت">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="11"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="priceSortingButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OAb-5M-K6Y"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="RDJ-5o-8r5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="BOt-v9-kFo"/>
+                    <constraint firstItem="8Od-DN-Qgc" firstAttribute="height" secondItem="lbY-sp-mar" secondAttribute="height" id="Gfx-cm-3XF"/>
                     <constraint firstItem="OB3-7v-MSz" firstAttribute="left" secondItem="lbY-sp-mar" secondAttribute="right" constant="2" id="IaI-Ao-uKw"/>
                     <constraint firstItem="RDJ-5o-8r5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="P33-aK-rGM"/>
                     <constraint firstItem="8Od-DN-Qgc" firstAttribute="left" secondItem="OB3-7v-MSz" secondAttribute="right" constant="2" id="Ruz-ny-uzd"/>
@@ -123,8 +121,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="priceSortButton" destination="OB3-7v-MSz" id="TYE-f8-gAy"/>
-                <outlet property="scoreButton" destination="8Od-DN-Qgc" id="u3N-FY-HKZ"/>
+                <outlet property="priceSortButton" destination="8Od-DN-Qgc" id="4BB-Qj-dGZ"/>
+                <outlet property="scoreButton" destination="OB3-7v-MSz" id="2Q7-6b-Sg2"/>
                 <outlet property="sellerSortIconView" destination="RDJ-5o-8r5" id="JFo-zq-nJ1"/>
                 <outlet property="timeSortButton" destination="lbY-sp-mar" id="8NG-TF-Hwe"/>
             </connections>

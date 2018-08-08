@@ -72,9 +72,9 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
         
         sellerNameLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
         deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        sellerOveralScoreLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: .white)
         priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 14), color: Theme.color(kColorOrange1))
         sellerScoreWrapperView.backgroundColor = Theme.color(kColorGreen)
+        sellerScoreWrapperView.clipsToBounds = false
         dicountPrecentageWrapperView.backgroundColor = Theme.color(kColorOrange)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)

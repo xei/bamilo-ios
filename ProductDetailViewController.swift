@@ -289,7 +289,7 @@ extension UIImageView: DisplaceableView {}
             animator?.isDragable = true
             animator?.bounces = true
             animator?.behindViewAlpha = 0.8
-            animator?.behindViewScale = 0.9
+            animator?.behindViewScale = 1.0
             animator?.transitionDuration = 0.7
             animator?.direction = .bottom
         }

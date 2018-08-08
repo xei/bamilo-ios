@@ -25,6 +25,7 @@ FOUNDATION_EXPORT NSString *const cFontVariationNone;
 FOUNDATION_EXPORT NSString *const cPrimaryPalette;
 
 //PALETTE COLORS
+FOUNDATION_EXPORT NSString *const kColorGold;
 FOUNDATION_EXPORT NSString *const kColorGreen;
 FOUNDATION_EXPORT NSString *const kColorBlue;
 FOUNDATION_EXPORT NSString *const kColorBlue1;
