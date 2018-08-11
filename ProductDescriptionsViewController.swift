@@ -36,6 +36,11 @@ class ProductDescriptionsViewController: BaseViewController {
                 if (error == nil) {
                     self.bind(data, forRequestId: 0)
                     completion?(true)
+                    
+                    //Track Event
+                    if let product = self.product {
+                        GoogleAnalyticsTracker.shared().trackEcommerceProductDetailView(product: product)
+                    }
                 } else {
                     self.errorHandler(error, forRequestID: 0)
                     completion?(false)

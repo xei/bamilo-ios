@@ -251,7 +251,6 @@ class WishListViewController: BaseViewController,
             
             self.showEmptyViewIfItsNeeded()
             
-            //TODO: temprory code, when we migrate RIProduct to Product these code must be removed
             TrackerManager.postEvent(selector: EventSelectors.removeFromWishListSelector(), attributes: EventAttributes.removeFromWishList(product: product, screenName: self.getScreenName()))
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: false])

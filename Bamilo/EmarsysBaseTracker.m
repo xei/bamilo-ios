@@ -63,7 +63,7 @@
 
 - (void)addToWishListWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
-//    dict[kEventCategoryUrlKey] = [((RIProduct *)attributes[kEventProduct]) categoryUrlKey] ?: cUNKNOWN_EVENT_VALUE;
+    dict[kEventCategoryUrlKey] = ((id<TrackableProductProtocol>)attributes[kEventProduct]).categoryUrlKey ?: cUNKNOWN_EVENT_VALUE;
     [self postEventByName:@"AddToFavorites" attributes:[dict copy]];
 }
 
@@ -85,7 +85,7 @@
 
 - (void)viewProductWithAttributes:(NSDictionary<NSString *,id> *)attributes {
     NSMutableDictionary *dict = [self generateCommonAttributesUsingAttributes:attributes];
-//    dict[kEventCategoryUrlKey] = ((RIProduct *)attributes[kEventProduct]).categoryUrlKey ?: cUNKNOWN_EVENT_VALUE;
+    dict[kEventCategoryUrlKey] = ((id<TrackableProductProtocol>)attributes[kEventProduct]).categoryUrlKey ?: cUNKNOWN_EVENT_VALUE;
     dict[kEventPrice] = ((id<TrackableProductProtocol>)attributes[kEventProduct]).payablePrice ?: cUNKNOWN_EVENT_VALUE;
     [self postEventByName:@"ViewProduct" attributes:[dict copy]];
 }

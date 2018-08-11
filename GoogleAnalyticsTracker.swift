@@ -368,12 +368,11 @@
         self.sendParamsToGA(params: builder)
     }
     
-    
-    func trackEcommerceProductClick(product: Product) {  //RIProduct must be replaced with Product after PDVController refactor
+    func trackEcommerceProductClick(product: TrackableProductProtocol) {
         self.sendEcommerceEvent(product: product, actionName: kGAIPAClick)
     }
     
-    func trackEcommerceProductDetailView(product: Product) {
+    func trackEcommerceProductDetailView(product: TrackableProductProtocol) {
         self.sendEcommerceEvent(product: product, actionName: kGAIPADetail)
     }
     

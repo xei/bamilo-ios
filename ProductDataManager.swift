@@ -15,6 +15,7 @@ import SwiftyJSON
     var sku: String! { get set }
     var isInWishList: Bool { get set }
     var payablePrice: NSNumber? { get }
+    var categoryUrlKey: String? { get }
 }
 
 class ProductDataManager: DataManagerSwift {

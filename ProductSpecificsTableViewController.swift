@@ -52,7 +52,6 @@ class ProductSpecificsTableViewController: BaseViewController {
             }
         }
     }
-    
 }
 
 extension ProductSpecificsTableViewController: UITableViewDelegate, UITableViewDataSource {

@@ -11,7 +11,7 @@ import ObjectMapper
 import SwiftyJSON
 
 @objcMembers class Product: NSObject, Mappable, TrackableProductProtocol {
-    
+        
     var sku: String!
     var name: String?
     var brand: String?
@@ -47,6 +47,11 @@ import SwiftyJSON
             }
             if let price = price { return NSNumber(value: price) }
             return nil
+        }
+    }
+    var categoryUrlKey: String? {
+        get {
+            return category?.urlKey
         }
     }
     

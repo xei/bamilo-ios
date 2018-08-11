@@ -46,6 +46,14 @@ class NewProduct: NSObject, Mappable, TrackableProductProtocol {
             return nil
         }
     }
+    var categoryUrlKey: String? {
+        get {
+            if let target = breadCrumbs?.last?.target {
+                return RITarget.parseTarget(target).node
+            }
+            return nil
+        }
+    }
     
     required init?(map: Map) {}
     func mapping(map: Map) {
