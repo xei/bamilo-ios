@@ -26,8 +26,7 @@
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
         
-        if([dataDic objectForKey:@"id"])
-        {
+        if(VALID_NOTEMPTY([dataDic objectForKey:@"id"], NSString)) {
             newBundle.bundleId = [dataDic objectForKey:@"id"];
         }
         

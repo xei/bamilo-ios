@@ -11,7 +11,7 @@ import UIKit
 protocol ProductDetailPrimaryInfoTableViewCellDelegate: class {
     func rateButtonTapped()
     func brandButtonTapped()
-    func seeAllCommentButttonTapped()
+    func writeCommentButtonTapped()
 }
 
 class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
@@ -78,6 +78,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
             oldPriceLabel.isHidden = (product.price?.oldPrice ?? 0) == 0
             discountPercentageLabel.text = product.price?.discountPercentage != nil ? "%\(product.price?.discountPercentage ?? 0)".convertTo(language: .arabic) : nil
             calculatedBenefitLabel.text = "سود شما : \("\(product.price?.discountBenefit ?? 0)".formatPriceWithCurrency())"
+            calculatedBenefitLabel.isHidden = (product.price?.discountBenefit ?? 0) == 0
             discountPercentageContainerView.isHidden = (product.price?.discountPercentage ?? 0) == 0
             brandlabel.text = product.brand
             if let rateCount = product.ratings?.totalCount, let rateAverage = product.ratings?.average , rateCount != 0 {
@@ -105,6 +106,6 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         delegate?.brandButtonTapped()
     }
     @IBAction func seeAllCommentsButtonTapped(_ sender: Any) {
-        delegate?.seeAllCommentButttonTapped()
+        delegate?.writeCommentButtonTapped()
     }
 }

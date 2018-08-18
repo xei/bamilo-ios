@@ -94,7 +94,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wum-vQ-hmV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="wum-vQ-hmV">
                                 <rect key="frame" x="8" y="56" width="14" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="IaU-kF-XW4"/>
@@ -175,4 +175,7 @@
             <point key="canvasLocation" x="-336" y="-52"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_dropdown" width="48" height="48"/>
+    </resources>
 </document>

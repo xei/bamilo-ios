@@ -27,7 +27,7 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
     
     override func update(withModel model: Any) {
         if let reviewItem = model as? ProductReviewItem {
-            titleLabel.text = reviewItem.username
+            titleLabel.text = reviewItem.title
             dateLabel.text = reviewItem.date
             reviewUserName.text = reviewItem.username
             rateViewControl.update(withModel: reviewItem.rateScore)

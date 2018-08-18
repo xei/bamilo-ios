@@ -55,7 +55,6 @@ extension ProductDescriptionsViewController : DataServiceProtocol {
     
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let model = data as? ProductDescriptionWrapper {
-            model.description = model.description?.replace(target: ", img {", withString: " img {")
             product?.descriptionHTML = model.description
             isLoaded = true
             updateWithDescription(description: model.description ?? "")

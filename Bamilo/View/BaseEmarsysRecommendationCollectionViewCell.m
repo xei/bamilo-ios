@@ -32,7 +32,7 @@
     [self.brandLabel applyStyle:[Theme font:kFontVariationRegular size:9.0f] color:[Theme color:kColorLightGray]];
     [self.priceLabel applyStyle:[Theme font:kFontVariationRegular size:9.0f] color: [Theme color:kColorLightGray]];
     [self.discountedPriceLabel applyStyle:[Theme font:kFontVariationBold size:14.0f] color:[Theme color:kColorOrange1]];
-    
+    self.imageView.clipsToBounds = YES;
     self.priceLabel.attributedText = (NSAttributedString *)[STRING_PRICE struckThroughText];
 }
 

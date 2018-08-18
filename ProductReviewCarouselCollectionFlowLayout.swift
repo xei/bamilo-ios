@@ -46,6 +46,11 @@ class ProductReviewCarouselCollectionFlowLayout: CarouselCollectionFlowLayout {
                 if fabs(attributes.frame.origin.x - proposedContentOffset.x) <
                     fabs(candidateAttributes!.frame.origin.x - proposedContentOffset.x) {
                     candidateAttributes = attributes
+                    
+                    if attributes.indexPath.row != 0 && attributes.indexPath.row != collectionView.numberOfItems(inSection: attributes.indexPath.section) {
+                        let leftSpace = (collectionView.bounds.width - (attributes.frame.size.width + (minimumLineSpacing * 2))) / 2
+                        candidateAttributes?.frame.origin.x -= leftSpace
+                    }
                 }
             }
             return CGPoint(x: candidateAttributes!.frame.origin.x - self.minimumInteritemSpacing, y: proposedContentOffset.y)

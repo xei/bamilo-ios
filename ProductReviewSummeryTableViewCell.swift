@@ -80,9 +80,18 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
     }
 }
 
-extension ProductReviewSummeryTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ProductReviewSummeryTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        var rightSpace: CGFloat =  0
+        let itemCount = self.collectionView(self.reviewCollectionView, numberOfItemsInSection: section)
+        if let itemWidth = (collectionViewLayout as? ProductReviewCarouselCollectionFlowLayout)?.itemWidth(), itemCount == 1 {
+            rightSpace = (collectionView.bounds.width - CGFloat(itemWidth)) / CGFloat(2)
+        }
+        return UIEdgeInsets(top: 0, left: rightSpace, bottom: 0, right: rightSpace)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

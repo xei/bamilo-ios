@@ -21,6 +21,7 @@ extension UIImageView: DisplaceableView {}
     
     @IBOutlet weak private var tableView: UITableView!
     @IBOutlet weak private var addToCartButton: IconButton!
+    @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
     
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
@@ -96,12 +97,13 @@ extension UIImageView: DisplaceableView {}
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.tableView {
             //stretch slider when bounce up
-            let cellSliderHeight = ProductDetailViewSliderTableViewCell.cellHeight() + 23 //bottom gap under the cell (slider)
-            var sliderRect = CGRect(x: 0, y:0, width: self.view.frame.width, height: cellSliderHeight - 20) //slider image vertical gap
+            let cellSliderHeight = ProductDetailViewSliderTableViewCell.cellHeight()
+            var sliderRect = CGRect(x: 0, y:0, width: self.view.frame.width, height: cellSliderHeight)
+            //slider image vertical gap
             if self.tableView.contentOffset.y < 0 {
                 sliderCell?.blurView?.alpha = 0
                 sliderRect.origin.y = self.tableView.contentOffset.y
-                sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight - 20 //slider image vertical gap
+                sliderRect.size.height = -self.tableView.contentOffset.y + cellSliderHeight
                 
                 if self.tableView.contentOffset.y < -100  {
                     self.sliderCell?.openCurrentImage()
@@ -116,8 +118,11 @@ extension UIImageView: DisplaceableView {}
                 //change alpha of slider's blur view
                 self.sliderCell?.blurView?.alpha = self.tableView.contentOffset.y / cellSliderHeight
             }
-            sliderCell?.visibleUIImageView?.frame = sliderRect
-            sliderCell?.blurView?.frame = sliderRect
+            
+            //to prevent unexpected jumps!
+            if let sliderCell = sliderCell, sliderCell.frame.origin.y - sliderRect.origin.y < 30 {
+                sliderCell.contentView.frame = sliderRect
+            }
         }
     }
     
@@ -275,6 +280,7 @@ extension UIImageView: DisplaceableView {}
             viewCtrl.signleReviewItem = sender as? ProductReviewItem
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
+            viewCtrl.prodcutSku = self.product?.sku
             viewCtrl.hidesBottomBarWhenPushed = true
         }  else if segueName == "showOtherSellerViewController", let viewCtrl = segue.destination as? OtherSellerViewController {
             viewCtrl.product = self.product

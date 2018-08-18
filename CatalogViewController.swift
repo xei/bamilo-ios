@@ -109,9 +109,7 @@ import SwiftyJSON
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateProductStatusFromWishList(notification:)), name: NSNotification.Name(NotificationKeys.WishListUpdate), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         
         if let navBar = self.navigationController?.navigationBar {

@@ -184,6 +184,8 @@
 		61716BA71E865B3D00F4E65F /* DeepLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 61716BA61E865B3D00F4E65F /* DeepLinkManager.m */; };
 		6171F3681F3A021700B3B212 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6171F3671F3A021700B3B212 /* Ext+UIView.swift */; };
 		6172EDFA1F94E70800ED36EE /* PurchaseBehaviourRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6172EDF91F94E70800ED36EE /* PurchaseBehaviourRecorder.swift */; };
+		6174A42E2120283A0093E909 /* ProductBundleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174A42C2120283A0093E909 /* ProductBundleTableViewCell.swift */; };
+		6174A42F2120283A0093E909 /* ProductBundleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6174A42D2120283A0093E909 /* ProductBundleTableViewCell.xib */; };
 		6174DC2920EA39A70056EA27 /* ProductReviewCarouselCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6174DC2820EA39A70056EA27 /* ProductReviewCarouselCollectionFlowLayout.swift */; };
 		617585F21F88D96700D66541 /* CarouselCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F11F88D96700D66541 /* CarouselCollectionFlowLayout.swift */; };
 		617585F41F88EEFE00D66541 /* HomePageDailyDeals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617585F31F88EEFE00D66541 /* HomePageDailyDeals.swift */; };
@@ -1326,6 +1328,8 @@
 		61716BA61E865B3D00F4E65F /* DeepLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeepLinkManager.m; sourceTree = "<group>"; };
 		6171F3671F3A021700B3B212 /* Ext+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		6172EDF91F94E70800ED36EE /* PurchaseBehaviourRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBehaviourRecorder.swift; sourceTree = "<group>"; };
+		6174A42C2120283A0093E909 /* ProductBundleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBundleTableViewCell.swift; sourceTree = "<group>"; };
+		6174A42D2120283A0093E909 /* ProductBundleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductBundleTableViewCell.xib; sourceTree = "<group>"; };
 		6174DC2820EA39A70056EA27 /* ProductReviewCarouselCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReviewCarouselCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		617585F11F88D96700D66541 /* CarouselCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		617585F31F88EEFE00D66541 /* HomePageDailyDeals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageDailyDeals.swift; sourceTree = "<group>"; };
@@ -3350,6 +3354,7 @@
 		6127EA0120B2E1E20064B291 /* ProductDetailView */ = {
 			isa = PBXGroup;
 			children = (
+				6174A42B212027680093E909 /* ProductBundleTableViewCell */,
 				6183DD17210CAA2100CD2339 /* ProductEmptyReviewTableViewCell */,
 				612AC4C82106016B00A14B3C /* ProductBreadCrumbTableViewCell */,
 				612AC4C321037B5F00A14B3C /* ProductRecommendationWidgetTableViewCell */,
@@ -3962,6 +3967,15 @@
 				61716BA61E865B3D00F4E65F /* DeepLinkManager.m */,
 			);
 			name = DeepLinkManager;
+			sourceTree = "<group>";
+		};
+		6174A42B212027680093E909 /* ProductBundleTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				6174A42C2120283A0093E909 /* ProductBundleTableViewCell.swift */,
+				6174A42D2120283A0093E909 /* ProductBundleTableViewCell.xib */,
+			);
+			name = ProductBundleTableViewCell;
 			sourceTree = "<group>";
 		};
 		617585EE1F88CD4000D66541 /* Widgets */ = {
@@ -8751,6 +8765,7 @@
 				61C5C40F1E545C7500F22130 /* CartEntitySummaryView.xib in Resources */,
 				875743FF1EA60E2D001B518A /* Summer-Small.png in Resources */,
 				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
+				6174A42F2120283A0093E909 /* ProductBundleTableViewCell.xib in Resources */,
 				875744641EA60E8E001B518A /* Yalda-72.png in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				61AAC67C1FC08A10007FC21E /* CollectionViewLoadingFooter.xib in Resources */,
@@ -9535,6 +9550,7 @@
 				6113E2B32055419D00CE20BE /* HPCollectionViewCell.swift in Sources */,
 				875AD56B1E38C0C900584ABF /* RIProduct.m in Sources */,
 				618204991E6D465500322937 /* SearchCategoryFilter.m in Sources */,
+				6174A42E2120283A0093E909 /* ProductBundleTableViewCell.swift in Sources */,
 				6151787120944B2B0049907F /* SimpleProgressBar.swift in Sources */,
 				CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */,
 				61C860471ECB1EAF00F2C571 /* CardCollectionViewFlowLayout.swift in Sources */,
