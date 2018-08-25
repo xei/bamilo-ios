@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,8 +24,8 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="aik-4a-tx3" secondAttribute="bottom" id="NJ3-Am-R6S"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aik-4a-tx3" secondAttribute="trailing" id="Wep-PE-Zts"/>
-                <constraint firstItem="aik-4a-tx3" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="lDG-hw-T5G"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="right" secondItem="aik-4a-tx3" secondAttribute="right" id="Wep-PE-Zts"/>
+                <constraint firstItem="aik-4a-tx3" firstAttribute="left" secondItem="vUN-kp-3ea" secondAttribute="left" id="lDG-hw-T5G"/>
                 <constraint firstItem="aik-4a-tx3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="xaW-kG-3jD"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

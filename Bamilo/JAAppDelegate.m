@@ -17,6 +17,7 @@
 #import "AppManager.h"
 #import "SessionManager.h"
 #import "URLUtility.h"
+#import "FirebaseCore.h"
 
 //#######################################################################################
 #import <Pushwoosh/PushNotificationManager.h>
@@ -159,6 +160,7 @@
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[FireBaseTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {

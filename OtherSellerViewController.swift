@@ -136,9 +136,9 @@ extension OtherSellerViewController: SellerSortingTableViewCellDelegate {
                 if method == .score, let firstOveral = first.seller?.score?.overall, let secOveral = sec.seller?.score?.overall {
                     return firstOveral > secOveral
                 } else if method == .price, let firstValue = first.productOffer?.price?.value, let secValue = sec.productOffer?.price?.value {
-                    return firstValue > secValue
+                    return firstValue < secValue
                 } else if method == .time, let firstTime = first.seller?.deliveryTime?.timStampValue, let secTime = sec.seller?.deliveryTime?.timStampValue {
-                    return firstTime > secTime
+                    return firstTime < secTime
                 }
                 return false
             })

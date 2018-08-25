@@ -107,7 +107,6 @@
         if let filterQuery = attributes[kEventFilterQuery] as? String {
             let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
             let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
-            //let filterValues = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 != 0 ? $1 : nil}.joined(separator: ", ")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
                 action: "Filters",
@@ -288,13 +287,13 @@
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
             var combinedSkus: String?
-            if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
-                combinedSkus = cart.cartEntity.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
-            } else if let packages = cart.cartEntity.packages, packages.count > 0 {
-                combinedSkus = cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
+            if let cartItems = cart.cartEntity?.cartItems,  cartItems.count > 0 {
+                combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
+            } else if let packages = cart.cartEntity?.packages, packages.count > 0 {
+                combinedSkus = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             }
-
-            let combinedSkusFromPackages = cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
+            
+            let combinedSkusFromPackages = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutFinish",

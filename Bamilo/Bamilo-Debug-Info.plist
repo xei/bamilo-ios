@@ -136,11 +136,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>42</string>
+	<string>43</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
-		<string>https://staging.bamilo.com/mobapi/</string>
+		<string>https://www.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.10</string>
 		<key>AdjustTokenID</key>

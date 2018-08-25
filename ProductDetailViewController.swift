@@ -193,6 +193,7 @@ extension UIImageView: DisplaceableView {}
     private func updateViewByProduct(product: NewProduct) {
         self.product = product
         self.title = product.name
+        RIRecentlyViewedProductSku.add(toRecentlyViewed: product, successBlock: nil, andFailureBlock: nil)
         ThreadManager.execute {
             self.updateAvaibleSections()
             self.tableView.reloadData()

@@ -78,7 +78,7 @@ static BOOL performed;
             [[MainTabBarViewController topNavigationController] openTargetString:[RITarget getTargetString:STATIC_PAGE node:argument] purchaseInfo:nil currentScreenName:nil];
         } else if ([targetKey isEqualToString:@"externalPayment"]) {
             // externalPayment - bamilo://ir/externalPayment?orderNum=<OrderNumber>&success=<BOOL>
-            performed = true;
+            performed = false;
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
                 JAExternalPaymentsViewController *viewController = (JAExternalPaymentsViewController *)[MainTabBarViewController topViewController];
                 RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;

@@ -81,12 +81,27 @@ class AddToCartViewController: UIViewController {
             let selectedColorProduct = variations.filter { $0.type == .size }.first?.products?.filter { $0.isSelected }.first
             if let selected = selectedColorProduct {
                 self.delegate?.submitAddToCartSimple(product: selected, refrence: self)
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                productVariationView.productVariationView?.sizeSelectionLabel.textColor = Theme.color(kColorOrange1)
+                productVariationView.productVariationView?.sizeSelectionLabel.layer.add(bounceAnimation, forKey: nil)
             }
         } else {
-            //TODO: message user to selected some of simple products
+            
         }
-        self.dismiss(animated: true, completion: nil)
     }
+    
+    private lazy var bounceAnimation: CABasicAnimation = {
+        let animation = CABasicAnimation(keyPath: "transform")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        animation.duration = 0.125
+        animation.repeatCount = 1
+        animation.autoreverses = true
+        animation.isRemovedOnCompletion = false
+        animation.fromValue = NSValue.init(caTransform3D: CATransform3DMakeScale(1.0, 1.0, 1.0))
+        animation.toValue = NSValue.init(caTransform3D: CATransform3DMakeScale(1.4, 1.4, 1.0))
+        return animation
+    }()
 }
 
 

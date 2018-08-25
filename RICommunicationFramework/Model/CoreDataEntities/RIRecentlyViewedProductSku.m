@@ -7,7 +7,7 @@
 //
 
 #import "RIRecentlyViewedProductSku.h"
-#import "RIProduct.h"
+#import "Bamilo-Swift.h"
 
 @implementation RIRecentlyViewedProductSku
 
@@ -29,7 +29,7 @@
     }
 }
 
-+ (void)addToRecentlyViewed:(RIProduct*)product successBlock:(void (^)(void))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
++ (void)addToRecentlyViewed:(id<TrackableProductProtocol>)product successBlock:(void (^)(void))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSArray* allRecentlyViewedProductSkus = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RIRecentlyViewedProductSku class])];
     BOOL productExists = NO;
     for (RIRecentlyViewedProductSku* currentProductSku in allRecentlyViewedProductSkus) {
@@ -76,7 +76,7 @@
     }];
 }
 
-+ (void)removeFromRecentlyViewed:(RIProduct *)product;
++ (void)removeFromRecentlyViewed:(id<TrackableProductProtocol>)product;
 {
     NSArray* recentlyViewedProductSkus = [[RIDataBaseWrapper sharedInstance] getEntryOfType:NSStringFromClass([RIRecentlyViewedProductSku class]) withPropertyName:@"productSku" andPropertyValue:product.sku];
     
@@ -101,7 +101,7 @@
             
             BOOL shouldDelete = YES;
             
-            for (RIProduct* product in productsArray) {
+            for (id<TrackableProductProtocol> product in productsArray) {
                 
                 if ([currentProductSku.productSku isEqualToString:product.sku]) {
                     

@@ -17,7 +17,7 @@ class ProductVariationView: BaseControlView {
     
     weak var delegate: ProductVariationViewDelegate?
     @IBOutlet private weak var buttonSizesContainerView: UIView!
-    @IBOutlet private weak var sizeSelectionLabel: UILabel!
+    @IBOutlet weak var sizeSelectionLabel: UILabel!
     @IBOutlet private weak var carouselCollectionView: UICollectionView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var buttonSizesContainerViewHeightConstraint: NSLayoutConstraint!

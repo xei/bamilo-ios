@@ -188,49 +188,6 @@
                 });
             }
         }
-//        if (customerObject) {
-//            if([@"normal" isEqualToString:customerObject.loginMethod]) {
-//                return [RIForm getForm:@"login" successBlock:^(RIForm *form) {
-//                    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-//                    for (RIField *field in form.fields) {
-//                        if ([field.key isEqualToString:@"email"]) {
-//                            [parameters setValue:customerObject.email forKey:field.name];
-//                        }else
-//                            if ([field.key isEqualToString:@"password"]) {
-//                                [parameters setValue:customerObject.plainPassword forKey:field.name];
-//                            }
-//                    }
-//                    [RIForm sendForm:form parameters:parameters
-//                        successBlock:^(id jsonObject, NSArray* successMessages) {
-//                            [RICustomer resetCustomerAsGuest];
-//                            if (returnBlock != nil) {
-//                                dispatch_async(dispatch_get_main_queue(), ^{
-//                                    returnBlock(YES, jsonObject, customerObject.loginMethod);
-//                                });
-//                            }
-//                            //##########
-//                            [EmarsysPredictManager setCustomer:customerObject];
-//                            
-//                        } andFailureBlock:^(RIApiResponse apiResponse,  id errorObject) {
-//                            if (returnBlock != nil) {
-//                                dispatch_async(dispatch_get_main_queue(), ^{
-//                                    returnBlock(NO, nil, customerObject.loginMethod);
-//                                });
-//                            }
-//                        }];
-//                } failureBlock:^(RIApiResponse apiResponse,  NSArray *errorMessage) {
-//                    if (returnBlock != nil) {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            returnBlock(NO, nil, customerObject.loginMethod);
-//                        });
-//                    }
-//                }];
-//            } else {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    returnBlock(NO, nil, customerObject.loginMethod);
-//                });
-//            }
-//        }
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             returnBlock(NO);

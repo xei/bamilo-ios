@@ -11,7 +11,6 @@ import UIKit
 @objcMembers class ReviewSurveyManager: NSObject {
     
     private class func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
-        
         //If we are not going to present any deeplink actions
         if DeepLinkManager.hasSomethingToShow() { return }
         ThreadManager.execute {

@@ -10,13 +10,13 @@ import UIKit
 
 class SubmitProductReviewViewController: BaseViewController, ProtectedViewControllerProtocol {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var submitReviewButton: IconButton!
-    @IBOutlet weak var rateStarControl: RateStarControl!
-    @IBOutlet weak var starDescriptionLabel: UILabel!
-    @IBOutlet weak var reviewTitleTextField: UITextField!
-    @IBOutlet weak var reviewCommentTextView: UITextView!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var submitReviewButton: IconButton!
+    @IBOutlet private weak var rateStarControl: RateStarControl!
+    @IBOutlet private weak var starDescriptionLabel: UILabel!
+    @IBOutlet private weak var reviewTitleTextField: UITextField!
+    @IBOutlet private weak var reviewCommentTextView: UITextView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     var prodcutSku: String?
     var rateValue: Int = 0

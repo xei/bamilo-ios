@@ -85,7 +85,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
                 ratePresentorContainerView.isHidden = false
                 rateValueLabel?.isHidden = false
                 rateViewControl?.isHidden = false
-                rateValueLabel?.text = Utility.formatScoreValue(score: rateAverage)
+                rateValueLabel?.text = Utility.formatScoreValue(score: Double(round(10 * (rateAverage))/10))
                 ratingCountLabel.text = "(\(rateCount)".convertTo(language: .arabic)
                 rateViewControl?.update(withModel: rateAverage)
                 rateViewContainerToSeperatorVerticalConstraint.priority = .defaultHigh

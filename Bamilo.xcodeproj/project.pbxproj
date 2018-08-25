@@ -263,6 +263,7 @@
 		61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A166B91FB6A7AA003FBA56 /* TourManager.swift */; };
 		61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyViewController.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
+		61A93A282131907A00C9B113 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61A93A272131907A00C9B113 /* GoogleService-Info.plist */; };
 		61AA6B3F20E8C6C800706F9A /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AA6B3E20E8C6C800706F9A /* Pagination.swift */; };
 		61AA6B4320E8DD0900706F9A /* ProductReviewSummeryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AA6B4120E8DD0900706F9A /* ProductReviewSummeryTableViewCell.swift */; };
 		61AA6B4420E8DD0900706F9A /* ProductReviewSummeryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61AA6B4220E8DD0900706F9A /* ProductReviewSummeryTableViewCell.xib */; };
@@ -367,6 +368,7 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
+		61E17E702129799A00481794 /* FireBaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E17E6F2129799A00481794 /* FireBaseTracker.swift */; };
 		61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */; };
 		61E534431FA48D3400CBDFED /* ProgressBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */; };
 		61E534451FA4918E00CBDFED /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534441FA4918E00CBDFED /* ProgressBarView.swift */; };
@@ -1422,6 +1424,7 @@
 		61A4D1AA1EA6256A003E203C /* EmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
+		61A93A272131907A00C9B113 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61AA6B3E20E8C6C800706F9A /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		61AA6B4120E8DD0900706F9A /* ProductReviewSummeryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReviewSummeryTableViewCell.swift; sourceTree = "<group>"; };
 		61AA6B4220E8DD0900706F9A /* ProductReviewSummeryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductReviewSummeryTableViewCell.xib; sourceTree = "<group>"; };
@@ -1552,6 +1555,7 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
+		61E17E6F2129799A00481794 /* FireBaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseTracker.swift; sourceTree = "<group>"; };
 		61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarItemView.swift; sourceTree = "<group>"; };
 		61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressBarItemView.xib; sourceTree = "<group>"; };
 		61E534441FA4918E00CBDFED /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -4379,6 +4383,7 @@
 				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
 				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
 				61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */,
+				61E17E6F2129799A00481794 /* FireBaseTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -8077,6 +8082,7 @@
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
+				61A93A272131907A00C9B113 /* GoogleService-Info.plist */,
 				617F77AA1EB85B2F000A2A6C /* Bamilo-Swift */,
 				B5A301AA19811D0700F71726 /* Bamilo */,
 				870F8CF41E338D2D0021F87B /* BamiloUITests */,
@@ -8885,6 +8891,7 @@
 				6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */,
 				8757445D1EA60E8D001B518A /* Yalda-Small-50@2x.png in Resources */,
 				614927C320ECC4AA00B16B27 /* ProductReviewItemTableViewCell.xib in Resources */,
+				61A93A282131907A00C9B113 /* GoogleService-Info.plist in Resources */,
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
 				61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */,
 				615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */,
@@ -9124,6 +9131,7 @@
 				"${BUILT_PRODUCTS_DIR}/EmarsysPredictSDK/EmarsysPredictSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageViewer/ImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/JBWhatsAppActivity/JBWhatsAppActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
@@ -9141,6 +9149,7 @@
 				"${BUILT_PRODUCTS_DIR}/TBActionSheet/TBActionSheet.framework",
 				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -9153,6 +9162,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmarsysPredictSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JBWhatsAppActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
@@ -9170,6 +9180,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TBActionSheet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -9238,6 +9249,7 @@
 				615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
 				615CFDFC20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift in Sources */,
+				61E17E702129799A00481794 /* FireBaseTracker.swift in Sources */,
 				611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */,
 				61B56D5F1F9B70240002BFF3 /* OrderPackage.swift in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
@@ -9994,7 +10006,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -10024,7 +10036,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10051,7 +10063,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
@@ -10074,7 +10086,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
@@ -10273,7 +10285,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10306,7 +10318,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

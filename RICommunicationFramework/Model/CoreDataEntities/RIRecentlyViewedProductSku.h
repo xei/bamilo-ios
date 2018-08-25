@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class RIProduct;
+@protocol TrackableProductProtocol;
 
 @interface RIRecentlyViewedProductSku : NSManagedObject
 
@@ -20,11 +20,11 @@
 
 + (void)getRecentlyViewedProductSkusWithSuccessBlock:(void (^ _Null_unspecified)( NSArray * _Null_unspecified recentlyViewedProductSkus))successBlock;
 
-+ (void)addToRecentlyViewed:(RIProduct * _Null_unspecified)product
++ (void)addToRecentlyViewed:(id<TrackableProductProtocol> _Null_unspecified)product
                successBlock:(void (^ _Null_unspecified)(void))successBlock
             andFailureBlock:(void (^ _Null_unspecified)(RIApiResponse apiResponse, NSArray * _Null_unspecified error))failureBlock;
 
-+ (void)removeFromRecentlyViewed:(RIProduct * _Null_unspecified)product;
++ (void)removeFromRecentlyViewed:(id<TrackableProductProtocol> _Null_unspecified)product;
 
 + (void)removeAllRecentlyViewedProductSkus;
 

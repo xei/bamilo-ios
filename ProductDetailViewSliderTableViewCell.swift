@@ -110,7 +110,7 @@ class ProductDetailViewSliderTableViewCell: BaseProductTableViewCell, FSPagerVie
             wishListButton.isSelected = product.isInWishList
             pagerControlBackroundWidthConstraint.constant = pagerControl.intrinsicContentSize.width + 10
             pagerControlBackroundHightConstraint.constant = pagerControl.intrinsicContentSize.height + 6
-            pagerControlBackrgroud.isHidden = pagerControl.numberOfPages == 0
+            pagerControlBackrgroud.isHidden = pagerControl.numberOfPages <= 1
         }
     }
     

@@ -62,7 +62,6 @@ import Kingfisher
     
     func setupView() {
         self.searchBarContainer.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        
         self.searchTextField.backgroundColor = UIColor.white
         self.searchTextField.font = Theme.font(kFontVariationRegular, size: 13)
         let searchIconView = UIImageView(image: UIImage(named: "searchIcon"))
@@ -86,7 +85,7 @@ import Kingfisher
     @IBAction func backButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         self.previousRequestTask?.cancel()
         if sender.text?.count == 0 {
