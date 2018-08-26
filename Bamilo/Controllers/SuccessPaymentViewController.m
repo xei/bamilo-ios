@@ -48,13 +48,19 @@
     
     [self trackPurchase];
     
+    //Ecommerce tracking
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(5) options:@"SuccessPayment"];
+    
+    [self resetTheCart];
+}
+
+- (void)resetTheCart {
     //Reset the shared Cart entities
     [RICart sharedInstance].cartEntity.cartItems = @[];
     [RICart sharedInstance].cartEntity.packages = @[];
     [RICart sharedInstance].cartEntity.cartCount = 0;
     
-    //Ecommerce tracking
-    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(5) options:@"SuccessPayment"];
+    [MainTabBarViewController updateCartValueWithCart:[RICart sharedInstance]];
 }
 
 - (void)setupView {

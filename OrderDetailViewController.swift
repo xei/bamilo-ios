@@ -87,6 +87,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
             cancellingOrderViewCtrl.order = order
         }
         if segueName == "showSubmitProductReviewViewController", let sku = sender as? String, let viewCtrl = segue.destination as? SubmitProductReviewViewController {
+            viewCtrl.hidesBottomBarWhenPushed = true
             viewCtrl.prodcutSku = sku
         }
     }

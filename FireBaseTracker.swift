@@ -158,11 +158,13 @@ class FireBaseTracker: BaseTracker, ScreenTrackerProtocol, EventTrackerProtocol 
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
-            Analytics.logEvent(AnalyticsEventBeginCheckout, parameters: [
-                AnalyticsParameterItemList: combinedSkus,
-                AnalyticsParameterValue: cart.cartEntity.cartValue
-            ])
+            let combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
+            if let combinedSku = combinedSkus, let cartValue = cart.cartEntity?.cartValue {
+                Analytics.logEvent(AnalyticsEventBeginCheckout, parameters: [
+                    AnalyticsParameterItemList: combinedSku,
+                    AnalyticsParameterValue: cartValue
+                ])
+            }
         }
     }
     
@@ -174,22 +176,25 @@ class FireBaseTracker: BaseTracker, ScreenTrackerProtocol, EventTrackerProtocol 
             } else if let packages = cart.cartEntity?.packages, packages.count > 0 {
                 combinedSkus = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             }
-            
             let combinedSkusFromPackages = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
-            
-            Analytics.logEvent(AnalyticsEventCheckoutProgress, parameters: [
-                AnalyticsParameterItemList: combinedSkus ?? combinedSkusFromPackages ?? "",
-                AnalyticsParameterValue: cart.cartEntity.cartValue
-            ])
+            if let itemList = combinedSkus ?? combinedSkusFromPackages, let cartValue = cart.cartEntity?.cartValue {
+                Analytics.logEvent(AnalyticsEventCheckoutProgress, parameters: [
+                    AnalyticsParameterItemList: itemList,
+                    AnalyticsParameterValue: cartValue
+                ])
+            }
         }
     }
     
     func purchaseBehaviour(attributes: EventAttributeType) {
-        
     }
     
     func searchSuggestionTapped(attributes: EventAttributeType) {
-        
+        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
+            Analytics.logEvent("search_suggestion", parameters: [
+                AnalyticsParameterSearchTerm: suggestionTitle
+            ])
+        }
     }
     
     
