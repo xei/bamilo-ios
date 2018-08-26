@@ -58,7 +58,7 @@
     //Reset the shared Cart entities
     [RICart sharedInstance].cartEntity.cartItems = @[];
     [RICart sharedInstance].cartEntity.packages = @[];
-    [RICart sharedInstance].cartEntity.cartCount = 0;
+    [RICart sharedInstance].cartEntity.cartCount = @(0);
     
     [MainTabBarViewController updateCartValueWithCart:[RICart sharedInstance]];
 }

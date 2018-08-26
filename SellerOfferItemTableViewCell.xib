@@ -131,6 +131,7 @@
                             <constraint firstAttribute="right" secondItem="4IL-0T-ccT" secondAttribute="right" constant="8" id="5NZ-63-QaR"/>
                             <constraint firstItem="aTl-k7-zGf" firstAttribute="right" secondItem="HAR-V0-aXt" secondAttribute="right" id="5pc-th-RgV"/>
                             <constraint firstItem="HAR-V0-aXt" firstAttribute="top" secondItem="C17-Wz-ogO" secondAttribute="bottom" constant="13" id="6TD-Ec-1Ef"/>
+                            <constraint firstItem="DWu-LB-ism" firstAttribute="left" relation="greaterThanOrEqual" secondItem="EPJ-CH-SNB" secondAttribute="left" constant="1" id="6zY-lC-FQn"/>
                             <constraint firstItem="DWu-LB-ism" firstAttribute="centerY" secondItem="EPJ-CH-SNB" secondAttribute="centerY" id="9ww-C2-r41"/>
                             <constraint firstItem="5CR-gm-pzA" firstAttribute="top" secondItem="qs2-gt-k8d" secondAttribute="top" id="BKW-6c-wRL"/>
                             <constraint firstItem="qs2-gt-k8d" firstAttribute="top" secondItem="h47-XB-4BK" secondAttribute="top" id="BvE-NF-5pb"/>
@@ -181,6 +182,7 @@
                 <outlet property="sellerNameLabel" destination="WCJ-cx-3WR" id="ajz-AI-sdf"/>
                 <outlet property="sellerNameTitleLabel" destination="4IL-0T-ccT" id="bPT-Xo-uQz"/>
                 <outlet property="sellerOveralScoreLabel" destination="DWu-LB-ism" id="emj-Mx-cwt"/>
+                <outlet property="sellerScoreContainerWidthConstraint" destination="M5x-ea-jw3" id="CpL-TD-ekh"/>
                 <outlet property="sellerScoreTitleLabel" destination="HAR-V0-aXt" id="CVv-Wv-WrP"/>
                 <outlet property="sellerScoreWrapperView" destination="EPJ-CH-SNB" id="I1v-J4-uOn"/>
             </connections>

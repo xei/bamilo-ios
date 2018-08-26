@@ -27,6 +27,7 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
     @IBOutlet weak private var dicountPrecentageLabel: UILabel!
     @IBOutlet weak private var dicountPrecentageWrapperView: UIView!
     @IBOutlet weak private var addToCartButton: UIButton!
+    @IBOutlet weak private var sellerScoreContainerWidthConstraint: NSLayoutConstraint!
     
     weak var delegate: SellerOfferItemTableViewCellDelegate?
     var model: SellerListItem?
@@ -44,6 +45,9 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
             sellerOveralScoreLabel.text = Utility.formatScoreValue(score: item.seller?.score?.overall ?? 0)
             if (item.seller?.score?.overall ?? 0) == 0 {
                 sellerOveralScoreLabel.text = STRING_NO_RATE
+                sellerScoreContainerWidthConstraint.constant = 100
+            } else {
+                sellerScoreContainerWidthConstraint.constant = 25
             }
             priceLabel.text = "\(item.productOffer?.price?.value ?? 0)".formatPriceWithCurrency()
             oldPriceLabel.attributedText = "\(item.productOffer?.price?.oldPrice ?? 0)".formatPriceWithCurrency().strucThroughPriceFormat()

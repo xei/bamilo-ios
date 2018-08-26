@@ -17,6 +17,9 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var rateViewControl: RateStarControl!
     @IBOutlet private weak var seeMoreButton: UIButton!
+    @IBOutlet weak var dateLabelAlignRightToTitleConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dateLabelSeperatorVerticalSpaceConstraint: NSLayoutConstraint!
+    
     private var model: ProductReviewItem?
     
     override func awakeFromNib() {
@@ -30,6 +33,8 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
             titleLabel.text = reviewItem.title
             dateLabel.text = reviewItem.date
             reviewUserName.text = reviewItem.username
+            dateLabelAlignRightToTitleConstraint.priority = (reviewItem.username ?? "").count == 0 ? .defaultHigh : .defaultLow
+            dateLabelSeperatorVerticalSpaceConstraint.priority = (reviewItem.username ?? "").count == 0 ? .defaultLow : .defaultHigh
             rateViewControl.update(withModel: reviewItem.rateScore)
             descriptionLabel.text = reviewItem.comment
             descriptionLabel.numberOfLines = 3

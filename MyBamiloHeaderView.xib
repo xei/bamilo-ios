@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,12 +25,21 @@
                                 <action selector="buttonTapped:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="JsO-1u-C18"/>
                             </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="XVn-pg-8HI">
+                            <rect key="frame" x="10" y="24" width="14" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="XVn-pg-8HI" secondAttribute="height" multiplier="1:1" id="cY0-tW-in7"/>
+                                <constraint firstAttribute="height" constant="14" id="jof-HJ-7aW"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="XVn-pg-8HI" firstAttribute="left" secondItem="h6z-lP-phV" secondAttribute="left" constant="10" id="Efc-3k-dUw"/>
                         <constraint firstAttribute="trailing" secondItem="Fgt-wK-uPd" secondAttribute="trailing" id="FBY-7P-gia"/>
                         <constraint firstAttribute="bottom" secondItem="Fgt-wK-uPd" secondAttribute="bottom" id="Hi8-jd-eer"/>
                         <constraint firstItem="Fgt-wK-uPd" firstAttribute="leading" secondItem="h6z-lP-phV" secondAttribute="leading" id="Xix-eZ-zSs"/>
+                        <constraint firstItem="XVn-pg-8HI" firstAttribute="centerY" secondItem="Fgt-wK-uPd" secondAttribute="centerY" id="sjc-HZ-KNY"/>
                         <constraint firstItem="Fgt-wK-uPd" firstAttribute="top" secondItem="h6z-lP-phV" secondAttribute="top" id="wRn-9K-CxD"/>
                     </constraints>
                 </view>
@@ -44,7 +54,10 @@
                 <outlet property="containerView" destination="h6z-lP-phV" id="CTU-mF-bpb"/>
                 <outlet property="menuButton" destination="Fgt-wK-uPd" id="oNQ-qi-I4C"/>
             </connections>
-            <point key="canvasLocation" x="-991" y="-136"/>
+            <point key="canvasLocation" x="-991" y="-136.5"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="ic_dropdown" width="48" height="48"/>
+    </resources>
 </document>

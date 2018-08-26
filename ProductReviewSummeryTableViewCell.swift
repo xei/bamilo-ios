@@ -40,6 +40,7 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
         reviewCollectionView.collectionViewLayout = ProductReviewCarouselCollectionFlowLayout()
         reviewCollectionView.delegate = self
         reviewCollectionView.dataSource = self
+        reviewCollectionView.alwaysBounceHorizontal = true
         
         writeCommentButton.setTitle(STRING_WRITE_COMMENT, for: .normal)
         moreCommentsButton.setTitle(STRING_SEE_ALL_COMMENTS, for: .normal)
@@ -84,15 +85,15 @@ extension ProductReviewSummeryTableViewCell: UICollectionViewDataSource, UIColle
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        var rightSpace: CGFloat =  0
-        let itemCount = self.collectionView(self.reviewCollectionView, numberOfItemsInSection: section)
-        if let itemWidth = (collectionViewLayout as? ProductReviewCarouselCollectionFlowLayout)?.itemWidth(), itemCount == 1 {
-            rightSpace = (collectionView.bounds.width - CGFloat(itemWidth)) / CGFloat(2)
-        }
-        return UIEdgeInsets(top: 0, left: rightSpace, bottom: 0, right: rightSpace)
-    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        var rightSpace: CGFloat =  0
+//        let itemCount = self.collectionView(self.reviewCollectionView, numberOfItemsInSection: section)
+//        if let itemWidth = (collectionViewLayout as? ProductReviewCarouselCollectionFlowLayout)?.itemWidth(), itemCount == 1 {
+//            rightSpace = (collectionView.bounds.width - CGFloat(itemWidth)) / CGFloat(2)
+//        }
+//        return UIEdgeInsets(top: 0, left: rightSpace, bottom: 0, right: rightSpace)
+//    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = reviewCollectionView.dequeueReusableCell(withReuseIdentifier: ProductReviewCollectionViewCell.nibName, for: indexPath) as! ProductReviewCollectionViewCell
