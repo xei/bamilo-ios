@@ -31,7 +31,8 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
     @IBOutlet private weak var seperatorView: UIView!
     @IBOutlet private weak var descriptionContainerView: UIView!
     @IBOutlet private weak var specificationsContainerView: UIView!
-    @IBOutlet private weak var addToCartButton: UIButton!
+    @IBOutlet private weak var addToCartButton: IconButton!
+    @IBOutlet private weak var addToCartButtonHeightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         
         self.segmentControl.selectedSegmentIndex = selectedViewType == .description ? 1 : 0
         indexChanged(segmentControl)
+        addToCartButton.layer.cornerRadius = addToCartButtonHeightConstraint.constant / 2
     }
     
     func applyStyle() {
@@ -47,8 +49,8 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         segmentControl.tintColor = Theme.color(kColorOrange1)
         seperatorView.backgroundColor = Theme.color(kColorGray10)
         
-        addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
-        addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+        addToCartButton.setTitle(STRING_BUY_PRODUCT, for: .normal)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         
         let image = #imageLiteral(resourceName: "btn_cart").withRenderingMode(.alwaysTemplate)

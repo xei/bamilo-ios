@@ -22,7 +22,6 @@ class ProductReviewCarouselCollectionFlowLayout: CarouselCollectionFlowLayout {
         
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         if let collectionView = self.collectionView {
-        
             if proposedContentOffset.x + collectionView.bounds.width >= collectionView.contentSize.width - ProductReviewCarouselCollectionFlowLayout.SCROLL_DISTANCE_TOLERANCE {
                 return CGPoint(x: proposedContentOffset.x + self.minimumInteritemSpacing/2, y: proposedContentOffset.y)
             }

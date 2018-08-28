@@ -20,6 +20,7 @@ extension UIImageView: DisplaceableView {}
     var animator: ZFModalTransitionAnimator?
     
     @IBOutlet weak private var tableView: UITableView!
+    @IBOutlet weak private var addToCartHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var addToCartButton: IconButton!
     @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
     
@@ -67,11 +68,16 @@ extension UIImageView: DisplaceableView {}
         self.tableView.clipsToBounds = false
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: addToCartHeightConstraint.constant, right: 0)
         
-        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
-        self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
-        self.addToCartButton.backgroundColor = Theme.color(kColorOrange1)
+        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+        self.addToCartButton.layer.cornerRadius = addToCartHeightConstraint.constant / 2
+        self.addToCartButton.applyGradient(colours: [
+            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+        ])
         
+        self.addToCartButton.setTitle(STRING_BUY_PRODUCT, for: .normal)
         // remove extra white gaps between sections & top and bottom of tableview
         self.tableView.sectionFooterHeight = 0
         
@@ -259,8 +265,11 @@ extension UIImageView: DisplaceableView {}
     private func requestAddToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, inViewCtrl: T) {
         if let productEntity = self.product {
             ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: inViewCtrl) { (success, error) in
-                if let info = self.purchaseTrackingInfo, success {
-                    PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
+                if success {
+                    if let info = self.purchaseTrackingInfo, success {
+                        PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
+                    }
+                    MainTabBarViewController.showCart()
                 }
             }
         }

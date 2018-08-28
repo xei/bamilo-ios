@@ -71,6 +71,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.formController?.unregisterForKeyboardNotifications()
+        
+        self.view.resignFirstResponder()
     }
     
     //MARK: - FormViewControlDelegate
@@ -175,6 +177,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     private func updateFormWithCustomer(customer: RICustomer) {
         
+        if customer == nil { return }
         var fieldValues = [
             "customer[phone]": customer.phone ?? "",
             "customer[first_name]": customer.firstName ?? "",

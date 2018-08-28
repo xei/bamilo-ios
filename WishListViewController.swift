@@ -327,6 +327,7 @@ class WishListViewController: BaseViewController,
         }
         if segueName == "showPDVViewController", let pdvViewCtrl = segue.destination as? ProductDetailViewController, let sku = sender as? String {
             pdvViewCtrl.productSku = sku
+            pdvViewCtrl.hidesBottomBarWhenPushed = true
         }
     }
     

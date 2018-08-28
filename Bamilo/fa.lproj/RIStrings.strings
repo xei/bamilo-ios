@@ -997,7 +997,7 @@
 
 "please_select_your_choice" = "لطفا گزینه مورد نظر خود را انتخاب کنید";
 
-"write_comment" = "نظر بدهید";
+"write_comment" = "نظر خود را بنویسید";
 
 "close" = "بستن";
 
@@ -1056,3 +1056,5 @@
 "rate_it" = "نظر دهید";
 
 "rate_and_review" = "امتیاز و نظرات";
+
+"buy_product" = "خرید محصول";

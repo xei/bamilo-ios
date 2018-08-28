@@ -17,6 +17,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     @IBOutlet private weak var reviewTitleTextField: UITextField!
     @IBOutlet private weak var reviewCommentTextView: UITextView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var submitButtonHeightConstraint: NSLayoutConstraint!
     
     var prodcutSku: String?
     var rateValue: Int = 0
@@ -41,10 +42,15 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
         rateStarControl.enableButtons(enable: true)
         reviewTitleTextField.font = Theme.font(kFontVariationRegular, size: 13)
         reviewCommentTextView.font = Theme.font(kFontVariationRegular, size: 13)
-        submitReviewButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
+        submitReviewButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
+        
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: submitButtonHeightConstraint.constant, right: 0)
         submitReviewButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         reviewCommentTextView.textAlignment = .right
+        reviewCommentTextView.text = STRING_WRITE_COMMENT
+        reviewCommentTextView.delegate = self
         
         submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
         submitReviewButton.tintColor = .white
@@ -96,6 +102,22 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     
     override func navBarTitleString() -> String! {
         return STRING_ADD_COMMENT
+    }
+}
+
+extension SubmitProductReviewViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = STRING_WRITE_COMMENT
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 

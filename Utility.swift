@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Adjust
 
 @objcMembers class Utility: NSObject {
 
@@ -44,7 +45,7 @@ import UIKit
     class func shareUrl(url: String, message: String, viewController: BaseViewController) {
         let textToShare = message
         if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let myWebsite = NSURL(string: encodeUrl) {
-            let objectsToShare: [Any] = [textToShare, myWebsite]
+            let objectsToShare: [Any] = ["\(encodeUrl)\n\(textToShare)", myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             viewController.present(activityVC, animated: true, completion: nil)
         }

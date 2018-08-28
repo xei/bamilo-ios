@@ -26,6 +26,8 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.backgroundColor = .white
         self.contentView.backgroundColor = .white
         self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.titleToSuperviewRightConstraint.priority = .defaultLow
+        self.titleLabelToImageRightConstraint.priority = .defaultHigh
     }
     
     override func update(withModel model: Any!) {
@@ -42,19 +44,14 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.titleLabel.text = title
         if let image = imageUrl {
             self.imageViewContainerView.isHidden = false
-            self.titleToSuperviewRightConstraint.priority = .defaultLow
-            self.titleLabelToImageRightConstraint.priority = .defaultHigh
             self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
         } else {
             self.imageViewContainerView.isHidden = true
-            self.titleToSuperviewRightConstraint.priority = .defaultHigh
-            self.titleLabelToImageRightConstraint.priority = .defaultLow
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-            
         self.titleLabel.text = nil
         self.iconImageView.image = nil
     }

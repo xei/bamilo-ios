@@ -69,7 +69,13 @@ import Kingfisher
         self.searchTextField.leftViewMode = .always
         searchIconView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
         self.searchTextField.leftView = searchIconView
-        self.searchTextField.textAlignment = .right
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.searchTextField.frame.height))
+        self.searchTextField.rightView = paddingView
+        self.searchTextField.rightViewMode = .always
+        
+        self.searchTextField.textAlignment = .natural
+        self.searchTextField.layer.cornerRadius = 4
         self.searchTextField.placeholder = STRING_SEARCH_PLACEHOLDER
         self.searchTextField.autocorrectionType = .no
         self.searchTextField.autocapitalizationType = .none

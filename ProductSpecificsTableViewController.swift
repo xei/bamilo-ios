@@ -23,7 +23,7 @@ class ProductSpecificsTableViewController: BaseViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 58 , right: 0)
         self.tableView.tableFooterView = UIView(frame: .zero)
         
         if let model = product?.specifications {

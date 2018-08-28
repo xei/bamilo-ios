@@ -158,4 +158,5 @@ let STRING_PLZ_ADD_RATE = RILocalizationWrapper.localizedString("please_add_your
 let STRING_RELATED_ITEMS = RILocalizationWrapper.localizedString("related_items")!
 let STRING_RATE_IT = RILocalizationWrapper.localizedString("rate_it")!
 let STRING_RATE_AND_REVIEW = RILocalizationWrapper.localizedString("rate_and_review")!
+let STRING_BUY_PRODUCT = RILocalizationWrapper.localizedString("buy_product")!
 

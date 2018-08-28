@@ -45,7 +45,7 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
             sellerOveralScoreLabel.text = Utility.formatScoreValue(score: item.seller?.score?.overall ?? 0)
             if (item.seller?.score?.overall ?? 0) == 0 {
                 sellerOveralScoreLabel.text = STRING_NO_RATE
-                sellerScoreContainerWidthConstraint.constant = 100
+                sellerScoreContainerWidthConstraint.constant = 65
             } else {
                 sellerScoreContainerWidthConstraint.constant = 25
             }

@@ -40,7 +40,7 @@ class ProductReviewSummeryTableViewCell: BaseProductTableViewCell {
         reviewCollectionView.collectionViewLayout = ProductReviewCarouselCollectionFlowLayout()
         reviewCollectionView.delegate = self
         reviewCollectionView.dataSource = self
-        reviewCollectionView.alwaysBounceHorizontal = true
+        
         
         writeCommentButton.setTitle(STRING_WRITE_COMMENT, for: .normal)
         moreCommentsButton.setTitle(STRING_SEE_ALL_COMMENTS, for: .normal)

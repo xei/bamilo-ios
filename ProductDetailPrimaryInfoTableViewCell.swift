@@ -48,7 +48,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
     private func applyStyle() {
         containerBoxView?.backgroundColor = .white
         seperatorLineView.backgroundColor = Theme.color(kColorGray10)
-        [calculatedBenefitLabel, oldPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: Theme.color(kColorGray3)) }
+        [calculatedBenefitLabel, oldPriceLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationMedium, size: 11), color: Theme.color(kColorGray3)) }
         
         calculatedBenefitLabel.textColor = Theme.color(kColorGray1)
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
@@ -59,13 +59,13 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         discountPercentageContainerView.layer.cornerRadius = 4
         discountPercentageContainerView.clipsToBounds = true
         
-        discountPercentageLabel.applyStyle(font: Theme.font(kFontVariationLight, size: 11), color: .white)
+        discountPercentageLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 11), color: .white)
         discountPercentageLabel.textAlignment = .center
         discountPercentageLabel.clipsToBounds = false
         
         
         
-        brandlabel.applyStyle(font: Theme.font(kFontVariationLight, size: 10), color: Theme.color(kColorBlue))
+        brandlabel.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorBlue))
         userIcon.image = #imageLiteral(resourceName: "ic_user_form").withRenderingMode(.alwaysTemplate)
         userIcon.tintColor = Theme.color(kColorGray8)
     }

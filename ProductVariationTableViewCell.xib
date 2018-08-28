@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,9 +39,21 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eei-vN-v2w">
                         <rect key="frame" x="10" y="317.5" width="152" height="45"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o8-3m-IXB" customClass="IconButton">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZj-84-GKL">
+                                <rect key="frame" x="100" y="11.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQJ-uY-3gk">
+                                <rect key="frame" x="10" y="17.5" width="80" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="P22-mN-5VB"/>
+                                    <constraint firstAttribute="width" secondItem="fQJ-uY-3gk" secondAttribute="height" multiplier="8:1" id="fFZ-2U-6Fh"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o8-3m-IXB">
                                 <rect key="frame" x="0.0" y="0.0" width="152" height="45"/>
-                                <state key="normal" title="Button" image="ArrowLeft"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
                                         <real key="value" value="0.40000000000000002"/>
@@ -53,19 +66,36 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fQJ-uY-3gk" firstAttribute="left" secondItem="eei-vN-v2w" secondAttribute="left" constant="10" id="51R-12-vjc"/>
+                            <constraint firstAttribute="right" secondItem="WZj-84-GKL" secondAttribute="right" constant="10" id="A6O-jA-DXu"/>
                             <constraint firstAttribute="height" constant="45" id="DwF-PB-IjW"/>
                             <constraint firstAttribute="bottom" secondItem="9o8-3m-IXB" secondAttribute="bottom" id="IsO-bm-bIO"/>
                             <constraint firstItem="9o8-3m-IXB" firstAttribute="top" secondItem="eei-vN-v2w" secondAttribute="top" id="Nti-1k-zgc"/>
+                            <constraint firstItem="fQJ-uY-3gk" firstAttribute="centerY" secondItem="eei-vN-v2w" secondAttribute="centerY" id="UHH-QJ-43I"/>
+                            <constraint firstItem="WZj-84-GKL" firstAttribute="left" secondItem="fQJ-uY-3gk" secondAttribute="right" constant="10" id="nFW-sS-fbH"/>
                             <constraint firstAttribute="right" secondItem="9o8-3m-IXB" secondAttribute="right" id="p0v-VX-sNy"/>
                             <constraint firstItem="9o8-3m-IXB" firstAttribute="left" secondItem="eei-vN-v2w" secondAttribute="left" id="t0O-8E-QeD"/>
+                            <constraint firstItem="WZj-84-GKL" firstAttribute="centerY" secondItem="eei-vN-v2w" secondAttribute="centerY" id="vJV-mw-sGR"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1mg-Hf-t13">
                         <rect key="frame" x="170" y="317.5" width="152" height="45"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faz-UN-u8M" customClass="IconButton">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOA-0X-Xzd">
+                                <rect key="frame" x="30" y="11.5" width="112" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-Ky-rwH">
+                                <rect key="frame" x="10" y="17.5" width="10" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="2aQ-Cu-tIl"/>
+                                    <constraint firstAttribute="height" constant="10" id="B5j-YG-BnJ"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faz-UN-u8M">
                                 <rect key="frame" x="0.0" y="0.0" width="152" height="45"/>
-                                <state key="normal" title="Button" image="ArrowLeft"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
                                         <real key="value" value="0.40000000000000002"/>
@@ -82,6 +112,11 @@
                             <constraint firstAttribute="right" secondItem="faz-UN-u8M" secondAttribute="right" id="4rg-4f-m3G"/>
                             <constraint firstItem="faz-UN-u8M" firstAttribute="left" secondItem="1mg-Hf-t13" secondAttribute="left" id="Fue-uX-GHg"/>
                             <constraint firstAttribute="bottom" secondItem="faz-UN-u8M" secondAttribute="bottom" id="HpT-wT-gc0"/>
+                            <constraint firstItem="AOA-0X-Xzd" firstAttribute="centerY" secondItem="1mg-Hf-t13" secondAttribute="centerY" id="TXc-9s-fLz"/>
+                            <constraint firstItem="6Ya-Ky-rwH" firstAttribute="left" secondItem="1mg-Hf-t13" secondAttribute="left" constant="10" id="dA5-Fl-8gC"/>
+                            <constraint firstItem="6Ya-Ky-rwH" firstAttribute="centerY" secondItem="1mg-Hf-t13" secondAttribute="centerY" id="nCL-eC-V45"/>
+                            <constraint firstAttribute="right" secondItem="AOA-0X-Xzd" secondAttribute="right" constant="10" id="roK-Np-lWH"/>
+                            <constraint firstItem="AOA-0X-Xzd" firstAttribute="left" secondItem="6Ya-Ky-rwH" secondAttribute="right" constant="10" id="viX-Dk-UD5"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -103,17 +138,18 @@
             <connections>
                 <outlet property="buttonsToVariationViewVerticalConstrint" destination="Dud-4V-ba1" id="S8C-dQ-RiY"/>
                 <outlet property="containerBoxView" destination="weY-9a-8lM" id="mMS-fb-Cx9"/>
+                <outlet property="descriptionArrowImageView" destination="fQJ-uY-3gk" id="2JL-QI-C5x"/>
                 <outlet property="descriptionButton" destination="9o8-3m-IXB" id="HuN-Md-CNf"/>
                 <outlet property="horizontalSpacingConstraint" destination="7kr-in-BPF" id="d3L-Qh-iHD"/>
+                <outlet property="producSpecificationLabel" destination="AOA-0X-Xzd" id="E3f-e0-gUO"/>
+                <outlet property="productDescriptionLabel" destination="WZj-84-GKL" id="IaA-aq-u4k"/>
                 <outlet property="productSpecificationButton" destination="faz-UN-u8M" id="uJb-6B-yPt"/>
                 <outlet property="productVariationViewControl" destination="HGf-mc-kNe" id="pHd-G2-gY6"/>
+                <outlet property="specifiationArrowImageView" destination="6Ya-Ky-rwH" id="5xz-le-QkO"/>
                 <outletCollection property="buttonViewWrapper" destination="eei-vN-v2w" collectionClass="NSMutableArray" id="JIY-1X-UGM"/>
                 <outletCollection property="buttonViewWrapper" destination="1mg-Hf-t13" collectionClass="NSMutableArray" id="bQ6-47-zNN"/>
             </connections>
             <point key="canvasLocation" x="-1670" y="-19.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="ArrowLeft" width="48" height="48"/>
-    </resources>
 </document>

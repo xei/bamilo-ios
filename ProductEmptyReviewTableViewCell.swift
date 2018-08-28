@@ -9,12 +9,15 @@
 import UIKit
 
 class ProductEmptyReviewTableViewCell: BaseProductTableViewCell {
-
+    
+    @IBOutlet private var leftArrowImageView: UIImageView!
     weak var delegate: ProductDetailPrimaryInfoTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        leftArrowImageView.image = #imageLiteral(resourceName: "ArrowLeft").withRenderingMode(.alwaysTemplate)
+        leftArrowImageView.tintColor = Theme.color(kColorGray5)
     }
     
     @IBAction func rateButtonTapped(_ sender: Any) {
