@@ -4953,6 +4953,13 @@
 			name = RecieptViewCartTableViewCell;
 			sourceTree = "<group>";
 		};
+		61C857632135A164009236C7 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		61C8604A1ECB3BD900F2C571 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -8123,6 +8130,7 @@
 				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
+				61C857632135A164009236C7 /* New Group */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,
@@ -10006,7 +10014,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -10036,7 +10044,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10063,7 +10071,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
@@ -10086,7 +10094,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
@@ -10285,7 +10293,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10318,7 +10326,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

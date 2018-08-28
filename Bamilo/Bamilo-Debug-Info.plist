@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>45</string>
+	<string>46</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
@@ -226,6 +226,8 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Bamilo would like to access your contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
