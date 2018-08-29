@@ -36,5 +36,17 @@
 	<string>1:459777214540:ios:60010be71d885df4</string>
 	<key>DATABASE_URL</key>
 	<string>https://bamilo-app.firebaseio.com</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>Bamilo would like to access your calendar</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Bamilo would like to access your camera</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Bamilo would like to access your contacts</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Bamilo would like to access your location</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Bamilo would like to access your location</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Bamilo would like to access your photos</string>
 </dict>
 </plist>
