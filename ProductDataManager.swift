@@ -99,6 +99,8 @@ class ProductDataManager: DataManagerSwift {
         }
         
         (viewCtrl.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
+            //Inform others if it's needed
+            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
             if add {
                 ProductDataManager.sharedInstance.addToWishList(viewCtrl, sku: product.sku, completion: { (data, error) in
                     if error != nil {
@@ -137,9 +139,6 @@ class ProductDataManager: DataManagerSwift {
                     }
                 })
             }
-            
-            //Inform others if it's needed
-            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
         })
     }
     

@@ -91,6 +91,11 @@
                             <constraint firstItem="vPS-nB-fvs" firstAttribute="left" secondItem="4c2-eE-ON2" secondAttribute="left" id="ogF-Q9-Npt"/>
                             <constraint firstItem="IZQ-EQ-Crn" firstAttribute="left" secondItem="kva-E3-Ed5" secondAttribute="left" constant="10" id="q64-v2-wgy"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>

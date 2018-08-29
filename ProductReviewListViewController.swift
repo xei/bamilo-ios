@@ -35,7 +35,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         
         submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
         submitReviewButton.tintColor = .white
-        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
+//        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
         
         
         tableview.delegate = self
@@ -48,7 +48,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         tableview.tableFooterView = UIView(frame: .zero)
         tableview.showsVerticalScrollIndicator = false
         tableview.separatorStyle = .none
-        tableview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: submitButtonHeightConstraint.constant, right: 0)
+        tableview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: submitButtonHeightConstraint.constant + 10, right: 0)
         if let _ = signleReviewItem {
             expandedIndexPathes = [IndexPath(row: 0, section: 1)]
         } else {
@@ -178,6 +178,10 @@ extension ProductReviewListViewController: UITableViewDelegate, UITableViewDataS
             }
             return cell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 500
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

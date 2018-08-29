@@ -193,6 +193,7 @@ class RootCategoryViewController: BaseViewController,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+        cell.forcedAlignment = .left
         cell.update(withModel: self.getModelOfIndexPath(indexPath: indexPath))
         return cell
     }

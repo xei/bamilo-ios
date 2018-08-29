@@ -1424,7 +1424,7 @@
 		61A4D1AA1EA6256A003E203C /* EmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
 		61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
-		61A93A272131907A00C9B113 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		61A93A272131907A00C9B113 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		61AA6B3E20E8C6C800706F9A /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		61AA6B4120E8DD0900706F9A /* ProductReviewSummeryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReviewSummeryTableViewCell.swift; sourceTree = "<group>"; };
 		61AA6B4220E8DD0900706F9A /* ProductReviewSummeryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductReviewSummeryTableViewCell.xib; sourceTree = "<group>"; };
@@ -4953,13 +4953,6 @@
 			name = RecieptViewCartTableViewCell;
 			sourceTree = "<group>";
 		};
-		61C857632135A164009236C7 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		61C8604A1ECB3BD900F2C571 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -8089,7 +8082,6 @@
 		B5A3019F19811D0700F71726 = {
 			isa = PBXGroup;
 			children = (
-				61A93A272131907A00C9B113 /* GoogleService-Info.plist */,
 				617F77AA1EB85B2F000A2A6C /* Bamilo-Swift */,
 				B5A301AA19811D0700F71726 /* Bamilo */,
 				870F8CF41E338D2D0021F87B /* BamiloUITests */,
@@ -8130,7 +8122,7 @@
 				871BA85E1E8786C5007680C5 /* Bamilo-Debug-Info.plist */,
 				8754351F1E780D6B00B5D6B4 /* Bamilo-Staging-Info.plist */,
 				CE9AE12C1AB84C2300D56481 /* Bamilo-Info.plist */,
-				61C857632135A164009236C7 /* New Group */,
+				61A93A272131907A00C9B113 /* GoogleService-Info.plist */,
 				870F8CCB1E3354700021F87B /* Bamilo.entitlements */,
 				870F8CCD1E3354E10021F87B /* Consts */,
 				CE9AE1221AB824B700D56481 /* Fonts */,

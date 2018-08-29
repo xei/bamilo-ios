@@ -17,6 +17,8 @@ class CategoryTableViewCell: BaseTableViewCell {
     @IBOutlet weak private var titleLabelToImageRightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var titleToSuperviewRightConstraint: NSLayoutConstraint!
     
+    var forcedAlignment: NSTextAlignment?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.applyStyle()
@@ -44,9 +46,21 @@ class CategoryTableViewCell: BaseTableViewCell {
         self.titleLabel.text = title
         if let image = imageUrl {
             self.imageViewContainerView.isHidden = false
+            self.titleToSuperviewRightConstraint.priority = .defaultLow
+            self.titleLabelToImageRightConstraint.priority = .defaultHigh
             self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
         } else {
             self.imageViewContainerView.isHidden = true
+            self.titleToSuperviewRightConstraint.priority = .defaultHigh
+            self.titleLabelToImageRightConstraint.priority = .defaultLow
+        }
+        
+        if let alignment = forcedAlignment {
+            self.titleToSuperviewRightConstraint.priority = alignment == .left ? .defaultLow : .defaultHigh
+            self.titleLabelToImageRightConstraint.priority = alignment == .left ? .defaultHigh : .defaultLow
+            if alignment == .right {
+                self.imageViewContainerView.isHidden = true
+            }
         }
     }
     

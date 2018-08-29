@@ -43,7 +43,6 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
             descriptionLabel.sizeToFit()
             descriptionLabel.frame = CGRect(origin: beforeSizeFitFrame.origin, size: CGSize(width: beforeSizeFitFrame.width, height: descriptionLabel.frame.height))
             
-            descriptionLabel.textAlignment = .right
             seeMoreButton.isHidden = descriptionLabel.numberOfVisibleLines <= 3
             seeMoreButton.isUserInteractionEnabled = false
             
@@ -65,5 +64,6 @@ class ProductReviewCollectionViewCell: BaseCollectionViewCellSwift {
             let whiteClear = UIColor.white.withAlphaComponent(0)
             seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor], locations: [0, 0.3 ,1],orientation: .horizontal)
         }
+        descriptionLabel.textAlignment = .right
     }
 }

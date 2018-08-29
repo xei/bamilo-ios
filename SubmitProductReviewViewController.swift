@@ -43,13 +43,14 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
         reviewTitleTextField.font = Theme.font(kFontVariationRegular, size: 13)
         reviewCommentTextView.font = Theme.font(kFontVariationRegular, size: 13)
         submitReviewButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
-        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
+//        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
         
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: submitButtonHeightConstraint.constant, right: 0)
         submitReviewButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         reviewCommentTextView.textAlignment = .right
         reviewCommentTextView.text = STRING_WRITE_COMMENT
+        reviewCommentTextView.textColor = .lightGray
         reviewCommentTextView.delegate = self
         
         submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -75,8 +76,8 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
             self.showNotificationBarMessage(STRING_PLZ_ADD_RATE, isSuccess: false)
             return
         }
-        
-        ProductDataManager.sharedInstance.addReview(self, sku: sku, rate: rateValue, title: reviewTitleTextField.text, comment: reviewCommentTextView.text) { (data, error) in
+        let reviewText = reviewCommentTextView.text != STRING_WRITE_COMMENT ? reviewCommentTextView.text : nil
+        ProductDataManager.sharedInstance.addReview(self, sku: sku, rate: rateValue, title: reviewTitleTextField.text, comment: reviewText) { (data, error) in
             if (error == nil) {
                 self.bind(data, forRequestId: 0)
             } else {
@@ -104,19 +105,19 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
         return STRING_ADD_COMMENT
     }
 }
-
+//MARK: - UITextViewDelegate
 extension SubmitProductReviewViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
+        if textView.textColor == .lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            textView.textColor = .black
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = STRING_WRITE_COMMENT
-            textView.textColor = UIColor.lightGray
+            textView.textColor = .lightGray
         }
     }
 }

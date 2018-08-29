@@ -40,25 +40,20 @@
                         <rect key="frame" x="10" y="317.5" width="152" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZj-84-GKL">
-                                <rect key="frame" x="100" y="11.5" width="42" height="21"/>
+                                <rect key="frame" x="34" y="11.5" width="108" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQJ-uY-3gk">
-                                <rect key="frame" x="10" y="17.5" width="80" height="10"/>
+                                <rect key="frame" x="10" y="15.5" width="14" height="14"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="10" id="P22-mN-5VB"/>
-                                    <constraint firstAttribute="width" secondItem="fQJ-uY-3gk" secondAttribute="height" multiplier="8:1" id="fFZ-2U-6Fh"/>
+                                    <constraint firstAttribute="height" constant="14" id="P22-mN-5VB"/>
+                                    <constraint firstAttribute="width" secondItem="fQJ-uY-3gk" secondAttribute="height" multiplier="1:1" id="yr7-jx-2IX"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o8-3m-IXB">
                                 <rect key="frame" x="0.0" y="0.0" width="152" height="45"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="moreDescriptionButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3qS-wz-Sao"/>
                                 </connections>
@@ -82,25 +77,20 @@
                         <rect key="frame" x="170" y="317.5" width="152" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOA-0X-Xzd">
-                                <rect key="frame" x="30" y="11.5" width="112" height="21"/>
+                                <rect key="frame" x="34" y="11.5" width="108" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-Ky-rwH">
-                                <rect key="frame" x="10" y="17.5" width="10" height="10"/>
+                                <rect key="frame" x="10" y="15.5" width="14" height="14"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="10" id="2aQ-Cu-tIl"/>
-                                    <constraint firstAttribute="height" constant="10" id="B5j-YG-BnJ"/>
+                                    <constraint firstAttribute="width" constant="14" id="2aQ-Cu-tIl"/>
+                                    <constraint firstAttribute="width" secondItem="6Ya-Ky-rwH" secondAttribute="height" multiplier="1:1" id="c0k-Gc-Ifz"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faz-UN-u8M">
                                 <rect key="frame" x="0.0" y="0.0" width="152" height="45"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
-                                        <real key="value" value="0.40000000000000002"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="moreSpecificationsButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jV1-K1-sdX"/>
                                 </connections>

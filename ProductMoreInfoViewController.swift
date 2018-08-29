@@ -50,7 +50,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         seperatorView.backgroundColor = Theme.color(kColorGray10)
         
         addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
-        addToCartButton.setTitle(STRING_BUY_PRODUCT, for: .normal)
+        addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         
         let image = #imageLiteral(resourceName: "btn_cart").withRenderingMode(.alwaysTemplate)

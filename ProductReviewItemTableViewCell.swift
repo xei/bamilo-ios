@@ -43,6 +43,7 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
             let whiteClear = UIColor.white.withAlphaComponent(0)
             seeMoreButton.applyGradient(colours: [whiteClear, backgroundColor, backgroundColor, backgroundColor], locations: [0, 0.3 , 0.7, 1],orientation: .horizontal)
         }
+        seeMoreButton.isUserInteractionEnabled = false
     }
     
     override func update(withModel model: Any!) {
@@ -62,8 +63,7 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
             
             seeMoreButton.isHidden = isExpanded || reviewDescription.numberOfVisibleLines <= minimizedLineNumbers
             reviewDescription.numberOfLines = seeMoreButton.isHidden ? 0 : minimizedLineNumbers
-            
-            seeMoreButton.isUserInteractionEnabled = false
+    
         }
     }
     

@@ -52,7 +52,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLN-HF-CzZ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLN-HF-CzZ">
                         <rect key="frame" x="12" y="64.5" width="296" height="20.5"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="76" id="siR-Ou-pr9"/>
@@ -61,13 +61,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlH-ZA-EBH">
-                        <rect key="frame" x="12" y="45" width="50" height="35"/>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlH-ZA-EBH">
+                        <rect key="frame" x="12" y="57" width="50" height="28"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="gnT-Pa-vdI"/>
+                            <constraint firstAttribute="height" constant="28" id="gnT-Pa-vdI"/>
                             <constraint firstAttribute="width" constant="50" id="iqu-Wy-Oob"/>
                         </constraints>
-                        <state key="normal" title="Button"/>
                     </button>
                 </subviews>
             </view>
@@ -76,8 +75,7 @@
                 <constraint firstItem="HKG-eI-70i" firstAttribute="left" secondItem="edO-nX-JCU" secondAttribute="right" priority="750" constant="5" id="2GN-Rl-yKm"/>
                 <constraint firstItem="k2R-Xj-qMJ" firstAttribute="left" secondItem="KLN-HF-CzZ" secondAttribute="left" id="7iD-88-SoE"/>
                 <constraint firstItem="TlH-ZA-EBH" firstAttribute="left" secondItem="KLN-HF-CzZ" secondAttribute="left" id="88C-Zh-1NS"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KLN-HF-CzZ" secondAttribute="bottom" constant="10" id="8AS-ec-DbT"/>
-                <constraint firstItem="KLN-HF-CzZ" firstAttribute="bottom" secondItem="TlH-ZA-EBH" secondAttribute="bottom" constant="5" id="8LY-Nw-dOP"/>
+                <constraint firstItem="KLN-HF-CzZ" firstAttribute="bottom" secondItem="TlH-ZA-EBH" secondAttribute="bottom" id="8LY-Nw-dOP"/>
                 <constraint firstItem="HKG-eI-70i" firstAttribute="centerY" secondItem="Lri-z9-4ay" secondAttribute="centerY" id="Coj-MS-nNR"/>
                 <constraint firstItem="hQF-UA-nvn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="J07-Ak-vHZ"/>
                 <constraint firstItem="k2R-Xj-qMJ" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="12" id="JHe-gI-jQp"/>
