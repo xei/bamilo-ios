@@ -662,12 +662,14 @@ import SwiftyJSON
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        ProductDataManager.sharedInstance.addOrRemoveFromWishList(product: product, in: self, add: add) { (success, error) in
-            cell.updateWithProduct(product: product)
-            if !success {
-//                if !Utility.handleErrorMessages(error: error, viewController: self) {
-//                    self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
-//                }
+        if let updatingIndexPath = collectionView.indexPath(for: cell) {
+            ProductDataManager.sharedInstance.addOrRemoveFromWishList(product: product, in: self, add: add) { (success, error) in
+                (self.collectionView.cellForItem(at: updatingIndexPath) as? BaseCatallogCollectionViewCell)?.updateWithProduct(product: product)
+                if !success {
+                    //                if !Utility.handleErrorMessages(error: error, viewController: self) {
+                    //                    self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+                    //                }
+                }
             }
         }
     }

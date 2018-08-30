@@ -81,11 +81,12 @@
                             <constraint firstItem="cNa-Ie-BPv" firstAttribute="top" secondItem="kva-E3-Ed5" secondAttribute="top" constant="6" id="MI8-Gd-vN5"/>
                             <constraint firstAttribute="trailing" secondItem="cNa-Ie-BPv" secondAttribute="trailing" constant="10" id="QHz-7r-QsU"/>
                             <constraint firstItem="ksI-EW-rb8" firstAttribute="centerY" secondItem="pyP-Fz-Pm0" secondAttribute="centerY" id="UQ1-eA-yCV"/>
-                            <constraint firstItem="ksI-EW-rb8" firstAttribute="left" secondItem="Hch-F1-7cR" secondAttribute="right" constant="5" id="Van-Ni-5Qi"/>
+                            <constraint firstItem="ksI-EW-rb8" firstAttribute="left" secondItem="Hch-F1-7cR" secondAttribute="right" priority="750" constant="5" id="Van-Ni-5Qi"/>
                             <constraint firstItem="cNa-Ie-BPv" firstAttribute="leading" secondItem="kva-E3-Ed5" secondAttribute="leading" constant="10" id="XhZ-xR-uit"/>
                             <constraint firstItem="pyP-Fz-Pm0" firstAttribute="left" secondItem="ksI-EW-rb8" secondAttribute="right" constant="5" id="aah-tk-kZV"/>
                             <constraint firstItem="4c2-eE-ON2" firstAttribute="right" secondItem="pyP-Fz-Pm0" secondAttribute="right" id="afp-2c-ldE"/>
                             <constraint firstItem="4c2-eE-ON2" firstAttribute="left" secondItem="IZQ-EQ-Crn" secondAttribute="left" id="cOZ-WQ-sVY"/>
+                            <constraint firstItem="Hch-F1-7cR" firstAttribute="right" secondItem="cNa-Ie-BPv" secondAttribute="right" priority="250" id="cpy-LC-2kJ"/>
                             <constraint firstItem="4c2-eE-ON2" firstAttribute="top" secondItem="pyP-Fz-Pm0" secondAttribute="bottom" constant="11" id="emW-j6-EAg"/>
                             <constraint firstItem="IZQ-EQ-Crn" firstAttribute="centerY" secondItem="pyP-Fz-Pm0" secondAttribute="centerY" id="mlY-B7-imv"/>
                             <constraint firstItem="vPS-nB-fvs" firstAttribute="left" secondItem="4c2-eE-ON2" secondAttribute="left" id="ogF-Q9-Npt"/>
@@ -109,6 +110,8 @@
             <connections>
                 <outlet property="containerView" destination="kva-E3-Ed5" id="dDG-xO-DSv"/>
                 <outlet property="dateLabel" destination="Hch-F1-7cR" id="0Oq-AA-iLb"/>
+                <outlet property="dateLabelRightToTitlelabelConstraint" destination="cpy-LC-2kJ" id="aK6-hT-8Vh"/>
+                <outlet property="dateLabelToSeperatorVerticalConstraint" destination="Van-Ni-5Qi" id="IgE-7c-lee"/>
                 <outlet property="rateView" destination="IZQ-EQ-Crn" id="p2C-hX-paK"/>
                 <outlet property="reviewDescription" destination="4c2-eE-ON2" id="pz7-Mf-zP9"/>
                 <outlet property="reviewTitleLabel" destination="cNa-Ie-BPv" id="1Jz-we-B9Q"/>

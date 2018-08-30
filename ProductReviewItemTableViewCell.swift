@@ -18,6 +18,8 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
     @IBOutlet private weak var reviewDescription: UILabel!
     @IBOutlet private weak var rateView: RateStarControl!
     @IBOutlet private weak var seeMoreButton: UIButton!
+    @IBOutlet private weak var dateLabelRightToTitlelabelConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var dateLabelToSeperatorVerticalConstraint: NSLayoutConstraint!
     
     var isExpanded: Bool = false
     let minimizedLineNumbers = 4
@@ -49,8 +51,18 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
     override func update(withModel model: Any!) {
         if let reviewItem = model as? ProductReviewItem {
             reviewTitleLabel.text = reviewItem.title
-            reviewUserName.text = reviewItem.username
             dateLabel.text = reviewItem.date
+            
+            if let username = reviewItem.username, username.count > 0 {
+                reviewUserName.text = username
+                dateLabelRightToTitlelabelConstraint.priority = .defaultLow
+                dateLabelToSeperatorVerticalConstraint.priority = .defaultHigh
+            } else {
+                reviewUserName.text = nil
+                dateLabelRightToTitlelabelConstraint.priority = .defaultHigh
+                dateLabelToSeperatorVerticalConstraint.priority = .defaultLow
+            }
+            
             reviewDescription.text = reviewItem.comment
             if let rateScore = reviewItem.rateScore {
                 rateView.colorButtons(rateValue: Double(rateScore), disabledColor: Theme.color(kColorGray9))
@@ -63,7 +75,7 @@ class ProductReviewItemTableViewCell: BaseTableViewCell {
             
             seeMoreButton.isHidden = isExpanded || reviewDescription.numberOfVisibleLines <= minimizedLineNumbers
             reviewDescription.numberOfLines = seeMoreButton.isHidden ? 0 : minimizedLineNumbers
-    
+            
         }
     }
     
