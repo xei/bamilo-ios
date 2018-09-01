@@ -216,9 +216,9 @@ extension UIImageView: DisplaceableView {}
         if let product = data as? NewProduct {
             product.loadedComprehensively = true
             
-            if let variations = self.product?.variations {
+            if let variations = self.product?.OtherVariaionProducts {
                 //keep the previous variations to prevent refreshing the variations (view)
-                product.variations = variations
+                product.OtherVariaionProducts = variations
             }
             updateViewByProduct(product: product)
             
