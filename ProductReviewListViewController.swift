@@ -94,6 +94,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         if let review = data as? ProductReview {
             if rid == 0 {
                 self.review = review
+                self.publishScreenLoadTime(withName: getScreenName(), withLabel: productSku)
             } else if let items = review.items {
                 self.review?.items?.append(contentsOf: items)
             }

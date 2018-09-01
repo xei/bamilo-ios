@@ -7,6 +7,7 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+@import Firebase;
 #import "JAAppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -17,7 +18,6 @@
 #import "AppManager.h"
 #import "SessionManager.h"
 #import "URLUtility.h"
-#import "FirebaseCore.h"
 
 //#######################################################################################
 #import <Pushwoosh/PushNotificationManager.h>
@@ -34,7 +34,8 @@
 @interface JAAppDelegate ()
 
 @property (nonatomic, strong) NSDate *startLoadingTime;
-
+@property (nonatomic, strong) FIRTrace* trace;
+    
 @end
 
 @implementation JAAppDelegate
@@ -177,6 +178,11 @@
     return YES;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+    [self.trace stop];
+    self.trace = [FIRPerformance startTraceWithName:@"App in background"];
+}
+    
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
@@ -210,8 +216,10 @@
 }
 
 -(void)applicationDidBecomeActive:(UIApplication *)application {
+    [self.trace stop];
+    self.trace = [FIRPerformance startTraceWithName:@"App in foreground"];
+    
     [application setApplicationIconBadgeNumber:0];
-
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     

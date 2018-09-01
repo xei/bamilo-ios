@@ -228,6 +228,8 @@ extension UIImageView: DisplaceableView {}
             
             GoogleAnalyticsTracker.shared().trackEcommerceProductClick(product: product)
             self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.sku ?? "")
+            
+            self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.name)
         }
     }
     

@@ -18,6 +18,9 @@ PODS:
     - FirebaseAnalytics (= 5.1.1)
   - Firebase/CoreOnly (5.6.0):
     - FirebaseCore (= 5.1.1)
+  - Firebase/Performance (5.6.0):
+    - Firebase/Core
+    - FirebasePerformance (= 2.1.1)
   - FirebaseAnalytics (5.1.1):
     - FirebaseCore (~> 5.1)
     - FirebaseInstanceID (~> 3.2)
@@ -32,6 +35,15 @@ PODS:
   - FirebaseInstanceID (3.2.1):
     - FirebaseCore (~> 5.1)
     - GoogleUtilities/Environment (~> 5.2)
+  - FirebasePerformance (2.1.1):
+    - FirebaseAnalytics (~> 5.1)
+    - FirebaseInstanceID (~> 3.2)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GoogleUtilities/ISASwizzler (~> 5.2.0)
+    - GoogleUtilities/MethodSwizzler (~> 5.2.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.5)
   - FSPagerView (0.7.2)
   - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
@@ -44,11 +56,17 @@ PODS:
     - nanopb (~> 0.3)
   - GoogleTagManager (3.15.0):
     - GoogleAnalytics (= 3.14.0)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - GoogleUtilities/AppDelegateSwizzler (5.2.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
   - GoogleUtilities/Environment (5.2.2)
+  - GoogleUtilities/ISASwizzler (5.2.2)
   - GoogleUtilities/Logger (5.2.2):
     - GoogleUtilities/Environment
   - GoogleUtilities/MethodSwizzler (5.2.2):
@@ -60,6 +78,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (5.2.2)"
   - GoogleUtilities/Reachability (5.2.2):
     - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.2.0)
   - ImageViewer (5.0.0)
   - JBWhatsAppActivity (1.0)
   - JSONModel (1.7.0)
@@ -74,6 +93,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - ObjectMapper (3.3.0)
+  - Protobuf (3.6.1)
   - Pushwoosh (5.8.4)
   - RAlertView (0.1.1):
     - Masonry
@@ -102,6 +122,7 @@ DEPENDENCIES:
   - EmarsysPredictSDK
   - Fabric
   - Firebase/Core
+  - Firebase/Performance
   - FSPagerView
   - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
@@ -138,13 +159,16 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseInstanceID
+    - FirebasePerformance
     - FSPagerView
     - FXBlurView
     - GoogleAnalytics
     - GoogleAppIndexing
     - GoogleAppMeasurement
     - GoogleTagManager
+    - GoogleToolboxForMac
     - GoogleUtilities
+    - GTMSessionFetcher
     - ImageViewer
     - JBWhatsAppActivity
     - JSONModel
@@ -154,6 +178,7 @@ SPEC REPOS:
     - MobileEngageSDK
     - nanopb
     - ObjectMapper
+    - Protobuf
     - Pushwoosh
     - RAlertView
     - Realm
@@ -179,13 +204,16 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
   FirebaseCore: cb9ee75e0894def766167c95a4d5a14b1c138269
   FirebaseInstanceID: ea5af6920d0a4a29b40459d055bebe4a6c1333c4
+  FirebasePerformance: e732cd3fe9488c68bf2e9ae7a55672e873d0c55a
   FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
   GoogleAppMeasurement: f7507b39b70ad0bd80b3d81518b2f43868974307
   GoogleTagManager: 39e4af1e9250e7817d328f690768e26afe560da0
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GoogleUtilities: 06b66f9567769a7958db20a92f0128b2843e49d5
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   ImageViewer: 3def6e39c6979ce3e9d001c78eec0d8b895f2f73
   JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
@@ -195,6 +223,7 @@ SPEC CHECKSUMS:
   MobileEngageSDK: f14d74940c5f62f8b704cc9238aa72b038d44dbb
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Pushwoosh: 55ac5b48ca06163f42b8235e88a13860b8f28be0
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
@@ -206,6 +235,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
   UICircularProgressRing: f5efb3e1fd8387bfd59f71738501d68f58b7e84e
 
-PODFILE CHECKSUM: 614543d4739de1b699ca4fc67c4ce01736f20502
+PODFILE CHECKSUM: 514b438d67ee2f0b65ed075fcecba2e0428f32a9
 
 COCOAPODS: 1.5.3

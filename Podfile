@@ -38,6 +38,7 @@ target 'Bamilo' do
   pod 'ImageViewer'
   pod 'UICircularProgressRing'
   pod 'Firebase/Core'
+  pod 'Firebase/Performance'
 
   target 'BamiloUITests' do
     inherit! :search_paths

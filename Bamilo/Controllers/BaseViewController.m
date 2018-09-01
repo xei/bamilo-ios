@@ -5,7 +5,7 @@
 //  Created by Narbeh Mirzaei on 1/31/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
-
+@import Firebase;
 #import "JAAppDelegate.h"
 #import "JAMessageView.h"
 #import "BaseViewController.h"
@@ -17,6 +17,7 @@
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
+@property (strong, nonatomic) FIRTrace *fireBaseTrace;
 @end
 
 @implementation BaseViewController {
@@ -169,12 +170,15 @@
 #pragma mark - PerformanceTrackerProtocol
 - (void)recordStartLoadTime {
     _startLoadingTime = [NSDate date];
+    self.fireBaseTrace = [FIRPerformance startTraceWithName:[self getScreenName]];
 }
 
 - (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label {
     NSDate *publishTime = [NSDate date];
     NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
     [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];
+    
+    [self.fireBaseTrace stop];
 }
 
 - (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid {
@@ -194,6 +198,9 @@
         [errorView bringSubviewToFront:self.view];
         [errorView bindFrameToSuperviewBounds];
     }
+    
+    //FireBase Tracking retry
+    [self.fireBaseTrace incrementMetric:@"retry" byInt:1];
 }
 
 - (void)removeErrorView {
