@@ -29,7 +29,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        submitReviewButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
+        submitReviewButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 15), color: .white)
         submitReviewButton.setTitle(STRING_ADD_COMMENT, for: .normal)
         submitReviewButton.backgroundColor = Theme.color(kColorOrange1)
         

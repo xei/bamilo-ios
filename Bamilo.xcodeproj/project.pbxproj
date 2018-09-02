@@ -368,7 +368,7 @@
 		61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099701E3E18F0004ED14E /* NotificationTableViewCell.xib */; };
 		61E099771E3E1A02004ED14E /* VersionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E099751E3E1A02004ED14E /* VersionTableViewCell.m */; };
 		61E099781E3E1A02004ED14E /* VersionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */; };
-		61E17E702129799A00481794 /* FireBaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E17E6F2129799A00481794 /* FireBaseTracker.swift */; };
+		61E17E702129799A00481794 /* FirebaseTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E17E6F2129799A00481794 /* FirebaseTracker.swift */; };
 		61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */; };
 		61E534431FA48D3400CBDFED /* ProgressBarItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */; };
 		61E534451FA4918E00CBDFED /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E534441FA4918E00CBDFED /* ProgressBarView.swift */; };
@@ -1555,7 +1555,7 @@
 		61E099741E3E1A02004ED14E /* VersionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionTableViewCell.h; sourceTree = "<group>"; };
 		61E099751E3E1A02004ED14E /* VersionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionTableViewCell.m; sourceTree = "<group>"; };
 		61E099761E3E1A02004ED14E /* VersionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VersionTableViewCell.xib; sourceTree = "<group>"; };
-		61E17E6F2129799A00481794 /* FireBaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseTracker.swift; sourceTree = "<group>"; };
+		61E17E6F2129799A00481794 /* FirebaseTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTracker.swift; sourceTree = "<group>"; };
 		61E534401FA48D2A00CBDFED /* ProgressBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarItemView.swift; sourceTree = "<group>"; };
 		61E534421FA48D3400CBDFED /* ProgressBarItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProgressBarItemView.xib; sourceTree = "<group>"; };
 		61E534441FA4918E00CBDFED /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
@@ -4383,7 +4383,7 @@
 				6193F3E01F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift */,
 				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
 				61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */,
-				61E17E6F2129799A00481794 /* FireBaseTracker.swift */,
+				61E17E6F2129799A00481794 /* FirebaseTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -9255,7 +9255,7 @@
 				615E796C1EF6BE58008E661D /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				612553471E4EE5B500975C6F /* InputTextField.m in Sources */,
 				615CFDFC20B41224003C6EAC /* ProductDetailViewSliderTableViewCell.swift in Sources */,
-				61E17E702129799A00481794 /* FireBaseTracker.swift in Sources */,
+				61E17E702129799A00481794 /* FirebaseTracker.swift in Sources */,
 				611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */,
 				61B56D5F1F9B70240002BFF3 /* OrderPackage.swift in Sources */,
 				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,

@@ -65,12 +65,12 @@ extension UIImageView: DisplaceableView {}
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.separatorStyle = .none
-        self.tableView.clipsToBounds = false
+        self.tableView.clipsToBounds = true
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: addToCartHeightConstraint.constant, right: 0)
         
-        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
         self.addToCartButton.layer.cornerRadius = 0 // addToCartHeightConstraint.constant / 2
 //        self.addToCartButton.applyGradient(colours: [
 //            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
@@ -228,8 +228,6 @@ extension UIImageView: DisplaceableView {}
             
             GoogleAnalyticsTracker.shared().trackEcommerceProductClick(product: product)
             self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.sku ?? "")
-            
-            self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.name)
         }
     }
     

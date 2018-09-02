@@ -1,5 +1,5 @@
 //
-//  FireBaseTracker.swift
+//  FirebaseTracker.swift
 //  Bamilo
 //
 //  Created by Ali Saeedifar on 8/19/18.
@@ -9,13 +9,13 @@
 import UIKit
 import Firebase
 
-class FireBaseTracker: BaseTracker, ScreenTrackerProtocol, EventTrackerProtocol {
+@objcMembers class FirebaseTracker: BaseTracker, ScreenTrackerProtocol, EventTrackerProtocol {
     
     //TODO: Must be changed when we migrate all Trackers
-    private static var sharedInstance: FireBaseTracker? // = AdjustTracker()
-    override class func shared() -> FireBaseTracker {
+    private static var sharedInstance: FirebaseTracker? // = AdjustTracker()
+    override class func shared() -> FirebaseTracker {
         if sharedInstance == nil {
-            sharedInstance = FireBaseTracker()
+            sharedInstance = FirebaseTracker()
             sharedInstance?.setConfig()
         }
         return sharedInstance!

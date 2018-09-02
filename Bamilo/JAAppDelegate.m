@@ -67,7 +67,7 @@
         kColorBlue2: [UIColor withHexString:@"#33466e"],
         kColorBlue6: [UIColor withHexString:@"#8c93ad"],
         kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
-        kColorGold: [UIColor withRGBA:255 green:191 blue:2 alpha:1.0f],
+        kColorGold: [UIColor withHexString:@"#ffbf02"],
         kColorOrange: [UIColor withHexString:@"#f6881b"],
         kColorGreen: [UIColor withRGBA:0 green:158 blue:139 alpha:1.0],
         kColorGray: [UIColor withHexString:@"#f8f8f8"],
@@ -161,7 +161,7 @@
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
-    [TrackerManager addTrackerWithTracker:[FireBaseTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[FirebaseTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {

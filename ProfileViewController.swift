@@ -66,6 +66,12 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.viewWillApearedOnceOrMore = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.spotLightView?.removeFromSuperview()
+    }
+    
     func updateTableViewDataSource() {
         self.tableViewDataSource = [
             [ProfileViewDataModel(cellType: .profileUserTableViewCell, title: nil, iconName: nil, notificationName: nil, selector: #selector(showLogin))],
@@ -294,13 +300,13 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 cellRect.size.width = UIScreen.main.bounds.width
                 
                 let orderSpotLight = TourSpotLight(withRect: cellRect, shape: .roundRectangle, text: STRING_ITEM_TRACKING_HINT_2)
-                spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
-                spotLightView?.enableContinueLabel = true
-                spotLightView?.tourName = featureName
-                spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
-                spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
-                spotLightView?.continueLabelText = STRING_GOT_IT
-                spotLightView?.delegate = self
+                self.spotLightView = TourSpotLightView(frame: UIScreen.main.bounds, spotlight: [orderSpotLight])
+                self.spotLightView?.enableContinueLabel = true
+                self.spotLightView?.tourName = featureName
+                self.spotLightView?.textLabelFont = Theme.font(kFontVariationBold, size: 16)
+                self.spotLightView?.continueLabelFont = Theme.font(kFontVariationBold, size: 16)
+                self.spotLightView?.continueLabelText = STRING_GOT_IT
+                self.spotLightView?.delegate = self
             }
             
             let window = UIApplication.shared.keyWindow!

@@ -1060,8 +1060,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="r8W-fi-eb9" firstAttribute="bottom" secondItem="Ekv-cg-g8w" secondAttribute="bottom" id="7hP-B2-kbh"/>
                             <constraint firstItem="r8W-fi-eb9" firstAttribute="top" secondItem="1ze-x0-lQB" secondAttribute="bottom" id="IQR-WZ-Rpl"/>
-                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="r8W-fi-eb9" secondAttribute="bottom" id="THC-qK-qNu"/>
                             <constraint firstItem="Ekv-cg-g8w" firstAttribute="left" secondItem="geR-SC-ejl" secondAttribute="left" id="n4t-A7-zS4"/>
                             <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="Ekv-cg-g8w" secondAttribute="bottom" id="nco-aB-FNt"/>
                             <constraint firstAttribute="right" secondItem="r8W-fi-eb9" secondAttribute="right" id="p42-6q-v5D"/>
@@ -1425,7 +1425,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y9P-mX-evs">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y9P-mX-evs">
                                 <rect key="frame" x="0.0" y="74" width="414" height="662"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -1450,9 +1450,9 @@
                             <constraint firstAttribute="right" secondItem="xVo-m6-nwr" secondAttribute="right" id="2x3-eH-aKR"/>
                             <constraint firstItem="CcD-ji-Rqx" firstAttribute="top" secondItem="xVo-m6-nwr" secondAttribute="bottom" id="HO3-o4-FGc"/>
                             <constraint firstItem="xVo-m6-nwr" firstAttribute="left" secondItem="gZ0-fl-FHf" secondAttribute="left" id="IWI-N6-5rs"/>
+                            <constraint firstItem="y9P-mX-evs" firstAttribute="bottom" secondItem="xVo-m6-nwr" secondAttribute="bottom" id="Szk-6D-nLp"/>
                             <constraint firstAttribute="right" secondItem="y9P-mX-evs" secondAttribute="right" id="hVU-wz-j70"/>
                             <constraint firstItem="y9P-mX-evs" firstAttribute="top" secondItem="aHT-XV-d6C" secondAttribute="bottom" constant="10" id="qhV-jz-Gbr"/>
-                            <constraint firstItem="CcD-ji-Rqx" firstAttribute="top" secondItem="y9P-mX-evs" secondAttribute="bottom" id="qza-Cp-GGd"/>
                             <constraint firstItem="y9P-mX-evs" firstAttribute="left" secondItem="gZ0-fl-FHf" secondAttribute="left" id="veZ-DA-dlD"/>
                         </constraints>
                     </view>
@@ -2364,9 +2364,9 @@
                             <constraint firstItem="m46-db-3Hh" firstAttribute="top" secondItem="yLJ-dx-EO0" secondAttribute="bottom" id="F8q-Yb-2gm"/>
                             <constraint firstItem="yLJ-dx-EO0" firstAttribute="top" secondItem="l9X-ae-4TZ" secondAttribute="bottom" constant="14" id="ISa-cy-sI6"/>
                             <constraint firstItem="ZVT-fU-Cg0" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" id="RkK-mE-G7f"/>
+                            <constraint firstItem="m46-db-3Hh" firstAttribute="bottom" secondItem="ZVT-fU-Cg0" secondAttribute="bottom" id="VmD-UB-Mgc"/>
                             <constraint firstItem="yLJ-dx-EO0" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" id="j1e-jp-FDT"/>
                             <constraint firstItem="ZVT-fU-Cg0" firstAttribute="top" secondItem="CFc-6p-Nyp" secondAttribute="bottom" id="k5b-Nl-Hza"/>
-                            <constraint firstItem="wbk-Ua-h7w" firstAttribute="top" secondItem="m46-db-3Hh" secondAttribute="bottom" id="nMA-1x-OJS"/>
                             <constraint firstItem="CFc-6p-Nyp" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" id="pkg-T3-3Ff"/>
                         </constraints>
                     </view>
@@ -2768,8 +2768,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="qrz-C2-bq8"/>
         <segue reference="iB6-A7-uY0"/>
-        <segue reference="Ned-FL-dUc"/>
-        <segue reference="ieO-ix-bhr"/>
+        <segue reference="Ib5-ij-N9c"/>
+        <segue reference="yLY-Re-RCl"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

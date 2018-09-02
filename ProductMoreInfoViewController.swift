@@ -49,7 +49,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         segmentControl.tintColor = Theme.color(kColorOrange1)
         seperatorView.backgroundColor = Theme.color(kColorGray10)
         
-        addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+        addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
         addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         
