@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>49</string>
+	<string>50</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
@@ -219,20 +219,20 @@
 			</dict>
 		</dict>
 	</dict>
-    <key>NSCalendarsUsageDescription</key>
-    <string>Bamilo would like to access your calendar</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Bamilo would like to access your camera</string>
-    <key>NSContactsUsageDescription</key>
-    <string>Bamilo would like to access your contacts</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Bamilo would like to access your location</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Bamilo would like to access your location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Bamilo would like to access your location</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Bamilo would like to access your photos</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Bamilo would like to access your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Bamilo would like to access your camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Bamilo would like to access your contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Bamilo would like to access your photos</string>
 	<key>PW_USE_GPS</key>
 	<true/>
 	<key>Pushwoosh_APPID</key>
