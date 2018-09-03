@@ -178,7 +178,7 @@ import Firebase
             }
             let combinedSkusFromPackages = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
             if let itemList = combinedSkus ?? combinedSkusFromPackages, let cartValue = cart.cartEntity?.cartValue {
-                Analytics.logEvent(AnalyticsEventCheckoutProgress, parameters: [
+                Analytics.logEvent("finish_checkout", parameters: [
                     AnalyticsParameterItemList: itemList,
                     AnalyticsParameterValue: cartValue
                 ])

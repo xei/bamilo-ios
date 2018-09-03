@@ -107,10 +107,41 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMq-Pd-z9y">
                                 <rect key="frame" x="0.0" y="93" width="300" height="161"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TWv-Oe-gxu" customClass="UICircularProgressRingView" customModule="UICircularProgressRing">
-                                        <rect key="frame" x="208" y="8" width="67" height="66"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TWv-Oe-gxu" customClass="UICircularProgressRingView" customModule="UICircularProgressRing">
+                                        <rect key="frame" x="235" y="15" width="40" height="40"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="TWv-Oe-gxu" secondAttribute="height" multiplier="1:1" id="Jl5-zr-iIV"/>
+                                            <constraint firstAttribute="width" constant="40" id="gC8-Fa-unX"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="outerRingWidth">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minValue">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="startAngle">
+                                                <real key="value" value="-90"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDZ-P3-pQa" customClass="UICircularProgressRingView" customModule="UICircularProgressRing">
+                                        <rect key="frame" x="172" y="15" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="OXk-lX-EhH"/>
+                                            <constraint firstAttribute="width" secondItem="VDZ-P3-pQa" secondAttribute="height" multiplier="1:1" id="wi8-k7-lz8"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="outerRingWidth">
                                                 <real key="value" value="0.0"/>
@@ -135,7 +166,12 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="VDZ-P3-pQa" firstAttribute="width" secondItem="VDZ-P3-pQa" secondAttribute="height" multiplier="1:1" id="4C7-tB-jAr"/>
+                                    <constraint firstItem="TWv-Oe-gxu" firstAttribute="left" secondItem="VDZ-P3-pQa" secondAttribute="right" constant="23" id="5QQ-Ig-eud"/>
+                                    <constraint firstItem="VDZ-P3-pQa" firstAttribute="centerY" secondItem="TWv-Oe-gxu" secondAttribute="centerY" id="9Pl-5e-4w8"/>
+                                    <constraint firstItem="TWv-Oe-gxu" firstAttribute="top" secondItem="MMq-Pd-z9y" secondAttribute="top" constant="15" id="QJJ-ZR-bRo"/>
                                     <constraint firstAttribute="height" constant="161" id="uPV-9Z-RW2"/>
+                                    <constraint firstAttribute="right" secondItem="TWv-Oe-gxu" secondAttribute="right" constant="25" id="w4z-vV-o9q"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -172,7 +208,7 @@
                 <outlet property="containerBoxView" destination="55t-36-0cv" id="uiQ-UY-lpW"/>
                 <outlet property="horizontalSpacingConstraint" destination="ICb-ef-Wqx" id="1vF-AC-dZp"/>
             </connections>
-            <point key="canvasLocation" x="-336" y="-52"/>
+            <point key="canvasLocation" x="-741" y="-302"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -44,24 +44,27 @@ class CategoryTableViewCell: BaseTableViewCell {
     
     private func updateView(imageUrl: URL?, title: String) {
         self.titleLabel.text = title
-        if let image = imageUrl {
-            self.imageViewContainerView.isHidden = false
-            self.titleToSuperviewRightConstraint.priority = .defaultLow
-            self.titleLabelToImageRightConstraint.priority = .defaultHigh
-            self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
-        } else {
-            self.imageViewContainerView.isHidden = true
-            self.titleToSuperviewRightConstraint.priority = .defaultHigh
-            self.titleLabelToImageRightConstraint.priority = .defaultLow
-        }
         
         if let alignment = forcedAlignment {
             self.titleToSuperviewRightConstraint.priority = alignment == .left ? .defaultLow : .defaultHigh
             self.titleLabelToImageRightConstraint.priority = alignment == .left ? .defaultHigh : .defaultLow
-            if alignment == .right {
+            self.imageViewContainerView.isHidden = alignment == .right ? true : false
+            if let image = imageUrl {
+                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+            }
+        } else {
+            if let image = imageUrl {
+                self.imageViewContainerView.isHidden = false
+                self.titleToSuperviewRightConstraint.priority = .defaultLow
+                self.titleLabelToImageRightConstraint.priority = .defaultHigh
+                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+            } else {
                 self.imageViewContainerView.isHidden = true
+                self.titleToSuperviewRightConstraint.priority = .defaultHigh
+                self.titleLabelToImageRightConstraint.priority = .defaultLow
             }
         }
+        
     }
     
     override func prepareForReuse() {

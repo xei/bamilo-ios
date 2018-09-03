@@ -21,7 +21,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
     
     private var coverPageCell: CategoryCoverTableViewCell?
     private var coverHeight: CGFloat?
-    private var allCategoriesHaveImage: Bool?
+    private var hasAnyCategoriesImage: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
         
         //navigation title
         self.title = self.historyCategory?.last?.name
-        allCategoriesHaveImage = subcategories?.reduce(true, { $0 && ($1.image != nil) })
+        hasAnyCategoriesImage = subcategories?.reduce(false, { $0 || ($1.image != nil) })
         //To remove extra seperators
         self.tableview.tableFooterView = UIView(frame: .zero)
     }
@@ -60,10 +60,10 @@ class SubCategoryLandingPageViewController: BaseViewController,
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+            cell.forcedAlignment = (hasAnyCategoriesImage ?? false ) ? .left : .right
             if indexPath.row < self.subcategories?.count ?? 0 {
                 cell.update(withModel: self.subcategories?[indexPath.row])
             }
-            cell.forcedAlignment = (allCategoriesHaveImage ?? false ) ? .left : .right
             cell.layer.zPosition = CGFloat(indexPath.row + indexPath.section)
             return cell
         }
