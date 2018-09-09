@@ -14,7 +14,6 @@
 #import "RITeaserComponent.h"
 
 @interface JACampaignsViewController () <SearchViewControllerDelegate>
-
 @property (nonatomic, strong)NSMutableArray* campaignPages;
 @property (nonatomic, strong)JATopTabsView* topTabsView;
 @property (nonatomic, strong)UIScrollView* scrollView;
@@ -22,26 +21,17 @@
 // size picker view
 @property (strong, nonatomic) JAPicker *picker;
 @property (strong, nonatomic) NSMutableArray *pickerDataSource;
-
 // for the retry connection, is necessary to store this stuff
 @property (nonatomic, strong)RICampaignProduct* backupCampaignProduct;
 @property (nonatomic, strong)NSString* backupSimpleSku;
-
 @property (nonatomic, assign)BOOL shouldPerformButtonActions;
-
 @property (nonatomic, assign)BOOL pickerNamesAlreadySet;
-
 @property (nonatomic, assign)NSInteger campaignIndex;
 @property (nonatomic, assign)NSNumber *clickedCampaignIndex;
-
 @property (nonatomic, assign)JACampaignPageView* campaignPageWithSizePickerOpen;
-
 @property (nonatomic, assign)RIApiResponse apiResponse;
-
 @property (nonatomic, assign)BOOL isLoaded;
-
 @property (nonatomic, strong)NSMutableArray* activeCampaignComponents;
-
 @property (strong, nonatomic) RICart *cart;
 
 @end
@@ -55,10 +45,7 @@
     self.pickerNamesAlreadySet = NO;
     
     CGRect bounds = [self viewBounds];
-    self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x,
-                                                                       bounds.origin.y,
-                                                                       bounds.size.width,
-                                                                       49.0f)];
+    self.topTabsView = [[JATopTabsView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, 49.0f)];
     self.topTabsView.delegate = self;
     [self.view addSubview:self.topTabsView];
     
@@ -93,8 +80,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self showLoading];
     
     [self closePicker];
@@ -178,9 +164,7 @@
                 }
             }
         }
-        
         [self setupCampaings:[self viewBounds].size.width height:[self viewBounds].size.height interfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-        
         self.pickerNamesAlreadySet = YES;
     } else if (VALID_NOTEMPTY(self.targetString, NSString)) {
         [self createCampaignPageAtX:currentX];
@@ -336,7 +320,6 @@
 - (void)openCampaignProductWithTarget:(NSString*)targetString {
     NSMutableDictionary* userInfo = [NSMutableDictionary new];
     [userInfo setObject:targetString forKey:@"targetString"];
-    [userInfo setObject:[NSNumber numberWithBool:YES] forKey:@"show_back_button"];
     if (self.purchaseTrackingInfo) {
         [userInfo setObject:self.purchaseTrackingInfo forKey:@"purchaseTrackingInfo"];
     }
@@ -394,9 +377,9 @@
 }
 
 - (void)trackAddToCartAction:(BOOL)success {
-    RIProduct *product = [RIProduct new];
+    Product *product = [Product new];
     product.sku = self.backupSimpleSku;
-    product.price = self.cart.cartEntity.cartValue;
+    [product setPriceWithPrice: self.cart.cartEntity.cartValue];
     //EVENT : ADD TO CART
     [TrackerManager postEventWithSelector:[EventSelectors addToCartEventSelector]
                                attributes:[EventAttributes addToCartWithProduct:product screenName:[self getScreenName] success:success]];

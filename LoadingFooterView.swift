@@ -12,7 +12,7 @@ class LoadingFooterView: BaseControlView {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

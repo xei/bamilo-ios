@@ -21,12 +21,31 @@ class OrderPackageDelay:NSObject, Mappable {
     }
 }
 
+enum OrderDeliveryType: String {
+    case dropship = "dropship"
+    case warehouse = "warehouse"
+    case Crossdock = "crossdock"
+}
+
+class OrderPackageDelivery: NSObject, Mappable {
+    var type: OrderDeliveryType?
+    var desc: String?
+    
+    required init?(map: Map) {}
+    func mapping(map: Map) {
+        type <- (map["type"], EnumTransform())
+        desc <- map["description"]
+    }
+    
+}
+
 class OrderPackage: NSObject, Mappable {
     
     var title: String?
     var deliveryTime: String?
     var products: [OrderProductItem]?
     var delay: OrderPackageDelay?
+    var delivery: OrderPackageDelivery?
     
     override init() {}
     required init?(map: Map) {}
@@ -36,5 +55,6 @@ class OrderPackage: NSObject, Mappable {
         deliveryTime <- map["delivery_time"]
         products <- map["products"]
         delay <- map["delay"]
+        delivery <- map["delivery_type"]
     }
 }

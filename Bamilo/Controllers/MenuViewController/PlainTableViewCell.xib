@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,13 +25,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ایتم منو" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKY-Mc-Ce9">
-                        <rect key="frame" x="324" y="29.5" width="30" height="13"/>
+                        <rect key="frame" x="315" y="25.5" width="39" height="21.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Mq4-Yr-pRJ">
-                        <rect key="frame" x="16" y="29" width="12" height="12"/>
+                        <rect key="frame" x="16" y="30" width="12" height="12"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Mq4-Yr-pRJ" secondAttribute="height" multiplier="1:1" id="0ua-QE-mJx"/>
                             <constraint firstAttribute="height" constant="12" id="9ak-K7-h3U"/>
@@ -56,12 +57,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrorwUIImage" destination="Mq4-Yr-pRJ" id="hwx-aA-WUw"/>
                 <outlet property="titleLabel" destination="kKY-Mc-Ce9" id="6F4-MC-ppN"/>
             </connections>
             <point key="canvasLocation" x="0.0" y="66"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ArrowLeft" width="8" height="14"/>
+        <image name="ArrowLeft" width="48" height="48"/>
     </resources>
 </document>

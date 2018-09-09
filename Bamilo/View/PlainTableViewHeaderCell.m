@@ -27,6 +27,10 @@
     _titleString = titleString;
 }
 
+- (void)applyStyle: (UIFont *)font color: (UIColor *)color {
+    [self.titleLabel applyStyle:font color:color];
+}
+
 #pragma mark - Overrides
 + (NSString *)nibName {
     return NSStringFromClass([self class]);

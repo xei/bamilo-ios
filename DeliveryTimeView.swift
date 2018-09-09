@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DeliveryTimeViewDelegate: class {
+    func updateDeliveryTimeValue(value: String?)
+}
+
 class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServiceProtocol {
 
     @IBOutlet private weak var titleLabel: UILabel!
@@ -15,11 +19,12 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     @IBOutlet private weak var cityInputView: InputTextFieldControl!
     @IBOutlet private weak var deliveryTimeLabel: UILabel!
     @IBOutlet private weak var deliveryTimeTitleLabel: UILabel!
+    weak var delegate: DeliveryTimeViewDelegate?
     var productSku: String!
     
     override func awakeFromNib() {
-        self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
-        self.deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: UIColor.black)
+        [titleLabel, deliveryTimeTitleLabel].forEach { $0.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color:  Theme.color(kColorGray1)) }
+        self.deliveryTimeLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: UIScreen.main.bounds.width <= 320 ? 9: 12), color: Theme.color(kColorGray1))
         
         self.cityInputView.delegate = self
         self.regionInputView.delegate = self
@@ -30,12 +35,12 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     func switchTheTextAlignments() {
         self.regionInputView.input.textField.textAlignment = .left
         self.cityInputView.input.textField.textAlignment = .left
-        
+
         self.titleLabel.textAlignment = .left
         self.deliveryTimeLabel.textAlignment = .left
     }
     
-    func fillTheView() {
+    func fillTheView(preDefaultValue: String?) {
         self.regionInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_PROVINCE, type: .options, validation: nil, selectOptions: nil)
         self.cityInputView.model = FormItemModel.init(textValue: nil, fieldName: "", andIcon: nil, placeholder: STRING_CITY, type: .options, validation: nil, selectOptions: nil)
         
@@ -50,10 +55,26 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
             })
             self.getRegionsWithCompletion()
             self.getCitiesOfRegion(regionId: savedSelectedArea["region"]?["id"])
-            self.getTimeDeliveryForCityId(cityID: savedSelectedArea["city"]?["id"])
+            if let preValue = preDefaultValue {
+                self.deliveryTimeLabel.text = preValue
+            } else {
+                self.getTimeDeliveryForCityId(cityID: DeliveryTimeView.getSelectedCityID())
+            }
         } else {
-            self.getTimeDeliveryForCityId(cityID: nil)
+            if let preValue = preDefaultValue {
+                self.deliveryTimeLabel.text = preValue
+                self.getRegionsWithCompletion()
+            } else {
+                self.getTimeDeliveryForCityId(cityID: nil)
+            }
         }
+    }
+    
+    static func getSelectedCityID() -> String? {
+        if let savedSelectedArea = UserDefaults.standard.object(forKey: "SelectedAreaByUser") as? [String: [String: String]] {
+            return savedSelectedArea["city"]?["id"]
+        }
+        return nil
     }
     
     private func updateOptionInField(inputField: InputTextFieldControl, withData: Any) {
@@ -95,6 +116,9 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
         ProductDataManager.sharedInstance.getDeliveryTime(self, sku: self.productSku, cityId: cityID) { (data, error) in
             if error == nil, let data = data {
                 self.bind(data, forRequestId: 2)
+                if let value = self.deliveryTimeLabel.text {
+                    self.delegate?.updateDeliveryTimeValue(value: value)
+                }
             } else {
                 self.deliveryTimeLabel.text = nil
                 self.deliveryTimeTitleLabel.text = nil
@@ -104,19 +128,18 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     
     //MARK: -InputTextFieldControlDelegate
     func inputValueChanged(_ inputTextFieldControl: Any!, byNewValue value: String!, inFieldIndex fieldIndex: UInt) {
-        if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView {
-            self.getCitiesOfRegion(regionId: self.regionInputView.model.getValue())
-        } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView {
-            self.getTimeDeliveryForCityId(cityID: self.cityInputView.model.getValue())
-            if let regionId = self.regionInputView.model.getValue(),
-               let cityId = self.cityInputView.model.getValue() {
+        if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.regionInputView, let regionId = self.regionInputView.model.getValue() {
+            self.getCitiesOfRegion(regionId: regionId)
+        } else if let inputControl = inputTextFieldControl as? InputTextFieldControl, inputControl == self.cityInputView, let cityID = self.cityInputView.model.getValue() {
+            self.getTimeDeliveryForCityId(cityID: cityID)
+            if let regionId = self.regionInputView.model.getValue() {
                 let selectedAreaByUser = [
                     "region" : [
                         "id": regionId,
                         "name": self.regionInputView.getStringValue()
                     ],
                     "city": [
-                        "id": cityId,
+                        "id": cityID,
                         "name": self.cityInputView.getStringValue()
                     ]
                 ]
@@ -159,7 +182,7 @@ class DeliveryTimeView: BaseControlView, InputTextFieldControlDelegate, DataServ
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> DeliveryTimeView {
+    override class func nibInstance() -> DeliveryTimeView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! DeliveryTimeView
     }
 }

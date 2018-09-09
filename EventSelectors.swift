@@ -10,7 +10,7 @@ import Foundation
 
 //TODO: this global variable (selectors) can be defined more easier, 
 //but we have to define them for now like this, because objective c files can see them
-@objc class EventSelectors: NSObject {
+@objcMembers class EventSelectors: NSObject {
     class func searchActionSelector() -> Selector {
         return Selector(("searchWithAttributes:"))
     }
@@ -50,8 +50,8 @@ import Foundation
     class func purchaseSelector() -> Selector {
         return Selector(("purchasedWithAttributes:"))
     }
-    class func teaserTappedSelector() -> Selector {
-        return Selector(("teaserTappedWithAttributes:"))
+    class func itemTappedSelector() -> Selector {
+        return Selector(("itemTappedWithAttributes:"))
     }
     class func behaviourPurchasedSelector() -> Selector {
         return Selector(("purchaseBehaviourWithAttributes:"))

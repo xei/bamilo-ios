@@ -25,8 +25,6 @@
 @property (strong, nonatomic) RIProduct *product;
 @property (strong, nonatomic) NSString *productSku;
 @property (strong, nonatomic) RICategory *category;
-@property (assign, nonatomic) BOOL fromCatalogue;
-@property (strong, nonatomic) NSString *previousCategory;
 @property (strong, nonatomic) NSString *preSelectedSize;
 @property (strong, nonatomic) NSString *richRelevanceParameter;
 @property (nonatomic, strong) NSString *purchaseTrackingInfo;

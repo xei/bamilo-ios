@@ -52,7 +52,7 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
         }
     }
     
-    override static func cellHeight() -> CGFloat {
+    override class func cellHeight() -> CGFloat {
         return min(UIScreen.main.bounds.width / self.imageRatio, self.maxCellHeight)
     }
     
@@ -63,7 +63,7 @@ class CategoryCoverTableViewCell: BaseTableViewCell, BreadcrumbsViewDelegate {
         }
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

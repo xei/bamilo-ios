@@ -16,20 +16,33 @@ class RateStarsView: BaseControlView {
     
     @IBOutlet private var starButtons: [IconButton]!
     weak var delegate: RateStarsViewDelegate?
-    private var tappable = false
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundColor = .clear
+    }
     
     func updateWithMode(rateValue: Double) {
+        self.colorButtons(rateValue: rateValue)
+    }
+    
+    func colorButtons(rateValue: Double, color: UIColor = Theme.color(kColorGold), disabledColor: UIColor = Theme.color(kColorGray9)) {
         let roundedRate = rateValue.roundByStep(step: 0.5)
-        ThreadManager.execute { 
+        ThreadManager.execute {
             self.starButtons.forEach { (button) in
+                button.imageHeightToButtonHeightRatio = 0.95
                 if button.tag <= Int(roundedRate) {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateFullStar")
+                    button.setImage(#imageLiteral(resourceName: "ProductRateFullStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = color
                 } else {
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateEmptyStar")
+                    button.setImage(#imageLiteral(resourceName: "ProductRateEmptyStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = disabledColor
                 }
                 if roundedRate > Double(Int(roundedRate)) && button.tag == Int(roundedRate) + 1 { //has 0.5
-                    button.imageView?.image = #imageLiteral(resourceName: "ProductRateHalfStar")
+                    button.setImage(#imageLiteral(resourceName: "ProductRateHalfStar").withRenderingMode(.alwaysTemplate), for: .normal)
+                    button.tintColor = color
                 }
+                
             }
         }
     }
@@ -46,7 +59,7 @@ class RateStarsView: BaseControlView {
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> RateStarsView {
+    override class func nibInstance() -> RateStarsView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! RateStarsView
     }
 }

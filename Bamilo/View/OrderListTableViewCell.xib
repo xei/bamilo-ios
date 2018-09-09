@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,10 +38,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="G8D-W2-dGC">
-                        <rect key="frame" x="15" y="70" width="12" height="12"/>
+                        <rect key="frame" x="15" y="63.5" width="25" height="25"/>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="G8D-W2-dGC" secondAttribute="height" multiplier="1:1" id="WXY-Sg-cZo"/>
-                            <constraint firstAttribute="height" constant="12" id="gW0-rL-x0d"/>
+                            <constraint firstAttribute="height" constant="25" id="gW0-rL-x0d"/>
                         </constraints>
                     </imageView>
                 </subviews>
@@ -59,6 +60,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="arrowUIImage" destination="G8D-W2-dGC" id="XUK-nW-X5y"/>
                 <outlet property="orderDateLabel" destination="a5Y-UX-U8u" id="hep-MN-jti"/>
                 <outlet property="orderNumLabel" destination="qyR-pw-DAL" id="Gm7-Yd-iLn"/>
                 <outlet property="priceLabel" destination="J1X-zc-CGK" id="VkJ-hF-JEf"/>
@@ -67,6 +69,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ArrowLeft" width="8" height="14"/>
+        <image name="ArrowLeft" width="48" height="48"/>
     </resources>
 </document>

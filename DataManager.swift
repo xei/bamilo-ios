@@ -34,7 +34,7 @@ class DataManagerSwift {
             if let messages = data.messages {
                 payload[DataManagerKeys.DataMessages] = messages
             }
-            if let serviceData = data.metadata as [String:Any]? {
+            if let serviceData = data.metadata {
                 if let mappableClass = aClass as? Mappable.Type, let responseObj = mappableClass.init(JSON: serviceData) {
                     payload[DataManagerKeys.DataContent] = responseObj
                     self.handlePayload(payload: payload, data: data, completion: completion)

@@ -21,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.submitButton setTitle:STRING_OK forState:UIControlStateNormal];
     
     filterView = [[[NSBundle mainBundle] loadNibNamed:@"JAGenericFiltersView" owner:self options:nil] objectAtIndex:0];
@@ -53,10 +52,17 @@
 - (IBAction)submitButtonTapped:(id)sender {
     for(CatalogFilterOption *catFilterOption in self.subCatsFilters) {
         if (catFilterOption.selected) {
+            
+            [TrackerManager postEventWithSelector:[EventSelectors itemTappedSelector] attributes: [EventAttributes itemTappedWithCategoryEvent:[self getScreenName] screenName:[self getScreenName] labelEvent: catFilterOption.name]];
+            
             [self.navigationController popViewControllerAnimated:NO];
             [self.delegate submitSubCategoryFilterByUrlKey:catFilterOption.value];
         }
     }
+}
+
+- (NSString *)getScreenName {
+    return @"SubCategoryFilterView";
 }
 
 #pragma mark - NavigationBarProtocol

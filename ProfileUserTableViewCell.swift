@@ -57,11 +57,11 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
         self.logoImage.image = #imageLiteral(resourceName: "man_user_profile")
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
     
-    override static func cellHeight() -> CGFloat {
+    override class func cellHeight() -> CGFloat {
         return 82
     }
 }

@@ -10,6 +10,6 @@
 
 @interface JAShopWebViewController : JABaseViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong) NSString* purchaseTrackingInfo;
+@property (nonatomic, strong) NSString *purchaseTrackingInfo;
 
 @end

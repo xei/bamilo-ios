@@ -13,7 +13,7 @@ import TBActionSheet
 protocol MyBamiloViewControllerDelegate: class {
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-    func didSelectProductSku(productSku: String)
+    func didSelectProductSku(productSku: String, recommendationLogic: String)
 }
 
 
@@ -68,7 +68,11 @@ class MyBamiloViewController:   BaseViewController,
         self.refreshControl = UIRefreshControl.init()
         self.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         if let refreshControl = self.refreshControl {
-            self.collectionView.addSubview(refreshControl)
+            if #available(iOS 10.0, *) {
+                self.collectionView.refreshControl = refreshControl
+            } else {
+                self.collectionView.addSubview(refreshControl)
+            }
         }
         self.collectionView.alwaysBounceVertical = true
     }
@@ -82,7 +86,7 @@ class MyBamiloViewController:   BaseViewController,
         }
     }
     
-    func handleRefresh() {
+    @objc func handleRefresh() {
         self.isRefreshing = true
         self.loadingIndicator.stopAnimating()
         self.visibleProductCount = 0
@@ -172,8 +176,8 @@ class MyBamiloViewController:   BaseViewController,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku {
-            self.delegate?.didSelectProductSku(productSku: sku)
+        if let products = self.presentingProducts, indexPath.row < products.count, let sku = products[indexPath.row].sku, let logic = products[indexPath.row].id {
+            self.delegate?.didSelectProductSku(productSku: sku, recommendationLogic: logic)
         }
     }
     
@@ -208,6 +212,11 @@ class MyBamiloViewController:   BaseViewController,
     
     //MARK: - MyBamiloHeaderViewDelegate
     func menuButtonTapped() {
+        //tracking tapp action
+        if let screenName = getScreenName() {
+            TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Emarsys", screenName: self.getScreenName(), labelEvent: "\(screenName)-filter"))
+        }
+        
         self.presentActionSheet()
     }
     

@@ -141,6 +141,7 @@ class RootCategoryViewController: BaseViewController,
             self.bind(data, forRequestId: requestID)
         } else {
             self.errorHandler(error, forRequestID: requestID)
+            self.bind(data, forRequestId: requestID)
         }
     }
     
@@ -173,21 +174,26 @@ class RootCategoryViewController: BaseViewController,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let model = self.getModelOfIndexPath(indexPath: indexPath) {
             if let cat = model as? CategoryProduct {
+                
+                //Track tapping on Cat item
+                TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Category", screenName: getScreenName(), labelEvent: cat.name ?? ""))
+                
                 if cat.childern?.count ?? 0 > 0 {
                     self.performSegue(withIdentifier: "showsubCategories", sender: cat)
-                } else {
-                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: nil)
+                } else if let screenName = getScreenName(), let categoryName = cat.name{
+                    MainTabBarViewController.topNavigationController()?.openTargetString(cat.target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Category", label: categoryName), currentScreenName: screenName)
                 }
             } else if let extLink = model as? ExternalLink, let browserLink = extLink.link, let validURL = URL(string: browserLink) {
                 UIApplication.shared.openURL(validURL)
-            } else if let link = model as? InternalLink {
-                MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil)
+            } else if let link = model as? InternalLink, let screenName = getScreenName() {
+                MainTabBarViewController.topNavigationController()?.openTargetString(link.target, purchaseInfo: nil, currentScreenName: screenName)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+        cell.forcedAlignment = .left
         cell.update(withModel: self.getModelOfIndexPath(indexPath: indexPath))
         return cell
     }
@@ -241,10 +247,9 @@ class RootCategoryViewController: BaseViewController,
             self.incomingInternalLinks = model
         } else if let model = data as? ExternalLinks {
             self.incomingExternalLinks = model
-        } else {
-            self.handleGenericErrorCodesWithErrorControlView(Int32(NSURLErrorBadServerResponse), forRequestID: rid)
         }
-        if requestIdsInProgress.count == 0, successRequestIds.count == 2 {
+        
+        if requestIdsInProgress.count == 0 {
             self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: "")
             self.categories = self.incomingCategories
             self.externalLinks = self.incomingExternalLinks
@@ -263,10 +268,10 @@ class RootCategoryViewController: BaseViewController,
         if let _ = self.categories {
             self.sectionTypes[self.sectionTypes.keys.count] = Categories.self
         }
-        if let _ = self.internalLinks {
+        if let linkItems = self.internalLinks?.items, linkItems.count > 0 {
             self.sectionTypes[self.sectionTypes.keys.count] = InternalLinks.self
         }
-        if let _ = self.externalLinks {
+        if let linkItems = self.externalLinks?.items, linkItems.count > 0 {
             self.sectionTypes[self.sectionTypes.keys.count] = ExternalLinks.self
         }
     }

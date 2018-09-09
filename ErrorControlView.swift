@@ -11,7 +11,7 @@ import UIKit
 typealias ErrorControlCallBack = (@escaping ErrorControlHandleRetry) -> Void
 typealias ErrorControlHandleRetry = (Bool) -> Void
 
-class ErrorControlView: BaseControlView {
+@objcMembers class ErrorControlView: BaseControlView {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
@@ -111,7 +111,7 @@ class ErrorControlView: BaseControlView {
     
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> ErrorControlView {
+    override class func nibInstance() -> ErrorControlView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ErrorControlView
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-@objc class DeliveryTime: NSObject, Mappable {
+@objcMembers class DeliveryTime: NSObject, Mappable {
     
     var sku: String!
     var deliveryTimeZone1: String?
@@ -43,6 +43,7 @@ class DeliveryTimes: NSObject, Mappable {
     var regionId: String?
     
     required init?(map: Map) {
+        
     }
 
     func mapping(map: Map) {

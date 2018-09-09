@@ -100,7 +100,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.0</string>
+	<string>2.6.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -136,15 +136,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>37</string>
+	<string>51</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
 		<string>pttex2kff47v</string>
 		<key>API_BaseUrl</key>
-		<string>http://staging.bamilo.com/mobapi/</string>
+		<string>https://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.9</string>
+		<string>2.10</string>
 		<key>EMMerchantID</key>
 		<string>18146DE34FE0B8C9</string>
 		<key>EmarsysMobileEngage</key>
@@ -225,6 +225,10 @@
 	<string>Bamilo would like to access your camera</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Bamilo would like to access your contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Bamilo would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>

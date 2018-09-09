@@ -56,7 +56,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
         }
     }
     
-    private static func getVaildItemsCount(data: HomePageTileTeaser?) -> Int {
+    private class func getVaildItemsCount(data: HomePageTileTeaser?) -> Int {
         let itemsCount = data?.items?.count ?? 0
         if itemsCount == 0 { return 0 }
         let validCount = itemsCount % 2 != 0 ? itemsCount : itemsCount - 1 //only odd items count
@@ -78,7 +78,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let target =  self.dataSource?.items?[indexPath.row].target, let id = self.dataSource?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id, index: indexPath.row)
         }
     }
     
@@ -104,7 +104,7 @@ class HomePageTileTeaserTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICol
     }
     
     //MARK: - HomePageTeaserHeightCalculator
-    static func teaserHeight(model: Any?) -> CGFloat {
+    class func teaserHeight(model: Any?) -> CGFloat {
         if let model = model as? HomePageTileTeaser {
             let items = self.getVaildItemsCount(data: model)
             if items == 0 { return 0 }

@@ -23,20 +23,20 @@ enum SurveryQuestionType: String {
     case imageSelect = "IMAGE_SELECT"
     case nps = "NPS"
     case checkbox = "CHECKBOX"
-//    case textbox = "TEXTBOX"
-//    case essay = "ESSAY"
+    case textbox = "TEXTBOX"
+    case essay = "ESSAY"
 }
 
 class SurveyQuestion: NSObject, Mappable {
     
-    var id         : Int?
-    var title      : String?
-    var type       : SurveryQuestionType?
-    var isRequired : Bool = false
-    var isHidden   : Bool = false
-    var options    : [SurveyQuestionOption]?
-    var product    : Product?
-    var haveAnswer = false
+    var id              : Int?
+    var title           : String?
+    var type            : SurveryQuestionType?
+    var isRequired      : Bool = false
+    var isHidden        : Bool = false
+    var options         : [SurveyQuestionOption]?
+    var product         : Product?
+    var anwerTextMessage: String?
     
     override init() {} //for initializeing without mapping
     required init?(map: Map) { }
@@ -75,7 +75,7 @@ class SurveyQuestion: NSObject, Mappable {
                         }
                     }
                     return nil
-                }).flatMap({ $0 }).reduce([:]) { $0 + $1 }
+                }).compactMap({ $0 }).reduce([:]) { $0 + $1 }
                 if let selectedOptions = selectedOptions, let id = self.id {
                     result["responses"] = [["\(id)": selectedOptions]]
                 }
@@ -83,7 +83,12 @@ class SurveyQuestion: NSObject, Mappable {
                 if let selectedOption = options?.filter({ $0.isSelected ?? false }).first, let id = self.id , let value = selectedOption.value {
                     result["responses"] = [["\(id)" : "\(value)"]]
                 }
+            case .essay, .textbox:
+                if let id = self.id , let value = self.anwerTextMessage {
+                    result["responses"] = [["\(id)" : value]]
+                }
             }
+            
         }
         return result
     }

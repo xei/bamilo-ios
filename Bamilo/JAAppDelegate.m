@@ -7,10 +7,10 @@
 //  Copyright (c) 2014 Rocket Internet. All rights reserved.
 //
 
+@import Firebase;
 #import "JAAppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <NewRelicAgent/NewRelic.h>
 #import <GoogleAppIndexing/GoogleAppIndexing.h>
 #import "JAUtils.h"
 #import "Adjust.h"
@@ -34,7 +34,8 @@
 @interface JAAppDelegate ()
 
 @property (nonatomic, strong) NSDate *startLoadingTime;
-
+@property (nonatomic, strong) FIRTrace* trace;
+    
 @end
 
 @implementation JAAppDelegate
@@ -44,10 +45,9 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"fa", @"en", nil] forKey:@"AppleLanguages"];
-    
     self.startLoadingTime = [NSDate date];
-    
     //SET THE LANGUAGE
     RICountry *country = [RICountry getUniqueCountry];
     [RILocalizationWrapper setLocalization:country.selectedLanguage.langCode];
@@ -61,16 +61,16 @@
         kFontVariationLight: @"Light"
     }];
     [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
-
     ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
-        kColorBlue: [UIColor withRGBA:74 green:144 blue:226 alpha:1.0f],
+        kColorBlue: [UIColor withHexString:@"#00a4e2"],
         kColorBlue1: [UIColor withHexString:@"#1a365e"],
         kColorBlue2: [UIColor withHexString:@"#33466e"],
         kColorBlue6: [UIColor withHexString:@"#8c93ad"],
         kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
-        kColorOrange: [UIColor withRGBA:255 green:153 blue:0 alpha:1.0f],
-        kColorGreen: [UIColor withRGBA:0 green:160 blue:0 alpha:1.0],
-        kColorGray: [UIColor withRepeatingRGBA:217 alpha:1.0f],
+        kColorGold: [UIColor withHexString:@"#ffbf02"],
+        kColorOrange: [UIColor withHexString:@"#f6881b"],
+        kColorGreen: [UIColor withRGBA:0 green:158 blue:139 alpha:1.0],
+        kColorGray: [UIColor withHexString:@"#f8f8f8"],
         kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
         kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
         kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
@@ -84,21 +84,21 @@
         kColorOrange10: [UIColor withHexString:@"FAF0E6"],
         kColorDarkGreen: [UIColor withRGBA:22 green:145 blue:140 alpha:1],
         kColorDarkGreen3: [UIColor withHexString:@"#16918c"],
-        kColorGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:1],
         kColorPrimaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.87],
         kColorSecondaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.54],
+        kColorGray1: [UIColor withHexString:@"#53585b"],
         kColorGray2: [UIColor withHexString:@"#656668"],
-        kColorGray3: [UIColor withRGBA:116 green:117 blue:119 alpha:1],
+        kColorGray3: [UIColor withHexString:@"#747577"],
         kColorGray3: [UIColor withHexString:@"#747577"],
         kColorGray4: [UIColor withHexString:@"#858688"],
-        kColorGray5: [UIColor withRGBA:149 green:150 blue:152 alpha:1],
+        kColorGray5: [UIColor withHexString:@"#959698"],
         kColorGray7: [UIColor withHexString:@"#b8b8b8"],
         kColorGray8: [UIColor withHexString:@"#959698"],
-        kColorGray9: [UIColor withHexString:@"#dbdbdb"],
-        kColorGray10: [UIColor withRepeatingRGBA:237 alpha:1],
+        kColorGray9: [UIColor withHexString:@"#d2d2d2"],
+        kColorGray10: [UIColor withHexString:@"#ededed"],
         kColorGreen1: [UIColor withHexString:@"#00B09B"],
-        kColorGreen3: [UIColor withRGBA:1 green:194 blue:173 alpha:1],
-        kColorGreen5: [UIColor withRGBA:63 green:210 blue:192 alpha:1],
+        kColorGreen3: [UIColor withHexString:@"#01c2ad"],
+        kColorGreen5: [UIColor withHexString:@"#3fd2c0"],
         kColorPink1 : [UIColor withHexString:@"#D80056"],
         kColorPink3: [UIColor withHexString:@"#e74775"],
         kColorPink10: [UIColor withHexString:@"#fbe8ec"],
@@ -110,41 +110,22 @@
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontBlackNameKey];
-
-//#ifdef IS_RELEASE
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITracking_Bamilo" ofType:@"plist"];
-//#else
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"RITrackingDebug_Bamilo" ofType:@"plist"];
-//#endif
-
-//    [[RITrackingWrapper sharedInstance] startWithConfigurationFromPropertyListAtPath:plistPath launchOptions:launchOptions delegate:self];
-
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
 
     [[SessionManager sharedInstance] evaluateActiveSessions];
 
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
-    
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:JABackgroundGrey, NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateNormal];
-
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[Theme color:kColorOrange], NSForegroundColorAttributeName, [Theme font:kFontVariationLight size:18], NSFontAttributeName,nil] forState:UIControlStateSelected];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitleTextAttributes:@{
+                              NSFontAttributeName: [Theme font:kFontVariationLight size:18],
+                              NSForegroundColorAttributeName: JABackgroundGrey
+                              } forState:UIControlStateSelected];
 
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary)) {
         NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    }
-
-    if ([launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
-//        UINavigationController *rootViewController = (UINavigationController*)self.window.rootViewController;
-//        JARootViewController* mainController = (JARootViewController*) [rootViewController topViewController];
-//        if(VALID_NOTEMPTY(mainController, JARootViewController)) {
-//            mainController.notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-//        }
-
-//        [[RITrackingWrapper sharedInstance] applicationDidReceiveRemoteNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
     //#########################################################################################################
@@ -180,6 +161,7 @@
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker:[FirebaseTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
     if(configs) {
@@ -196,18 +178,19 @@
     return YES;
 }
 
+- (void)applicationWillResignActive:(UIApplication *)application {
+    [self.trace stop];
+    self.trace = [FIRPerformance startTraceWithName:@"App in background"];
+}
+    
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler {
-//    if(!VALID_NOTEMPTY(application, UIApplication) || UIApplicationStateActive != application.applicationState) {
-//        [[RITrackingWrapper sharedInstance] applicationHandleActionWithIdentifier:identifier forRemoteNotification:userInfo];
-//    }
-
-    completionHandler();
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    if (completionHandler) completionHandler();
 }
 #endif
 
@@ -229,17 +212,15 @@
 // In case the app was sent into the background when there was no network connection, we will use
 // the background data fetching mechanism to send any pending Google Analytics data.
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    [[RITrackingWrapper sharedInstance] applicationDidEnterBackground:application];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
 -(void)applicationDidBecomeActive:(UIApplication *)application {
-    [application setApplicationIconBadgeNumber:0];
-
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
-//    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
-//    [[EmarsysMobileEngage sharedInstance] sendLogin:[pushManager getPushToken] completion:nil];
+    [self.trace stop];
+    self.trace = [FIRPerformance startTraceWithName:@"App in foreground"];
     
+    [application setApplicationIconBadgeNumber:0];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"appDidEnterForeground" object:nil]];
     OpenAppEventSourceType openAppEventSourceType = [[AppManager sharedInstance] getOpenAppEventSource];
     
     if(openAppEventSourceType != OpenAppEventSourceTypePushNotification &&
@@ -256,32 +237,14 @@
     
     //Reset to none for next app open
     [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
-    
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
-    
     [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    
     self.startLoadingTime = [NSDate date];
-
     [[SessionManager sharedInstance] evaluateActiveSessions];
-
-//    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-//    NSMutableDictionary *trackingDictionary = [[NSMutableDictionary alloc] init];
-//
-//    [trackingDictionary setValue:[infoDictionary valueForKey:@"CFBundleVersion"] forKey:kRILaunchEventAppVersionDataKey];
-//    [trackingDictionary setValue:[JAUtils getDeviceModel] forKey:kRILaunchEventDeviceModelDataKey];
-//
-//    CGFloat duration = fabs([self.startLoadingTime timeIntervalSinceNow] * 1000);
-//
-//    [trackingDictionary setValue:[NSString stringWithFormat:@"%f", duration] forKey:kRILaunchEventDurationDataKey];
-
-//    [[RITrackingWrapper sharedInstance] trackEvent:[NSNumber numberWithInt:RIEventOpenApp]
-//                                              data:[trackingDictionary copy]];
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppWillEnterForeground object:nil];
 }
 
@@ -318,14 +281,10 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
-
     if (url) {
-//        [[RITrackingWrapper sharedInstance] trackOpenURL:url];
         [DeepLinkManager handleUrl:url];
-    
         //EVENT: OPEN APP / DEEP LINK
         [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDeeplink]];
-        
         return YES;
     }
 

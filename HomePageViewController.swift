@@ -9,6 +9,7 @@
 import UIKit
 
 protocol HomePageViewControllerDelegate: class {
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?)
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
@@ -71,7 +72,7 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
-    func handleRefresh() {
+    @objc func handleRefresh() {
         self.loadingIndicator.stopAnimating()
         self.isRefreshing = true
         self.getHomePage { success in
@@ -162,11 +163,8 @@ class HomePageViewController:   BaseViewController,
     }
     
     //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
-    func teaserItemTappedWithTargetString(target: String, teaserId: String) {
-        TrackerManager.postEvent(selector: EventSelectors.teaserTappedSelector(), attributes: EventAttributes.teaserTapped(teaserName: teaserId, screenName: getScreenName(), teaserTargetNode: target))
-        if let screenName = getScreenName() {
-            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "\(screenName)_\(teaserId):::\(target)")
-        }
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
+        self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: teaserId, index: index)
     }
     
     func teaserMustBeRemoved(at indexPath: IndexPath) {
@@ -214,7 +212,6 @@ class HomePageViewController:   BaseViewController,
         return STRING_HOME
     }
     
-    
     //MARK: - helper functions for timer
     private func runTimer(seconds: Int) {
         //if any previous timer exists
@@ -223,7 +220,7 @@ class HomePageViewController:   BaseViewController,
         RunLoop.main.add(self.timer!, forMode: .commonModes)
     }
     
-    func updateTimer() {
+    @objc func updateTimer() {
         if let index = self.dailyDealsIndex, let interval = (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds {
             (self.homePage?.teasers[index] as? HomePageDailyDeals)?.ramainingSeconds = interval - 1
             self.updateCellTimer(with: interval)

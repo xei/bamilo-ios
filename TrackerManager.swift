@@ -6,15 +6,15 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-@objc class TrackerManager: NSObject {
+@objcMembers class TrackerManager: NSObject {
     
     static var trackers = [BaseTracker]()
     
-    static func addTracker(tracker: BaseTracker) {
+    class func addTracker(tracker: BaseTracker) {
         self.trackers.append(tracker)
     }
     
-    static func postEvent(selector: Selector, attributes: EventAttributeType) {
+    class func postEvent(selector: Selector, attributes: EventAttributeType) {
         trackers.forEach { (tracker) in
             if tracker.conforms(to: EventTrackerProtocol.self) && tracker.responds(to: selector){
                 tracker.perform(selector, with: attributes)
@@ -22,19 +22,19 @@
         }
     }
     
-    static func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
+    class func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
         trackers.forEach { (tracker) in
             (tracker as? ScreenTrackerProtocol)?.trackLoadTime?(screenName: screenName, interval: interval, label: label)
         }
     }
     
-    static func trackScreenName(screenName:String) {
+    class func trackScreenName(screenName:String) {
         self.trackers.forEach { (tracker) in
             (tracker as? ScreenTrackerProtocol)?.trackScreenName(screenName: screenName)
         }
     }
     
-    static func sendTag(tags: [String:Any], completion: @escaping TagTrackerCompletion) {
+    class func sendTag(tags: [String:Any], completion: @escaping TagTrackerCompletion) {
         self.trackers.forEach { (tracker) in
             (tracker as? TagTrackerProtocol)?.sendTags(tags, completion: completion)
         }

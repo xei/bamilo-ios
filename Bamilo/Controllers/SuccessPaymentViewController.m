@@ -41,22 +41,39 @@
     [self setupView];
     [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
-    //Reset the shared Cart entities
-    [RICart sharedInstance].cartEntity.cartItems = @[];
-    [RICart sharedInstance].cartEntity.cartCount = 0;
-    
     [self.tabBarController.tabBar setTranslucent:NO];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     [self trackPurchase];
+    
+    //Ecommerce tracking
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(5) options:@"SuccessPayment"];
+    
+    [self resetTheCart];
+}
+
+- (void)resetTheCart {
+    //Reset the shared Cart entities
+    [RICart sharedInstance].cartEntity.cartItems = @[];
+    [RICart sharedInstance].cartEntity.packages = @[];
+    [RICart sharedInstance].cartEntity.cartCount = @(0);
+    
+    [MainTabBarViewController updateCartValueWithCart:[RICart sharedInstance]];
 }
 
 - (void)setupView {
     [self.titleLabel applyStyle:[Theme font:kFontVariationRegular size:19.0f] color: [Theme color:kColorGreen]];
     [self.descLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[UIColor blackColor]];
     self.titleLabel.text = STRING_THANK_YOU_ORDER_TITLE;
-    self.descLabel.text = STRING_ORDER_SUCCESS;
+    
+    if ([self.cart.orderNr isKindOfClass:[NSString class]] && [self.cart.orderNr length]) {
+        self.descLabel.text = [[NSString stringWithFormat:@"%@\n%@: %@", STRING_ORDER_SUCCESS, STRING_ORDER_NO, self.cart.orderNr] numbersToPersian];
+    } else {
+        self.descLabel.text = STRING_ORDER_SUCCESS;
+    }
+
     self.iconImageView.image = [UIImage imageNamed:@"successIcon"];
     [self.carouselWidget hide];
     
@@ -73,6 +90,7 @@
     [TrackerManager postEventWithSelector:[EventSelectors purchaseSelector] attributes:[EventAttributes purchaseWithCart:self.cart success:YES]];
     [TrackerManager postEventWithSelector:[EventSelectors checkoutFinishedSelector] attributes:[EventAttributes chekcoutFinishWithCart:self.cart]];
     
+    [[GoogleAnalyticsTracker sharedTracker] trackTransactionWithCart:self.cart];
     [TrackerManager sendTagWithTags:@{ @"PurchaseCount": @([UserDefaultsManager incrementCounter:kUDMPurchaseCount]) } completion:^(NSError *error) {
         if(error == nil) {
             NSLog(@"TrackerManager > PurchaseCount > %d", [UserDefaultsManager getCounter:kUDMPurchaseCount]);
@@ -80,13 +98,15 @@
     }];
     
     //check if came from teasers and track that info
-    [self.cart.cartEntity.cartItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[RICartItem class]]) {
-            PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)obj).sku];
-            if (behaviour) {
-                [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
+    [self.cart.cartEntity.packages enumerateObjectsUsingBlock:^(CartPackage * _Nonnull package, NSUInteger idx, BOOL * _Nonnull stop) {
+        [package.products enumerateObjectsUsingBlock:^(RICartItem * _Nonnull product, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([product isKindOfClass:[RICartItem class]]) {
+                PurchaseBehaviour *behaviour = [[PurchaseBehaviourRecorder sharedInstance] getBehviourBySkuWithSku:((RICartItem *)product).sku];
+                if (behaviour) {
+                    [TrackerManager postEventWithSelector:[EventSelectors behaviourPurchasedSelector] attributes:[EventAttributes purchaseBehaviourWithBehaviour:behaviour]];
+                }
             }
-        }
+        }];
     }];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kSkusFromTeaserInCartKey];
@@ -160,12 +180,13 @@
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
-        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
-                                                            object: nil
-                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku,
-                                                                      @"show_back_button": @(YES)
-                                                                      }];
+        
+        NSString *logic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL";
+        
+        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:logic]];
+        
+        //track behaviour journey from here
+        [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:[NSString stringWithFormat:@"%@-%@", [self getScreenName], logic]] currentScreenName:[self getScreenName]];
     }
 }
 

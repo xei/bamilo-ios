@@ -9,9 +9,9 @@
 public typealias EventAttributeType = [String:Any]
 
 
-@objc class EventAttributes: NSObject {
+@objcMembers class EventAttributes: NSObject {
     
-    private static func getCommonAttributes() -> EventAttributeType {
+    private class func getCommonAttributes() -> EventAttributeType {
         var attributes = [
             kEventAppVersion: AppManager.sharedInstance().getAppFullFormattedVersion(),
             kEventPlatform: "ios",
@@ -24,20 +24,21 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func login(loginMethod: String, user: RICustomer) -> EventAttributeType {
+    class func login(loginMethod: String, user: RICustomer?, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = loginMethod
-        attributes[kEventUser] = user
+        if let user = user { attributes[kEventUser] = user }
+        attributes[kEventSuccess] = success
         return attributes
     }
     
-    static func logout(success: Bool) -> EventAttributeType {
+    class func logout(success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSuccess] = success
         return attributes
     }
     
-    static func signup(method: String, user: RICustomer?,success: Bool) -> EventAttributeType {
+    class func signup(method: String, user: RICustomer?,success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = method
         attributes[kEventUser] = user
@@ -45,7 +46,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func openApp(source: OpenAppEventSourceType) -> EventAttributeType {
+    class func openApp(source: OpenAppEventSourceType) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         switch source {
         case .deeplink:
@@ -60,7 +61,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func addToWishList(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+    class func addToWishList(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
@@ -68,14 +69,14 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func removeFromWishList(product: RIProduct, screenName: String) -> EventAttributeType {
+    class func removeFromWishList(product: TrackableProductProtocol, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func addToCart(product: RIProduct, screenName: String, success: Bool) -> EventAttributeType {
+    class func addToCart(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
@@ -83,114 +84,112 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    static func removeFromCard(product: RIProduct, success: Bool) -> EventAttributeType {
+    class func removeFromCard(product: TrackableProductProtocol, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func viewCart(cart: RICart, success: Bool) -> EventAttributeType {
+    class func viewCart(cart: RICart, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCart] = success
         attributes[kEventSuccess] = success
         return attributes
     }
     
-    static func purchase(cart: RICart, success: Bool) -> EventAttributeType {
+    class func purchase(cart: RICart, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCart] = cart
         attributes[kEventSuccess] = success
         return attributes
     }
     
-    static func purchaseBehaviour(behaviour: PurchaseBehaviour) -> EventAttributeType {
+    class func purchaseBehaviour(behaviour: PurchaseBehaviour) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kGAEventCategory] = behaviour.categoryName
         attributes[kGAEventLabel] = behaviour.label
         return attributes
     }
     
-    static func teaserTapped(teaserName: String, screenName: String, teaserTargetNode: String) -> EventAttributeType {
+    class func itemTapped(categoryEvent: String, screenName: String, labelEvent: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
-        attributes[kEventTeaser] = teaserName
+        attributes[kGAEventCategory] = categoryEvent
         attributes[kEventScreenName] = screenName
-        attributes[kEventTargetString] = teaserTargetNode
+        attributes[kGAEventLabel] = labelEvent
         return attributes
     }
     
-    static func viewProduct(parentViewScreenName: String, product: RIProduct) -> EventAttributeType {
+    class func viewProduct(parentViewScreenName: String, product: TrackableProductProtocol) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = parentViewScreenName
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func rateProduct(product: RIProduct) -> EventAttributeType {
+    class func rateProduct(product: TrackableProductProtocol) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventProduct] = product
         return attributes
     }
     
-    static func searchAction(searchTarget: RITarget) -> EventAttributeType {
+    class func searchAction(searchTarget: RITarget) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSearchTarget] = searchTarget
         return attributes
     }
     
-    static func searchBarSearched(searchString: String, screenName: String) -> EventAttributeType {
+    class func searchBarSearched(searchString: String, screenName: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventKeywords] = searchString
         attributes[kEventScreenName] = screenName
         return attributes
     }
     
-    static func tapEmarsysRecommendation(screenName: String, logic: String) -> EventAttributeType {
+    class func tapEmarsysRecommendation(screenName: String, logic: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventRecommendationLogic] = logic
         return attributes
     }
     
-    static func filterSearch(filterQueryString: String) -> EventAttributeType {
+    class func filterSearch(filterQueryString: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventFilterQuery] = filterQueryString
         return attributes
     }
     
-    static func catalogViewChanged(listViewType: CatalogListViewType) -> EventAttributeType {
+    class func catalogViewChanged(listViewType: CatalogListViewType) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCatalogListViewType] = listViewType.rawValue
         return attributes
     }
     
-    static func catalogSortChanged(sortMethod: Catalog.CatalogSortType) -> EventAttributeType {
+    class func catalogSortChanged(sortMethod: Catalog.CatalogSortType) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCatalogSortMethod] = sortMethod
         return attributes
     }
     
-    static func checkoutStart(cart :RICart) -> EventAttributeType {
+    class func checkoutStart(cart :RICart) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCart] = cart
         return attributes
     }
     
-    static func chekcoutFinish(cart: RICart) -> EventAttributeType {
+    class func chekcoutFinish(cart: RICart) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventCart] = cart
         return attributes
     }
     
-    static func searchSuggestionTapped(suggestionTitle: String) -> EventAttributeType {
+    class func searchSuggestionTapped(suggestionTitle: String) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSuggestionTitle] = suggestionTitle
         return attributes
     }
     
-    static func callToOrderTapped() -> EventAttributeType {
+    class func callToOrderTapped() -> EventAttributeType {
         return self.getCommonAttributes()
     }
-    
-    
 }

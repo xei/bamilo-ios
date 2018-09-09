@@ -14,7 +14,7 @@ import Kingfisher
     @objc optional func searchBySuggestion(targetString: String)
 }
 
-class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
+@objcMembers class SearchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, DataServiceProtocol, UITextFieldDelegate, UIScrollViewDelegate, SearchViewControllerDelegate {
 
     @IBOutlet private weak var dummyStatusbarView: UIView!
     @IBOutlet private weak var searchBarContainer: UIView!
@@ -62,7 +62,6 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     
     func setupView() {
         self.searchBarContainer.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        
         self.searchTextField.backgroundColor = UIColor.white
         self.searchTextField.font = Theme.font(kFontVariationRegular, size: 13)
         let searchIconView = UIImageView(image: UIImage(named: "searchIcon"))
@@ -70,7 +69,13 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         self.searchTextField.leftViewMode = .always
         searchIconView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
         self.searchTextField.leftView = searchIconView
-        self.searchTextField.textAlignment = .right
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.searchTextField.frame.height))
+        self.searchTextField.rightView = paddingView
+        self.searchTextField.rightViewMode = .always
+        
+        self.searchTextField.textAlignment = .natural
+        self.searchTextField.layer.cornerRadius = 4
         self.searchTextField.placeholder = STRING_SEARCH_PLACEHOLDER
         self.searchTextField.autocorrectionType = .no
         self.searchTextField.autocapitalizationType = .none
@@ -86,7 +91,7 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
     @IBAction func backButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         self.previousRequestTask?.cancel()
         if sender.text?.count == 0 {
@@ -191,23 +196,25 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
                     self.delegate?.searchBySuggestion?(targetString: target)
                     let trackingActionLabel = isRecentView ? "search_recent_cat" : "Search_recom_cat"
                     TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
+                    if let screenName = self.getScreenName() {
+                        MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "\(screenName)", label: "\(trackingActionLabel)"), currentScreenName: screenName)
+                    }
                 }
             }
         } else if indexPath.section == 1 {
             if let products = self.suggestion?.products {
                 self.localSavedSuggestion.add(product: products[indexPath.row])
-                if let target = products[indexPath.row].target {
+                if let target = products[indexPath.row].target, let screenName = self.getScreenName() {
                     self.delegate?.searchBySuggestion?(targetString: target)
                     let trackingActionLabel = isRecentView ? "search_recent_sku" : "Search_recom_sku"
                     TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: trackingActionLabel))
-                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::\(trackingActionLabel)")
+                    MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "\(screenName)", label: "\(trackingActionLabel)"), currentScreenName: screenName)
                 }
             }
         } else if indexPath.section == 2 {
-            if let searchQueries = self.suggestion?.searchQueries, let target = searchQueries[indexPath.row].target, let _ = searchQueries[indexPath.row].name {
+            if let searchQueries = self.suggestion?.searchQueries, let target = searchQueries[indexPath.row].target, let _ = searchQueries[indexPath.row].name, let screenName = self.getScreenName() {
                 TrackerManager.postEvent(selector: EventSelectors.suggestionTappedSelector(), attributes: EventAttributes.searchSuggestionTapped(suggestionTitle: "search_recent_string"))
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: "SearchSuggestions:::search_recent_string")
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "\(screenName)", label: "search_recent_string"), currentScreenName: screenName)
             }
         }
         
@@ -230,8 +237,9 @@ class SearchViewController: BaseViewController, UITableViewDelegate, UITableView
         if let queryString = textField.text {
             self.delegate?.searchByString?(queryString: queryString)
             self.localSavedSuggestion.add(searchQuery: queryString)
-            
-            MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "SearchString:::\(queryString)")
+            if let screenName = getScreenName() {
+                MainTabBarViewController.topNavigationController()?.openTargetString(target?.targetString, purchaseInfo: "\(screenName):::query=\(queryString)", currentScreenName: screenName)
+            }
         }
         
         return true

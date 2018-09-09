@@ -26,10 +26,16 @@ class FailPaymentViewController: BaseViewController {
         self.backToCardButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = false
         self.tabBarController?.tabBar.isHidden = false;
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     @IBAction func backToCardButtonTapped(_ sender: Any) {

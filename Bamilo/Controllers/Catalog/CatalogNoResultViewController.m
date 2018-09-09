@@ -43,7 +43,7 @@
     [self.carouselWidget hide];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    self.carouselBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
+//    self.carouselBottomConstraint.constant = [MainTabBarViewController sharedInstance].tabBar.height;
 }
 
 - (void)getSuggestions {
@@ -98,9 +98,9 @@
     if ([item isKindOfClass:[RecommendItem class]]) {
         [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector]
                                    attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:@"Catalog" logic:@"PERSONAL"]];
-        [[NSNotificationCenter defaultCenter] postNotificationName: kDidSelectTeaserWithPDVUrlNofication
-                                                            object: nil
-                                                          userInfo: @{@"sku": ((RecommendItem *)item).sku}];
+        
+        //track behaviour journey from here
+        [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:@"Catalog-PERSONAL"] currentScreenName: @"Catalog"];
     }
 }
 

@@ -19,12 +19,20 @@ extension String {
         return "\u{200F}".appending(self)
     }
     
+    func replace(target: String, withString: String) -> String {
+        return self.replacingOccurrences(of: target, with: withString, options: NSString.CompareOptions.literal, range: nil)
+    }
+    
     func convertTo(language: LocalLang) -> String {
         var converted: String = ""
         for character in self {
             converted.append(convertSingleCharTo(character: String(character), language: language))
         }
         return converted
+    }
+    
+    func persianDoubleFormat() -> String {
+        return self.replacingOccurrences(of: ".", with: "/")
     }
     
     func priceFormat() -> String {
@@ -43,8 +51,8 @@ extension String {
     
     func strucThroughPriceFormat() -> NSAttributedString {
         let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: self)
-        attributeString.addAttribute(NSBaselineOffsetAttributeName, value: 0, range: NSMakeRange(0, attributeString.length))
-        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSAttributedStringKey.baselineOffset, value: 0, range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
         return attributeString
     }
     

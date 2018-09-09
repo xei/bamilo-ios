@@ -41,6 +41,13 @@
         [self showLoading];
         [RIHtmlShop getHtmlShopForTargetString:self.targetString successBlock:^(RIHtmlShop *htmlShop) {
             self.htmlShop = htmlShop;
+            if ([htmlShop.title isKindOfClass:[NSString class]] && [htmlShop.title length]){
+                self.navigationItem.titleView = nil;
+                self.title = htmlShop.title;
+            } else {
+                self.navigationItem.titleView = [NavBarUtility navBarLogo];
+            }
+            
             self.isLoaded = YES;
             [self onSuccessResponse:RIApiResponseSuccess messages:nil showMessage:NO];
             [self.webView loadHTMLString:self.htmlShop.html baseURL:[NSURL URLWithString:@"http://"]];
@@ -98,14 +105,13 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType: (UIWebViewNavigationType)navigationType {
     RITarget *target = [RITarget parseTarget:[request.URL absoluteString]];
-    JAScreenTarget *screenTarget = [[JAScreenTarget alloc] initWithTarget:target];
-    return ![[MainTabBarViewController topNavigationController] openScreenTarget:screenTarget purchaseInfo:self.purchaseTrackingInfo];
+    return ![[MainTabBarViewController topNavigationController] openScreenTarget:target purchaseInfo:self.purchaseTrackingInfo currentScreenName:[self getScreenName]];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self hideLoading];
     if (self.htmlShop.featuredBoxesArray.count) {
-        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.title];
+        [self publishScreenLoadTimeWithName:[self getScreenName] withLabel: self.targetString];
         [self.scrollView setFrame:[self viewBounds]];
         [self.webView setFrame:self.scrollView.bounds];
         [self loadViews];
@@ -124,6 +130,10 @@
 
 - (NavBarButtonType)navBarleftButton {
     return NavBarButtonTypeSearch;
+}
+
+- (UIView *)navBarTitleView {
+    return [NavBarUtility navBarLogo];
 }
 
 @end

@@ -8,64 +8,50 @@
 
 #import "EmarsysRecommendationGridWidgetView.h"
 #import "EmarsysRecommendationCarouselCollectionViewCell.h"
+#import "Bamilo-Swift.h"
 
 @interface EmarsysRecommendationGridWidgetView()
 
-@property (nonatomic, weak) IBOutlet UILabel *widgetTitle;
-@property (nonatomic, weak) IBOutlet UIButton *leftButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
 @end
 
 @implementation EmarsysRecommendationGridWidgetView
 
-const CGFloat cellSpace = 2;
+const CGFloat cellSpace = 5;
 const int numberOfColumns = 2;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setWidgetBacgkround:[UIColor clearColor]];
-    
-    [self.widgetTitle applyStyle:[Theme font:kFontVariationBold size:12.0f] color:[UIColor blackColor]];
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    [self.moreButton applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorBlue]];
+    [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %@", STRING_ALL, STRING_RELATED_ITEMS] forState:UIControlStateNormal];
     [self.collectionView registerNib:[UINib nibWithNibName:[EmarsysRecommendationCarouselCollectionViewCell nibName] bundle:nil] forCellWithReuseIdentifier:[EmarsysRecommendationCarouselCollectionViewCell nibName]];
-    
-    [self.leftButton applyStyle:[Theme font:kFontVariationRegular size:11] color:[Theme color:kColorGray1]];
-    [self.leftButton setTitle:STRING_MORE forState:UIControlStateNormal];
 }
 
-- (void)updateLeftButtonTitle:(NSString *)title {
-    [self.leftButton setHidden:NO];
-    [self.leftButton setTitle:title forState:UIControlStateNormal];
-}
-
-- (IBAction)leftButtonTapped:(id)sender {
+- (IBAction)moreButtonTapped:(id)sender {
     if ([self.delegate respondsToSelector:@selector(moreButtonTappedInWidgetView:)]) {
         [self.delegate moreButtonTappedInWidgetView:self];
     }
 }
 
-- (void)updateTitle:(NSString *)title {
-    self.widgetTitle.text = title;
-}
-
 - (void)updateWithModel:(NSArray *)arrayModel {
     if ([arrayModel isKindOfClass:[NSArray<RecommendItem *> class]]) {
         [super updateWithModel:arrayModel];
+        CGFloat contentWidth = UIScreen.mainScreen.bounds.size.width - 8 * 2;
+        self.collectionViewHeightConstraint.constant = [self collectionViewHeightWithContentModel: arrayModel
+                                                                                       boundWidth: contentWidth];
     }
 }
 
-+ (CGFloat)preferredHeightWithContentModel:(NSArray<RecommendItem *> *)arrayModel boundWidth:(CGFloat)width {
-    const CGFloat collectionViewTopConstrint = 40;
-    const CGFloat collectionViewMarginConstrint = 15;
+- (CGFloat)collectionViewHeightWithContentModel:(NSArray<RecommendItem *> *)arrayModel boundWidth:(CGFloat)width {
     const int collectionItemsRowsCount = ceil(arrayModel.count / (CGFloat)numberOfColumns);
     
     CGSize cellPrefferedSize = [EmarsysRecommendationCarouselCollectionViewCell preferedSize];
     CGFloat ratio = cellPrefferedSize.height / cellPrefferedSize.width;
-    CGFloat cellItemWidth = (width - (collectionViewMarginConstrint * 2) - (numberOfColumns - 1) * cellSpace) / numberOfColumns;
-    
-    return collectionViewTopConstrint +
-    collectionViewMarginConstrint +
-    collectionItemsRowsCount * (ratio * cellItemWidth) +
-    (collectionItemsRowsCount - 1) * cellSpace;
+    CGFloat cellItemWidth = (width - (numberOfColumns - 1) * cellSpace) / numberOfColumns;
+    return collectionItemsRowsCount * (ratio * cellItemWidth) + (collectionItemsRowsCount - 1) * cellSpace;
 }
 
 #pragma mark - UICollectionViewDataSource

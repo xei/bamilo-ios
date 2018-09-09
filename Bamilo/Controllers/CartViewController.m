@@ -99,8 +99,8 @@
         //remove the existing purchase behaviour with sku
         [[PurchaseBehaviourRecorder sharedInstance] deleteBehaviourWithSku:cartItem.sku];
         
-        RIProduct *product = [RIProduct new];
-        product.price = cartItem.price;
+        Product *product = [Product new];
+        [product setPriceWithPrice: cartItem.price];
         product.sku = cartItem.sku;
         [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product success:YES]];
         
@@ -266,6 +266,9 @@
             [EmarsysPredictManager sendTransactionsOf:self];
             [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:self.cart success:YES]];
         }
+        
+        //track Ecommerce event
+        [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(1) options:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo: @{kUpdateCartNotificationValue: self.cart}];
     }
 }

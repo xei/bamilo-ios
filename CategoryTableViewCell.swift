@@ -17,6 +17,8 @@ class CategoryTableViewCell: BaseTableViewCell {
     @IBOutlet weak private var titleLabelToImageRightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var titleToSuperviewRightConstraint: NSLayoutConstraint!
     
+    var forcedAlignment: NSTextAlignment?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.applyStyle()
@@ -25,13 +27,9 @@ class CategoryTableViewCell: BaseTableViewCell {
     private func applyStyle() {
         self.backgroundColor = .white
         self.contentView.backgroundColor = .white
-//        self.iconImageView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2
-//        self.iconImageView.clipsToBounds = true
-//        self.imageViewContainerView.layer.cornerRadius = self.imageViewContainerHeightConstraint.constant / 2
-//        self.imageViewContainerView.applyShadow(position: CGSize(width:0 , height: 1), color: .black, opacity: 0.2)
-//        self.imageViewContainerView.clipsToBounds = false
-        
         self.titleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: Theme.color(kColorGray1))
+        self.titleToSuperviewRightConstraint.priority = .defaultLow
+        self.titleLabelToImageRightConstraint.priority = .defaultHigh
     }
     
     override func update(withModel model: Any!) {
@@ -46,26 +44,36 @@ class CategoryTableViewCell: BaseTableViewCell {
     
     private func updateView(imageUrl: URL?, title: String) {
         self.titleLabel.text = title
-        if let image = imageUrl {
-            self.imageViewContainerView.isHidden = false
-            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultLow
-            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultHigh
-            self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+        
+        if let alignment = forcedAlignment {
+            self.titleToSuperviewRightConstraint.priority = alignment == .left ? .defaultLow : .defaultHigh
+            self.titleLabelToImageRightConstraint.priority = alignment == .left ? .defaultHigh : .defaultLow
+            self.imageViewContainerView.isHidden = alignment == .right ? true : false
+            if let image = imageUrl {
+                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+            }
         } else {
-            self.imageViewContainerView.isHidden = true
-            self.titleToSuperviewRightConstraint.priority = UILayoutPriorityDefaultHigh
-            self.titleLabelToImageRightConstraint.priority = UILayoutPriorityDefaultLow
+            if let image = imageUrl {
+                self.imageViewContainerView.isHidden = false
+                self.titleToSuperviewRightConstraint.priority = .defaultLow
+                self.titleLabelToImageRightConstraint.priority = .defaultHigh
+                self.iconImageView.kf.setImage(with: image, options: [.transition(.fade(0.20))])
+            } else {
+                self.imageViewContainerView.isHidden = true
+                self.titleToSuperviewRightConstraint.priority = .defaultHigh
+                self.titleLabelToImageRightConstraint.priority = .defaultLow
+            }
         }
+        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-            
         self.titleLabel.text = nil
         self.iconImageView.image = nil
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

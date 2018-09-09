@@ -5,7 +5,7 @@
 //  Created by Narbeh Mirzaei on 1/31/17.
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
-
+@import Firebase;
 #import "JAAppDelegate.h"
 #import "JAMessageView.h"
 #import "BaseViewController.h"
@@ -17,6 +17,7 @@
 
 @interface BaseViewController()
 @property (strong, nonatomic) JAMessageView *messageView;
+@property (strong, nonatomic) FIRTrace *fireBaseTrace;
 @end
 
 @implementation BaseViewController {
@@ -44,7 +45,10 @@
         self.navigationItem.titleView = [self navBarTitleView];
     }
     if ([self respondsToSelector:@selector(navBarTitleString)]) {
-        self.title = [self navBarTitleString];
+        if ([[self navBarTitleString] isKindOfClass:[NSString class]] && [[self navBarTitleString] length]) {
+            self.navigationItem.titleView = nil;
+            self.title = [self navBarTitleString];
+        }
     }
     if ([self respondsToSelector:@selector(navBarhideBackButton)]) {
         self.navigationItem.hidesBackButton = [self navBarhideBackButton];
@@ -166,12 +170,15 @@
 #pragma mark - PerformanceTrackerProtocol
 - (void)recordStartLoadTime {
     _startLoadingTime = [NSDate date];
+    self.fireBaseTrace = [FIRPerformance startTraceWithName:[self getScreenName]];
 }
 
 - (void)publishScreenLoadTimeWithName:(NSString *)name withLabel:(NSString *)label {
     NSDate *publishTime = [NSDate date];
     NSTimeInterval publishInterVal = [publishTime timeIntervalSinceDate:_startLoadingTime];
     [TrackerManager trackLoadTimeWithScreenName:name interval:@((NSUInteger)(publishInterVal * 1000)) label:label];
+    
+    [self.fireBaseTrace stop];
 }
 
 - (void)handleGenericErrorCodesWithErrorControlView:(int)errorCode forRequestID:(int)rid {
@@ -191,6 +198,9 @@
         [errorView bringSubviewToFront:self.view];
         [errorView bindFrameToSuperviewBounds];
     }
+    
+    //FireBase Tracking retry
+    [self.fireBaseTrace incrementMetric:@"retry" byInt:1];
 }
 
 - (void)removeErrorView {
@@ -216,7 +226,7 @@
 }
 
 - (void)updateCartInNavBar {
-    if (self.navBarleftButton == NavBarButtonTypeCart) {
+    if ([self respondsToSelector:@selector(navBarleftButton)] && self.navBarleftButton == NavBarButtonTypeCart) {
         self.navigationItem.rightBarButtonItem.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[[RICart sharedInstance].cartEntity.cartCount integerValue]];
     }
 }

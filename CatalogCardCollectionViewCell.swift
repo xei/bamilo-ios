@@ -21,11 +21,11 @@ class CatalogCardCollectionViewCell: BaseCatallogCollectionViewCell {
         super.updateWithProduct(product: product)
         self.discountedPriceTopConstaint.constant = product.specialPrice != nil ? discountedPriceTopConstaintForAvaiableSpecialPrice: discountedPriceTopConstaintForNotAvaiableSpecialPrice
         if product.specialPrice != nil {
-            self.rateViewCenterToPriceConstraint.priority = 750
-            self.rateViewCenterToDiscountedPriceConstraint.priority = 250
+            self.rateViewCenterToPriceConstraint.priority = UILayoutPriority(rawValue: 750)
+            self.rateViewCenterToDiscountedPriceConstraint.priority = UILayoutPriority(rawValue: 250)
         } else {
-            self.rateViewCenterToPriceConstraint.priority = 250
-            self.rateViewCenterToDiscountedPriceConstraint.priority = 750
+            self.rateViewCenterToPriceConstraint.priority = UILayoutPriority(rawValue: 250)
+            self.rateViewCenterToDiscountedPriceConstraint.priority = UILayoutPriority(rawValue: 750)
         }
     }
 }

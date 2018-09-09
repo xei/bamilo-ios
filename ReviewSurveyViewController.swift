@@ -7,13 +7,14 @@
 //
 
 import UIKit
-import CHIPageControl
+import AnimatedCollectionViewLayout
 
 class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DataServiceProtocol {
 
     @IBOutlet weak private var submitButton: OrangeButton!
     @IBOutlet weak private var collectionView: UICollectionView!
     @IBOutlet weak private var pagerControl: CHIPageControlJaloro!
+    @IBOutlet weak private var submitButtonBottomConstraint: NSLayoutConstraint!
     
     var surveryModel: ReviewSurvery!
     var orderID: String!
@@ -35,19 +36,35 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.showsHorizontalScrollIndicator = false
         
+        self.collectionView.isPagingEnabled = true
+        
+        if let layout = collectionView?.collectionViewLayout as? AnimatedCollectionViewLayout {
+            layout.scrollDirection = .horizontal
+            layout.animator = CubeAttributesAnimator()
+        }
+        
         self.collectionView.register(UINib(nibName: SurveyQuestionCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: SurveyQuestionCollectionViewCell.nibName)
+        self.collectionView.register(UINib(nibName: AppreciateSurveyCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: AppreciateSurveyCollectionViewCell.nibName)
 
         self.updateView(by: surveryModel)
         self.title = self.surveryModel.title ?? STRING_SURVEY
         
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSFontAttributeName: Theme.font(kFontVariationBold, size: 14),
-            NSForegroundColorAttributeName: Theme.color(kColorBlue2)
-        ]
+            NSAttributedStringKey.font: Theme.font(kFontVariationBold, size: 14),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorBlue2)
+            ] as [NSAttributedStringKey : Any]
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    deinit {
+        //remove all observers for this view controller when it's deinitliazed
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func closeButtonTapped() {
-        if let id = self.surveryModel.id {
+        if let id = self.surveryModel.id, let dataSource = self.dataSource, self.activeIndex != dataSource.count {
             ReviewServiceDataManager.sharedInstance.ignoreSurvey(self, surveyID: "\(id)") { (data, error) in }
         }
         super.closeButtonTapped()
@@ -61,20 +78,26 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         self.pagerControl.currentPageTintColor = Theme.color(kColorOrange)
         self.pagerControl.numberOfPages = 0
         self.pagerControl.elementHeight = 9
+        
+        //for RTL view
+        self.pagerControl.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
     
     //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+    var mycell: UICollectionViewCell?
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let question = self.dataSource?[indexPath.row] {
+        if let dataSource = self.dataSource, indexPath.row < dataSource.count {
             let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SurveyQuestionCollectionViewCell.nibName, for: indexPath) as! SurveyQuestionCollectionViewCell
-            cell.update(withModel: question)
+            self.mycell = cell
+            cell.update(withModel: dataSource[indexPath.row])
             return cell
+        } else {
+            return self.collectionView.dequeueReusableCell(withReuseIdentifier: AppreciateSurveyCollectionViewCell.nibName, for: indexPath) as! AppreciateSurveyCollectionViewCell
         }
-        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.count ?? 0
+        return (dataSource?.count ?? 0) + 1
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -86,7 +109,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.collectionView, let dataSource = self.dataSource, dataSource.count - 1 != self.firstNotAnsweredQuestionIndex {
+        if scrollView == self.collectionView, let dataSource = self.dataSource, dataSource.count != self.firstNotAnsweredQuestionIndex {
             //Prevent user from scrolling to other more questions before answering this question
             if let x = self.collectionView.layoutAttributesForItem(at: IndexPath(row: self.firstNotAnsweredQuestionIndex, section: 0))?.frame.minX {
                 if (scrollView.contentOffset.x < x) {
@@ -117,30 +140,27 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     private func updateView(by survey: ReviewSurvery) {
-        self.dataSource = survey.pages?.flatMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
+        self.dataSource = survey.pages?.compactMap({ $0.questions }).flatMap({ $0 }).filter({ !$0.isHidden && $0.type != nil })
         if let dataSourceCount = self.dataSource?.count, dataSourceCount > 1 {
-            self.pagerControl.numberOfPages = dataSourceCount
+            self.pagerControl.numberOfPages = dataSourceCount + 1
         } else {
             self.pagerControl.isHidden = true
         }
         self.pagerControl.elementWidth = UIScreen.main.bounds.width / CGFloat(self.pagerControl.numberOfPages) - 2 * self.pagerHorizontalPadding
-        
-        self.pagerControl.set(progress: self.pagerControl.numberOfPages - 1, animated: false)
-        
         self.collectionView.reloadData()
     }
     
     private func updatePagerControl(animated: Bool) {
-        if let dataSource = self.dataSource {
-            if self.pagerControl.currentPage != dataSource.count - 1 - self.activeIndex {
-                self.pagerControl.set(progress: dataSource.count - 1 - self.activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
-            }
+        if self.pagerControl.currentPage != self.activeIndex {
+            self.pagerControl.set(progress: self.activeIndex, animated: animated && pagerMustBeUpdatedViaAnimation)
         }
     }
     
     private func updateSubmitButtonTitle() {
         if let dataSource = self.dataSource, self.activeIndex == dataSource.count - 1 {
             self.submitButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)
+        } else if let dataSource = self.dataSource, self.activeIndex == dataSource.count {
+            self.submitButton.setTitle(STRING_CLOSE, for: .normal)
         } else {
             self.submitButton.setTitle(STRING_NEXT, for: .normal)
         }
@@ -156,16 +176,23 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         if let dataSource = self.dataSource {
+            
+            //last view is appreciation view
+            if dataSource.count == self.activeIndex {
+                self.dismiss(animated: true, completion: nil)
+            }
             
             if let dataSource = self.dataSource, dataSource.count > self.activeIndex {
                 self.submitQuestion(question: dataSource[self.activeIndex], isLastOne: dataSource.count - 1 == self.activeIndex)
             }
-            
             if self.firstNotAnsweredQuestionIndex >= self.activeIndex {
-                if self.activeIndex < dataSource.count - 1 {
+                if self.activeIndex < dataSource.count {
                     self.activeIndex += 1
-                    self.scrollToIndex(index: self.activeIndex)
+                    Utility.delay(duration: 0.15) {
+                        self.scrollToIndex(index: self.activeIndex)
+                    }
                 }
             }
             if firstNotAnsweredQuestionIndex < activeIndex {
@@ -176,15 +203,19 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     
     private func submitQuestion(question: SurveyQuestion, isLastOne: Bool) {
         
-        if let activeQuestionOptionsCount = question.options?.filter({ $0.isSelected ?? false }).count, activeQuestionOptionsCount > 0 {
-            if let alias = self.surveryModel.alias {
+        if let activeQuestionOptionsCount = question.options?.filter({ $0.isSelected ?? false }).count, activeQuestionOptionsCount > 0 , let alias = self.surveryModel.alias {
                 ReviewServiceDataManager.sharedInstance.sendSurveyAlias(self, surveyAlias: alias, question: question, isLastOne: isLastOne, for: self.orderID, requestType: .background) { data, error in
                 }
+        } else if let _ = question.anwerTextMessage, let alias = self.surveryModel.alias {
+            ReviewServiceDataManager.sharedInstance.sendSurveyAlias(self, surveyAlias: alias, question: question, isLastOne: isLastOne, for: self.orderID, requestType: .background) { data, error in
             }
         }
         
         if isLastOne {
-            self.dismiss(animated: true, completion: nil)
+            self.collectionView.isScrollEnabled = false
+            Utility.delay(duration: 4) {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
@@ -203,5 +234,25 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
+    }
+    
+    
+    //MARK: - KeyboardNotifications
+    @objc func keyboardWasShown(notification:NSNotification) {
+        let userInfo = notification.userInfo
+        let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let keyboardRectangle = keyboardFrame?.cgRectValue
+        if let keyboardHeight = keyboardRectangle?.height {
+            self.submitButtonBottomConstraint.constant = keyboardHeight
+            self.collectionView.collectionViewLayout.invalidateLayout()
+            
+            self.collectionView.panGestureRecognizer.isEnabled = false
+        }
+    }
+    
+    @objc func keyboardWillBeHidden(notification: Notification) {
+        self.submitButtonBottomConstraint.constant = 0
+        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView.panGestureRecognizer.isEnabled = true
     }
 }

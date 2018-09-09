@@ -21,6 +21,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
     
     private var coverPageCell: CategoryCoverTableViewCell?
     private var coverHeight: CGFloat?
+    private var hasAnyCategoriesImage: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
         
         //navigation title
         self.title = self.historyCategory?.last?.name
-        
+        hasAnyCategoriesImage = subcategories?.reduce(false, { $0 || ($1.image != nil) })
         //To remove extra seperators
         self.tableview.tableFooterView = UIView(frame: .zero)
     }
@@ -59,6 +60,7 @@ class SubCategoryLandingPageViewController: BaseViewController,
             return cell
         } else if indexPath.section == 1 {
             let cell = self.tableview.dequeueReusableCell(withIdentifier: CategoryTableViewCell.nibName(), for: indexPath) as! CategoryTableViewCell
+            cell.forcedAlignment = (hasAnyCategoriesImage ?? false ) ? .left : .right
             if indexPath.row < self.subcategories?.count ?? 0 {
                 cell.update(withModel: self.subcategories?[indexPath.row])
             }
@@ -81,11 +83,15 @@ class SubCategoryLandingPageViewController: BaseViewController,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.section == 1, let subCats = self.subcategories, indexPath.row < subCats.count {
+            if let title = subCats[indexPath.row].name {
+                TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: "Category", screenName: getScreenName(), labelEvent: title))
+            }
             if let childs = subCats[indexPath.row].childern, childs.count > 0 {
                 self.pushToSubCatViewByCategory(category: subCats[indexPath.row])
-            } else if let target = subCats[indexPath.row].target {
-                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+            } else if let target = subCats[indexPath.row].target, let screenName = getScreenName(), let title = subCats[indexPath.row].name {
+                MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: "Category", label: title), currentScreenName: screenName)
             }
         }
     }
@@ -128,6 +134,10 @@ class SubCategoryLandingPageViewController: BaseViewController,
         if let viewControllers = self.navigationController?.viewControllers, level < viewControllers.count {
             self.navigationController?.popToViewController(viewControllers[level], animated: true)
         }
+    }
+    
+    override func getScreenName() -> String! {
+        return "SubCategoriesView"
     }
     
     //MARK: - NavigationBarProtocol

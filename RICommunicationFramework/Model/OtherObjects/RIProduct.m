@@ -11,11 +11,11 @@
 #import "RIProductSimple.h"
 #import "RIVariation.h"
 #import "RICategory.h"
-#import "RISeller.h"
 #import "RIBanner.h"
 #import "RISpecification.h"
 #import "RITarget.h"
 #import "RISearchSuggestion.h"
+#import "Bamilo-Swift.h"
 
 @implementation RIBundle
 
@@ -26,8 +26,7 @@
     
     if (VALID_NOTEMPTY(dataDic, NSDictionary)) {
         
-        if([dataDic objectForKey:@"id"])
-        {
+        if(VALID_NOTEMPTY([dataDic objectForKey:@"id"], NSString)) {
             newBundle.bundleId = [dataDic objectForKey:@"id"];
         }
         
@@ -53,7 +52,6 @@
 @end
 
 @implementation RIProduct
-
 @synthesize attributeCareLabel;
 @synthesize attributeColor;
 @synthesize attributeDescription;
@@ -116,10 +114,15 @@
 @synthesize hasStock;
 @synthesize freeShippingPossible;
 
-+ (NSString *)getCompleteProductWithSku:(NSString*)sku
-                           successBlock:(void (^)(id product))successBlock
-                        andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock
-{
+- (NSNumber *)getPayablePrice {
+    return price;
+}
+
+- (BOOL)getIsInWishList {
+    return favoriteAddDate != nil;
+}
+
++ (NSString *)getCompleteProductWithSku:(NSString*)sku successBlock:(void (^)(id product))successBlock andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *error))failureBlock {
     NSString *finalTargetString = [RITarget getTargetString:PRODUCT_DETAIL node:sku];
     return [RIProduct getCompleteProductWithTargetString:finalTargetString
                                        withRichParameter:nil
@@ -141,7 +144,7 @@
     
     NSString * url =  [RITarget getURLStringforTargetString:targetString];
     url = [NSString stringWithFormat:@"%@/%@",url,richParam];
-    url = [url  stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:url]
                                                             parameters:nil
@@ -647,9 +650,7 @@
         if ([dataDic objectForKey:@"seller_entity"]) {
             NSDictionary* sellerJSON = [dataDic objectForKey:@"seller_entity"];
             if (VALID_NOTEMPTY(sellerJSON, NSDictionary)) {
-                
-                RISeller* seller = [RISeller parseSeller:sellerJSON];
-                newProduct.seller = seller;
+                newProduct.seller = [Seller parseToSellerWithDic:sellerJSON];
             }
         }
         

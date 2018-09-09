@@ -35,13 +35,14 @@
             package.products = [self parseProductsFromDictionary:obj forCartEntity:cartEntity withCountry:country];
             package.title = [obj objectForKey:@"title"];
             package.deliveryTime = [obj objectForKey:@"delivery_time"];
+            package.deliveryTypeDesc = [[obj objectForKey:@"delivery_type"] objectForKey:@"description"];
             [parsingPackages addObject:package];
         }];
         
         cartEntity.packages = [parsingPackages copy];
     }
     
-    if([dict objectForKey:@"sub_total_undiscounted"]) {
+    if(VALID_NOTEMPTY([dict objectForKey:@"sub_total_undiscounted"], NSNumber)) {
         cartEntity.cartUnreducedValue = [dict objectForKey:@"sub_total_undiscounted"];
         cartEntity.cartUnreducedValueFormatted = [RICountryConfiguration formatPrice:cartEntity.cartUnreducedValue country:country];
     }

@@ -15,7 +15,7 @@ typealias TourPresentingHandler = (_ feature: String, _ presenter: TourPresenter
     func getScreenName() -> String!
 }
 
-@objc class TourManager: NSObject {
+@objcMembers class TourManager: NSObject {
     
     static let shared = TourManager()
 

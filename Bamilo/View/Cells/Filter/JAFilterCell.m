@@ -47,7 +47,7 @@
             if (option.selected) numberOfSelectedOptions++;
         }
     } else if ([filter isKindOfClass:[CatalogPriceFilterItem class]]) {
-        CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)filter;
+//        CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)filter;
 //        if (priceFilter.lowerValue > priceFilter.minPrice || priceFilter.upperValue < priceFilter.maxPrice || YES == priceFilter.discountOnly) {
 //            numberOfSelectedOptions = 1;
 //        }

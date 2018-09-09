@@ -33,22 +33,18 @@
 //************ root view controller notifications
 #define kOpenMenuNotification @"NOTIFICATION_OPEN_MENU"
 #define kCloseMenuNotification @"NOTIFICATION_OPEN_COLSE"
-#define kOpenCenterPanelNotification @"NOTIFICATION_OPEN_CENTER_PANEL"
 //#define kTurnOffMenuSwipePanelNotification @"NOTIFICATION_TURN_OFF_MENU_SWIPE_PANEL"
 //************
 
 //************ center navigation controller notifications
 #define kCloseCurrentScreenNotification @"NOTIFICATION_CLOSE_CURRENT_SCREEN"
 #define kCloseTopTwoScreensNotification @"NOTIFICATION_CLOSE_TOP_TWO_SCREENS"
-#define kMenuDidSelectOptionNotification @"NOTIFICATION_SELECTED_ITEM_MENU"
 #define kOpenCatalogFromUndefinedSearch @"NOTIFICATION_OPEN_CATALOG_FROM_UNDEF_SEARCH"
 #define kMenuDidSelectLeafCategoryNotification @"NOTIFICATION_SELECTED_LEAF_CATEGORY"
 #define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 #define kOpenOtherOffers @"NOTIFICATION_OPEN_OTHER_OFFERS"
-#define kOpenSellerReviews @"NOTIFICATION_OPEN_SELLER_REVIEWS"
 #define kOpenNewSellerReview @"NOTIFICATION_OPEN_NEW_SELLER_REVIEW"
-#define kOpenSellerPage @"NOTIFICATION_OPEN_SELLER_PAGE"
 
 //************ side menu navigation controller notifications
 #define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
@@ -64,8 +60,6 @@
 #define kShowRecentlyViewedScreenNotification @"NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN"
 #define kShowMyAccountScreenNotification @"NOTIFICATION_SHOW_MY_ACCOUNT_SCREEN"
 #define kShowUserDataScreenNotification @"NOTIFICATION_SHOW_USER_DATA_SCREEN"
-#define kShowEmailNotificationsScreenNotification @"NOTIFICATION_SHOW_EMAIL_NOTIFICAITONS_SCREEN"
-#define kShowNewsletterSubscriptionsScreenNotification @"NOTIFICATION_SHOW_NEWSLETTER_SUBSCRIPTIONS_NOTIFICAITONS_SCREEN"
 
 // Checkout
 #define kShowCheckoutForgotPasswordScreenNotification @"NOTIFICATION_SHOW_CHECKOUT_FORGOT_PASSWORD_SCREEN"

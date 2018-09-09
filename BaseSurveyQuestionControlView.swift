@@ -15,7 +15,7 @@ class BaseSurveyQuestionControlView: BaseControlView {
         self.questionModel = model
     }
     
-//    func getQuestionResponse(for orderID: String) -> [String:Any]? {
-//        return nil
-//    }
+    override class func nibName() -> String {
+        return AppUtility.getStringFromClass(for: self)!
+    }
 }

@@ -49,7 +49,7 @@ class ProgressBarItemView: BaseControlView {
         self.updateConstraints()
     }
     
-    static func getFrameSize() -> CGSize {
+    class func getFrameSize() -> CGSize {
         return CGSize(width: 50, height: 90)
     }
     
@@ -87,7 +87,7 @@ class ProgressBarItemView: BaseControlView {
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> ProgressBarItemView {
+    override class func nibInstance() -> ProgressBarItemView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ProgressBarItemView
     }
 }

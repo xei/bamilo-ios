@@ -15,9 +15,10 @@ protocol SelectViewItemDataSourceProtocol {
 
 class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak private var tableview: UITableView!
-    private var selectionType: SelectionType = .checkbox
-    private var dataSource: [SelectViewItemDataSourceProtocol]?
+    @IBOutlet weak internal var tableview: UITableView!
+    internal var dataSource: [SelectViewItemDataSourceProtocol]?
+    internal var selectionType: SelectionType = .checkbox
+    var isScrollEnabled: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,12 +35,13 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
     func update(model: [SelectViewItemDataSourceProtocol], selectionType: SelectionType) {
         self.dataSource = model
         self.selectionType = selectionType
+        self.tableview.isScrollEnabled = self.isScrollEnabled
         self.tableview.reloadData()
         self.tableview.layoutIfNeeded()
     }
     
     func getGetContentSizeHeight() -> CGFloat {
-        return self.tableview.contentSize.height
+        return CGFloat(self.dataSource?.count ?? 0)  * SelectItemViewCell.cellHeight()
     }
     
     //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -85,7 +87,7 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
         return self.dataSource?.count ?? 0
     }
     
-    private func toggleSelectOption(indexPath: IndexPath) {
+    internal func toggleSelectOption(indexPath: IndexPath) {
         if var dataSource = self.dataSource, indexPath.row < dataSource.count {
             dataSource[indexPath.row].isSelected?.toggle()
             if dataSource[indexPath.row].isSelected == nil {
@@ -95,7 +97,7 @@ class SelectView: BaseControlView, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

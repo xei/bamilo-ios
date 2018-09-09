@@ -12,6 +12,7 @@
 @interface OrderListTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *orderNumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *orderDateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowUIImage;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) Order *order;
 @end
@@ -24,6 +25,9 @@
     [self.priceLabel applyStyle:[Theme font:kFontVariationBold size:13.0f] color:[Theme color:kColorGreen1]];
     [self.orderNumLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorGray5]];
     [self.orderDateLabel applyStyle:[Theme font:kFontVariationRegular size:12.0f] color:[Theme color:kColorGray5]];
+    
+    self.arrowUIImage.image = [self.arrowUIImage.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.arrowUIImage.tintColor = [Theme color:kColorGray5];
 }
 
 - (void)updateWithModel:(id)model {

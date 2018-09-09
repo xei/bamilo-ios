@@ -15,7 +15,7 @@ class CollectionViewLoadingFooter: UICollectionReusableView {
     }
     
     static let viewHeight: CGFloat = 50
-    static func nibName() -> String {
+    class func nibName() -> String {
         return "CollectionViewLoadingFooter"
     }
     

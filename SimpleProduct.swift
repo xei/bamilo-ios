@@ -13,10 +13,13 @@ class SimpleProduct: NSObject, Mappable {
     
     var sku: String!
     var price: UInt64?
+    var image: URL?
     var specialPrice: UInt64?
     var quantity: UInt = 0
     var variationValue: String?
+    var isSelected: Bool = false
     
+    override init() {}
     required init?(map: Map) {}
     
     func mapping(map: Map) {
@@ -25,5 +28,6 @@ class SimpleProduct: NSObject, Mappable {
         specialPrice <- map["special_price"]
         variationValue <- map["variation_value"]
         quantity <- map["quantity"]
+        image <- (map["image"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Bamilosans Light.ttf">
+            <string>Bamilo-Sans-Light</string>
+        </array>
         <array key="Bamilosans Reg.ttf">
             <string>Bamilo-Sans</string>
         </array>
@@ -56,7 +59,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(۱۲)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kW-KG-8HQ">
-                        <rect key="frame" x="88" y="301.5" width="17" height="19.5"/>
+                        <rect key="frame" x="88" y="302" width="17" height="19.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -92,7 +95,7 @@
                         <rect key="frame" x="10" y="304" width="30" height="14"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="جدید" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xc0-Ql-kAs">
-                                <rect key="frame" x="3" y="-2.5" width="24.5" height="19.5"/>
+                                <rect key="frame" x="3" y="-2" width="24.5" height="19.5"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -139,16 +142,50 @@
                             <action selector="addToWishListButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="kzK-fe-HwN"/>
                         </connections>
                     </button>
+                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HBO-Ro-eXa">
+                        <rect key="frame" x="0.0" y="0.0" width="177" height="322"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZfI-Fx-Kmm">
+                        <rect key="frame" x="10" y="304" width="25.5" height="14"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrm-YF-Ocd">
+                                <rect key="frame" x="3" y="-0.5" width="19.5" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="NNy-1C-Rvz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="9"/>
+                                <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="xrm-YF-Ocd" firstAttribute="centerY" secondItem="ZfI-Fx-Kmm" secondAttribute="centerY" id="8sM-td-yAY"/>
+                            <constraint firstItem="xrm-YF-Ocd" firstAttribute="centerX" secondItem="ZfI-Fx-Kmm" secondAttribute="centerX" id="VVt-h6-l8j"/>
+                            <constraint firstAttribute="height" constant="14" id="Z3k-Vy-RkG"/>
+                            <constraint firstAttribute="right" secondItem="xrm-YF-Ocd" secondAttribute="right" constant="3" id="hCf-NI-4Gw"/>
+                            <constraint firstItem="xrm-YF-Ocd" firstAttribute="left" secondItem="ZfI-Fx-Kmm" secondAttribute="left" constant="3" id="mYE-F5-ZSJ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="6fv-eE-yXW" firstAttribute="top" secondItem="ohu-Xx-d0E" secondAttribute="bottom" constant="5" id="0vB-iV-ZEv"/>
+                <constraint firstItem="HBO-Ro-eXa" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" id="5ry-GQ-VrN"/>
                 <constraint firstItem="m3z-e3-ctr" firstAttribute="right" secondItem="87s-Gj-773" secondAttribute="right" id="65S-mC-11B"/>
                 <constraint firstItem="32h-6f-EtO" firstAttribute="width" secondItem="32h-6f-EtO" secondAttribute="height" multiplier="1:1" id="6aF-VU-sKY"/>
                 <constraint firstItem="TU7-2H-hrP" firstAttribute="left" secondItem="MZn-If-CuB" secondAttribute="left" id="75x-dl-AUo"/>
                 <constraint firstItem="eil-MW-0Ga" firstAttribute="centerY" secondItem="m3z-e3-ctr" secondAttribute="centerY" id="9tM-8y-mxg"/>
+                <constraint firstItem="ZfI-Fx-Kmm" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="AKr-39-Ovw"/>
                 <constraint firstItem="87s-Gj-773" firstAttribute="right" secondItem="lRd-KW-w02" secondAttribute="right" id="Az4-6V-HRp"/>
+                <constraint firstItem="HBO-Ro-eXa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="BU2-xi-OCT"/>
                 <constraint firstItem="lRd-KW-w02" firstAttribute="right" secondItem="6fv-eE-yXW" secondAttribute="right" id="CYM-hh-uBL"/>
                 <constraint firstAttribute="right" secondItem="ohu-Xx-d0E" secondAttribute="right" constant="10" id="Dop-K1-XT7"/>
                 <constraint firstItem="eil-MW-0Ga" firstAttribute="left" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="left" id="KhY-p2-jvc"/>
@@ -168,7 +205,10 @@
                 <constraint firstAttribute="right" secondItem="MZn-If-CuB" secondAttribute="right" constant="10" id="hFg-8z-O5e"/>
                 <constraint firstItem="ohu-Xx-d0E" firstAttribute="top" secondItem="MZn-If-CuB" secondAttribute="bottom" constant="5" id="mIu-rW-qqv"/>
                 <constraint firstItem="7kW-KG-8HQ" firstAttribute="centerY" secondItem="lRd-KW-w02" secondAttribute="centerY" id="mWi-CM-ItD"/>
+                <constraint firstAttribute="right" secondItem="HBO-Ro-eXa" secondAttribute="right" id="myJ-dR-efN"/>
                 <constraint firstItem="MZn-If-CuB" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="sNq-R9-qvp"/>
+                <constraint firstAttribute="bottom" secondItem="HBO-Ro-eXa" secondAttribute="bottom" id="sbB-sB-h6E"/>
+                <constraint firstAttribute="bottom" secondItem="ZfI-Fx-Kmm" secondAttribute="bottom" constant="4" id="zh7-AV-gFF"/>
                 <constraint firstItem="m3z-e3-ctr" firstAttribute="top" secondItem="87s-Gj-773" secondAttribute="bottom" constant="5" id="zwW-wk-Im2"/>
             </constraints>
             <size key="customSize" width="316" height="517"/>
@@ -192,6 +232,9 @@
                 <outlet property="dicountPrecentageLabel" destination="eil-MW-0Ga" id="iGn-O7-WSX"/>
                 <outlet property="discountedPriceLabel" destination="87s-Gj-773" id="dht-1m-vu8"/>
                 <outlet property="newTagView" destination="TU7-2H-hrP" id="cFY-ca-kxM"/>
+                <outlet property="outOfStockCoverView" destination="HBO-Ro-eXa" id="uQJ-Er-fiz"/>
+                <outlet property="outOfStockLabel" destination="xrm-YF-Ocd" id="Qyb-R3-86y"/>
+                <outlet property="outOfStockTagView" destination="ZfI-Fx-Kmm" id="2Wv-Sf-6BE"/>
                 <outlet property="priceLabel" destination="m3z-e3-ctr" id="0hs-he-QT1"/>
                 <outlet property="productImage" destination="MZn-If-CuB" id="laR-Dt-f9a"/>
                 <outlet property="rateCountLabel" destination="7kW-KG-8HQ" id="yBz-jt-vwQ"/>
@@ -202,6 +245,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="addToWishlist_highlited" width="26" height="26"/>
+        <image name="addToWishlist_highlited" width="48" height="48"/>
     </resources>
 </document>

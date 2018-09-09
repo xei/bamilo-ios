@@ -21,8 +21,8 @@ class HomePageSliderItem: NSObject, Mappable {
     
     func mapping(map: Map) {
         title <- map["title"]
-        imagePortraitUrl <- (map["image_portrait"], URLTransform())
-        imageLandscapeUrl <- (map["image_landscape"], URLTransform())
+        imagePortraitUrl <- (map["image_portrait"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
+        imageLandscapeUrl <- (map["image_landscape"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         target <- map["target"]
     }
 }

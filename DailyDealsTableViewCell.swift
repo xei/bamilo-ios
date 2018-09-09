@@ -66,19 +66,19 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
-        if let target = self.teaserModelObject?.moreOption?.target {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: self.teaserModelObject?.teaserId ?? "")
+        if let target = self.teaserModelObject?.moreOption?.target, let teaserId = self.teaserModelObject?.teaserId {
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: teaserId, index: nil)
         }
     }
     
     //MARK: - HomePageTeaserHeightCalculator
-    static func teaserHeight(model: Any?) -> CGFloat {
+    class func teaserHeight(model: Any?) -> CGFloat {
          return self.cellSize().height + teaserBottomPadding
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let product = teaserModelObject?.products?[indexPath.row], let sku = product.sku, let id = self.teaserModelObject?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: "product_detail::\(sku)", teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: "product_detail::\(sku)", teaserId: id, index: indexPath.row)
         }
     }
     
@@ -100,11 +100,11 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
                 if let moreOption = dailyDeals.moreOption {
                     self.moreButton.setTitle(moreOption.title, for: .normal)
                     self.moreButton.setTitleColor(moreOption.color ?? Theme.color(kColorGray3), for: .normal)
-                    self.countDownCenterdConstraint.priority = UILayoutPriorityDefaultHigh
-                    self.countDownAlignLeftConstraint.priority = UILayoutPriorityDefaultLow
+                    self.countDownCenterdConstraint.priority = .defaultHigh
+                    self.countDownAlignLeftConstraint.priority = .defaultLow
                 } else {
-                    self.countDownAlignLeftConstraint.priority = UILayoutPriorityDefaultHigh
-                    self.countDownCenterdConstraint.priority = UILayoutPriorityDefaultLow
+                    self.countDownAlignLeftConstraint.priority = .defaultHigh
+                    self.countDownCenterdConstraint.priority = .defaultLow
                 }
                 
                 if let countDown = dailyDeals.ramainingSeconds {
@@ -116,6 +116,11 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
                 
                 self.collectionView.reloadData()
             })
+            
+            //Ecommerce
+            if let products = dailyDeals.products {
+                GoogleAnalyticsTracker.shared().trackProductImpression(products: products, impressionList: self.countDownLabel.isHidden ? "FeaturedBox" : "DailyDeals", impressionSource: "From HomePage")
+            }
         }
     }
     
@@ -124,7 +129,7 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
         self.countDownLabel.text = Utility.timeString(seconds: seconds, allowedUnits: [.hour, .minute, .second]).convertTo(language: .arabic)
     }
     
-    private static func cellSize() -> CGSize {
+    private class func cellSize() -> CGSize {
         let collectionWidth = UIScreen.main.bounds.width - 2 * collectionPadding
         let cellWidth = CarouselCollectionFlowLayout.itemWidth(relateTo: collectionWidth, cellSpacing: 5)
         let collectionHeight = DailyDealsCollectionViewCell.cellHeight(relateTo: cellWidth)

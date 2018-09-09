@@ -10,7 +10,6 @@
 #import "JAPriceView.h"
 #import "RIProduct.h"
 #import "RIProductSimple.h"
-#import "RISeller.h"
 #import "JAProductInfoHeaderLine.h"
 #import "JAProductInfoSubLine.h"
 #import "JAProductInfoPriceLine.h"
@@ -22,9 +21,7 @@
 #import "JAProductInfoSizeLine.h"
 #import "Bamilo-Swift.h"
 
-const CGFloat deliveryTimeViewHeight = 200;
-
-@interface JAPDVProductInfo() {
+@interface JAPDVProductInfo() <SellerViewDelegate> {
     UILabel *_sizesLabel;
     JAProductInfoPriceLine *_priceLine;
     JAProductInfoBaseLine *_priceBackgroundLine;
@@ -256,30 +253,25 @@ const CGFloat deliveryTimeViewHeight = 200;
     /*
      *  SELLER
      */
-    if (VALID_NOTEMPTY(product.seller, RISeller)) {
+    if (VALID_NOTEMPTY(product.seller, Seller)) {
         _sellerYPosition = yOffset;
         JAProductInfoHeaderLine *headerSeller = [[JAProductInfoHeaderLine alloc] initWithFrame:CGRectMake(0, yOffset, frame.size.width, kProductInfoHeaderLineHeight)];
         [headerSeller setTitle:[STRING_SELLER_DELIVERTY_TIME_INFO uppercaseString]];
         [self addSubview:headerSeller];
         yOffset = CGRectGetMaxY(headerSeller.frame);
         
-        DeliveryTimeView *deliveryView = [DeliveryTimeView nibInstance];
-        deliveryView.productSku = ((RIProductSimple *)product.productSimples.firstObject).sku;
-        [deliveryView setFrame:CGRectMake(0, yOffset, frame.size.width, deliveryTimeViewHeight)];
-        [deliveryView fillTheView];
-        [deliveryView switchTheTextAlignments];
-        [self addSubview:deliveryView];
-        yOffset += deliveryTimeViewHeight;
+        SellerView *sellerView = [SellerView nibInstance];
+//        [sellerView updateWith:product.seller];
         
+        [sellerView setNeedsLayout];
+        [sellerView layoutIfNeeded];
+        [sellerView setFrame:CGRectMake(0, yOffset, frame.size.width, [sellerView getCalculatedHeight])];
+//        [sellerView runDeliveryTimeCalculationsWithProductSku:((RIProductSimple *)product.productSimples.firstObject).sku];
+        [sellerView switchTheTextAlignments];
+        sellerView.delegate = self;
+        [self addSubview:sellerView];
         
-        JAPDVProductInfoSellerInfo *sellerInfoView = [[JAPDVProductInfoSellerInfo alloc] initWithFrame:CGRectMake(0, yOffset, self.width, 50)];
-        [sellerInfoView setIsShopFirst:product.shopFirst];
-        [sellerInfoView setShopFirstOverlayText:product.shopFirstOverlayText];
-        [sellerInfoView setSeller:product.seller];
-        [self addTargetToSellerInfoView:sellerInfoView seller:product.seller];
-
-        [self addSubview:sellerInfoView];
-        yOffset = CGRectGetMaxY(sellerInfoView.frame);
+        yOffset += sellerView.frame.size.height;
     }
     
     /*
@@ -330,12 +322,12 @@ const CGFloat deliveryTimeViewHeight = 200;
     [self setHeight:yOffset];
 }
 
-- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller {
-    if (VALID_NOTEMPTY(seller.targetString, NSString)) {
-        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
-        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
-    }
-}
+//- (void)addTargetToSellerInfoView:(JAPDVProductInfoSellerInfo *)sellerInfoView seller:(RISeller*)seller {
+//    if (VALID_NOTEMPTY(seller.targetString, NSString)) {
+//        [sellerInfoView addTarget:self action:@selector(tapSellerCatalogLine)];
+//        [sellerInfoView addLinkTarget:self action:@selector(tapSellerLink)];
+//    }
+//}
 
 
 - (void)setSizesText:(NSString *)sizesText {
@@ -488,6 +480,19 @@ const CGFloat deliveryTimeViewHeight = 200;
 - (void)addSisTarget:(id)target action:(SEL)action {
     self.sisTarget = target;
     self.sisSelector = action;
+}
+
+#pragma mark: - SellerViewDelegate
+- (void)refreshContentWithSellerView:(SellerView *)sellerView {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sellerInfoNeedsContentToBeRefreshed)]) {
+        [self.delegate sellerInfoNeedsContentToBeRefreshed];
+    }
+}
+
+- (void)goToSellerPageWithTarget:(RITarget *)target {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sellerNameTapped)]) {
+        [self.delegate sellerNameTapped];
+    }
 }
 
 @end

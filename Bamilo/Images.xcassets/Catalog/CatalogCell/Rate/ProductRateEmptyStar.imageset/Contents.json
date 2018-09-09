@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "1.1-empty-star-9px-mdpi.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "1.3-empty-star-27px-xhdpi.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "1.4-empty-star-36px-xxhdpi.png",
-      "scale" : "3x"
+      "filename" : "Star.pdf"
     }
   ],
   "info" : {

@@ -24,7 +24,7 @@ class OrderCMSMessageTableViewCell: BaseTableViewCell {
         }
     }
 
-    override static func nibName() -> String {
+    override class func nibName() -> String {
         return AppUtility.getStringFromClass(for: self)!
     }
 }

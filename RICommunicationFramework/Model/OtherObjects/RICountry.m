@@ -91,9 +91,7 @@
 
 + (NSString *)getCountryPhoneNumber {
     NSArray *configuration = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICountryConfiguration class])];
-    
     RICountryConfiguration *config = (RICountryConfiguration *)configuration[0];
-    
     return config.phoneNumber;
 }
 
@@ -157,11 +155,11 @@
     }
     
     if ([jsonObject objectForKey:@"url"]) {
-        if([[jsonObject objectForKey:@"url"] rangeOfString:@"http://"].location == NSNotFound && [[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound) {
+        if([[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound && [[jsonObject objectForKey:@"url"] rangeOfString:@"https://"].location == NSNotFound) {
             if(country.forceHttps) {
                 country.url = [NSString stringWithFormat:@"%@%@", @"https://", [jsonObject objectForKey:@"url"]];
             } else {
-                country.url = [NSString stringWithFormat:@"%@%@", @"http://", [jsonObject objectForKey:@"url"]];
+                country.url = [NSString stringWithFormat:@"%@%@", @"https://", [jsonObject objectForKey:@"url"]];
             }
         } else {
             country.url = [jsonObject objectForKey:@"url"];

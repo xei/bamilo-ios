@@ -79,8 +79,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         
         let doneBtn = UIBarButtonItem(title:STRING_OK_LABEL, style: .plain, target: self, action: #selector(doneButtonPickerTapped(sender:)))
         doneBtn.setTitleTextAttributes([
-            NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
+            NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 13),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return doneBtn
         
@@ -90,8 +90,8 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         
         let cancelBtn = UIBarButtonItem(title: STRING_CANCEL, style: .plain, target: self, action: #selector(cancelButtonPickerTapped(sender:)))
         cancelBtn.setTitleTextAttributes([
-            NSFontAttributeName: Theme.font(kFontVariationRegular, size: 13),
-            NSForegroundColorAttributeName: Theme.color(kColorDarkGreen)
+            NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 13),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorDarkGreen)
             ], for: .normal)
         return cancelBtn
         
@@ -157,11 +157,11 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         self.sortIconImage.image = #imageLiteral(resourceName: "sortingIcon_highlighted")
     }
     
-    func cancelButtonPickerTapped(sender: UIBarButtonItem) {
+    @objc func cancelButtonPickerTapped(sender: UIBarButtonItem) {
         self.pickerViewTextFiled?.resignFirstResponder()
     }
     
-    func doneButtonPickerTapped(sender: UIBarButtonItem) {
+    @objc func doneButtonPickerTapped(sender: UIBarButtonItem) {
         self.pickerViewTextFiled?.resignFirstResponder()
         let selectedRow = self.pickerView.selectedRow(inComponent: 0)
         self.sortingOptionInex = selectedRow
@@ -236,7 +236,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
     }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
-    override static func nibInstance() -> CatalogHeaderView {
+    override class func nibInstance() -> CatalogHeaderView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! CatalogHeaderView
     }
     

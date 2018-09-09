@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-@objc class CatalogCategoryFilterOption: CatalogFilterOption {
+@objcMembers class CatalogCategoryFilterOption: CatalogFilterOption {
     
     override func mapping(map: Map) {
         super.mapping(map: map)

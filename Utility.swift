@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Adjust
 
-@objc class Utility: NSObject {
+@objcMembers class Utility: NSObject {
 
-    @discardableResult static func handleErrorMessages(error: Any?, viewController: BaseViewController) -> Bool {
+    @discardableResult class func handleErrorMessages(error: Any?, viewController: BaseViewController) -> Bool {
         if viewController.showNotificationBar(error, isSuccess: false) {
             return true
         } else {
@@ -25,7 +26,12 @@ import UIKit
         return false
     }
     
-    static func openExternalUrlOnBrowser(urlString: String) {
+    class func formatScoreValue(score: Double) -> String {
+        let isInteger = floor(score) == score
+        return "\(isInteger ? "\(Int(score))" : "\(score)")".convertTo(language: .arabic).persianDoubleFormat()
+    }
+    
+    class func openExternalUrlOnBrowser(urlString: String) {
         guard let url = URL(string: urlString) else {
             return
         }
@@ -36,16 +42,16 @@ import UIKit
         }
     }
     
-    static func shareUrl(url: String, message: String, viewController: BaseViewController) {
+    class func shareUrl(url: String, message: String, viewController: BaseViewController) {
         let textToShare = message
-        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),let myWebsite = NSURL(string: encodeUrl) {
-            let objectsToShare: [Any] = [textToShare, myWebsite]
+        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let myWebsite = NSURL(string: encodeUrl) {
+            let objectsToShare: [Any] = ["\(encodeUrl)\n\(textToShare)", myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             viewController.present(activityVC, animated: true, completion: nil)
         }
     }
     
-    static func timeString(seconds:Int, allowedUnits: NSCalendar.Unit) -> String {
+    class func timeString(seconds:Int, allowedUnits: NSCalendar.Unit) -> String {
         let hours = seconds / 3600
         let minutes = seconds / 60 % 60
         let seconds = seconds % 60
@@ -62,7 +68,7 @@ import UIKit
         return String(format:"%02i:%02i:%02i", hours, minutes, seconds)
     }
     
-    static func resetUserBehaviours() {
+    class func resetUserBehaviours() {
         //Reset some actions
         EmarsysPredictManager.userLoggedOut()
         RICustomer.cleanFromDB()
@@ -71,7 +77,7 @@ import UIKit
         LocalSearchSuggestion().clearAllHistories()
     }
     
-    static func delay (duration: TimeInterval, completion: @escaping ()->() ) {
+    class func delay (duration: TimeInterval, completion: @escaping ()->() ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             completion()
         }

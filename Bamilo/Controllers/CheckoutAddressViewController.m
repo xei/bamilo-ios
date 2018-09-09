@@ -59,6 +59,9 @@
             [self publishScreenLoadTimeWithName:[self getScreenName] withLabel:@""];
             [TrackerManager postEventWithSelector:[EventSelectors checkoutStartSelector] attributes:[EventAttributes checkoutStartWithCart:data]];
             if (callBack) callBack(YES);
+            
+            //track Ecommerce event
+            [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(2) options:nil];
         } else {
             if (callBack) callBack(NO);
             [self errorHandler:error forRequestID:0];

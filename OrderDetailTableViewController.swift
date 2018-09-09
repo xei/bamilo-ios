@@ -114,6 +114,7 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         } else {
             header.update(deviationDescription: nil)
         }
+        header.updateDeliveryDescription(desccription: dataSource?.packages?[section - 1].delivery?.desc)
         return header
     }
 

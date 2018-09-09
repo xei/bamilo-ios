@@ -49,7 +49,6 @@
 #import "ViewControllerManager.h"
 #import "FormViewControl.h"
 
-#import "JASearchView.h"
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
 #import "AuthenticationBaseViewController.h"
@@ -71,3 +70,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAI.h"
 #import "GAIFields.h"
+#import "GAIEcommerceFields.h"
+#import "ZFModalTransitionAnimator.h"
+#import "EmarsysRecommendationGridWidget.h"
+

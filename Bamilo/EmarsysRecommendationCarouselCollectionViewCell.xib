@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="134" height="230"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_grid" translatesAutoresizingMaskIntoConstraints="NO" id="iBh-VX-LnF">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bts-wP-rPm">
+                        <rect key="frame" x="0.0" y="0.0" width="134" height="230"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_grid" translatesAutoresizingMaskIntoConstraints="NO" id="iBh-VX-LnF">
                         <rect key="frame" x="10" y="10" width="114" height="141.5"/>
                         <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -41,13 +45,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logitec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-e4-MGd">
-                        <rect key="frame" x="10" y="170.5" width="114" height="10.5"/>
+                        <rect key="frame" x="10" y="170.5" width="114" height="17.5"/>
                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="9"/>
                         <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۲۰۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZV-fE-ZZg">
-                        <rect key="frame" x="10" y="186" width="114" height="14"/>
+                        <rect key="frame" x="10" y="210" width="114" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="GIu-10-5Cz"/>
                         </constraints>
@@ -56,7 +60,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱۵۰،۰۰۰ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eeJ-5C-nJu">
-                        <rect key="frame" x="10" y="200" width="114" height="17"/>
+                        <rect key="frame" x="10" y="193" width="114" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="xus-e7-3u4"/>
                         </constraints>
@@ -73,20 +77,25 @@
                 <constraint firstItem="eeJ-5C-nJu" firstAttribute="left" secondItem="EZV-fE-ZZg" secondAttribute="left" id="803-Fy-yce"/>
                 <constraint firstItem="zXR-e4-MGd" firstAttribute="top" secondItem="RAy-em-oT2" secondAttribute="bottom" id="DFX-L3-Mdl"/>
                 <constraint firstItem="EZV-fE-ZZg" firstAttribute="right" secondItem="zXR-e4-MGd" secondAttribute="right" id="J5G-Rx-SLX"/>
+                <constraint firstItem="eeJ-5C-nJu" firstAttribute="top" secondItem="zXR-e4-MGd" secondAttribute="bottom" constant="5" id="P4l-qr-SFd"/>
+                <constraint firstItem="Bts-wP-rPm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="RTc-DR-Uqq"/>
                 <constraint firstItem="RAy-em-oT2" firstAttribute="left" secondItem="iBh-VX-LnF" secondAttribute="left" id="XPG-Ri-hgR"/>
                 <constraint firstItem="EZV-fE-ZZg" firstAttribute="left" secondItem="zXR-e4-MGd" secondAttribute="left" id="bSh-y8-73D"/>
                 <constraint firstAttribute="right" secondItem="iBh-VX-LnF" secondAttribute="right" constant="10" id="dXt-jb-dmc"/>
+                <constraint firstAttribute="bottom" secondItem="Bts-wP-rPm" secondAttribute="bottom" id="e5a-hB-bM9"/>
+                <constraint firstAttribute="right" secondItem="Bts-wP-rPm" secondAttribute="right" id="e6w-F5-fhG"/>
                 <constraint firstItem="iBh-VX-LnF" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" constant="10" id="eSS-wg-2nX"/>
                 <constraint firstItem="zXR-e4-MGd" firstAttribute="left" secondItem="RAy-em-oT2" secondAttribute="left" id="fat-SN-KnU"/>
                 <constraint firstItem="zXR-e4-MGd" firstAttribute="right" secondItem="RAy-em-oT2" secondAttribute="right" id="fsT-SC-k5x"/>
-                <constraint firstItem="EZV-fE-ZZg" firstAttribute="top" secondItem="zXR-e4-MGd" secondAttribute="bottom" constant="5" id="j05-Ch-Egz"/>
+                <constraint firstItem="EZV-fE-ZZg" firstAttribute="top" secondItem="eeJ-5C-nJu" secondAttribute="bottom" id="ghP-US-B8w"/>
                 <constraint firstItem="RAy-em-oT2" firstAttribute="right" secondItem="iBh-VX-LnF" secondAttribute="right" id="oDt-mu-gQc"/>
-                <constraint firstItem="eeJ-5C-nJu" firstAttribute="top" secondItem="EZV-fE-ZZg" secondAttribute="bottom" id="tgK-1n-pec"/>
+                <constraint firstItem="Bts-wP-rPm" firstAttribute="left" secondItem="gTV-IL-0wX" secondAttribute="left" id="qxa-d7-AU7"/>
                 <constraint firstItem="iBh-VX-LnF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="wEd-2q-5Jq"/>
             </constraints>
             <size key="customSize" width="138" height="264"/>
             <connections>
                 <outlet property="brandLabel" destination="zXR-e4-MGd" id="vIN-1w-WIW"/>
+                <outlet property="cellBackgroundView" destination="Bts-wP-rPm" id="lMF-kg-IZP"/>
                 <outlet property="discountedPriceLabel" destination="eeJ-5C-nJu" id="H1q-y7-NlQ"/>
                 <outlet property="imageView" destination="iBh-VX-LnF" id="YMf-QI-1Ff"/>
                 <outlet property="priceLabel" destination="EZV-fE-ZZg" id="nMq-H0-3gv"/>

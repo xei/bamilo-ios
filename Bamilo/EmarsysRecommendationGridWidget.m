@@ -7,15 +7,25 @@
 //
 
 #import "EmarsysRecommendationGridWidget.h"
+#import "Bamilo-Swift.h"
+
+@interface EmarsysRecommendationGridWidget()
+@end
 
 @implementation EmarsysRecommendationGridWidget
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.backgroundColor = [UIColor whiteColor];
+    self.widgetView = [EmarsysRecommendationGridWidgetView nibInstance];
+    self.widgetView.backgroundColor = [UIColor clearColor];
+    if(self.widgetView) {
+        [self addAnchorMatchedSubViewWithView:self.widgetView];
+    }
 }
-*/
+
+- (void)setDelegate:(id<FeatureBoxCollectionViewWidgetViewDelegate>)delegate {
+    self.widgetView.delegate = delegate;
+}
 
 @end

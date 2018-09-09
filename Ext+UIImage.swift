@@ -9,6 +9,7 @@
 import Foundation
 
 extension UIImage {
+    
     var noir: UIImage {
         let context = CIContext(options: nil)
         let currentFilter = CIFilter(name: "CIPhotoEffectNoir")!

@@ -28,24 +28,6 @@ typedef NS_ENUM(NSUInteger, TargetType) {
     EXTERNAL_LINK
 };
 
-//typedef enum {
-//    UNKNOWN,
-//    PRODUCT_DETAIL,
-//    CATALOG_SEARCH,
-//    CATALOG_HASH,
-//    CATALOG_CATEGORY,
-//    CATALOG_BRAND,
-//    CATALOG_SELLER,
-//    CAMPAIGN,
-//    STATIC_PAGE,
-//    SHOP_IN_SHOP,
-//    FORM_SUBMIT,
-//    FORM_GET,
-//    RR_RECOMENDATION,
-//    RR_CLICK,
-//    EXTERNAL_LINK
-//} TargetType;
-
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic) TargetType targetType;
 @property (nonatomic, strong) NSString* node;

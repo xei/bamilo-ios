@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSArray<RICartItem *>* products;
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *deliveryTime;
-
+@property (copy, nonatomic) NSString *deliveryTypeDesc;
 @end
 
 @interface CartEntity : BaseModel <JSONVerboseModel>

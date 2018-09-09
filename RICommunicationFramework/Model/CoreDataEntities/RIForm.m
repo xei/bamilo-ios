@@ -381,13 +381,13 @@
     
     if (VALID_NOTEMPTY(dict, NSDictionary)) {
         
-        if ([dict objectForKey:@"type"]) {
+        if (VALID_NOTEMPTY([dict objectForKey:@"type"], NSString)) {
             form.type = [dict objectForKey:@"type"];
         }
-        if ([dict objectForKey:@"action"]) {
+        if (VALID_NOTEMPTY([dict objectForKey:@"action"], NSString)) {
             form.action = [dict objectForKey:@"action"];
         }
-        if ([dict objectForKey:@"method"]) {
+        if (VALID_NOTEMPTY([dict objectForKey:@"method"], NSString)) {
             form.method = [dict objectForKey:@"method"];
         }
         

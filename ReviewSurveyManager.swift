@@ -8,18 +8,21 @@
 
 import UIKit
 
-@objc class ReviewSurveyManager: NSObject {
+@objcMembers class ReviewSurveyManager: NSObject {
     
-    private static func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
-        if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
-            surveyViewCtrl.surveryModel = reviewSurvey
-            surveyViewCtrl.orderID = orderID
-            viewController.present(reviewStarter, animated: true)
+    private class func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
+        //If we are not going to present any deeplink actions
+        if DeepLinkManager.hasSomethingToShow() { return }
+        ThreadManager.execute {
+            if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
+                surveyViewCtrl.surveryModel = reviewSurvey
+                surveyViewCtrl.orderID = orderID
+                viewController.present(reviewStarter, animated: true)
+            }
         }
     }
     
-    
-    static func getJourneySurvey(orderID: String) {
+    class func getJourneySurvey(orderID: String) {
         ReviewServiceDataManager.sharedInstance.getServeryAlias(nil, surveyAlias: .journeySurvey, executionType: .background) { (data, error) in
             if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? AliasSurvey, let presentingSurvey = content.survey {
                 self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
@@ -29,7 +32,7 @@ import UIKit
         }
     }
     
-    static func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
+    class func runSurveyIfItsNeeded(target: DataServiceProtocol, executionType: ApiRequestExecutionType) {
         ReviewServiceDataManager.sharedInstance.getAvaiableUserSurvey(target, executionType: executionType) { (data, error) in
             if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? UserSurvey, let presentingSurvey = content.surveys?.first, let orderID = content.orderNumber {
                 self.startPresentingSurvey(reviewSurvey: presentingSurvey, orderId: orderID)
@@ -42,7 +45,7 @@ import UIKit
 //        }
     }
     
-    static func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
+    class func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
         Utility.delay(duration: 2) {
             if let topViewController = MainTabBarViewController.topViewController() {
                 self.presentSurveyOn(viewController: topViewController, reviewSurvey: reviewSurvey, orderID: orderId)
@@ -52,7 +55,7 @@ import UIKit
     
     
     
-    private static func mockApi() -> UserSurvey {
+    private class func mockApi() -> UserSurvey {
         //mock
         let userSurvey = UserSurvey()
         let review = ReviewSurvery()
@@ -61,7 +64,7 @@ import UIKit
         option.title = "what"
         option.id = 123
         option.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید که از بامیلو خرید کنند؟"
+        question.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید که از بامیلو خرید کنند؟"
         
         
         let option1 = SurveyQuestionOption()
@@ -95,7 +98,7 @@ import UIKit
         option11.title = "1"
         option11.id = 123
         option11.image = URL(string:"http://www.emoji.com/wordpress/wp-content/uploads/emoji_celebs_146-1.jpg")
-        question1.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
+        question1.title = "چقدر مایل هستید بامیلو را به دوستان خود توصیه کنید؟"
         
         
         let option12 = SurveyQuestionOption()
@@ -122,7 +125,7 @@ import UIKit
         question1.type = .nps
         
         let question30 = SurveyQuestion()
-        question30.title = "چقدر مایلید بامیلو را به دوستان خود توصیه کنید؟"
+        question30.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید؟"
         question30.type = .radio
         
         let option31 = SurveyQuestionOption()
@@ -140,11 +143,16 @@ import UIKit
         question30.options = [option31, option32, option33]
         question30.id = 12342
         
+        let question33 = SurveyQuestion()
+        question33.title = "چقدر مایل هستید که بامیلو را به دوستان خود توصیه کنید؟"
+        question33.type = .essay
+        
+        
         review.pages = [SurveyQuestionPage()]
-        review.pages?.first?.questions = [question, question1, question30, question1]
+        review.pages?.first?.questions = [question, question33, question1, question30, question1]
         //end of mock
         
-        var product = Product()
+        let product = Product()
         product.name = "بسته خرید بسیار ويزه سال ۹۷"
         product.imageUrl = URL(string: "http://media.bamilo.com/p/tm-6682-6582622-1-zoom.jpg")
         

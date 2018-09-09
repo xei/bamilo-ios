@@ -7,6 +7,11 @@
 //
 
 #import "FeatureBoxCollectionViewWidget.h"
+#import "EmarsysRecommendationGridWidgetView.h"
 
 @interface EmarsysRecommendationGridWidget : FeatureBoxCollectionViewWidget
+
+@property (nonatomic, strong) EmarsysRecommendationGridWidgetView *widgetView;
+- (void)setDelegate:(id<FeatureBoxCollectionViewWidgetViewDelegate>)delegate;
+
 @end

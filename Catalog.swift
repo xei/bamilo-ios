@@ -10,7 +10,7 @@ import UIKit
 import ObjectMapper
 import SwiftyJSON
 
-@objc class Catalog: NSObject, Mappable {
+@objcMembers class Catalog: NSObject, Mappable {
     
     var title:String?
     var filters: [BaseCatalogFilterItem]?
@@ -83,7 +83,7 @@ import SwiftyJSON
         })
     }
     
-    static func urlForSortType(type: CatalogSortType) -> String? {
+    class func urlForSortType(type: CatalogSortType) -> String? {
         var urlComponent:String?
         switch (type) {
         case .bestRating:

@@ -35,7 +35,6 @@ class HomeViewController:   BaseViewController,
         super.viewDidLoad()
         self.view.backgroundColor = Theme.color(kColorGray10)
         self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
         if let navBar = self.navigationController?.navigationBar {
             self.navBarInitialHeight = navBar.frame.height
             self.artificialNavBarViewHeightConstraint.constant = self.navBarInitialHeight ?? 44
@@ -52,7 +51,6 @@ class HomeViewController:   BaseViewController,
         self.searchBar.searchView?.textField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(resetAllBarFrames(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         self.view.bringSubview(toFront: self.searchBar)
-        
         
         self.searchBar.layer.zPosition = (self.navigationController?.navigationBar.layer.zPosition ?? 0 ) + 1
     }
@@ -106,6 +104,10 @@ class HomeViewController:   BaseViewController,
             self.setAndFollowerScrollView(scrollView: self.homePage.tableView)
             
             self.isLoaded = true
+            
+            //start review survey if it's necessary
+            ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
+            
             //to start DeeplinkManager
             DeepLinkManager.listenersReady()
         }
@@ -115,7 +117,6 @@ class HomeViewController:   BaseViewController,
         super.viewWillAppear(animated)
         self.homePage.viewWillAppear(animated)
         self.myBamiloPage.viewWillAppear(animated)
-        
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
@@ -200,9 +201,24 @@ class HomeViewController:   BaseViewController,
         self.artificialNavbarLogo.alpha = 1
     }
     
-    func didSelectProductSku(productSku: String) {
-        TrackerManager.postEvent(selector: EventSelectors.recommendationTappedSelector(), attributes: EventAttributes.tapEmarsysRecommendation(screenName: myBamiloPage.getScreenName(), logic: myBamiloPage.recommendationLogic))
-        self.performSegue(withIdentifier: "pushPDVViewController", sender: productSku)
+    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
+        if let screenName = self.homePage.getScreenName() {
+            var teaserName: String?
+            if let index = index {
+                teaserName = "\(screenName)_\(teaserId)_\(index)"
+            } else {
+                teaserName = "\(screenName)_\(teaserId)_moreButton"
+            }
+            if let teaserName = teaserName {
+                self.goToTrackableTarget(target: RITarget.parseTarget(target), category: teaserName, label: target, screenName: screenName)
+            }
+        }
+    }
+    
+    func didSelectProductSku(productSku: String, recommendationLogic: String) {
+        if let screenName = myBamiloPage.getScreenName() {
+            self.goToTrackableTarget(target: RITarget.getTarget(.PRODUCT_DETAIL, node: productSku), category: "Emarsys", label: "\(screenName)-\(recommendationLogic)", screenName: screenName)
+        }
     }
     
     private func setAndFollowerScrollView(scrollView: UIScrollView) {
@@ -231,10 +247,10 @@ class HomeViewController:   BaseViewController,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "pushPDVViewController" {
-            let destinationViewCtrl = segue.destination as? JAPDVViewController
-            destinationViewCtrl?.productSku = sender as! String
+            let destinationViewCtrl = segue.destination as? ProductDetailViewController
+            destinationViewCtrl?.productSku = sender as? String
             //if go to pdv by segue only from Emarsys recommendations (myBamilo)
-            destinationViewCtrl?.purchaseTrackingInfo = "Emarsys:\(getScreenName())"
+            destinationViewCtrl?.purchaseTrackingInfo = "Emarsys:\(self.myBamiloPage.getScreenName())"
         } else if segueName == "ShowSearchView", let destinationViewCtrl = segue.destination as? SearchViewController {
             destinationViewCtrl.parentScreenName = self.getScreenName()
         }
@@ -253,5 +269,10 @@ class HomeViewController:   BaseViewController,
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         
+    }
+    
+    private func goToTrackableTarget(target: RITarget, category: String, label: String, screenName: String) {
+        TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: category, screenName: screenName, labelEvent: label))
+        MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: screenName)
     }
 }

@@ -16,8 +16,7 @@
 
 + (NSString*)getHtmlShopForTargetString:(NSString*)targetString
                            successBlock:(void (^)(RIHtmlShop *htmlShop))sucessBlock
-                           failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-{
+                           failureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     NSString* urlString = [RITarget getURLStringforTargetString:targetString];
     NSURL* url = [NSURL URLWithString:urlString];
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:url parameters:nil httpMethod:HttpVerbPOST cacheType:RIURLCacheNoCache cacheTime:RIURLCacheDefaultTime userAgentInjection:[RIApi getCountryUserAgentInjection] successBlock:^(RIApiResponse apiResponse, NSDictionary *jsonObject) {
@@ -35,15 +34,12 @@
             failureBlock(apiResponse, nil);
         }];
     } failureBlock:^(RIApiResponse apiResponse, NSDictionary *errorJsonObject, NSError *errorObject) {
-        if(NOTEMPTY(errorJsonObject))
-        {
+        if(NOTEMPTY(errorJsonObject)) {
             failureBlock(apiResponse, [RIError getErrorMessages:errorJsonObject]);
-        } else if(NOTEMPTY(errorObject))
-        {
+        } else if(NOTEMPTY(errorObject)) {
             NSArray *errorArray = [NSArray arrayWithObject:[errorObject localizedDescription]];
             failureBlock(apiResponse, errorArray);
-        } else
-        {
+        } else {
             failureBlock(apiResponse, nil);
         }
     }];
@@ -57,10 +53,12 @@
         if (VALID_NOTEMPTY(htmlRaw, NSString)) {
             NSString *htmlStep = [htmlRaw gtm_stringByUnescapingFromHTML];
             NSString *htmlFinal = [htmlStep gtm_stringByUnescapingFromHTML];
-            
             newHtmlStore.html = htmlFinal;
         }
-        
+        NSString* title = [json objectForKey:@"title"];
+        if (VALID_NOTEMPTY(title, NSString)) {
+            newHtmlStore.title = title;
+        }
         NSArray* featuredBoxesJson = [json objectForKey:@"featured_box"];
         if (VALID_NOTEMPTY(featuredBoxesJson, NSArray)) {
             NSMutableArray* featuredBoxesArray = [NSMutableArray new];

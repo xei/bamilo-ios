@@ -12,7 +12,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     @IBOutlet private weak var activiryIndicator: UIActivityIndicatorView!
     let orderTableViewCtrl = OrderDetailTableViewController()
-    var orderId: String?
+    @objc var orderId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,16 +64,7 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     //MARK: - OrderDetailTableViewCellDelegate
     func openRateViewWithSku(sku: String) {
-        LoadingManager.showLoading()
-        RIProduct.getCompleteWithSku(sku, successBlock: { (product) in
-            LoadingManager.hideLoading()
-            if let product = product {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"), object: nil, userInfo: ["product": product, "product.screen": "reviews"])
-            }
-        }) { (response, error) in
-            LoadingManager.hideLoading()
-            Utility.handleErrorMessages(error: error, viewController: self)
-        }
+        self.performSegue(withIdentifier: "showSubmitProductReviewViewController", sender: sku)
     }
     
     func opensProductDetailWithSku(sku: String) {
@@ -88,12 +79,16 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "pushPDVViewController", let pdvViewCtrl = segue.destination as? JAPDVViewController {
+        if segueName == "pushPDVViewController", let pdvViewCtrl = segue.destination as? ProductDetailViewController {
             pdvViewCtrl.productSku = sender as? String
         }
         if segueName == "pushCancellationViewController", let cancellingOrderViewCtrl = segue.destination as? OrderDetailCancellationViewController, let order = self.orderTableViewCtrl.dataSource, let avaiableCancellationReasons = order.cancellationInfo?.reasons, avaiableCancellationReasons.count > 0, let selectedProduct = sender as? OrderProductItem  {
             cancellingOrderViewCtrl.selectedProduct = selectedProduct
             cancellingOrderViewCtrl.order = order
+        }
+        if segueName == "showSubmitProductReviewViewController", let sku = sender as? String, let viewCtrl = segue.destination as? SubmitProductReviewViewController {
+            viewCtrl.hidesBottomBarWhenPushed = true
+            viewCtrl.prodcutSku = sku
         }
     }
     

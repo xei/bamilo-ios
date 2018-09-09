@@ -86,9 +86,8 @@
             
             //EVENT: LOGIN / SUCCESS
             RICustomer *customer = [RICustomer getCurrentCustomer];
-            [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer]];
             
-//            [[EmarsysMobileEngage sharedInstance] sendLogin:[[PushNotificationManager pushManager] getPushToken] completion:nil];
+            [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:customer success:YES]];
             
             [EmarsysPredictManager setCustomer:customer];
             [PushWooshTracker setUserID:customer.email];
@@ -101,6 +100,7 @@
             }
         } else {
             //EVENT: LOGIN / FAILURE
+            [TrackerManager postEventWithSelector:[EventSelectors loginEventSelector] attributes:[EventAttributes loginWithLoginMethod:cLoginMethodEmail user:nil success:NO]];
             BaseViewController *baseViewController = (BaseViewController *)self.delegate;
             if(![baseViewController showNotificationBar:error isSuccess:NO]) {
                 BOOL errorHandled = NO;

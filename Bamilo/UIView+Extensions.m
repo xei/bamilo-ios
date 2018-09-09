@@ -43,7 +43,7 @@
 
 - (void)anchorMatch:(UIView *)view {
     NSDictionary *views = NSDictionaryOfVariableBindings(view);
-    
+    self.frame = view.frame;
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"options:0 metrics:nil views:views]];
 }

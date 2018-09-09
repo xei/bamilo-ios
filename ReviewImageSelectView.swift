@@ -73,7 +73,7 @@ class ReviewImageSelectView: BaseControlView, ReviewImageSelectItemViewDelegate 
         return buttons
     }
     
-    override static func nibInstance() -> ReviewImageSelectView {
+    override class func nibInstance() -> ReviewImageSelectView {
         return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! ReviewImageSelectView
     }
     

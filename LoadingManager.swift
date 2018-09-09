@@ -6,7 +6,7 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-@objc class LoadingManager: NSObject {
+@objcMembers class LoadingManager: NSObject {
     
     private static let loadingView: UIView? = {
         let loadingView = LoadingCoverView.nibInstance()
@@ -15,11 +15,11 @@
         return loadingView
     }()
     
-    static func showLoading() {
+    class func showLoading() {
         showLoading(on: MainTabBarViewController.topViewController())
     }
     
-    static func showLoading(on viewcontroller: Any?) {
+    class func showLoading(on viewcontroller: Any?) {
         if let targetViewController = viewcontroller as? UIViewController {
             if let superview = self.loadingView?.superview, superview == targetViewController.view {
                 return
@@ -38,7 +38,7 @@
         }
     }
     
-    static func hideLoading() {
+    class func hideLoading() {
         UIView.animate(withDuration: 0.4, animations: {
             self.loadingView?.alpha = 0
         }, completion: { (finished) in

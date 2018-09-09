@@ -105,6 +105,10 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 }
 
 - (void)performPreDepartureAction:(CheckoutActionCompletion)completion {
+    
+    //Ecommerce Tracking
+    [[GoogleAnalyticsTracker sharedTracker] trackEcommerceCartInCheckoutWithCart:self.cart step:@(4) options: self.cart.paymentInformation.method];
+    
     if([_multistepEntity.nextStep isEqualToString:@"finish"] && completion != nil) {
         [DataAggregator setMultistepConfirmation:self cart:self.cart completion:^(id data, NSError *error) {
             if(error == nil) {
@@ -115,7 +119,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
                     [self performSegueWithIdentifier:NSStringFromClass([SuccessPaymentViewController class]) sender:nil];
                     [self setHidesBottomBarWhenPushed:YES];
                 } else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
+                    [[NSNotificationCenter defaultCenter] postNotificationName: kShowCheckoutExternalPaymentsScreenNotification object:nil userInfo:userInfo];
                 }
                 completion(_multistepEntity.nextStep, YES);
             } else {
@@ -194,7 +198,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: {
-            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:[PlainTableViewHeaderCell nibName]];
+            PlainTableViewHeaderCell *plainTableViewHeaderCell = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier: [PlainTableViewHeaderCell nibName]];
             plainTableViewHeaderCell.titleString = STRING_PAYMENT_OPTION;
             return plainTableViewHeaderCell;
         }

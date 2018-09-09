@@ -18,17 +18,16 @@ class SurveyQuestionCollectionViewCell: BaseCollectionViewCellSwift {
     override func update(withModel model: Any) {
         if let question = model as? SurveyQuestion, let type = question.type {
             switch type {
-            case .radio,
-                 .checkbox:
+            case .radio:
+                self.questionView = RadioOptionQuestionView.nibInstance()
+            case .checkbox:
                 self.questionView = SelectOptionQuestionView.nibInstance()
             case .imageSelect:
                 self.questionView = ImageSelectQuestionView.nibInstance()
             case .nps:
                 self.questionView = NPSQuestionView.nibInstance()
-//            case .textbox:
-//                break
-//            case .essay:
-//                break
+            case .textbox, .essay:
+                self.questionView = TextFieldQuestionView.nibInstance()
             }
             if let view = self.questionView {
                 self.contentView.addAnchorMatchedSubView(view: view)

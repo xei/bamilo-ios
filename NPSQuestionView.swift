@@ -19,7 +19,7 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
     @IBOutlet weak private var horizontalPickerView: HorizontalPickerView!
     private var isPreselecting: Bool = false
     
-    override func update(model: SurveyQuestion) {
+        override func update(model: SurveyQuestion) {
         super.update(model: model)
         self.questionTitle.text = self.questionModel?.title
         self.horizontalPickerView.reloadAll()
@@ -27,14 +27,14 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
         
         //Do after horizontalPicker updated
         if let options = self.questionModel?.options {
-//            //get seleted Index or get third quarter index
+            //get seleted Index or get third quarter index
             var selectedIndex = options.index(where: { $0.isSelected ?? false })
             if selectedIndex == nil {
                 self.isPreselecting = true
                 selectedIndex = Int((options.count - 1 + (options.count / 2)) / 2)
             }
             ThreadManager.execute {
-                self.horizontalPickerView.selectRow(rowIndex: 5, animated: false)
+                self.horizontalPickerView.selectRow(rowIndex: selectedIndex ?? 0, animated: false)
             }
         }
     }
@@ -47,10 +47,6 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
         self.horizontalPickerView.delegate = self
         self.horizontalPickerView.dataSource = self
         self.horizontalPickerView.bounces = false
-    }
-    
-    override static func nibInstance() -> NPSQuestionView {
-        return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.last as! NPSQuestionView
     }
     
     //MARK: - HorizontalPickerViewDataSource - HorizontalPickerViewDelegate
@@ -73,7 +69,6 @@ class NPSQuestionView: BaseSurveyQuestionControlView, HorizontalPickerViewDelega
         }
         self.hintUILabel.text = nil
         self.selectionIndicatorUIImage.image = #imageLiteral(resourceName: "outlineCircle")
-        self.questionModel?.haveAnswer = true
         if let options = self.questionModel?.options, row < options.count {
             for i in 0..<options.count {
                 options[i].isSelected = false

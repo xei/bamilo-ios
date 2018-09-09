@@ -1,7 +1,7 @@
-/* 
+/*
    RIStrings.strings
    Jumia
-   
+
    Created by Pedro Lopes on 13/09/14.
    Copyright (c) 2014 Rocket Internet. All rights reserved. */
 "string_update_necessary_title" = "بروزرسانی لازم است.";
@@ -132,13 +132,13 @@
 
 "string_choose_size_for_all_products" = "لطفا سایز را برای تمام کالاها انتخاب کنید";
 
-"add_to_shopping_cart" = "افزودن به سبد خرید";
+"add_to_shopping_cart" = "افزودن به سبد";
 
 "string_variations" = "تنوع کالا";
 
 "string_rate_now" = "آیا این کالا را دارید؟ به آن امتیاز بدهید.";
 
-"related_items" = "کالاهای مرتبط";
+"related_items" = "کالاهای مشابه";
 
 "product_features_title" = "امکانات کالا";
 
@@ -160,7 +160,7 @@
 
 "submit_title" = "نقد و بررسی شما ارسال شد.";
 
-"write_comment" = "نوشتن نقد و بررسی";
+"write_comment" = "ارسال نظر";
 
 "string_posted_by" = "پست شده توسط %@، %@";
 
@@ -318,7 +318,7 @@
 
 "string_order_status" = "وضعیت سفارش";
 
-"order_no" = "شماره سفارش %@";
+"order_no" = "شماره سفارش";
 
 "string_loosing_order_title" = "اخطار";
 
@@ -390,7 +390,7 @@
 
 "thank_you_order_title" = "با تشکر از شما!";
 
-"order_success" = "سفارش شما با موفقیت ثبت شد.\nمیتوانید وضعیت سفارش خود را در جزئیات سفارش مشاهده کنید.";
+"order_success" = "سفارش شما با موفقیت ثبت شد.";
 
 "order_fail_desc" = "پرداخت شما ناموفق بود.";
 
@@ -686,7 +686,7 @@
 
 "by_someone" = "پست شده توسط %@";
 
-"user_reviews" = "نظرات و پیشنهادهای کاربر";
+"user_reviews" = "نظرات کاربران";
 
 "profile" = "اطلاعات کاربری من";
 
@@ -996,3 +996,65 @@
 "next" = "بعدی";
 
 "please_select_your_choice" = "لطفا گزینه مورد نظر خود را انتخاب کنید";
+
+"write_comment" = "نظر خود را بنویسید";
+
+"close" = "بستن";
+
+"precense_duration_with_bamilo_label" = "همراه با بامیلو";
+
+"guarantee" = "ضمانت";
+
+"orders_count" = "تعداد سفارشات";
+
+"rate" = "امتیاز";
+
+"successful_product_supplement" = "تامین موفق کالا";
+
+"no_return_title" = "فروش بدون بازگشت";
+
+"SLA_title" = "ارسال به موقع";
+
+"no_name" = "بدون نام";
+
+"options" = "گزینه ها";
+
+"select_type" = "انتخاب نوع";
+
+"select_size" = "انتخاب سایز";
+
+"privacy_policy" = "قوانین و شرایط";
+
+"vendor" = "تامین کننده";
+
+"specifications" = "مشخصات";
+
+"see_whole_description" = "مشاهده توضیحات کامل";
+
+"see_whole_specifications" = "مشاهده مشخصات کامل";
+
+"see_all_comments" = "مشاهده همه نظرات";
+
+"comment" = "نظر";
+
+"star" = "ستاره";
+
+"add_comment" = "افزودن نظر";
+
+"other_sellers" = "فروشندگان دیگر";
+
+"seller_name" = "نام فروشنده";
+
+"seller_score" = "امتیاز فروشنده";
+
+"no_rate" = "بدون امتیاز";
+
+"please_add_your_rate" = "لطفا امتیاز خود را وارد نمایید";
+
+"review_submission_success" = "ثبت نظر شما با موفقیت انجام شد";
+
+"rate_it" = "نظر دهید";
+
+"rate_and_review" = "امتیاز و نظرات";
+
+"buy_product" = "خرید محصول";

@@ -19,7 +19,7 @@ class HomePageFeaturedStoreItem: NSObject, Mappable {
     
     func mapping(map: Map) {
         title <- map["title"]
-        imageUrl <- (map["image_portrait"], URLTransform())
+        imageUrl <- (map["image_portrait"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
         target <- map["target"]
     }
 }

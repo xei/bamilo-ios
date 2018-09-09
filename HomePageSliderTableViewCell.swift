@@ -76,7 +76,6 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     }
     
     //MARK: - FSPagerViewDataSource
-    
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         self.sliderPager.numberOfPages = self.sliderContent?.sliders?.count ?? 0
         return self.sliderPager.numberOfPages
@@ -108,12 +107,12 @@ class HomePageSliderTableViewCell: BaseHomePageTeaserBoxTableViewCell, FSPagerVi
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: true)
         if let sliderItems = self.sliderContent?.sliders, index < sliderItems.count, let target = sliderItems[index].target, let id = self.sliderContent?.teaserId {
-            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id)
+            self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: id, index: index)
         }
     }
     
     //MARK: - HomePageTeaserHeightCalculator
-    static func teaserHeight(model: Any?) -> CGFloat {
+    class func teaserHeight(model: Any?) -> CGFloat {
         if let slider = model as? HomePageSlider, let sliders = slider.sliders, sliders.count > 0 {
             let itemWidth = (UIApplication.shared.statusBarFrame.width - 2 * cellSpacing) / wholeSlidesWidthRatio
             let itemHeight = itemWidth / sliderRatio

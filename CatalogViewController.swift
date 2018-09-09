@@ -10,7 +10,7 @@ import UIKit
 import EmarsysPredictSDK
 import SwiftyJSON
 
-@objc class CatalogViewController: BaseViewController,
+@objcMembers class CatalogViewController: BaseViewController,
                                     DataServiceProtocol,
                                     JAFiltersViewControllerDelegate,
                                     CatalogHeaderViewDelegate,
@@ -20,10 +20,10 @@ import SwiftyJSON
                                     EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
-                                    JAPDVViewControllerDelegate,
                                     SearchViewControllerDelegate,
                                     BreadcrumbsViewDelegate {
     
+    @IBOutlet private weak var noResultContainerBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeaderContainer: UIView!
     @IBOutlet private weak var catalogHeaderContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var catalogHeader: CatalogHeaderControl!
@@ -42,6 +42,7 @@ import SwiftyJSON
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
     var purchaseTrackingInfo: String? //For tracking teaser (purchase) journeys (optional)
+    var initiatorScreenName: String?
     
     private var selectedProduct: Product? //TODO: it's not necessary to keep it, but we should do it for now because
                                           // we need to know which product (may) has been changed by PDVViewController (add to wish list)
@@ -108,9 +109,7 @@ import SwiftyJSON
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateListWithUserLoginNotification(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateProductStatusFromWishList(notification:)), name: NSNotification.Name(NotificationKeys.WishListUpdate), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(resetBarFollowers(animated:)), name: NSNotification.Name(NotificationKeys.EnterForground), object: true)
         
         if let navBar = self.navigationController?.navigationBar {
@@ -121,6 +120,7 @@ import SwiftyJSON
         
         if let tabBar = self.tabBarController?.tabBar {
             self.initialTabBarHeight = tabBar.frame.height
+            noResultContainerBottomConstraint.constant = self.initialTabBarHeight
         }
         self.productCountLabelHeight.constant = self.productCountViewHeight
     }
@@ -194,8 +194,8 @@ import SwiftyJSON
     func updateNavBar() {
         if let navTitle = self.catalogData?.title {
             self.navBarTitle = navTitle
-            self.title = navTitle
         }
+        self.title = self.catalogData?.title ?? ""
     }
     
     //MARK: - DataServiceProtocol
@@ -214,7 +214,8 @@ import SwiftyJSON
                         self.productCountLabel.text = "\(totalProducts) \(STRING_FOUND_PRODUCT_COUNT)".convertTo(language: .arabic)
                     }
                     self.loadingDataInProgress = false
-                    if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0, false { //for now
+                    
+                    if let breadcrumbs = self.catalogData?.breadcrumbs, breadcrumbs.count > 0 { //for now
                         self.catalogHeaderContainer.translatesAutoresizingMaskIntoConstraints = false
                         UIView.animate(withDuration: 0.15, animations: {
                             self.catalogHeaderContainerHeightConstraint.constant = self.catalogHeaderContainerHeightWithBreadcrumb
@@ -255,6 +256,9 @@ import SwiftyJSON
                         })
                     }
                 }
+                
+                //Ecommerce tracking behaviours
+                self.trackProductImpressions(products: receivedCatalogData.products)
             }
 
         })
@@ -266,6 +270,11 @@ import SwiftyJSON
                 callBack(success)
             }
         }
+    }
+    
+    func trackProductImpressions(products: [Product]) {
+        //track Ecommerce product impression
+        GoogleAnalyticsTracker.shared().trackProductImpression(products: products, impressionList: "Catalog Search", impressionSource: "From \(self.initiatorScreenName ?? "PushNotification")")
     }
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {
@@ -439,7 +448,7 @@ import SwiftyJSON
     
     func updateProductStatusFromWishList(notification: Notification) {
         if MainTabBarViewController.topViewController() is CatalogViewController { return }
-        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? Product ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
+        if let product = notification.userInfo?[NotificationKeys.NotificationProduct] as? TrackableProductProtocol ,let isInWishlist = notification.userInfo?[NotificationKeys.NotificationBool] as? Bool {
             let targetProduct = self.catalogData?.products.filter { $0.sku == product.sku }.first
             if let targetProduct = targetProduct {
                 targetProduct.isInWishList = isInWishlist
@@ -532,7 +541,6 @@ import SwiftyJSON
             }
             self.resetBarFollowers(animated: true)
         }
-//        self.loadAvaiableSubCategories()
     }
     
     private func trackSearch(searchTarget: RITarget) {
@@ -541,18 +549,6 @@ import SwiftyJSON
             attributes: EventAttributes.searchAction(searchTarget: searchTarget)
         )
     }
-    
-//    func loadAvaiableSubCategories() {
-//        if self.searchTarget.targetType == .CATALOG_CATEGORY {
-//            CatalogDataManager.sharedInstance.getSubCategoriesFilter(self, categoryUrlKey: self.searchTarget.node, completion: { (data, errorMessages) in
-//                if errorMessages == nil {
-//                    self.subCategoryFilterItem = data as? CatalogCategoryFilterItem
-//                } else {
-////                    Utility.handleError(error: errorMessages, viewController: self)
-//                }
-//            })
-//        }
-//    }
     
     private func loadMore() {
         if self.loadingDataInProgress || self.listFullyLoaded { return }
@@ -570,7 +566,10 @@ import SwiftyJSON
     
     private func showProductPage(product: Product) {
         self.selectedProduct = product
-        self.performSegue(withIdentifier: "pushPDVViewController", sender: nil)
+        
+        self.hidesBottomBarWhenPushed = true
+        self.performSegue(withIdentifier: "ProductDetailViewController", sender: nil)
+        self.hidesBottomBarWhenPushed = false
     }
     
     //MARK: - UICollectionViewDataSource & UICollectionViewDelegate
@@ -579,7 +578,6 @@ import SwiftyJSON
         if let product = self.catalogData?.products[indexPath.row] {
             self.showProductPage(product: product)
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -661,74 +659,19 @@ import SwiftyJSON
         self.tabBarScrollFollower?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
-    //MARK: - JAPDVViewControllerDelegate
-    func add(toWishList sku: String!, add: Bool) {
-        self.selectedProduct?.isInWishList = add
-        self.collectionView.reloadData()
-    }
     
     //MARK: - BaseCatallogCollectionViewCellDelegate
     func addOrRemoveFromWishList(product: Product, cell: BaseCatallogCollectionViewCell, add: Bool) {
-        
-        if !RICustomer.checkIfUserIsLogged() {
-            product.isInWishList.toggle()
-            cell.updateWithProduct(product: product)
+        if let updatingIndexPath = collectionView.indexPath(for: cell) {
+            ProductDataManager.sharedInstance.addOrRemoveFromWishList(product: product, in: self, add: add) { (success, error) in
+                (self.collectionView.cellForItem(at: updatingIndexPath) as? BaseCatallogCollectionViewCell)?.updateWithProduct(product: product)
+                if !success {
+                    //                if !Utility.handleErrorMessages(error: error, viewController: self) {
+                    //                    self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
+                    //                }
+                }
+            }
         }
-        
-        (self.navigationController as? JACenterNavigationController)?.performProtectedBlock({ (userHadSession) in
-            let translatedProduct = RIProduct()
-            translatedProduct.sku = product.sku
-            if let price = product.price {
-                translatedProduct.price = NSNumber(value: price)
-            }
-            if add {
-                ProductDataManager.sharedInstance.addToWishList(self, sku: product.sku, completion: { (data, error) in
-                    if error != nil {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
-//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
-//                        }
-                        return
-                    }
-                    if product.isInWishList != true {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-                    }
-                    self.showNotificationBar(error, isSuccess: false)
-                })
-
-                TrackerManager.postEvent(
-                    selector: EventSelectors.addToWishListSelector(),
-                    attributes: EventAttributes.addToWishList(product: translatedProduct, screenName: self.getScreenName(), success: true)
-                )
-
-            } else {
-                DeleteEntityDataManager.sharedInstance().removeFromWishList(self, sku: product.sku, completion: { (data, error) in
-                    if error != nil {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-//                        if !Utility.handleErrorMessages(error: error, viewController: self) {
-//                            self.showNotificationBarMessage(STRING_SERVER_CONNECTION_ERROR_MESSAGE, isSuccess: false)
-//                        }
-                        TrackerManager.postEvent(
-                            selector: EventSelectors.removeFromWishListSelector(),
-                            attributes: EventAttributes.removeFromWishList(product: translatedProduct, screenName: self.getScreenName())
-                        )
-                        return
-                    }
-
-                    if product.isInWishList != false {
-                        product.isInWishList.toggle()
-                        cell.updateWithProduct(product: product)
-                    }
-                    self.showNotificationBar(error, isSuccess: false)
-                })
-            }
-            
-            //Inform others if it's needed
-            NotificationCenter.default.post(name: Notification.Name(rawValue: NotificationKeys.WishListUpdate), object: nil, userInfo: [NotificationKeys.NotificationProduct: product, NotificationKeys.NotificationBool: add])
-        })
     }
     
     //MARK: - prepareForSegue
@@ -747,18 +690,17 @@ import SwiftyJSON
         } else if segueName == "embedFilteredListNoResult" {
             let destinationViewCtrl = segue.destination as? FilteredListNoResultViewController
             destinationViewCtrl?.delegate = self
-        } else if segueName == "pushPDVViewController" {
-            let destinationViewCtrl = segue.destination as? JAPDVViewController
+        } else if segueName == "ProductDetailViewController" {
+            let destinationViewCtrl = segue.destination as? ProductDetailViewController
             destinationViewCtrl?.purchaseTrackingInfo = self.purchaseTrackingInfo
             destinationViewCtrl?.productSku = self.selectedProduct?.sku
-            destinationViewCtrl?.delegate = self
         }
     }
     
     //MARK: - BreadcrumbsViewDelegate
     func itemTapped(item: BreadcrumbsItem) {
-        if let target = item.target {
-            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil)
+        if let target = item.target, let screenName = getScreenName(){
+            MainTabBarViewController.topNavigationController()?.openTargetString(target, purchaseInfo: nil, currentScreenName: screenName)
         }
     }
     
@@ -770,7 +712,6 @@ import SwiftyJSON
         if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
             transaction.setCategory(breadcrumbsFullPath)
         }
-        
         return transaction
     }
     

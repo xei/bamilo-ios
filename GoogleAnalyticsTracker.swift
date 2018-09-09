@@ -6,8 +6,8 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-@objc class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
-
+@objcMembers class GoogleAnalyticsTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol {
+    
     private var campaginDataString: String?
     
     //TODO: Must be changed when we migrate all Trackers
@@ -106,8 +106,7 @@
     func searchFiltered(attributes: EventAttributeType) {
         if let filterQuery = attributes[kEventFilterQuery] as? String {
             let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
-            let filterKeys = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
-            //let filterValues = arrayOfFilterKeysAndValues.enumerated().flatMap { $0 % 2 != 0 ? $1 : nil}.joined(separator: ", ")
+            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
                 action: "Filters",
@@ -156,12 +155,12 @@
     
     func addToWishList(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "AddToWishList",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
@@ -169,12 +168,12 @@
     
     func removeFromWishList(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "RemoveFromWishList",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
@@ -182,58 +181,60 @@
     
     func addToCart(attributes: EventAttributeType) {
         if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: screenName,
                 action: "AddToCart",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
+            
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
         }
     }
     
     func removeFromCart(attributes: EventAttributeType) {
-        if let product = attributes[kEventProduct] as? RIProduct {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "CART",
                 action: "RemoveFromCart",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
+            
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPARemove)
         }
     }
     
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? RIProduct {
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "\(parentScreenName)",
                 action: "ViewProduct",
                 label: product.sku,
-                value: product.price
+                value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
         }
     }
     
-    
-    
-    func teaserTapped(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let teaserName = attributes[kEventTeaser] as? String,
-            let teaserTarget = attributes[kEventTargetString] as? String {
+    func itemTapped(attributes: EventAttributeType) {
+        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+            let labelEventName = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
-                withCategory: "\(screenName)+\(teaserName)",
-                action: "TeaserTapped",
-                label: teaserTarget,
+                withCategory: categoryEventName,
+                action: "Tapped",
+                label: labelEventName,
                 value: nil
             )
             self.sendParamsToGA(params: params)
         }
     }
-    
     
     func login(attributes: EventAttributeType) {
         if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer {
@@ -272,12 +273,12 @@
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            let combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutStart",
                 label: combinedSkus,
-                value: cart.cartEntity.cartValue
+                value: cart.cartEntity?.cartValue ?? 0
             )
             self.sendParamsToGA(params: params)
         }
@@ -285,23 +286,30 @@
     
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity.cartItems.map { ($0 as? RICartItem)?.sku }.flatMap { $0 }.joined(separator: ",")
+            var combinedSkus: String?
+            if let cartItems = cart.cartEntity?.cartItems, cartItems.count > 0 {
+                combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
+            } else if let packages = cart.cartEntity?.packages, packages.count > 0 {
+                combinedSkus = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
+            }
+            
+            let combinedSkusFromPackages = cart.cartEntity?.packages?.map{$0.products ?? nil}.compactMap{$0}.flatMap{$0}.map{$0.sku ?? nil}.compactMap {$0}.joined(separator: ",")
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Checkout",
                 action: "CheckoutFinish",
-                label: combinedSkus,
-                value: cart.cartEntity.cartValue
+                label: combinedSkus ?? combinedSkusFromPackages ?? "",
+                value: cart.cartEntity?.cartValue ?? 0
             )
             self.sendParamsToGA(params: params)
         }
     }
-
+    
     func purchaseBehaviour(attributes: EventAttributeType) {
         if let category = attributes[kGAEventCategory] as? String,
             let label = attributes[kGAEventLabel] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: category,
-                action: "Purchase",
+                action: "Purchased",
                 label: label,
                 value: nil
             )
@@ -340,4 +348,114 @@
         }
         GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])
     }
+    
+    
+    
+    // --- GA ECommerce trackings ----
+    func trackProductImpression(products: [Product], impressionList: String, impressionSource: String) {
+        let builder = GAIDictionaryBuilder.createScreenView()
+        products.map { (product) -> GAIEcommerceProduct in
+            let gaProduct = GAIEcommerceProduct()
+            gaProduct.setId(product.sku)
+            gaProduct.setName(product.name)
+            gaProduct.setBrand(product.brand)
+            if let price = product.price {
+                gaProduct.setPrice(NSNumber(value: price))
+            }
+            return gaProduct
+        }.forEach{ let _ = builder?.addProductImpression($0, impressionList: impressionList, impressionSource: impressionSource) }
+        self.sendParamsToGA(params: builder)
+    }
+    
+    func trackEcommerceProductClick(product: TrackableProductProtocol) {
+        self.sendEcommerceEvent(product: product, actionName: kGAIPAClick)
+    }
+    
+    func trackEcommerceProductDetailView(product: TrackableProductProtocol) {
+        self.sendEcommerceEvent(product: product, actionName: kGAIPADetail)
+    }
+    
+    func trackEcommerceCartInCheckout(cart: RICart, step: NSNumber, options: String? = nil) {
+        let builder = GAIDictionaryBuilder.createEvent(withCategory: "Ecommerce", action: "Checkout", label: nil, value: nil)
+        
+        if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
+            cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        } else if let packages = cart.cartEntity.packages, packages.count > 0 {
+            cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        }
+        
+        let action = GAIEcommerceProductAction()
+        action.setAction(kGAIPACheckout)
+        action.setCheckoutStep(step)
+        if let options = options {
+            action.setCheckoutOption(options)
+        }
+        let _ = builder?.setProductAction(action)
+        self.sendParamsToGA(params: builder)
+    }
+    
+    
+    func trackTransaction(cart: RICart) {
+        let builder = GAIDictionaryBuilder.createEvent(withCategory: "Ecommerce", action: "Purchase", label: nil, value: nil)
+        
+        if let cartItems = cart.cartEntity.cartItems,  cartItems.count > 0 {
+            cart.cartEntity.cartItems.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        } else if let packages = cart.cartEntity.packages, packages.count > 0 {
+            cart.cartEntity.packages.map{$0.products}.compactMap{$0}.flatMap{$0}.map { self.convertCartItemToGAIProduct(cartItem: $0) }.forEach { let _ = builder?.add($0) }
+        }
+        
+        let action = GAIEcommerceProductAction()
+        action.setAction(kGAIPAPurchase)
+        action.setShipping(cart.cartEntity.shippingValue)
+        if let orderNr = cart.orderNr {
+            action.setTransactionId(orderNr)
+        }
+        action.setAffiliation("Bamilo iOS")
+        if let vatValue = cart.cartEntity.vatValue {
+            action.setTax(vatValue)
+        }
+        if let code = cart.cartEntity.couponCode {
+            action.setCouponCode(code)
+        }
+        let _ = builder?.setProductAction(action)
+        self.sendParamsToGA(params: builder)
+    }
+    
+    //Ecommerce tracking helpers
+    private func sendEcommerceEvent(product: TrackableProductProtocol, actionName: String) {
+        let action = GAIEcommerceProductAction()
+        action.setAction(actionName)
+        
+        let builder = GAIDictionaryBuilder.createScreenView()
+        let _ = builder?.setProductAction(action)
+        let _ = builder?.add(self.convertProductToGAIProduct(product: product))
+        
+        self.sendParamsToGA(params: builder)
+    }
+    
+    private func convertCartItemToGAIProduct(cartItem: RICartItem) -> GAIEcommerceProduct {
+        let gaProduct = GAIEcommerceProduct()
+        gaProduct.setId(cartItem.sku)
+        gaProduct.setName(cartItem.name)
+        gaProduct.setBrand(cartItem.brand)
+        if let price = cartItem.price {
+            gaProduct.setPrice(price)
+        }
+        gaProduct.setQuantity(cartItem.quantity)
+        gaProduct.setVariant(cartItem.variation)
+        return gaProduct
+    }
+    
+    private func convertProductToGAIProduct(product: TrackableProductProtocol) -> GAIEcommerceProduct {
+        let gaProduct = GAIEcommerceProduct()
+        gaProduct.setId(product.sku)
+        gaProduct.setName(product.name)
+        gaProduct.setBrand(product.brand)
+        if let price = product.payablePrice {
+            gaProduct.setPrice(price)
+        }
+        gaProduct.setQuantity(1)
+        return gaProduct
+    }
+    
 }

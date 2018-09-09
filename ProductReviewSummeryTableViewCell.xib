@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Bamilosans Light.ttf">
+            <string>Bamilo-Sans-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="334" id="KGk-i7-Jjw" customClass="ProductReviewSummeryTableViewCell" customModule="Bamilo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="334"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="395" height="333.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ND2-Hm-GYY">
+                        <rect key="frame" x="10" y="0.0" width="374" height="333.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۴/۶" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cMP-wl-008">
+                                <rect key="frame" x="289.5" y="4" width="67.5" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="2b7-Qs-jeo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="48"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="از ۵" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-gG-4XG">
+                                <rect key="frame" x="255.5" y="16.5" width="24" height="25.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                                <color key="textColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user_form" translatesAutoresizingMaskIntoConstraints="NO" id="LJC-vG-4Ta">
+                                <rect key="frame" x="259.5" y="44" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="NVY-X0-Ksx"/>
+                                    <constraint firstAttribute="width" secondItem="LJC-vG-4Ta" secondAttribute="height" multiplier="1:1" id="jmC-BL-3gl"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۳۳۴۲ نفر" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAj-o9-8yW">
+                                <rect key="frame" x="197.5" y="41.5" width="58" height="25.5"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="biO-e3-1h9">
+                                <rect key="frame" x="17" y="20" width="58" height="38"/>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="14"/>
+                                <state key="normal" title="ارسال نظر">
+                                    <color key="titleColor" red="0.0" green="0.64313725489999995" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="writeCommentButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sHS-hk-gxk"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProductRateFullStar" translatesAutoresizingMaskIntoConstraints="NO" id="ehT-YF-mCG">
+                                <rect key="frame" x="241.5" y="24.5" width="10" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ehT-YF-mCG" secondAttribute="height" multiplier="1:1" id="Pai-uX-yBh"/>
+                                    <constraint firstAttribute="height" constant="10" id="syZ-TQ-B9c"/>
+                                </constraints>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="EIM-0F-Zph">
+                                <rect key="frame" x="10" y="74" width="354" height="148.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="148" id="W1k-SR-ndY"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gYt-la-Njx">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBg-qb-gs5">
+                                <rect key="frame" x="10" y="285.5" width="354" height="1"/>
+                                <color key="backgroundColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="TsJ-4d-PRv"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNe-6y-vtb">
+                                <rect key="frame" x="10" y="286.5" width="354" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="DGv-eq-Gy1"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="seeAllCommentsTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tFE-ui-Fuy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cMP-wl-008" firstAttribute="top" secondItem="ND2-Hm-GYY" secondAttribute="top" constant="4" id="1yl-fH-N8S"/>
+                            <constraint firstItem="cMP-wl-008" firstAttribute="left" secondItem="CZD-gG-4XG" secondAttribute="right" constant="10" id="3ls-CB-Wux"/>
+                            <constraint firstItem="biO-e3-1h9" firstAttribute="left" secondItem="ND2-Hm-GYY" secondAttribute="left" constant="17" id="9Qw-CV-z6r"/>
+                            <constraint firstItem="biO-e3-1h9" firstAttribute="centerY" secondItem="cMP-wl-008" secondAttribute="centerY" id="A48-2l-CMY"/>
+                            <constraint firstItem="lAj-o9-8yW" firstAttribute="centerY" secondItem="LJC-vG-4Ta" secondAttribute="centerY" id="K78-Xj-Wzv"/>
+                            <constraint firstAttribute="bottom" secondItem="ZNe-6y-vtb" secondAttribute="bottom" id="Kcx-oU-6b9"/>
+                            <constraint firstItem="LJC-vG-4Ta" firstAttribute="left" secondItem="lAj-o9-8yW" secondAttribute="right" constant="4" id="LFs-Wl-dQq"/>
+                            <constraint firstItem="ehT-YF-mCG" firstAttribute="centerY" secondItem="CZD-gG-4XG" secondAttribute="centerY" id="Sxb-It-Nka"/>
+                            <constraint firstItem="gBg-qb-gs5" firstAttribute="left" secondItem="EIM-0F-Zph" secondAttribute="left" id="WaS-t4-lsX"/>
+                            <constraint firstItem="CZD-gG-4XG" firstAttribute="centerY" secondItem="cMP-wl-008" secondAttribute="centerY" constant="-10" id="XSm-fI-fa5"/>
+                            <constraint firstItem="EIM-0F-Zph" firstAttribute="top" secondItem="cMP-wl-008" secondAttribute="bottom" id="Zas-7n-6g5"/>
+                            <constraint firstItem="gBg-qb-gs5" firstAttribute="right" secondItem="EIM-0F-Zph" secondAttribute="right" id="bwI-N3-Qv7"/>
+                            <constraint firstItem="ZNe-6y-vtb" firstAttribute="right" secondItem="gBg-qb-gs5" secondAttribute="right" id="by5-5B-rFA"/>
+                            <constraint firstItem="LJC-vG-4Ta" firstAttribute="right" secondItem="CZD-gG-4XG" secondAttribute="right" id="ePi-AU-LNq"/>
+                            <constraint firstItem="CZD-gG-4XG" firstAttribute="left" secondItem="ehT-YF-mCG" secondAttribute="right" constant="4" id="ffr-DK-OF6"/>
+                            <constraint firstItem="LJC-vG-4Ta" firstAttribute="centerY" secondItem="cMP-wl-008" secondAttribute="centerY" constant="15" id="g7g-9R-a9f"/>
+                            <constraint firstItem="gBg-qb-gs5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="EIM-0F-Zph" secondAttribute="bottom" constant="16" id="hs9-Xj-WC3"/>
+                            <constraint firstItem="ZNe-6y-vtb" firstAttribute="top" secondItem="gBg-qb-gs5" secondAttribute="bottom" id="iEI-P6-JnE"/>
+                            <constraint firstItem="ZNe-6y-vtb" firstAttribute="left" secondItem="gBg-qb-gs5" secondAttribute="left" id="msH-Gp-25A"/>
+                            <constraint firstAttribute="right" secondItem="EIM-0F-Zph" secondAttribute="right" constant="10" id="rFK-ml-Jmx"/>
+                            <constraint firstItem="EIM-0F-Zph" firstAttribute="left" secondItem="ND2-Hm-GYY" secondAttribute="left" constant="10" id="wRe-9q-Tnh"/>
+                            <constraint firstAttribute="right" secondItem="cMP-wl-008" secondAttribute="right" constant="17" id="zSd-z8-KFR"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ND2-Hm-GYY" secondAttribute="bottom" id="lX4-6u-mFE"/>
+                    <constraint firstItem="ND2-Hm-GYY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pFr-rE-U0e"/>
+                    <constraint firstItem="ND2-Hm-GYY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="pmm-0D-zo4"/>
+                    <constraint firstItem="ND2-Hm-GYY" firstAttribute="left" secondItem="H2p-sc-9uM" secondAttribute="left" constant="10" id="wN2-aa-0GJ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="averageRateLabel" destination="cMP-wl-008" id="4j8-h2-sF3"/>
+                <outlet property="baseAverageRateLabel" destination="CZD-gG-4XG" id="ieQ-Dq-eWg"/>
+                <outlet property="containerBoxView" destination="ND2-Hm-GYY" id="c3C-NY-VcB"/>
+                <outlet property="horizontalSpacingConstraint" destination="wN2-aa-0GJ" id="jsm-oK-JIA"/>
+                <outlet property="moreCommentButtonHeightConstraint" destination="DGv-eq-Gy1" id="e6B-ui-hEZ"/>
+                <outlet property="moreCommentsButton" destination="ZNe-6y-vtb" id="eZx-Eu-kd0"/>
+                <outlet property="rateCountLabel" destination="lAj-o9-8yW" id="Lji-Q1-aKn"/>
+                <outlet property="reviewCollectionView" destination="EIM-0F-Zph" id="xIN-kV-dBa"/>
+                <outlet property="seperatorView" destination="gBg-qb-gs5" id="u5T-Ig-vwd"/>
+                <outlet property="userIcon" destination="LJC-vG-4Ta" id="1VH-BL-Uhh"/>
+                <outlet property="writeCommentButton" destination="biO-e3-1h9" id="T9L-01-hep"/>
+            </connections>
+            <point key="canvasLocation" x="-204.5" y="17"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ProductRateFullStar" width="120" height="120"/>
+        <image name="ic_user_form" width="48" height="48"/>
+    </resources>
+</document>

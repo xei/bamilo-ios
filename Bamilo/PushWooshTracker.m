@@ -9,7 +9,7 @@
 #import "PushWooshTracker.h"
 #import <Pushwoosh/PWInAppManager.h>
 #import "RITrackingWrapper.h"
-#import "DeepLinkManager.h"
+//#import "DeepLinkManager.h"
 #import "Bamilo-Swift.h"
 
 @implementation PushWooshTracker
@@ -59,13 +59,6 @@ static PushWooshTracker *instance;
 #pragma mark - Helpers
 -(void) handleCustomData:(NSDictionary *)jsonData {
     [self handleActions:[jsonData objectForKey:@"actions"]];
-    
-    NSString *emarsysSID = [jsonData objectForKey:@"sid"];
-//    if(emarsysSID) {
-//        [[EmarsysMobileEngage sharedInstance] sendOpen:emarsysSID completion:^(BOOL success) {
-//            NSLog(@"EmarsysMobileEngage > sendOpen > %@", success ? sSUCCESSFUL : sFAILED);
-//        }];
-//    }
     
     // -- UTM tracking
     __block NSMutableDictionary *utmDictionary = [NSMutableDictionary new];

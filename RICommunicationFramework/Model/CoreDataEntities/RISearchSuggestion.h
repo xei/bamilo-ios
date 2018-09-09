@@ -88,18 +88,6 @@
                   isRecentSearch:(BOOL)isRecentSearch andContext:(BOOL)save;
 
 /**
- * Method to request a set of search suggestions
- *
- * @param the query for which we want the suggestions
- * @param the block where the success response can be processed
- * @param the block where the failure response can be processed
- * @return a string with the operationID that can be used to cancel the operation
- */
-+ (NSString *)getSuggestionsForQuery:(NSString *)query
-                        successBlock:(void (^)(NSArray *suggestions))successBlock
-                     andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
-
-/**
  * Method to request results for a given query
  *
  * @param the query for which we want the results
