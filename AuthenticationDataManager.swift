@@ -91,4 +91,16 @@ class AuthenticationDataManager: DataManagerSwift {
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
         }
     }
+    
+    func getConfigure(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            let params = [
+                "versionCode":"\(version)",
+                "platform":"ios"
+            ]
+            AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_COUNTRY_CONFIGURATION, params: params, type: .foreground) { (responseType, data, errors) in
+                self.processResponse(responseType, aClass: AppConfigurations.self, data: data, errorMessages: errors, completion: completion)
+            }
+        }
+    }
 }

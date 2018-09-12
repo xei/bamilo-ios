@@ -11,7 +11,9 @@ import Crashlytics
 
 @objcMembers class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
     
+    private var animator: ZFModalTransitionAnimator? //modal presentation for optional udpate
     private static var previousSelectedViewController: JACenterNavigationController?
+    static var appConfig: AppConfigurations?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +40,12 @@ import Crashlytics
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
             UITabBarItem.appearance().badgeColor = Theme.color(kColorOrange)
         } else {}
-        
+    
         self.updateUserSessionAndCart()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateCartListener(notification:)), name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil)
+        requestTheAppConfiguration()
     }
     
     func updateCartListener(notification: Notification) {
@@ -185,4 +187,54 @@ import Crashlytics
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
         }
     }
+}
+
+
+//MARK: force udpate
+extension MainTabBarViewController {
+    
+    private func requestTheAppConfiguration() {
+        AuthenticationDataManager.sharedInstance.getConfigure(self) { (data, error) in
+            if let config = data as? AppConfigurations {
+                MainTabBarViewController.appConfig = config
+            }
+        }
+    }
+    
+    private func checkForUpdate(config: AppConfigurations) {
+        if let status = config.status {
+            switch status {
+            case .forceUpdate:
+                presentForcedUpdate(configs: config)
+            case .optionalUpdate:
+                presentOptionalUpdate(configs: config)
+            case .normal :
+                break
+            }
+        }
+    }
+    
+    private func presentOptionalUpdate(configs: AppConfigurations) {
+        if animator == nil, let optionalUpdate = ViewControllerManager.sharedInstance().loadViewController("OptionalUpdateViewController", resetCache: false) as? OptionalUpdateViewController, let topViewController = MainTabBarViewController.topViewController() {
+            animator = ZFModalTransitionAnimator(modalViewController: optionalUpdate)
+            animator?.isDragable = true
+            animator?.bounces = true
+            animator?.behindViewAlpha = 0.8
+            animator?.behindViewScale = 1.0
+            animator?.transitionDuration = 0.7
+            animator?.direction = .bottom
+            optionalUpdate.modalPresentationStyle = .overCurrentContext
+            optionalUpdate.transitioningDelegate = animator
+            topViewController.present(optionalUpdate, animated: true, completion: nil)
+        }
+    }
+    
+    private func presentForcedUpdate(configs: AppConfigurations) {
+        if let topViewController = MainTabBarViewController.topViewController() {
+            if let forceViewCtrl = ViewControllerManager.sharedInstance().loadViewController("ForceUpdateViewController", resetCache: true) as? ForceUpdateViewController {
+                topViewController.present(forceViewCtrl, animated: true, completion: nil)
+            }
+        }
+    }
+
 }

@@ -243,6 +243,7 @@
 		6194224C20D7E9BC00445845 /* ProductVariationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6194224B20D7E9BC00445845 /* ProductVariationView.xib */; };
 		6199B8331FF8EC36008C62A6 /* LoadingCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */; };
 		6199B8351FF8EC47008C62A6 /* LoadingCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */; };
+		619A4615214941F2005565D6 /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619A4614214941F2005565D6 /* AppConfigurations.swift */; };
 		619BAD9F20D9317300467C3D /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 619BAD9D20D9317300467C3D /* ZFModalTransitionAnimator.m */; };
 		619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */; };
 		619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */; };
@@ -343,6 +344,8 @@
 		61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */; };
 		61CC6AD21FC187B800355B78 /* SimpleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC6AD11FC187B800355B78 /* SimpleProduct.swift */; };
 		61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */; };
+		61CCEAAF2149529C00BC842F /* ForceUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */; };
+		61CCEAB121495A1500BC842F /* OptionalUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */; };
 		61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */; };
@@ -1396,6 +1399,7 @@
 		6194224B20D7E9BC00445845 /* ProductVariationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductVariationView.xib; sourceTree = "<group>"; };
 		6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCoverView.swift; sourceTree = "<group>"; };
 		6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCoverView.xib; sourceTree = "<group>"; };
+		619A4614214941F2005565D6 /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
 		619BAD9B20D9317300467C3D /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		619BAD9D20D9317300467C3D /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTileTeaser.swift; sourceTree = "<group>"; };
@@ -1523,6 +1527,8 @@
 		61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionDataManager.swift; sourceTree = "<group>"; };
 		61CC6AD11FC187B800355B78 /* SimpleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProduct.swift; sourceTree = "<group>"; };
 		61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmarsysMobileEngageTracker.swift; sourceTree = "<group>"; };
+		61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateViewController.swift; sourceTree = "<group>"; };
+		61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalUpdateViewController.swift; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustTracker.swift; sourceTree = "<group>"; };
@@ -3549,6 +3555,8 @@
 				614927BE20EBAD5200B16B27 /* ProductReviewListViewController.swift */,
 				61BB83F920F0B24A00758F30 /* SubmitProductReviewViewController.swift */,
 				61813B8A20FB2202002E9F46 /* OtherSellerViewController.swift */,
+				61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */,
+				61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -4049,6 +4057,7 @@
 				61AA6B4520E8FA5C00706F9A /* ProductRate.swift */,
 				61AA6B4720E8FBC900706F9A /* ProductReview.swift */,
 				6170AECC20FA03C3007A4905 /* SellerDeliveryTime.swift */,
+				619A4614214941F2005565D6 /* AppConfigurations.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -9274,6 +9283,7 @@
 				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
 				9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */,
+				61CCEAB121495A1500BC842F /* OptionalUpdateViewController.swift in Sources */,
 				61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */,
 				6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */,
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
@@ -9433,6 +9443,7 @@
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */,
 				61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */,
+				61CCEAAF2149529C00BC842F /* ForceUpdateViewController.swift in Sources */,
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
 				61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */,
 				615E44B12115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift in Sources */,
@@ -9679,6 +9690,7 @@
 				61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */,
 				61E6EE64209DD2FC0007ED5F /* CHIBasePageControl.swift in Sources */,
 				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
+				619A4615214941F2005565D6 /* AppConfigurations.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				6157A74220E24C02001B8361 /* ProductDescriptionsViewController.swift in Sources */,
