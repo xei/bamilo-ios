@@ -24,7 +24,8 @@ class AppConfigurations: NSObject, Mappable {
     var updateTitle: String?
     var updateMessage: String?
     var storeUrl: String?
-
+    
+    override init() {}
     required init?(map: Map) {}
     func mapping(map: Map) {
         currency <- map["currency_symbol"]

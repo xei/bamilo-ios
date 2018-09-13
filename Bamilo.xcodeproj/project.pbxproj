@@ -8630,6 +8630,8 @@
 				870F8CEF1E338D2C0021F87B /* Sources */,
 				870F8CF01E338D2C0021F87B /* Frameworks */,
 				870F8CF11E338D2C0021F87B /* Resources */,
+				90E6DD3F0AEA79AF8D1E256E /* [CP] Embed Pods Frameworks */,
+				9CF043BBBEE778EF86857B34 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -9214,6 +9216,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nelif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nfi";
+		};
+		90E6DD3F0AEA79AF8D1E256E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9CF043BBBEE778EF86857B34 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BamiloUITests/Pods-BamiloUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 

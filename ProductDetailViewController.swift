@@ -85,7 +85,6 @@ extension UIImageView: DisplaceableView {}
         cellIdentifiers.forEach { (cellId) in
             self.tableView.register(UINib(nibName: cellId.value, bundle: nil), forCellReuseIdentifier: cellId.value)
         }
-
         self.tableView.register(UINib(nibName: TransparentHeaderHeaderTableView.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: headerCellIdentifier)
         self.tableView.tableFooterView = UIView(frame: .zero)
         

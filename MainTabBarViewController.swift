@@ -45,7 +45,11 @@ import Crashlytics
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateCartListener(notification:)), name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil)
-        requestTheAppConfiguration()
+        
+        //wait for tabbar to be rendered
+        Utility.delay(duration: 0.1) {
+            self.requestTheAppConfiguration()
+        }
     }
     
     func updateCartListener(notification: Notification) {
@@ -197,6 +201,7 @@ extension MainTabBarViewController {
         AuthenticationDataManager.sharedInstance.getConfigure(self) { (data, error) in
             if let config = data as? AppConfigurations {
                 MainTabBarViewController.appConfig = config
+                self.checkForUpdate(config: config)
             }
         }
     }
@@ -215,7 +220,8 @@ extension MainTabBarViewController {
     }
     
     private func presentOptionalUpdate(configs: AppConfigurations) {
-        if animator == nil, let optionalUpdate = ViewControllerManager.sharedInstance().loadViewController("OptionalUpdateViewController", resetCache: false) as? OptionalUpdateViewController, let topViewController = MainTabBarViewController.topViewController() {
+        if animator == nil, let optionalUpdate = ViewControllerManager.sharedInstance().loadViewController("OptionalUpdateViewController", resetCache: false) as? OptionalUpdateViewController {
+            optionalUpdate.configs = configs
             animator = ZFModalTransitionAnimator(modalViewController: optionalUpdate)
             animator?.isDragable = true
             animator?.bounces = true
@@ -225,15 +231,15 @@ extension MainTabBarViewController {
             animator?.direction = .bottom
             optionalUpdate.modalPresentationStyle = .overCurrentContext
             optionalUpdate.transitioningDelegate = animator
-            topViewController.present(optionalUpdate, animated: true, completion: nil)
+            
+            self.present(optionalUpdate, animated: true, completion: nil)
         }
     }
     
     private func presentForcedUpdate(configs: AppConfigurations) {
-        if let topViewController = MainTabBarViewController.topViewController() {
-            if let forceViewCtrl = ViewControllerManager.sharedInstance().loadViewController("ForceUpdateViewController", resetCache: true) as? ForceUpdateViewController {
-                topViewController.present(forceViewCtrl, animated: true, completion: nil)
-            }
+        if let forceViewCtrl = ViewControllerManager.sharedInstance().loadViewController("ForceUpdateViewController", resetCache: true) as? ForceUpdateViewController {
+            forceViewCtrl.configs = configs
+            self.present(forceViewCtrl, animated: true, completion: nil)
         }
     }
 

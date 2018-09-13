@@ -168,19 +168,17 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     @objc func callContctUs() {
         AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
             if didSelectOk {
-                RICountry.getConfigurationWithSuccessBlock({ (configuration) in
-                    if let tel = configuration?.phoneNumber {
-                        if let url = URL(string: "tel://\(tel)"), UIApplication.shared.canOpenURL(url) {
-                            if #available(iOS 10, *) {
-                                UIApplication.shared.open(url)
-                            } else {
-                                UIApplication.shared.openURL(url)
-                            }
+                if let tel = MainTabBarViewController.appConfig?.phoneNumber {
+                    if let url = URL(string: "tel://\(tel)"), UIApplication.shared.canOpenURL(url) {
+                        if #available(iOS 10, *) {
+                            UIApplication.shared.open(url)
+                        } else {
+                            UIApplication.shared.openURL(url)
                         }
                     }
-                }, andFailureBlock: { (status, errorMessages) in
-                    
-                })
+                } else {
+                    self.showNotificationBar("متاسفانه شماره ای موجود نمیباشد، لطفا بعدا مجددا سعی نمایید", isSuccess: false)
+                }
             }
         }
     }
