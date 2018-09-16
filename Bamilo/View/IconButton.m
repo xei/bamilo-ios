@@ -75,9 +75,9 @@
     [self.imageView.layer addAnimation: self.bounceAnim forKey:nil];
 }
 
-- (BOOL)canBecomeFirstResponder {
-    return YES;
-}
+//- (BOOL)canBecomeFirstResponder {
+//    return YES;
+//}
 
 - (void)setPositionStatus:(NSUInteger)positionStatus {
     self.position = (IconButtonPosition)positionStatus;

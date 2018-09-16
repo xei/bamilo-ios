@@ -99,8 +99,7 @@ static BOOL performed;
                                                  @"o"   : kShowMyOrdersScreenNotification,
                                                  @"l"   : kShowAuthenticationScreenNotification,
                                                  @"r"   : kShowSignUpScreenNotification,
-                                                 @"rv"  : kShowRecentlyViewedScreenNotification,
-                                                 @"rc"  : kShowRecentSearchesScreenNotification
+                                                 @"rv"  : kShowRecentlyViewedScreenNotification
                                                  };
 
     if ([targetKeyToNotificationMap objectForKey:targetKey]) {

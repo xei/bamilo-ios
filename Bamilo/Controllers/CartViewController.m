@@ -14,7 +14,6 @@
 #import "CartTableViewCell.h"
 #import "RecieptViewCartTableViewCell.h"
 #import "NSString+Extensions.h"
-#import "RIAddress.h"
 #import "ViewControllerManager.h"
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"

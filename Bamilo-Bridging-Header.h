@@ -58,12 +58,11 @@
 #import "MutualTitleHeaderCell.h"
 #import "CatalogNoResultViewController.h"
 #import "JAFiltersViewController.h"
-#import "JAPDVViewController.h"
+#import "RIRecentlyViewedProductSku.h"
 #import "BaseTracker.h"
 #import "TagTrackerProtocol.h"
 
 #import "CartViewController.h"
-#import "JAHomeViewController.h"
 #import "MultistepEntity.h"
 #import "SuccessPaymentViewController.h"
 

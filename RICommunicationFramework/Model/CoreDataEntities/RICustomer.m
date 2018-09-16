@@ -7,7 +7,6 @@
 //
 
 #import "RICustomer.h"
-#import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "ViewControllerManager.h"

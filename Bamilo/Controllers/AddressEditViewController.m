@@ -161,6 +161,8 @@
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
+        params[@"address_form[is_default_shipping]"] = @"1";
+        params[@"address_form[is_default_billing]"] = @"1";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];

@@ -8,10 +8,6 @@
 
 #import "JACenterNavigationController.h"
 #import "AuthenticationContainerViewController.h"
-#import "JAChooseCountryViewController.h"
-#import "JAHomeViewController.h"
-#import "JALoadCountryViewController.h"
-#import "JARecentSearchesViewController.h"
 #import "JARecentlyViewedViewController.h"
 #import "JAExternalPaymentsViewController.h"
 #import "RIProduct.h"
@@ -19,32 +15,17 @@
 #import "JANavigationBarLayout.h"
 #import "RICustomer.h"
 #import "JACampaignsViewController.h"
-#import "JATabNavigationViewController.h"
-#import "JANewRatingViewController.h"
 #import "JASizeGuideViewController.h"
 #import "JAOtherOffersViewController.h"
-#import "JASellerRatingsViewController.h"
-#import "JANewSellerRatingViewController.h"
 #import "JAShopWebViewController.h"
-#import "JABundlesViewController.h"
-#import "JAPDVVariationsViewController.h"
 #import "RICountry.h"
 
 #import "JAStepByStepTabViewController.h"
 #import "JACheckoutStepByStepModel.h"
 #import "JAReturnStepByStepModel.h"
+#import "RICategory.h"
 
-#import "JAORConfirmConditionsViewController.h"
-#import "JAORConfirmationScreenViewController.h"
-#import "JAORCallToReturnViewController.h"
-#import "RIHtmlShop.h"
-
-#import "JAORReasonsViewController.h"
-#import "JAORWaysViewController.h"
-#import "JAORPaymentViewController.h"
-#import "JAORPickupStationWebViewController.h"
 #import "OrderListViewController.h"
-
 //###################################################
 #import "ViewControllerManager.h"
 #import "ContactUsViewController.h"
@@ -95,7 +76,6 @@
 - (void)registerObservingOnNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showHomeScreen:) name:kShowHomeScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSavedListViewController:) name:kShowSavedListScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentSearchesController:) name:kShowRecentSearchesScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentlyViewedController) name:kShowRecentlyViewedScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMyAccountController) name:kShowMyAccountScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showUserData:) name:kShowUserDataScreenNotification object:nil];
@@ -111,20 +91,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelectTeaserWithShopUrl:) name:kDidSelectTeaserWithShopUrlNofication object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeCurrentScreenNotificaion:) name:kCloseCurrentScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeTopTwoScreensNotificaion:) name:kCloseTopTwoScreensNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductSpecificationScreen:) name:kShowProductSpecificationScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewRatingScreen:) name:kShowNewRatingScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductBundlesScreen:) name:kOpenProductBundlesScreen object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showProductVariationsScreen:) name:kOpenProductVariationsScreen object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSizeGuide:) name:kShowSizeGuideNotification object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOtherOffers:) name:kOpenOtherOffers object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNewSellerReview:) name:kOpenNewSellerReview object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkRedirectInfo) name:kCheckRedirectInfoNotification object:nil];
 }
 
 - (void)removeObservingNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowHomeScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSavedListScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowRecentSearchesScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowRecentlyViewedScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowMyAccountScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowUserDataScreenNotification object:nil];
@@ -140,13 +114,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kDidSelectTeaserWithShopUrlNofication object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCloseCurrentScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCloseTopTwoScreensNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowProductSpecificationScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowNewRatingScreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductBundlesScreen object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenProductVariationsScreen object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowSizeGuideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenOtherOffers object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenNewSellerReview object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kCheckRedirectInfoNotification object:nil];
     
 }
@@ -227,9 +195,7 @@
     if ([newScreenName isEqualToString:STRING_HOME]) {
         [self showHomeScreen:nil];
     }
-    else if ([newScreenName isEqualToString:STRING_RECENT_SEARCHES]) {
-        [self showRecentSearchesController:nil];
-    } else if ([newScreenName isEqualToString:STRING_LOGIN]) {
+    else if ([newScreenName isEqualToString:STRING_LOGIN]) {
         [self showSignInScreen:nil];
     } else if ([newScreenName isEqualToString:STRING_RECENTLY_VIEWED]) {
         [self showRecentlyViewedController];
@@ -245,17 +211,6 @@
 #pragma mark Favorites Screen
 - (void)showSavedListViewController:(NSNotification*)notification {
     [MainTabBarViewController showWishList];
-}
-
-#pragma mark Recent Searches Screen
-- (void)showRecentSearchesController:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JARecentSearchesViewController class]]) {
-        JARecentSearchesViewController *recentSearches = [[JARecentSearchesViewController alloc] initWithNibName:@"JARecentSearchesViewController" bundle:nil];
-
-        [self popToRootViewControllerAnimated:NO];
-        [self pushViewController:recentSearches animated:NO];
-    }
 }
 
 #pragma mark Sign In Screen
@@ -395,67 +350,7 @@
     }
 }
 
-#pragma mark - Filters
-- (void)showProductSpecificationScreen:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JATabNavigationViewController class]]) {
-        JATabNavigationViewController *productDetailsViewController = [[JATabNavigationViewController alloc] init];
-        if ([notification.userInfo objectForKey:@"product"]) {
-            productDetailsViewController.product = [notification.userInfo objectForKey:@"product"];
-        }
-        if ([notification.userInfo objectForKey:@"product.screen"]) {
-            if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"description"]) {
-                [productDetailsViewController setTabScreenEnum:kTabScreenDescription];
-            } else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"specifications"]) {
-                [productDetailsViewController setTabScreenEnum:kTabScreenSpecifications];
-            } else if ([[notification.userInfo objectForKey:@"product.screen"] isEqualToString:@"reviews"]) {
-                [productDetailsViewController setTabScreenEnum:kTabScreenReviews];
-            }
-        }
-        
-        [self pushViewController:productDetailsViewController animated:YES];
-    }
-}
-
-- (void)showNewRatingScreen:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JANewRatingViewController class]])
-    {
-        JANewRatingViewController* newRatingViewController = [[JANewRatingViewController alloc] initWithNibName:@"JANewRatingViewController" bundle:nil];
-        
-        if ([notification.userInfo objectForKey:@"product"]) {
-            newRatingViewController.product = [notification.userInfo objectForKey:@"product"];
-        }
-        
-        if ([notification.userInfo objectForKey:@"productRatings"]) {
-            newRatingViewController.productRatings = [notification.userInfo objectForKey:@"productRatings"];
-        }
-        
-        BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
-        }
-        
-        [self pushViewController:newRatingViewController animated:animated];
-    }
-}
-
-- (void)showSizeGuide:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JASizeGuideViewController class]]) {
-        JASizeGuideViewController* viewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"sizeGuideViewController"];
-        
-        if ([notification.userInfo objectForKey:@"sizeGuideUrl"]) {
-            viewController.sizeGuideUrl = [notification.userInfo objectForKey:@"sizeGuideUrl"];
-        }
-        
-        [self pushViewController:viewController animated:YES];
-    }
-
-}
-
 #pragma mark - PDV Actions
-
 - (void)showOtherOffers:(NSNotification*)notification {
     UIViewController *topViewController = [self topViewController];
     if (![topViewController isKindOfClass:[JAOtherOffersViewController class]]) {
@@ -467,89 +362,6 @@
         }
         
         [self pushViewController:otherOffersVC animated:YES];
-    }
-}
-
-- (void)showProductBundlesScreen:(NSNotification *)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JABundlesViewController class]]) {
-        
-        JABundlesViewController* bundlesVC = [[JABundlesViewController alloc] init];
-        
-        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
-            bundlesVC.product = notification.object;
-        }
-        if (VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
-            if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"product.bundles"], NSArray)) {
-                bundlesVC.bundles = [notification.userInfo objectForKey:@"product.bundles"];
-            }
-            if ([notification.userInfo objectForKey:@"product.bundles.onChange"]) {
-                [bundlesVC onBundleSelectionChanged:[notification.userInfo objectForKey:@"product.bundles.onChange"]];
-            }
-            if ([notification.userInfo objectForKeyedSubscript:@"product.bundles.selected"]) {
-                [bundlesVC setSelectedItems:[notification.userInfo objectForKey:@"product.bundles.selected"]];
-            }
-            if ([notification.userInfo objectForKeyedSubscript:@"product.bundle"]) {
-                [bundlesVC setBundle:[notification.userInfo objectForKey:@"product.bundle"]];
-            }
-        }
-        
-        [self pushViewController:bundlesVC animated:YES];
-    }
-}
-
-
-- (void)showProductVariationsScreen:(NSNotification *)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAPDVVariationsViewController class]]) {
-        
-        JAPDVVariationsViewController* variationsVC = [[JAPDVVariationsViewController alloc] init];
-        
-        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
-            variationsVC.product = notification.object;
-        }
-        if (notification.userInfo) {
-            if ([[notification.userInfo objectForKey:@"product.variations"] count]) {
-                variationsVC.variations = [notification.userInfo objectForKey:@"product.variations"];
-            }
-        }
-        
-        [self pushViewController:variationsVC animated:YES];
-    }
-}
-
-//- (void)showSellerReviews:(NSNotification*)notification {
-//    UIViewController *topViewController = [self topViewController];
-//    if (![topViewController isKindOfClass:[JASellerRatingsViewController class]]) {
-//        JASellerRatingsViewController* viewController = [[JASellerRatingsViewController alloc] initWithNibName:@"JASellerRatingsViewController" bundle:nil];
-//        
-//        if (notification.object && [notification.object isKindOfClass:[RIProduct class]]) {
-//            viewController.product = notification.object;
-//        }
-//        
-//        [self pushViewController:viewController animated:YES];
-//    }
-//}
-
-- (void)showNewSellerReview:(NSNotification*)notification {
-    UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JANewRatingViewController class]]) {
-        JANewSellerRatingViewController* newSellerRatingViewController = [[JANewSellerRatingViewController alloc] initWithNibName:@"JANewSellerRatingViewController" bundle:nil];
-        
-        if ([notification.userInfo objectForKey:@"product"]) {
-            newSellerRatingViewController.product = [notification.userInfo objectForKey:@"product"];
-        }
-        
-        if([notification.userInfo objectForKey:@"sellerAverageReviews"]) {
-            newSellerRatingViewController.sellerAverageReviews = [notification.userInfo objectForKey:@"sellerAverageReviews"];
-        }
-        
-        BOOL animated = YES;
-        if([notification.userInfo objectForKey:@"animated"] && VALID_NOTEMPTY([notification.object objectForKey:@"animated"], NSNumber)) {
-            animated = [[notification.userInfo objectForKey:@"animated"] boolValue];
-        }
-        
-        [self pushViewController:newSellerRatingViewController animated:animated];
     }
 }
 
@@ -686,14 +498,6 @@
 }
 
 #pragma mark - OnlineReturns
-
-- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock {
-    JAORPickupStationWebViewController* viewController = [[JAORPickupStationWebViewController alloc] init];
-    [viewController setCmsBlock:cmsBlock];
-    [self pushViewController:viewController animated:YES];
-}
-
-
 - (void)updateCartWith:(RICart *)cart {
     if(cart) {
         //update navbars cart value

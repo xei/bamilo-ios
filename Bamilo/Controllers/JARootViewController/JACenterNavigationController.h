@@ -27,7 +27,6 @@ typedef void(^ProtectedBlock)(BOOL userHadSession);
 - (void)openTargetString:(NSString *)targetString purchaseInfo:(NSString *)purchaseInfo currentScreenName:(NSString *)screenName;
 - (BOOL)openScreenTarget:(RITarget *)target purchaseInfo:(NSString *)purchaseInfo currentScreenName:(NSString *)screenName;
 - (void)showSearchView:(NSString *)screenName;
-- (void)goToPickupStationWebViewControllerWithCMS:(NSString*)cmsBlock;
 - (void)updateCartWith:(RICart *)cart;
 
 //- (void)goToOnlineReturnsPaymentScreenForItems:(NSArray *)items order:(RITrackOrder*)order;

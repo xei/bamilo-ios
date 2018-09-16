@@ -9,7 +9,6 @@
 #import "CartEntity.h"
 #import "RICountryConfiguration.h"
 #import "RIPaymentInformation.h"
-#import "RIAddress.h"
 #import "RISellerDelivery.h"
 #import "RIProduct.h"
 
