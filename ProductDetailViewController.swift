@@ -20,7 +20,9 @@ extension UIImageView: DisplaceableView {}
     var animator: ZFModalTransitionAnimator?
     
     @IBOutlet weak private var tableView: UITableView!
-    @IBOutlet weak private var addToCartHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomButtonsWrapperView: UIView!
+    @IBOutlet weak private var bottomButtonsWrapperHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var buyNowButton: IconButton!
     @IBOutlet weak private var addToCartButton: IconButton!
     @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
     
@@ -68,15 +70,28 @@ extension UIImageView: DisplaceableView {}
         self.tableView.clipsToBounds = true
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: addToCartHeightConstraint.constant, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomButtonsWrapperHeightConstraint.constant, right: 0)
+        [addToCartButton, buyNowButton].forEach {
+            $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
+            $0?.positionStatus = 1
+        }
         
-        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
-        self.addToCartButton.layer.cornerRadius = 0 // addToCartHeightConstraint.constant / 2
-//        self.addToCartButton.applyGradient(colours: [
-//            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-//            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-//        ])
-        self.addToCartButton.backgroundColor = Theme.color(kColorOrange1)
+        self.bottomButtonsWrapperView.layer.cornerRadius =
+        bottomButtonsWrapperHeightConstraint.constant / 2
+        
+        
+        self.bottomButtonsWrapperView.applyGradient(colours: [
+            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+        ])
+        self.addToCartButton.applyGradient(colours: [
+            UIColor(red:0.1, green:0.21, blue:0.37, alpha:1),
+            UIColor(red:0.12, green:0.31, blue:0.56, alpha:1)
+            ])
+        self.buyNowButton.applyGradient(colours: [
+            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+        ])
         
         self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         // remove extra white gaps between sections & top and bottom of tableview

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kvV-JZ-EK2">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1038,41 +1038,97 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ekv-cg-g8w" customClass="IconButton">
-                                <rect key="frame" x="0.0" y="688" width="414" height="48"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-Ry-Jdc">
+                                <rect key="frame" x="10" y="679" width="394" height="47"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-Y5-LfC">
+                                        <rect key="frame" x="362" y="11.666666666666629" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="A2o-zu-0H1"/>
+                                            <constraint firstAttribute="width" secondItem="j1a-Y5-LfC" secondAttribute="height" multiplier="1:1" id="iUD-hQ-V51"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
+                                        <rect key="frame" x="309" y="5.3333333333333712" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-qw-zz3">
+                                        <rect key="frame" x="309" y="26" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="left_btn_back" translatesAutoresizingMaskIntoConstraints="NO" id="PS7-Qp-bSL">
+                                        <rect key="frame" x="8" y="11.666666666666629" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="9Wy-yC-4Fk"/>
+                                            <constraint firstAttribute="width" secondItem="PS7-Qp-bSL" secondAttribute="height" multiplier="1:1" id="LAE-5H-qyJ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaJ-9v-Rjs" customClass="IconButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="197" height="47"/>
+                                        <state key="normal" title="همین الان بخر" image="tabbar_button_cart_highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                                                <real key="value" value="0.29999999999999999"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWx-nR-vD0" customClass="IconButton">
+                                        <rect key="frame" x="197" y="0.0" width="197" height="47"/>
+                                        <state key="normal" title="افزودن به سبد" image="tabbar_button_cart_highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                                                <real key="value" value="0.29999999999999999"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="6Gt-N7-Mcw"/>
+                                    <constraint firstItem="PS7-Qp-bSL" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" constant="8" id="1VV-44-kVd"/>
+                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="left" secondItem="SiN-i9-VzX" secondAttribute="right" constant="11" id="3wQ-89-iAO"/>
+                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" id="4T0-zA-daq"/>
+                                    <constraint firstItem="7XB-qw-zz3" firstAttribute="right" secondItem="SiN-i9-VzX" secondAttribute="right" id="66K-Cv-gFY"/>
+                                    <constraint firstAttribute="bottom" secondItem="kWx-nR-vD0" secondAttribute="bottom" id="9gV-bC-qi6"/>
+                                    <constraint firstItem="PS7-Qp-bSL" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="AKs-pn-9eT"/>
+                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="SiN-i9-VzX" secondAttribute="centerY" constant="8" id="NWb-YH-KJ8"/>
+                                    <constraint firstAttribute="right" secondItem="kWx-nR-vD0" secondAttribute="right" id="PU4-0H-ndh"/>
+                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="width" secondItem="kWx-nR-vD0" secondAttribute="width" id="Sbn-Oi-KaU"/>
+                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="U9V-Vx-VYf"/>
+                                    <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
+                                    <constraint firstItem="kWx-nR-vD0" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="bwE-Lf-y0n"/>
+                                    <constraint firstItem="7XB-qw-zz3" firstAttribute="top" secondItem="SiN-i9-VzX" secondAttribute="bottom" id="cp2-w2-43S"/>
+                                    <constraint firstAttribute="right" secondItem="j1a-Y5-LfC" secondAttribute="right" constant="8" id="wLM-kL-PaY"/>
+                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="wcl-Rn-rLF"/>
+                                    <constraint firstItem="kWx-nR-vD0" firstAttribute="left" secondItem="BaJ-9v-Rjs" secondAttribute="right" id="xBT-4s-q6Z"/>
+                                    <constraint firstAttribute="bottom" secondItem="BaJ-9v-Rjs" secondAttribute="bottom" id="z0Z-Ft-S0v"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="btn_cart"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="addToCartButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="9YA-ap-g4a"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="r8W-fi-eb9" firstAttribute="bottom" secondItem="Ekv-cg-g8w" secondAttribute="bottom" id="7hP-B2-kbh"/>
+                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="bottom" constant="10" id="0Xu-4s-ArW"/>
+                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="r8W-fi-eb9" secondAttribute="bottom" id="I9p-Uh-vTa"/>
                             <constraint firstItem="r8W-fi-eb9" firstAttribute="top" secondItem="1ze-x0-lQB" secondAttribute="bottom" id="IQR-WZ-Rpl"/>
-                            <constraint firstItem="Ekv-cg-g8w" firstAttribute="left" secondItem="geR-SC-ejl" secondAttribute="left" id="n4t-A7-zS4"/>
-                            <constraint firstItem="pSA-3I-mdU" firstAttribute="top" secondItem="Ekv-cg-g8w" secondAttribute="bottom" id="nco-aB-FNt"/>
+                            <constraint firstItem="F7n-Ry-Jdc" firstAttribute="left" secondItem="geR-SC-ejl" secondAttribute="left" constant="10" id="SG4-zw-xwk"/>
                             <constraint firstAttribute="right" secondItem="r8W-fi-eb9" secondAttribute="right" id="p42-6q-v5D"/>
-                            <constraint firstAttribute="right" secondItem="Ekv-cg-g8w" secondAttribute="right" id="sPR-fL-Cof"/>
                             <constraint firstItem="r8W-fi-eb9" firstAttribute="left" secondItem="geR-SC-ejl" secondAttribute="left" id="w1n-Tn-TL0"/>
+                            <constraint firstAttribute="right" secondItem="F7n-Ry-Jdc" secondAttribute="right" constant="10" id="xc7-0l-Dbp"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="addToCartButton" destination="Ekv-cg-g8w" id="Iws-L0-Miy"/>
-                        <outlet property="addToCartHeightConstraint" destination="6Gt-N7-Mcw" id="2sP-jb-6jg"/>
+                        <outlet property="addToCartButton" destination="kWx-nR-vD0" id="6wX-WH-bvO"/>
+                        <outlet property="bottomButtonsWrapperHeightConstraint" destination="a1Z-Wl-c0w" id="gHc-2l-5MO"/>
+                        <outlet property="bottomButtonsWrapperView" destination="F7n-Ry-Jdc" id="CwH-1k-FYl"/>
+                        <outlet property="buyNowButton" destination="BaJ-9v-Rjs" id="KW4-1s-bNu"/>
                         <outlet property="tableView" destination="r8W-fi-eb9" id="ED9-JS-VlY"/>
                         <outlet property="topTableViewConstraint" destination="IQR-WZ-Rpl" id="dUW-Ex-Sqd"/>
                         <segue destination="r4K-gO-BGF" kind="presentation" identifier="showAddToCartModal" id="Ib5-ij-N9c"/>
@@ -1085,7 +1141,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yQW-T6-gDl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="90" y="845"/>
+            <point key="canvasLocation" x="89.855072463768124" y="844.56521739130437"/>
         </scene>
         <!--Add To Cart View Controller-->
         <scene sceneID="qfZ-Hn-wPD">
@@ -2925,6 +2981,7 @@
         <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
         <image name="img_navbar_logo" width="83" height="20"/>
+        <image name="left_btn_back" width="20" height="20"/>
         <image name="noOrdersImage" width="120" height="57"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="reload" width="170" height="170"/>
@@ -2942,8 +2999,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qrz-C2-bq8"/>
-        <segue reference="iB6-A7-uY0"/>
-        <segue reference="Ned-FL-dUc"/>
+        <segue reference="hAx-Pw-RUJ"/>
+        <segue reference="Ib5-ij-N9c"/>
         <segue reference="yLY-Re-RCl"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>

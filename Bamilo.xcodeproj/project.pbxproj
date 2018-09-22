@@ -893,7 +893,6 @@
 		CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */; };
-		CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
 		CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
@@ -957,7 +956,6 @@
 		CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
 		CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */; };
 		CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
-		CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */; };
 		CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
@@ -1058,9 +1056,6 @@
 		4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVSingleRelatedItem.h; sourceTree = "<group>"; };
 		4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVSingleRelatedItem.m; sourceTree = "<group>"; };
 		4A2FD84919913FCA00C65C1D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		4A3719BB19C05F52002D4199 /* JAUndefinedSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUndefinedSearchView.h; sourceTree = "<group>"; };
-		4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUndefinedSearchView.m; sourceTree = "<group>"; };
-		4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAUndefinedSearchView.xib; sourceTree = "<group>"; };
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212B19891F6D00B70A9C /* JARecentSearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentSearchesViewController.h; sourceTree = "<group>"; };
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
@@ -2573,16 +2568,6 @@
 				9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */,
 			);
 			path = NoConnectionView;
-			sourceTree = "<group>";
-		};
-		4A3719BA19C05F3C002D4199 /* UndefinedSearchView */ = {
-			isa = PBXGroup;
-			children = (
-				4A3719BB19C05F52002D4199 /* JAUndefinedSearchView.h */,
-				4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */,
-				4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */,
-			);
-			path = UndefinedSearchView;
 			sourceTree = "<group>";
 		};
 		4A39211D19891F1500B70A9C /* RecentlyViewed */ = {
@@ -7094,7 +7079,6 @@
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
 				4A1892CF199399EC0036F327 /* ReviewCell */,
 				CE69B58D19868B7A005CC699 /* Teasers */,
-				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 			);
 			name = JA;
@@ -8555,7 +8539,6 @@
 				875743FE1EA60E2D001B518A /* Summer-Small@2x.png in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				6190B4F920AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib in Resources */,
-				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				875743A91EA60DE0001B518A /* Ramadan-72@2x.png in Resources */,
 				870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */,
 				616A9FC420C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib in Resources */,
@@ -9267,7 +9250,6 @@
 				61338D001EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m in Sources */,
 				CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */,
 				9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */,
-				CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */,
 				6119576D2003C0A600B7B9D8 /* Ext+Dictionary.swift in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				6170AECD20FA03C3007A4905 /* SellerDeliveryTime.swift in Sources */,

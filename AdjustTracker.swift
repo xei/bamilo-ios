@@ -39,6 +39,7 @@ class AdjustTracker: BaseTracker, EventTrackerProtocol {
     func setConfig() {
         if let ADJUSTID = AppUtility.getInfoConfigs(for: "AdjustTokenID") as? String {
             let adjConfigs = ADJConfig.init(appToken: ADJUSTID, environment: ADJEnvironmentProduction)
+            adjConfigs?.sendInBackground = true
             adjConfigs?.logLevel = ADJLogLevelAssert
             Adjust.appDidLaunch(adjConfigs)
         }
