@@ -1041,35 +1041,47 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-Ry-Jdc">
                                 <rect key="frame" x="10" y="679" width="394" height="47"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-Y5-LfC">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle_checked" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-Y5-LfC">
                                         <rect key="frame" x="362" y="11.666666666666629" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="A2o-zu-0H1"/>
                                             <constraint firstAttribute="width" secondItem="j1a-Y5-LfC" secondAttribute="height" multiplier="1:1" id="iUD-hQ-V51"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
-                                        <rect key="frame" x="309" y="5.3333333333333712" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-qw-zz3">
-                                        <rect key="frame" x="309" y="26" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="left_btn_back" translatesAutoresizingMaskIntoConstraints="NO" id="PS7-Qp-bSL">
-                                        <rect key="frame" x="8" y="11.666666666666629" width="24" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادامه و پرداخت" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
+                                        <rect key="frame" x="263.66666666666669" y="9" width="87.333333333333314" height="15"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="9Wy-yC-4Fk"/>
+                                            <constraint firstAttribute="height" constant="15" id="NUc-dy-97z"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="محصول با موفقیت به سبد خرید اضافه شد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-qw-zz3">
+                                        <rect key="frame" x="160.33333333333337" y="23.666666666666629" width="190.66666666666663" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="B58-7H-m64"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pcw-BS-a8g">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="47"/>
+                                        <connections>
+                                            <action selector="gotoCartButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="NAL-dO-GND"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="PS7-Qp-bSL">
+                                        <rect key="frame" x="8" y="14.666666666666629" width="18" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="18" id="9Wy-yC-4Fk"/>
                                             <constraint firstAttribute="width" secondItem="PS7-Qp-bSL" secondAttribute="height" multiplier="1:1" id="LAE-5H-qyJ"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaJ-9v-Rjs" customClass="IconButton">
                                         <rect key="frame" x="0.0" y="0.0" width="197" height="47"/>
-                                        <state key="normal" title="همین الان بخر" image="tabbar_button_cart_highlighted">
+                                        <state key="normal" title="همین الان بخر" image="buy_now">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -1077,6 +1089,9 @@
                                                 <real key="value" value="0.29999999999999999"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="buyNowButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="qgH-Ky-NdO"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWx-nR-vD0" customClass="IconButton">
                                         <rect key="frame" x="197" y="0.0" width="197" height="47"/>
@@ -1088,6 +1103,9 @@
                                                 <real key="value" value="0.29999999999999999"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="addToCartButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="YR9-ur-Oi7"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1096,6 +1114,7 @@
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="left" secondItem="SiN-i9-VzX" secondAttribute="right" constant="11" id="3wQ-89-iAO"/>
                                     <constraint firstItem="BaJ-9v-Rjs" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" id="4T0-zA-daq"/>
                                     <constraint firstItem="7XB-qw-zz3" firstAttribute="right" secondItem="SiN-i9-VzX" secondAttribute="right" id="66K-Cv-gFY"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pcw-BS-a8g" secondAttribute="bottom" id="9bN-TG-d0j"/>
                                     <constraint firstAttribute="bottom" secondItem="kWx-nR-vD0" secondAttribute="bottom" id="9gV-bC-qi6"/>
                                     <constraint firstItem="PS7-Qp-bSL" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="AKs-pn-9eT"/>
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="SiN-i9-VzX" secondAttribute="centerY" constant="8" id="NWb-YH-KJ8"/>
@@ -1104,7 +1123,10 @@
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="U9V-Vx-VYf"/>
                                     <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
                                     <constraint firstItem="kWx-nR-vD0" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="bwE-Lf-y0n"/>
+                                    <constraint firstItem="Pcw-BS-a8g" firstAttribute="leading" secondItem="F7n-Ry-Jdc" secondAttribute="leading" id="cmo-WG-Tl9"/>
                                     <constraint firstItem="7XB-qw-zz3" firstAttribute="top" secondItem="SiN-i9-VzX" secondAttribute="bottom" id="cp2-w2-43S"/>
+                                    <constraint firstItem="Pcw-BS-a8g" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="ej3-oT-pvM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pcw-BS-a8g" secondAttribute="trailing" id="gvO-sA-LBn"/>
                                     <constraint firstAttribute="right" secondItem="j1a-Y5-LfC" secondAttribute="right" constant="8" id="wLM-kL-PaY"/>
                                     <constraint firstItem="BaJ-9v-Rjs" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="wcl-Rn-rLF"/>
                                     <constraint firstItem="kWx-nR-vD0" firstAttribute="left" secondItem="BaJ-9v-Rjs" secondAttribute="right" id="xBT-4s-q6Z"/>
@@ -1129,6 +1151,8 @@
                         <outlet property="bottomButtonsWrapperHeightConstraint" destination="a1Z-Wl-c0w" id="gHc-2l-5MO"/>
                         <outlet property="bottomButtonsWrapperView" destination="F7n-Ry-Jdc" id="CwH-1k-FYl"/>
                         <outlet property="buyNowButton" destination="BaJ-9v-Rjs" id="KW4-1s-bNu"/>
+                        <outlet property="circleCheckedImageView" destination="j1a-Y5-LfC" id="lKS-8y-AcK"/>
+                        <outlet property="leftArrowImageView" destination="PS7-Qp-bSL" id="8e8-QC-lcG"/>
                         <outlet property="tableView" destination="r8W-fi-eb9" id="ED9-JS-VlY"/>
                         <outlet property="topTableViewConstraint" destination="IQR-WZ-Rpl" id="dUW-Ex-Sqd"/>
                         <segue destination="r4K-gO-BGF" kind="presentation" identifier="showAddToCartModal" id="Ib5-ij-N9c"/>
@@ -2977,11 +3001,13 @@
         <image name="ArrowLeft" width="48" height="48"/>
         <image name="ProductComment" width="48" height="48"/>
         <image name="app-update" width="46" height="51"/>
+        <image name="arrow_left" width="24" height="24"/>
         <image name="btn_cart" width="22" height="22"/>
+        <image name="buy_now" width="10" height="20"/>
+        <image name="circle_checked" width="24" height="24"/>
         <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
         <image name="img_navbar_logo" width="83" height="20"/>
-        <image name="left_btn_back" width="20" height="20"/>
         <image name="noOrdersImage" width="120" height="57"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="reload" width="170" height="170"/>

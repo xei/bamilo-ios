@@ -25,11 +25,14 @@ extension UIImageView: DisplaceableView {}
     @IBOutlet weak private var buyNowButton: IconButton!
     @IBOutlet weak private var addToCartButton: IconButton!
     @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var circleCheckedImageView: UIImageView!
+    @IBOutlet weak private var leftArrowImageView: UIImageView!
     
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
     private var recommendItems: [RecommendItem]?
     private var calculatedDeliveryTimeMessage: String?
+    private var shuouldGoToCardAfterAddToCard: Bool = false
     
     enum CellType {
         case slider
@@ -76,9 +79,10 @@ extension UIImageView: DisplaceableView {}
             $0?.positionStatus = 1
         }
         
+        [circleCheckedImageView, leftArrowImageView].forEach { $0.applyTintColor(color: .white) }
+        
         self.bottomButtonsWrapperView.layer.cornerRadius =
         bottomButtonsWrapperHeightConstraint.constant / 2
-        
         
         self.bottomButtonsWrapperView.applyGradient(colours: [
             UIColor(red:1, green:0.65, blue:0.05, alpha:1),
@@ -147,6 +151,15 @@ extension UIImageView: DisplaceableView {}
         }
     }
     
+    private func hideButtons(animated: Bool) {
+        if animated {
+            self.addToCartButton.hide()
+            self.buyNowButton.hide()
+        } else {
+            self.addToCartButton.isHidden = true
+            self.buyNowButton.isHidden = true
+        }
+    }
     
     private func getContent(completion: ((Bool)-> Void)? = nil) {
         ProductDataManager.sharedInstance.getProductDetailInfo(self, sku: product?.sku ?? productSku ??  "") { (data, error) in
@@ -258,8 +271,24 @@ extension UIImageView: DisplaceableView {}
             callBack?(succes)
         }
     }
+
+    
+    @IBAction func buyNowButtonTapped(_ sender: Any) {
+        shuouldGoToCardAfterAddToCard = true
+        prepareToAddToCart()
+    }
+    
     
     @IBAction func addToCartButtonTapped(_ sender: Any) {
+        shuouldGoToCardAfterAddToCard = false
+        prepareToAddToCart()
+    }
+    
+    @IBAction func gotoCartButtonTapped(_ sender: Any) {
+        MainTabBarViewController.showCart()
+    }
+    
+    private func prepareToAddToCart() {
         if let variations = product?.variations, variations.count >= 1 {
             let sizeVariations = variations.filter { $0.type == .size }.first
             let selectedSize = sizeVariations?.products?.filter { $0.isSelected }.first
@@ -284,7 +313,12 @@ extension UIImageView: DisplaceableView {}
                     if let info = self.purchaseTrackingInfo, success {
                         PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
                     }
-//                    MainTabBarViewController.showCart()
+                    
+                    if self.shuouldGoToCardAfterAddToCard {
+                        MainTabBarViewController.showCart()
+                    } else {
+                        self.hideButtons(animated: true)
+                    }
                 }
             }
         }

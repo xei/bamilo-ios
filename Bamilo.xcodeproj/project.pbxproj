@@ -346,6 +346,7 @@
 		61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */; };
 		61CCEAAF2149529C00BC842F /* ForceUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */; };
 		61CCEAB121495A1500BC842F /* OptionalUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */; };
+		61CD2C372156605400493D43 /* Ext+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CD2C362156605400493D43 /* Ext+UIImageView.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */; };
 		61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */; };
@@ -1479,6 +1480,7 @@
 		61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmarsysMobileEngageTracker.swift; sourceTree = "<group>"; };
 		61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateViewController.swift; sourceTree = "<group>"; };
 		61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalUpdateViewController.swift; sourceTree = "<group>"; };
+		61CD2C362156605400493D43 /* Ext+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImageView.swift"; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustTracker.swift; sourceTree = "<group>"; };
@@ -4802,6 +4804,7 @@
 				61540C812006482300D2F03F /* Ext+Array.swift */,
 				61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */,
 				6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */,
+				61CD2C362156605400493D43 /* Ext+UIImageView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -9285,6 +9288,7 @@
 				875AD5751E38C0C900584ABF /* RIShippingMethodFormField.m in Sources */,
 				610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */,
 				CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */,
+				61CD2C372156605400493D43 /* Ext+UIImageView.swift in Sources */,
 				8720C3411EE2CD2700404378 /* LoadingManager.swift in Sources */,
 				618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */,
 				897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */,
