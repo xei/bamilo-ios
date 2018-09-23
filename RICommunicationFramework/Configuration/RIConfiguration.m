@@ -64,12 +64,13 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.10/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.11/";
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
 NSString *const RI_API_GET_TEASERS = @"main/home/";
 NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getconfigurations/";
+NSString *const RI_API_CONFIGURATION = @"configurations/";
 NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/"; //$$$ this one doesn't exist in android, does it have anything to do with the next one?
 NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic/key/mobile_promotions/";
 

@@ -35,7 +35,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         
         submitReviewButton.setImage(#imageLiteral(resourceName: "ProductComment").withRenderingMode(.alwaysTemplate), for: .normal)
         submitReviewButton.tintColor = .white
-//        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
+        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
         
         
         tableview.delegate = self

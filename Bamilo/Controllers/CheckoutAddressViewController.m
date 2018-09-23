@@ -34,6 +34,7 @@
     _addressTableViewController.options = (ADDRESS_CELL_EDIT | ADDRESS_CELL_SELECT);
     _addressTableViewController.delegate = self;
     [_addressTableViewController addInto:self ofView:self.addressListContainerView];
+    _addressTableViewController.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.continueButtonHeightConstraint.constant + 20, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

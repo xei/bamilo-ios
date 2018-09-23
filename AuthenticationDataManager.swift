@@ -98,7 +98,7 @@ class AuthenticationDataManager: DataManagerSwift {
                 "versionCode":"\(version)",
                 "platform":"ios"
             ]
-            AuthenticationDataManager.requestManager.async(.get, target: target, path: RI_API_COUNTRY_CONFIGURATION, params: params, type: .background) { (responseType, data, errors) in
+            AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_CONFIGURATION, params: params, type: .background) { (responseType, data, errors) in
                 self.processResponse(responseType, aClass: AppConfigurations.self, data: data, errorMessages: errors, completion: completion)
             }
         }

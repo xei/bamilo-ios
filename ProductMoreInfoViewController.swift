@@ -40,7 +40,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         
         self.segmentControl.selectedSegmentIndex = selectedViewType == .description ? 1 : 0
         indexChanged(segmentControl)
-//        addToCartButton.layer.cornerRadius = addToCartButtonHeightConstraint.constant / 2
+        addToCartButton.layer.cornerRadius = addToCartButtonHeightConstraint.constant / 2
     }
     
     func applyStyle() {

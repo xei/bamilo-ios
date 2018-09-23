@@ -8,7 +8,18 @@
 
 #import "ButtonTableViewCell.h"
 
+@interface ButtonTableViewCell()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonHeightConstraint;
+
+@end
+
 @implementation ButtonTableViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.button.clipsToBounds = YES;
+    self.button.layer.cornerRadius = self.buttonHeightConstraint.constant / 2;
+}
 
 + (NSString *)nibName {
     return @"ButtonTableViewCell";

@@ -23,6 +23,8 @@
 #define cLoginMethodGoogle @"sso-google"
 
 @interface SignInViewController ()
+@property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *submitButtonHeightConstraint;
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *emailControl;
 @property (weak, nonatomic) IBOutlet InputTextFieldControl *passwordControl;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -54,6 +56,8 @@
     self.passwordControl.input.textField.delegate = self;
     
     [self.forgetPasswordButton applyStyle:[Theme font:kFontVariationRegular size:10] color:[Theme color:kColorOrange1]];
+    
+    self.submitButton.layer.cornerRadius = self.submitButtonHeightConstraint.constant / 2;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

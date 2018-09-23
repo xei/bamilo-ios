@@ -43,7 +43,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
         reviewTitleTextField.font = Theme.font(kFontVariationRegular, size: 13)
         reviewCommentTextView.font = Theme.font(kFontVariationRegular, size: 13)
         submitReviewButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
-//        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
+        submitReviewButton.layer.cornerRadius = submitButtonHeightConstraint.constant / 2
         
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: submitButtonHeightConstraint.constant, right: 0)
         submitReviewButton.setTitle(STRING_SUBMIT_LABEL, for: .normal)

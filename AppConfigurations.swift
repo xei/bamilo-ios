@@ -32,8 +32,8 @@ class AppConfigurations: NSObject, Mappable {
         phoneNumber <- map["phone_number"]
         csEmail <- map["cs_email"]
         status <- (map["version.status"], EnumTransform())
-        updateTitle <- map["version.title"]
-        updateMessage <- map["version.message"]
+        updateTitle <- map["version.message_title"]
+        updateMessage <- map["version.message_content"]
         storeUrl <- map["version.store_url"]
     }
 }
