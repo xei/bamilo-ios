@@ -32,9 +32,11 @@ import Adjust
     }
     
     class func openExternalUrlOnBrowser(urlString: String) {
-        guard let url = URL(string: urlString) else {
+        let validUrlString = urlString.contains("http") ? urlString : "http://\(urlString)"
+        guard let url = URL(string: validUrlString) else {
             return
         }
+        
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {

@@ -10,9 +10,9 @@ import UIKit
 import ObjectMapper
 
 enum AppUpdateStatus: Int32 {
-    case forceUpdate = 0
+    case normal = 0
     case optionalUpdate = 1
-    case normal = 2
+    case forceUpdate = 2
 }
 
 class AppConfigurations: NSObject, Mappable {

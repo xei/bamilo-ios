@@ -93,7 +93,7 @@ class AuthenticationDataManager: DataManagerSwift {
     }
     
     func getConfigure(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             let params = [
                 "versionCode":"\(version)",
                 "platform":"ios"
