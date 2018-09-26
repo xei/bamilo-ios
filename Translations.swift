@@ -161,4 +161,5 @@ let STRING_RATE_AND_REVIEW = RILocalizationWrapper.localizedString("rate_and_rev
 let STRING_BUY_PRODUCT = RILocalizationWrapper.localizedString("buy_product")!
 let STRING_UPDATE_NOW = RILocalizationWrapper.localizedString("update_now")!
 let STRING_NOT_NOW = RILocalizationWrapper.localizedString("not_now")!
+let STRING_BUY_RIGHT_NOW = RILocalizationWrapper.localizedString("buy_right_now")!
 

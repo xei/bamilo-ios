@@ -81,7 +81,7 @@ class SellerOfferItemTableViewCell: BaseProductTableViewCell {
         sellerScoreWrapperView.clipsToBounds = false
         dicountPrecentageWrapperView.backgroundColor = Theme.color(kColorOrange)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
-        addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        addToCartButton.setTitle(STRING_BUY_RIGHT_NOW, for: .normal)
         addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 14), color: .white)
         addToCartButton.layer.cornerRadius = 4
     }

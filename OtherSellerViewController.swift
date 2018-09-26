@@ -120,7 +120,11 @@ extension OtherSellerViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension OtherSellerViewController: SellerOfferItemTableViewCellDelegate {
     func addToCart(simpleSku: String, product: TrackableProductProtocol) {
-        ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: product, viewCtrl: self)
+        ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: product, viewCtrl: self) { (success, error) in
+            if success {
+                MainTabBarViewController.showCart()
+            }
+        }
     }
 }
 

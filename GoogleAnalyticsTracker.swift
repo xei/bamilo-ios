@@ -60,19 +60,11 @@
             
             
             if let utmSource = campaignDictionary[kUTMSource], utmSource.count > 0 {
-                if let _ = campaignDictionary[kUTMCampaign] {
-                    params += ["\(kUTMSource)=push"]
-                } else {
-                    params += ["\(kUTMSource)=\(utmSource)"]
-                }
+                params += ["\(kUTMSource)=\(utmSource)"]
             }
             
             if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.count > 0 {
-                if let _ = campaignDictionary[kUTMCampaign] {
-                    params += ["\(kUTMMedium)=referrer"]
-                } else {
-                    params += ["\(kUTMMedium)=\(utmMedium)"]
-                }
+                params += ["\(kUTMMedium)=\(utmMedium)"]
             }
             
             self.campaginDataString = params.joined(separator:"&")
