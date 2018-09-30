@@ -93,7 +93,7 @@ class ProductDataManager: DataManagerSwift {
     
     // ------------ helpers for viewControllers ------------
     func addOrRemoveFromWishList<T: BaseViewController & DataServiceProtocol>(product: TrackableProductProtocol, in viewCtrl: T,add: Bool, callBackHandler: ((_ success: Bool,_ error: Error?)->Void)? = nil) {
-        if !RICustomer.checkIfUserIsLogged() {
+        if !CurrentUserManager.isUserLoggedIn() {
             product.isInWishList.toggle()
             callBackHandler?(false, nil)
         }

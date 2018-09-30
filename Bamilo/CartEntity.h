@@ -11,7 +11,7 @@
 #import "RICartItem.h"
 #import "Address.h"
 
-@class RIPaymentInformation, RIForm, RISellerDelivery, RICustomer;
+@class RIPaymentInformation, RIForm, RISellerDelivery;
 
 @interface CartPackage: BaseModel
 

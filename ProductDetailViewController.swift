@@ -357,15 +357,8 @@ extension UIImageView: DisplaceableView {}
     private func prepareAddToCartView(addToCartViewController: AddToCartViewController){
         addToCartViewController.product = self.product
         if animator == nil {
-            animator = ZFModalTransitionAnimator(modalViewController: addToCartViewController)
-            animator?.isDragable = true
-            animator?.bounces = true
-            animator?.behindViewAlpha = 0.8
-            animator?.behindViewScale = 1.0
-            animator?.transitionDuration = 0.7
-            animator?.direction = .bottom
+            animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
         }
-        addToCartViewController.modalPresentationStyle = .overCurrentContext
         addToCartViewController.delegate = self
         addToCartViewController.transitioningDelegate = animator
     }

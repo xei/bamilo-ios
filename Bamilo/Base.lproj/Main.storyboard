@@ -3000,7 +3000,7 @@
     <resources>
         <image name="ArrowLeft" width="48" height="48"/>
         <image name="ProductComment" width="48" height="48"/>
-        <image name="app-update" width="46" height="51"/>
+        <image name="app-update" width="185" height="205"/>
         <image name="arrow_left" width="24" height="24"/>
         <image name="btn_cart" width="22" height="22"/>
         <image name="buy_now" width="10" height="20"/>

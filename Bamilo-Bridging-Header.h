@@ -11,7 +11,6 @@
 #import "RIApi.h"
 #import "RITarget.h"
 #import "RICartItem.h"
-#import "RICustomer.h"
 #import "JAStrings.h"
 #import "JANavigationBarLayout.h"
 #import "IconButton.h"
@@ -72,4 +71,4 @@
 #import "GAIEcommerceFields.h"
 #import "ZFModalTransitionAnimator.h"
 #import "EmarsysRecommendationGridWidget.h"
-
+#import "AddressList.h"

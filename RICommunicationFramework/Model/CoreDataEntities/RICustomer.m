@@ -326,21 +326,6 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserIsGuestFlagKey];
 }
 
-
-+ (BOOL)checkIfUserHasAddresses {
-    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    if (VALID_NOTEMPTY(customers, NSArray)) {
-        RICustomer *customer = [customers lastObject];
-        if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet)) {
-            return YES;
-        } else {
-            return NO;
-        }
-    } else {
-        return NO;
-    }
-}
-
 #pragma mark - Cancel requests
 
 + (void)cancelRequest:(NSString *)operationID {

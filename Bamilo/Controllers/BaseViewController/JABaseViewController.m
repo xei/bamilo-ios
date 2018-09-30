@@ -12,7 +12,6 @@
 #import "JAMaintenancePage.h"
 #import "JAKickoutView.h"
 #import "JAFallbackView.h"
-#import "RICustomer.h"
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
@@ -518,17 +517,17 @@
             }
         }
     };
-    if ([RICustomer checkIfUserIsLogged]) {
-        [RICustomer autoLogin:^(BOOL success) {
-            if (success) {
-                block();
-            } else {
-                [RICustomer cleanCustomerFromDB];
-                [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
-                    block();
-                }];
-            }
-        }];
+    if ([CurrentUserManager isUserLoggedIn]) {
+//        [RICustomer autoLogin:^(BOOL success) {
+//            if (success) {
+//                block();
+//            } else {
+//                [CurrentUserManager cleanFromDB];
+//                [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
+//                    block();
+//                }];
+//            }
+//        }];
     } else{
         [(JACenterNavigationController *)self.navigationController performProtectedBlock:^(BOOL userHadSession) {
             block();

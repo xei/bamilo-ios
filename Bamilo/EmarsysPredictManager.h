@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 #import "EmarsysPredictProtocol.h"
-#import "RICustomer.h"
 
-
+@class User;
 @interface EmarsysPredictManager : NSObject
 
 + (void)setConfigs;
 + (void)sendTransactionsOf:(UIViewController *)viewController;
-+ (void)setCustomer:(RICustomer *)customer;
++ (void)setCustomer:(User *)customer;
 + (void)userLoggedOut;
 
 @end

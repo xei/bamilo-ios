@@ -106,16 +106,16 @@
 }
 
 - (void)autoLoginWith:(HttpVerb)method path:(NSString *)path params:(NSDictionary *)params type:(RequestExecutionType)type target:(id<DataServiceProtocol>)target completion:(RequestCompletion)completion {
-    [RICustomer autoLogin:^(BOOL success) {
-        if (success) {
-            [self asyncRequest:method path:path params:params type:type target:target completion:completion];
-        } else {
-            [Utility resetUserBehaviours];
-            [[MainTabBarViewController topNavigationController] performProtectedBlock:^(BOOL userHadSession) {
-                [self asyncRequest:method path:path params:params type:type target:target completion:completion];
-            }];
-        }
-    }];
+//    [RICustomer autoLogin:^(BOOL success) {
+//        if (success) {
+//            [self asyncRequest:method path:path params:params type:type target:target completion:completion];
+//        } else {
+//            [Utility resetUserBehaviours];
+//            [[MainTabBarViewController topNavigationController] performProtectedBlock:^(BOOL userHadSession) {
+//                [self asyncRequest:method path:path params:params type:type target:target completion:completion];
+//            }];
+//        }
+//    }];
 }
 
 @end

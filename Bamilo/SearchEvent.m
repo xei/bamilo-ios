@@ -7,7 +7,6 @@
 //
 
 #import "SearchEvent.h"
-#import "RICustomer.h"
 
 @implementation SearchEvent
 

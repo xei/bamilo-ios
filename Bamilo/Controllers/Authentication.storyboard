@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3BH-rN-hyO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="07Y-oI-dJa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwQ-6G-1pU" userLabel="top title label bottom border">
-                                <rect key="frame" x="218" y="60" width="153" height="2"/>
+                                <rect key="frame" x="218" y="60" width="153.5" height="2"/>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.59215686274509804" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="Qf2-4T-Bat"/>
@@ -130,7 +130,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2xG-av-bxD">
-                                <rect key="frame" x="10" y="91" width="355" height="40"/>
+                                <rect key="frame" x="10" y="90.5" width="355" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="uaM-fu-lju"/>
                                 </constraints>
@@ -139,13 +139,13 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fj6-1w-yQk">
-                                <rect key="frame" x="10" y="55" width="354" height="21"/>
+                                <rect key="frame" x="10" y="55" width="354" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4d-xr-5Ea">
-                                <rect key="frame" x="10" y="131" width="355" height="1"/>
+                                <rect key="frame" x="10" y="130.5" width="355" height="1"/>
                                 <color key="backgroundColor" red="0.61960784310000006" green="0.61960784310000006" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="CTm-rK-cwi"/>
@@ -249,6 +249,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4xF-ub-R1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-668" y="-119"/>
+        </scene>
+        <!--Authentication View Controller-->
+        <scene sceneID="ZPj-Lm-cQN">
+            <objects>
+                <viewController storyboardIdentifier="AuthenticationViewController" id="07Y-oI-dJa" customClass="AuthenticationViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YEg-pk-re2"/>
+                        <viewControllerLayoutGuide type="bottom" id="GCI-CO-kJ7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HOn-7J-G8v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQw-nN-FGx">
+                                <rect key="frame" x="0.0" y="417" width="375" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="tG5-7B-2sZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="paQ-Ql-KGF" kind="embed" identifier="embedSignInViewController" id="RVT-aT-SjU"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CQw-nN-FGx" firstAttribute="left" secondItem="HOn-7J-G8v" secondAttribute="left" id="bzK-rM-DDO"/>
+                            <constraint firstItem="GCI-CO-kJ7" firstAttribute="top" secondItem="CQw-nN-FGx" secondAttribute="bottom" id="eLg-fJ-q7j"/>
+                            <constraint firstAttribute="right" secondItem="CQw-nN-FGx" secondAttribute="right" id="xNq-3J-pzk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="signInViewContainer" destination="CQw-nN-FGx" id="t0H-UB-uQ7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jqO-bl-M2t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1343" y="58"/>
+        </scene>
+        <!--Sign In View Controller-->
+        <scene sceneID="e57-GD-kzW">
+            <objects>
+                <viewController id="paQ-Ql-KGF" customClass="SignInViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IUD-0a-zla"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pya-Cw-M3f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sah-xd-vb0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="acm-Uc-NoU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="acm-Uc-NoU" firstAttribute="top" secondItem="IUD-0a-zla" secondAttribute="bottom" id="6Jt-nk-zRU"/>
+                            <constraint firstAttribute="trailing" secondItem="acm-Uc-NoU" secondAttribute="trailing" id="EOY-Bo-67s"/>
+                            <constraint firstItem="Pya-Cw-M3f" firstAttribute="top" secondItem="acm-Uc-NoU" secondAttribute="bottom" id="lph-mc-L1A"/>
+                            <constraint firstItem="acm-Uc-NoU" firstAttribute="leading" secondItem="sah-xd-vb0" secondAttribute="leading" id="nsT-Nd-8Yh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableview" destination="acm-Uc-NoU" id="jgA-aK-ROg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VhD-dC-uAO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="615" y="757"/>
         </scene>
     </scenes>
 </document>

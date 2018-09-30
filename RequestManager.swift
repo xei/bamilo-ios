@@ -92,16 +92,16 @@ class RequestManagerSwift {
     }
     
     private func autoLoginWith(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
-        RICustomer.autoLogin({ (success) in
-            if (success) {
-                self.async(method, target: target, path: path, params: params, type: type, completion: completion)
-            } else {
-                Utility.resetUserBehaviours()
-                MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
-                    self.async(method, target: target, path: path, params: params, type: type, completion: completion)
-                })
-            }
-        })
+//        RICustomer.autoLogin({ (success) in
+//            if (success) {
+//                self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+//            } else {
+//                Utility.resetUserBehaviours()
+//                MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
+//                    self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+//                })
+//            }
+//        })
     }
     
     //MARK: Private Methods

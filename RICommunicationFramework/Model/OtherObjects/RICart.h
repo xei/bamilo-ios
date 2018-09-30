@@ -10,14 +10,14 @@
 #import "JSONVerboseModel.h"
 #import "CartEntity.h"
 #import "FormEntity.h"
-#import "RICustomer.h"
 #import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
+@class User;
 @interface RICart : NSObject <JSONVerboseModel>
 
 @property (strong, nonatomic) CartEntity *cartEntity;
 @property (strong, nonatomic) FormEntity *formEntity;
-@property (strong, nonatomic) RICustomer *customerEntity;
+@property (strong, nonatomic) User *customerEntity;
 
 @property (strong, nonatomic) NSNumber *totalNumberOfOrders;
 @property (nonatomic, strong) NSString *nextStep;
@@ -156,7 +156,7 @@
 + (void)cancelRequest:(NSString *)operationID;
 
 
-+(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, RICustomer *customer))successBlock
++(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, User *customer))successBlock
                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock;
 +(NSString*)setMultistepAddressForShipping:(NSString*)shippingAddressId
                                    billing:(NSString*)billingAddressId

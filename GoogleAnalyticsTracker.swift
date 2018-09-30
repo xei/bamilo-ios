@@ -229,12 +229,12 @@
     }
     
     func login(attributes: EventAttributeType) {
-        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer {
+        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? User {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Account",
                 action: "Login",
                 label: "\(loginMethod)",
-                value: user.customerId
+                value: user.getID()
             )
             self.sendParamsToGA(params: params)
         }
@@ -252,12 +252,12 @@
     
     func signup(attributes: EventAttributeType) {
         if let loginMethod = attributes[kEventMethod] as? String, let success = attributes[kEventSuccess] as? Bool {
-            let user = attributes[kEventUser] as? RICustomer
+            let user = attributes[kEventUser] as? User
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Account",
                 action: success ? "SignupSuccess" : "SignupFailed",
                 label: "\(loginMethod)",
-                value: user?.customerId
+                value: user?.getID()
             )
             self.sendParamsToGA(params: params)
         }

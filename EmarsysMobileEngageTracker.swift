@@ -33,8 +33,8 @@ class EmarsysMobileEngageTracker: EmarsysBaseTracker, MobileEngageStatusDelegate
     
     //MARK: - EventTrackerProtocol
     func appOpened(attributes: EventAttributeType) {
-        if let customer = RICustomer.getCurrent() {
-            MobileEngage.appLogin(withContactFieldId: 3, contactFieldValue: customer.email)
+        if let customerID = CurrentUserManager.user.userID, customerID != 0, let email = CurrentUserManager.user.email {
+            MobileEngage.appLogin(withContactFieldId: 3, contactFieldValue: email)
             return
         }
         MobileEngage.appLogin()

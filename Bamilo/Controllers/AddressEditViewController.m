@@ -83,8 +83,9 @@
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"address_form[phone]"];
     
     if(self.address == nil) {
+        [CurrentUserManager loadLocal];
         //Adding a new address. Try to pre-fill user info
-        RICustomer *customer = [RICustomer getCurrentCustomer];
+        User *customer = CurrentUserManager.user;
         
         [firstName setInputTextValue:customer.firstName];
         [lastName setInputTextValue:customer.lastName];
@@ -92,8 +93,7 @@
     }
     
     [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
-    
-    if (![RICustomer getCustomerGender] && self.address == nil) {
+    if (![CurrentUserManager.user getGender] && self.address == nil) {
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];
     }
@@ -120,7 +120,7 @@
         [self getAddressByID:self.address.uid];
     }
     //pop this view controller if user is not logged in
-    if (![RICustomer checkIfUserIsLogged]) {
+    if (![CurrentUserManager isUserLoggedIn]) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }

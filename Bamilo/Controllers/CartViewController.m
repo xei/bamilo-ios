@@ -8,7 +8,6 @@
 
 #import "CartViewController.h"
 #import "JAEmptyCartView.h"
-#import "RICustomer.h"
 #import "JAUtils.h"
 #import "RICartItem.h"
 #import "CartTableViewCell.h"

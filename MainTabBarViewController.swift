@@ -48,7 +48,7 @@ import Crashlytics
         
         //wait for tabbar to be rendered
         Utility.delay(duration: 0.1) {
-            self.requestTheAppConfiguration()
+//            self.requestTheAppConfiguration()
         }
     }
     
@@ -60,10 +60,10 @@ import Crashlytics
     
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
-        if let currentUser = RICustomer.getCurrent() {
-            EmarsysPredictManager.setCustomer(currentUser)
-            PushWooshTracker.setUserID(currentUser.customerId.stringValue)
-            Crashlytics.sharedInstance().setUserName(currentUser.email)
+        if let userID = CurrentUserManager.user.userID, userID != 0 {
+            EmarsysPredictManager.setCustomer(CurrentUserManager.user)
+            PushWooshTracker.setUserID("\(userID)")
+            Crashlytics.sharedInstance().setUserName(CurrentUserManager.user.email)
         }
         self.getAndUpdateCart()
     }
@@ -88,6 +88,10 @@ import Crashlytics
     }
     
     //MARk: - UITabBarControllerDelegate
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        return true
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let centerNav = viewController as? JACenterNavigationController, centerNav != MainTabBarViewController.previousSelectedViewController {
             MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()

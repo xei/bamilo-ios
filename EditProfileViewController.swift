@@ -9,7 +9,7 @@
 import UIKit
 
 struct EditProfileDataSource {
-    var customer: RICustomer?
+    var customer: User?
     var warningMsg: String?
 }
 
@@ -111,10 +111,10 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0, let dataSource = data as? EditProfileDataSource, let customer = dataSource.customer {
+        if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
             ThreadManager.execute(onMainThread: {
                 self.updateFormWithCustomer(customer: customer)
-                if let warningMessage = dataSource.warningMsg, warningMessage.count > 0 {
+                if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
                     self.setHeaderMessage(message: warningMessage)
                 }
             })
@@ -175,9 +175,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     
-    private func updateFormWithCustomer(customer: RICustomer) {
+    private func updateFormWithCustomer(customer: User) {
         
-        if customer == nil { return }
         var fieldValues = [
             "customer[phone]": customer.phone ?? "",
             "customer[first_name]": customer.firstName ?? "",
@@ -188,16 +187,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         ]
         
         if let birthday = customer.birthday {
-            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd", locale: "en_US")
-            dateFormatter.calendar = Calendar(identifier: .persian)
-            if let date = dateFormatter.date(from: birthday) {
-                fieldValues["customer[birthday]"] = birthdayFeildModel?.visibleDateFormat.string(from: date) ?? ""
-            }
+            fieldValues["customer[birthday]"] = birthdayFeildModel?.visibleDateFormat.string(from: birthday) ?? ""
         }
         
         if let gender = customer.gender {
-            let genderMapper = ["male": STRING_MALE, "female": STRING_FEMALE]
-            fieldValues["customer[gender]"] = genderMapper[gender] ?? ""
+            let genderMapper = [Gender.male.rawValue: STRING_MALE, Gender.female.rawValue: STRING_FEMALE]
+            fieldValues["customer[gender]"] = genderMapper[gender.rawValue] ?? ""
         }
         
         if let modelList = self.formController?.formModelList {

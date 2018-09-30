@@ -10,7 +10,6 @@
 #import "RIProductOffer.h"
 #import "JAOfferCollectionViewCell.h"
 #import "RICart.h"
-#import "RICustomer.h"
 #import "RISeller.h"
 #import "RIProductSimple.h"
 #import "JAUtils.h"

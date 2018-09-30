@@ -11,7 +11,6 @@
 #import "JARecentlyViewedCell.h"
 #import "RIProductSimple.h"
 #import "RICategory.h"
-#import "RICustomer.h"
 #import "JAPicker.h"
 #import "JAUtils.h"
 #import "RICart.h"

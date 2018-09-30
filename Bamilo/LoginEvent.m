@@ -8,17 +8,17 @@
 
 #import "LoginEvent.h"
 #import "EmailUtility.h"
-#import "RICustomer.h"
+#import "Bamilo-Swift.h"
 
 @implementation LoginEvent
 
 +(NSMutableDictionary *)attributes {
     NSMutableDictionary *attributes = [super attributes];
     
-    RICustomer *user = [RICustomer getCurrentCustomer];
-    if(user) {
+    NSString *userMail = CurrentUserManager.user.email;
+    if(VALID_NOTEMPTY(userMail, NSString)) {
         //Email Domain
-        NSArray *userEmailDomainComponents = [EmailUtility getEmailDomain:user.email];
+        NSArray *userEmailDomainComponents = [EmailUtility getEmailDomain:userMail];
         if(userEmailDomainComponents) {
             [attributes setObject:userEmailDomainComponents[0] forKey:kEventEmailDomain]; //gmail
         }

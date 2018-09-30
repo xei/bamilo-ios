@@ -8,6 +8,7 @@
 
 #import "FormViewControl.h"
 #import "FormHeaderTableViewCell.h"
+#import "FormCustomFiled.h"
 
 @interface FormViewControl ()
 @property (nonatomic, strong) UITextField *activeField;
@@ -103,6 +104,8 @@
             FormHeaderTableViewCell *formHeaderItemTableViewCell = [self.tableView dequeueReusableCellWithIdentifier:[FormHeaderTableViewCell nibName] forIndexPath:indexPath];
             [formHeaderItemTableViewCell updateWithModel: formElement];
             return formHeaderItemTableViewCell;
+        } else if([formElement isKindOfClass:[FormCustomFiled class]]) {
+            return [self.delegate customCellForIndexPath:self.tableView cellName:((FormCustomFiled *)formElement).cellName indexPath:indexPath];
         }
     }
     return nil;

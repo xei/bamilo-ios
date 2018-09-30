@@ -8,7 +8,6 @@
 
 #import "AuthenticationContainerViewController.h"
 #import "CAPSPageMenu.h"
-#import "RICustomer.h"
 #import "ViewControllerManager.h"
 #import "Bamilo-Swift.h"
 #import "DataServiceProtocol.h"
@@ -25,16 +24,16 @@
     [super awakeFromNib];
     
     //Sign In View Controller
-    self.signInViewController = (SignInViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignInViewController" resetCache:YES];
-    self.signInViewController.title = STRING_LOGIN;
-    self.signInViewController.fromSideMenu = self.fromSideMenu;
-    self.signInViewController.showContinueWithoutLogin = self.showContinueWithoutLogin;
-    self.signInViewController.delegate = self;
+//    self.signInViewController = (SignInViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignInViewController" resetCache:YES];
+//    self.signInViewController.title = STRING_LOGIN;
+//    self.signInViewController.fromSideMenu = self.fromSideMenu;
+//    self.signInViewController.showContinueWithoutLogin = self.showContinueWithoutLogin;
+//    self.signInViewController.delegate = self;
     
     //Sign Up View Controller
-    self.signUpViewController = (SignUpViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignUpViewController" resetCache:YES];
-    self.signUpViewController.title = STRING_SIGNUP;
-    self.signUpViewController.delegate = self;
+//    self.signUpViewController = (SignUpViewController *)[[ViewControllerManager sharedInstance] loadNib:@"SignUpViewController" resetCache:YES];
+//    self.signUpViewController.title = STRING_SIGNUP;
+//    self.signUpViewController.delegate = self;
 }
 
 - (void)viewDidLoad {
@@ -64,7 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([RICustomer checkIfUserIsLogged]) {
+    if ([CurrentUserManager isUserLoggedIn]) {
         [self.navigationController popViewControllerAnimated:NO];
     }
 }
@@ -86,10 +85,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSString * segueName = segue.identifier;
-    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[SignUpViewController class]]) {
-        ((PhoneVerificationViewController *)segue.destinationViewController).phoneNumber = userPhone;
-        ((PhoneVerificationViewController *)segue.destinationViewController).delegate = sender;
-    }
+//    if ([segueName isEqualToString:@"showVrificationCodeViewCtrl"] && [sender isKindOfClass:[SignUpViewController class]]) {
+//        ((PhoneVerificationViewController *)segue.destinationViewController).phoneNumber = userPhone;
+//        ((PhoneVerificationViewController *)segue.destinationViewController).delegate = sender;
+//    }
 }
 
 #pragma mark - CAPSPageMenuDelegate

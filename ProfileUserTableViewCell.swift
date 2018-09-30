@@ -30,7 +30,7 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
     }
 
     override func update(withModel model: Any!) {
-        if let user = model as? RICustomer {
+        if let user = model as? User, let userID = user.userID, userID != 0 {
             self.setupLoggedInView()
             self.setDefaults()
             if let name = user.firstName {
@@ -39,10 +39,12 @@ class ProfileUserTableViewCell: BaseProfileTableViewCell {
                 self.topMessageLabel.text = STRING_HELLO
             }
             if let gender = user.gender {
-                self.logoImage.image = UIImage(named: gender == "female" ? "woman_user_profile" : "man_user_profile")
+                self.logoImage.image = UIImage(named: gender == .female ? "woman_user_profile" : "man_user_profile")
             }
             if let email = user.email {
                 self.bottomMessageLabel.text = email
+            } else {
+                self.bottomMessageLabel.text = nil
             }
             
         } else {

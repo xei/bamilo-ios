@@ -36,6 +36,7 @@
 #import "ArgsReceiverProtocol.h"
 #import "SuccessPaymentViewController.h"
 #import "Bamilo-Swift.h"
+#import "ZFModalTransitionAnimator.h"
 
 @interface JACenterNavigationController ()
 
@@ -46,6 +47,7 @@
 
 @property (nonatomic, strong) JAStepByStepTabViewController *checkoutStepByStepViewController;
 @property (nonatomic, strong) JAStepByStepTabViewController *returnsStepByStepViewController;
+@property (nonatomic, strong) ZFModalTransitionAnimator* authenticationModalAnimation;
 
 @end
 
@@ -215,37 +217,38 @@
 
 #pragma mark Sign In Screen
 - (void)showAuthenticationScreen:(NSNotification *)notification {
-    if ([self showAndCheckIfUserAlreadyLoggedIn]) {
-        return;
-    }
-    
-    AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
-    
-    authenticationViewController.fromSideMenu = NO;
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
-        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
-        authenticationViewController.fromSideMenu = [fromSide boolValue];
-    }
-    BOOL animated = YES;
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
-        [self popToRootViewControllerAnimated:NO];
-        animated = NO;
-    }
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
-        NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
-        animated = [animatedNumber boolValue];
-    }
-    
-    BOOL isFromCheckout = NO;
-    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
-        isFromCheckout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
-    }
-    authenticationViewController.showContinueWithoutLogin = isFromCheckout;
-    
-    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
-        [authenticationViewController setUserInfo:notification.userInfo];
-    }
-    [self pushViewController:authenticationViewController animated:YES];
+    [self pushAuthenticationViewController:nil byAniamtion:YES];
+//    if ([self showAndCheckIfUserAlreadyLoggedIn]) {
+//        return;
+//    }
+//
+//    AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
+//
+//    authenticationViewController.fromSideMenu = NO;
+//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"from_side_menu"], NSNumber)) {
+//        NSNumber* fromSide = [notification.userInfo objectForKey:@"from_side_menu"];
+//        authenticationViewController.fromSideMenu = [fromSide boolValue];
+//    }
+//    BOOL animated = YES;
+//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"tabbar_is_visible"], NSNumber)) {
+//        [self popToRootViewControllerAnimated:NO];
+//        animated = NO;
+//    }
+//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY([notification.userInfo objectForKey:@"animated"], NSNumber)) {
+//        NSNumber* animatedNumber = [notification.userInfo objectForKey:@"animated"];
+//        animated = [animatedNumber boolValue];
+//    }
+//
+//    BOOL isFromCheckout = NO;
+//    if (VALID_NOTEMPTY([notification.userInfo objectForKey:@"continue_button"], NSNumber)) {
+//        isFromCheckout = [[notification.userInfo objectForKey:@"continue_button"] boolValue];
+//    }
+//    authenticationViewController.showContinueWithoutLogin = isFromCheckout;
+//
+//    if (VALID_NOTEMPTY(notification, NSNotification) && VALID_NOTEMPTY(notification.userInfo, NSDictionary)) {
+//        [authenticationViewController setUserInfo:notification.userInfo];
+//    }
+//    [self pushViewController:authenticationViewController animated:YES];
 }
 
 - (void)showSignInScreen:(NSNotification *)notification {
@@ -264,7 +267,7 @@
 }
 
 - (BOOL)showAndCheckIfUserAlreadyLoggedIn {
-    if ([RICustomer checkIfUserIsLogged]) {
+    if ([CurrentUserManager isUserLoggedIn]) {
         if ([self.topViewController isKindOfClass:[BaseViewController class]]) {
             [((BaseViewController *)self.topViewController) showNotificationBarMessage:STRING_ALREADY_LOGGED_IN isSuccess:YES];
         } else if ([self.topViewController isKindOfClass:[JABaseViewController class]]) {
@@ -293,7 +296,7 @@
 #pragma mark Track Order Screen
 - (void)showMyOrdersViewController:(NSNotification*)notification {
     //UIViewController *topViewController = [self topViewController];
-    if([RICustomer checkIfUserIsLogged]) {
+    if([CurrentUserManager isUserLoggedIn]) {
         OrderListViewController *myOrderViewCtrl = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"OrderListViewController"];
         [self pushViewController:myOrderViewCtrl animated:YES];
     } else {
@@ -315,7 +318,7 @@
 //#pragma mark Checkout External Payments Screen
 - (void)showCheckoutExternalPaymentsScreen:(NSNotification *)notification {
     UIViewController *topViewController = [self topViewController];
-    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [RICustomer checkIfUserIsLogged]) {
+    if (![topViewController isKindOfClass:[JAExternalPaymentsViewController class]] && [CurrentUserManager isUserLoggedIn]) {
         self.neeedsExternalPaymentMethod = YES;
         JAExternalPaymentsViewController *externalPaymentsVC = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"externalPaymentsViewController"];
         externalPaymentsVC.cart = [notification.userInfo objectForKey:kCart];
@@ -550,7 +553,7 @@
 }
 
 - (void)performProtectedBlock:(ProtectedBlock)block {
-    if(block && ![RICustomer checkIfUserIsLogged]) {
+    if(block && ![CurrentUserManager isUserLoggedIn]) {
         [self pushAuthenticationViewController:^{
             block(YES);
         } byAniamtion:YES];
@@ -575,7 +578,7 @@
 
 //In existing navigation view controller force the user to login (no back button) e.g. in root of navigation view controllers
 - (void)requestForcedLoginWithCompletion:(void (^)(void))completion {
-    if (![RICustomer checkIfUserIsLogged]) {
+    if (![CurrentUserManager isUserLoggedIn]) {
         [self pushAuthenticationViewController:completion byAniamtion:NO byForce:YES];
     }
 }
@@ -595,11 +598,11 @@
                 if(completion) completion();
                 break;
             case AuthenticationStatusSignupFinished:
-                if ([[MainTabBarViewController topViewController] isKindOfClass:[PhoneVerificationViewController class]]) {
-                    [self popWithStep:2 animated:NO];
-                } else if ([[MainTabBarViewController topViewController] isKindOfClass:[SignUpViewController class]]) {
-                    [self popViewControllerAnimated:NO];
-                }
+//                if ([[MainTabBarViewController topViewController] isKindOfClass:[PhoneVerificationViewController class]]) {
+//                    [self popWithStep:2 animated:NO];
+//                } else if ([[MainTabBarViewController topViewController] isKindOfClass:[SignUpViewController class]]) {
+//                    [self popViewControllerAnimated:NO];
+//                }
                 if(completion) completion();
                 break;
             default:
@@ -607,12 +610,16 @@
         }
     };
     
-    AuthenticationContainerViewController *authViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
-    authViewController.fromSideMenu = NO;
-    authViewController.isForcedToLogin = force;
-    authViewController.signInViewController.completion = _authenticationCompletion;
-    authViewController.signUpViewController.completion = _authenticationCompletion;
-    [self pushViewController:authViewController animated:animation];
+    AuthenticationViewController *authViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
+    self.authenticationModalAnimation = [Utility createModalBounceAnimatorWithViewCtrl:authViewController];
+    [self.authenticationModalAnimation setDragable:NO];
+    authViewController.transitioningDelegate = self.authenticationModalAnimation;
+//    authViewController.fromSideMenu = NO;
+//    authViewController.isForcedToLogin = force;
+//    authViewController.signInViewController.completion = _authenticationCompletion;
+//    authViewController.signUpViewController.completion = _authenticationCompletion;
+//    [self pushViewController:authViewController animated:animation];
+    [[MainTabBarViewController sharedInstance] presentViewController:authViewController animated:YES completion:nil];
 }
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation {

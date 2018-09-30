@@ -73,7 +73,7 @@ import Adjust
     class func resetUserBehaviours() {
         //Reset some actions
         EmarsysPredictManager.userLoggedOut()
-        RICustomer.cleanFromDB()
+        CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil
         LocalSearchSuggestion().clearAllHistories()
@@ -83,5 +83,17 @@ import Adjust
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             completion()
         }
+    }
+    
+    class func createModalBounceAnimator(viewCtrl: UIViewController) -> ZFModalTransitionAnimator? {
+        let animator = ZFModalTransitionAnimator(modalViewController: viewCtrl)
+        animator?.isDragable = true
+        animator?.bounces = true
+        animator?.behindViewAlpha = 0.8
+        animator?.behindViewScale = 1.0
+        animator?.transitionDuration = 0.7
+        animator?.direction = .bottom
+        viewCtrl.modalPresentationStyle = .overCurrentContext
+        return animator
     }
 }

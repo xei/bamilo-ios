@@ -100,15 +100,15 @@
                                                            kEventDate:  attributes[kEventDate],
                                                            }];
     
-    NSString *userEmail = [RICustomer getCurrentCustomer].email;
-    if([userEmail length]) {
+    NSString *userEmail = CurrentUserManager.user.email;
+    if(VALID_NOTEMPTY_VALUE(userEmail, NSString)) {
         NSArray *userEmailDomainComponents = [EmailUtility getEmailDomain:userEmail];
         if(userEmailDomainComponents) {
             [dict setObject:userEmailDomainComponents[0] forKey:kEventEmailDomain]; //gmail
         }
     }
     
-    NSString *gender = [RICustomer getCustomerGender];
+    NSString *gender = [CurrentUserManager.user getGender];
     if([gender length]) {
         [dict setValue:gender forKey:kEventUserGender];
     }

@@ -63,6 +63,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             self.updateTableViewDataSource()
             self.tableView.reloadData()
         }
+        
+        CurrentUserManager.loadLocal()
         self.viewWillApearedOnceOrMore = true
     }
     
@@ -88,7 +90,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             ]
         ]
         
-        if RICustomer.checkIfUserIsLogged() {
+        if CurrentUserManager.isUserLoggedIn() {
             self.tableViewDataSource?.append([ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_LOGOUT, iconName: "user_logout_profile", notificationName: nil, selector: #selector(logoutUser))])
         }
     }
@@ -101,7 +103,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             switch cellType {
             case .profileUserTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileUserTableViewCell.nibName(), for: indexPath) as! ProfileUserTableViewCell
-                cell.update(withModel: RICustomer.getCurrent())
+                cell.update(withModel: CurrentUserManager.user)
             case .profileOrderTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileOrderTableViewCell.nibName(), for: indexPath) as! ProfileOrderTableViewCell
                 cell.update(withModel: dataModel)
@@ -160,7 +162,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     //MARK: - helper functions
     @objc func showLogin() {
-        if !RICustomer.checkIfUserIsLogged() {
+        if !CurrentUserManager.isUserLoggedIn() {
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)
         }
     }
@@ -198,7 +200,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             
             //Reset some actions
             EmarsysPredictManager.userLoggedOut()
-            RICustomer.cleanFromDB()
+            CurrentUserManager.cleanFromDB()
             RICart.sharedInstance().cartEntity?.cartItems = []
             RICart.sharedInstance().cartEntity?.cartCount = nil
             LocalSearchSuggestion().clearAllHistories()

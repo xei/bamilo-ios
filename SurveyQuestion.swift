@@ -51,10 +51,13 @@ class SurveyQuestion: NSObject, Mappable {
     }
     
     func prepareForSubmission(for orderID: String) -> [String:Any] {
-        let user = RICustomer.getCurrent()
+        
+        CurrentUserManager.loadLocal()
+        let user = CurrentUserManager.user
+        
         var result: [String: Any] = [
             "device": "mobile_app",
-            "userId" : user?.customerId.stringValue ?? "",
+            "userId" : "\(user.userID ?? 0)",
             "orderNumber": orderID
         ]
         

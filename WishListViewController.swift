@@ -37,6 +37,8 @@ class WishListViewController: BaseViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        CurrentUserManager.loadLocal()
         self.view.backgroundColor = Theme.color(kColorVeryLightGray)
         self.collectionView.backgroundColor = .clear
         
@@ -60,13 +62,12 @@ class WishListViewController: BaseViewController,
             self.collectionView.addSubview(refreshControl)
         }
         self.collectionView.alwaysBounceVertical = true
-        
         NotificationCenter.default.addObserver(self, selector: #selector(userLogout(notification:)), name: NSNotification.Name(rawValue: NotificationKeys.UserLoggedOut), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !RICustomer.checkIfUserIsLogged() {
+        if !CurrentUserManager.isUserLoggedIn() {
             (self.navigationController as? JACenterNavigationController)?.requestForcedLogin(completion: {
                 self.refreshAndReload {(success) in
                     //Do nothing
@@ -87,8 +88,10 @@ class WishListViewController: BaseViewController,
         if isLoading { return }
         if let lastPage = self.wishList?.lastPage ,(lastPage != 0 && page > lastPage) { return }
         self.isLoading = true
+        self.refreshControl?.beginRefreshing()
         ProductDataManager.sharedInstance.getWishListProducts(self, page: page, perPageCount: perPageProductCount) { (data, error) in
             self.isLoading = false
+            self.refreshControl?.endRefreshing()
             if let error = error {
                 callBack?(false)
                 self.errorHandler(error, forRequestID: 0)
@@ -285,7 +288,6 @@ class WishListViewController: BaseViewController,
                 self.collectionView.reloadData()
                 self.isLoading = false
                 if self.isRefreshing {
-                    self.refreshControl?.endRefreshing()
                     self.isRefreshing = false
                 }
                 

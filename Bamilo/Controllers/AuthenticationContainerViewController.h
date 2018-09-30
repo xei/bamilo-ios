@@ -21,8 +21,8 @@ typedef void(^AuthenticationBlock)(void);
 @property (nonatomic) NSDictionary *userInfo;
 
 
-@property (strong, nonatomic) SignInViewController *signInViewController;
-@property (strong, nonatomic) SignUpViewController *signUpViewController;
+@property (strong, nonatomic) UIViewController *signInViewController;
+@property (strong, nonatomic) UIViewController *signUpViewController;
 @property (nonatomic) BOOL startWithSignUpViewController;
 
 @end

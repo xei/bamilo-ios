@@ -7,9 +7,9 @@
 //
 
 #import "AppEvent.h"
-#import "RICustomer.h"
 #import "AppManager.h"
 #import "DeviceStatusManager.h"
+#import "Bamilo-Swift.h"
 
 @implementation AppEvent
 
@@ -27,8 +27,8 @@
                                          kEventDate:  [NSDate date]
                                          }];
     
-    NSString *userGender = [RICustomer getCustomerGender];
-    if(userGender) {
+    NSString *userGender = [CurrentUserManager.user getGender];
+    if(VALID_NOTEMPTY_VALUE(userGender, NSString)) {
         [attributes setObject:userGender forKey:kEventUserGender]; //male OR female
     }
     

@@ -19,6 +19,7 @@
 - (void)formSubmitButtonTapped;
 
 @optional
+- (UITableViewCell *)customCellForIndexPath:(UITableView *)tableView cellName:(NSString *)cellName indexPath:(NSIndexPath *)indexPath;
 - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
 - (void)fieldHasBeenFocuced:(InputTextFieldControl *)field inFieldIndex:(NSUInteger)fieldIndex;
 

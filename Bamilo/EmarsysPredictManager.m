@@ -8,6 +8,7 @@
 
 #import "EmarsysPredictManager.h"
 #import "RICart.h"
+#import "Bamilo-Swift.h"
 
 @implementation EmarsysPredictManager
 
@@ -38,13 +39,14 @@
     }];
 }
 
-+ (void)setCustomer:(RICustomer *)customer {
++ (void)setCustomer:(User *)customer {
     EMSession *emarsysSession = [EMSession sharedSession];
     if (customer.email) {
         [emarsysSession setCustomerEmail:customer.email];
     }
-    if (customer.customerId) {
-        [emarsysSession setCustomerID:[customer.customerId stringValue]];
+    
+    if ([customer getID].intValue) {
+        [emarsysSession setCustomerID:[[customer getID] stringValue]];
     }
 }
 
