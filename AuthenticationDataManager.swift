@@ -13,7 +13,7 @@ class AuthenticationDataManager: DataManagerSwift {
 
     func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
         let params : [String: String] = [
-            "login[email]" : username,
+            "login[identifier]" : username,
             "login[password]" : password
         ]
         

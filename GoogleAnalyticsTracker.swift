@@ -187,6 +187,22 @@
         }
     }
     
+    func buyNowTapped(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: screenName,
+                action: "BuyNow",
+                label: product.sku,
+                value: product.payablePrice
+            )
+            self.sendParamsToGA(params: params)
+            
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
+        }
+    }
+    
     func removeFromCart(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let params = GAIDictionaryBuilder.createEvent(

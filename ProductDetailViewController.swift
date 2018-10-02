@@ -316,6 +316,8 @@ extension UIImageView: DisplaceableView {}
                     
                     if self.shuouldGoToCardAfterAddToCard {
                         MainTabBarViewController.showCart()
+                        TrackerManager.postEvent(selector: EventSelectors.buyNowTappedSelector(), attributes: EventAttributes.buyNowTapped(product: productEntity, screenName: self.getScreenName(), success: true))
+                        //Track BuyNow action
                     } else {
                         self.hideButtons(animated: true)
                     }

@@ -53,6 +53,7 @@ typedef void(^GetPaymentMethodsCompletion)(NSArray *paymentMethods);
     _selectedPaymentMethodIndex = -1;
     
     [self.noPaymentLabel applyStyle:[Theme font:kFontVariationRegular size:13] color:[Theme color:kColorGray1]];
+    [self.tableView setContentInset:UIEdgeInsetsMake(45, 0, self.continueButtonHeightConstraint.constant + 10 , 0)];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
