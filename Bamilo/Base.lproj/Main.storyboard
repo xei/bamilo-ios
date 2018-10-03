@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="194" y="69" width="27.333333333333343" height="23"/>
+                                        <rect key="frame" x="193.66666666666666" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -401,7 +401,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="جستجو نام، برند یا دسته بندی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U0h-Rg-tEL">
-                                        <rect key="frame" x="64" y="11.666666666666668" width="342" height="23.000000000000004"/>
+                                        <rect key="frame" x="64" y="12.333333333333336" width="342" height="23"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.23921568630000001" green="0.23921568630000001" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
@@ -1108,7 +1108,7 @@
                                     <constraint firstAttribute="right" secondItem="kWx-nR-vD0" secondAttribute="right" id="PU4-0H-ndh"/>
                                     <constraint firstItem="BaJ-9v-Rjs" firstAttribute="width" secondItem="kWx-nR-vD0" secondAttribute="width" id="Sbn-Oi-KaU"/>
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="U9V-Vx-VYf"/>
-                                    <constraint firstItem="SiN-i9-VzX" firstAttribute="leading" secondItem="PS7-Qp-bSL" secondAttribute="trailing" constant="10" id="XFp-g4-gqJ"/>
+                                    <constraint firstItem="SiN-i9-VzX" firstAttribute="left" secondItem="PS7-Qp-bSL" secondAttribute="right" constant="10" id="XFp-g4-gqJ"/>
                                     <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
                                     <constraint firstItem="kWx-nR-vD0" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="bwE-Lf-y0n"/>
                                     <constraint firstItem="Pcw-BS-a8g" firstAttribute="leading" secondItem="F7n-Ry-Jdc" secondAttribute="leading" id="cmo-WG-Tl9"/>
@@ -1219,7 +1219,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfD-Mb-Oh3">
-                                                <rect key="frame" x="231.33333333333334" y="38.666666666666686" width="20.333333333333343" height="21.666666666666671"/>
+                                                <rect key="frame" x="231.33333333333334" y="38.333333333333314" width="20.333333333333343" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1676,7 +1676,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.666666666666679" y="14.999999999999998" width="85.333333333333314" height="21.333333333333329"/>
+                                                <rect key="frame" x="59.666666666666679" y="15.666666666666663" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2217,7 +2217,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83.333333333333329" y="165" width="247.33333333333337" height="23"/>
+                                <rect key="frame" x="84.000000000000014" y="165" width="247.33333333333337" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

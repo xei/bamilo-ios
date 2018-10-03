@@ -35,7 +35,7 @@
 
 @property (nonatomic, strong) NSDate *startLoadingTime;
 @property (nonatomic, strong) FIRTrace* trace;
-    
+
 @end
 
 @implementation JAAppDelegate
@@ -54,73 +54,73 @@
     
     //SETUP THEME
     ThemeFont *themeFont = [ThemeFont fontWithVariations:@{
-        kFontVariationRegular: cFontVariationNone,
-        kFontVariationBold: @"Bold",
-        kFontVariationBlack: @"Black",
-        kFontVariationMedium: cFontVariationNone,
-        kFontVariationLight: @"Light"
-    }];
+                                                           kFontVariationRegular: cFontVariationNone,
+                                                           kFontVariationBold: @"Bold",
+                                                           kFontVariationBlack: @"Black",
+                                                           kFontVariationMedium: cFontVariationNone,
+                                                           kFontVariationLight: @"Light"
+                                                           }];
     [[ThemeManager sharedInstance] addThemeFont:cPrimaryFont font:themeFont];
     ThemeColor *themeColor = [ThemeColor colorWithPalette:@{
-        kColorBlue: [UIColor withHexString:@"#00a4e2"],
-        kColorBlue1: [UIColor withHexString:@"#1a365e"],
-        kColorBlue2: [UIColor withHexString:@"#33466e"],
-        kColorBlue6: [UIColor withHexString:@"#8c93ad"],
-        kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
-        kColorGold: [UIColor withHexString:@"#ffbf02"],
-        kColorOrange: [UIColor withHexString:@"#f6881b"],
-        kColorGreen: [UIColor withRGBA:0 green:158 blue:139 alpha:1.0],
-        kColorGray: [UIColor withHexString:@"#f8f8f8"],
-        kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
-        kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
-        kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
-        kColorVeryLightGray: [UIColor withRepeatingRGBA:238 alpha:1.0f],
-        kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f],
-        kColorExtraExtraLightGray: [UIColor withRepeatingRGBA:222 alpha:1.0f],
-        kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f],
-        kColorExtraLightRed: [UIColor withRGBA:254 green:243 blue:242 alpha:1.0f],
-        kColorExtraDarkBlue: [UIColor withHexString:@"#1a365e"],
-        kColorOrange1: [UIColor withRGBA:254 green:107 blue:12 alpha:1],
-        kColorOrange10: [UIColor withHexString:@"FAF0E6"],
-        kColorDarkGreen: [UIColor withRGBA:22 green:145 blue:140 alpha:1],
-        kColorDarkGreen3: [UIColor withHexString:@"#16918c"],
-        kColorPrimaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.87],
-        kColorSecondaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.54],
-        kColorGray1: [UIColor withHexString:@"#53585b"],
-        kColorGray2: [UIColor withHexString:@"#656668"],
-        kColorGray3: [UIColor withHexString:@"#747577"],
-        kColorGray3: [UIColor withHexString:@"#747577"],
-        kColorGray4: [UIColor withHexString:@"#858688"],
-        kColorGray5: [UIColor withHexString:@"#959698"],
-        kColorGray7: [UIColor withHexString:@"#b8b8b8"],
-        kColorGray8: [UIColor withHexString:@"#959698"],
-        kColorGray9: [UIColor withHexString:@"#d2d2d2"],
-        kColorGray10: [UIColor withHexString:@"#ededed"],
-        kColorGreen1: [UIColor withHexString:@"#00B09B"],
-        kColorGreen3: [UIColor withHexString:@"#01c2ad"],
-        kColorGreen5: [UIColor withHexString:@"#3fd2c0"],
-        kColorPink1 : [UIColor withHexString:@"#D80056"],
-        kColorPink3: [UIColor withHexString:@"#e74775"],
-        kColorPink10: [UIColor withHexString:@"#fbe8ec"],
-    }];
+                                                            kColorBlue: [UIColor withHexString:@"#00a4e2"],
+                                                            kColorBlue1: [UIColor withHexString:@"#1a365e"],
+                                                            kColorBlue2: [UIColor withHexString:@"#33466e"],
+                                                            kColorBlue6: [UIColor withHexString:@"#8c93ad"],
+                                                            kColorBlue10: [UIColor withHexString:@"#e9e8ee"],
+                                                            kColorGold: [UIColor withHexString:@"#ffbf02"],
+                                                            kColorOrange: [UIColor withHexString:@"#f6881b"],
+                                                            kColorGreen: [UIColor withRGBA:0 green:158 blue:139 alpha:1.0],
+                                                            kColorGray: [UIColor withHexString:@"#f8f8f8"],
+                                                            kColorDarkGray: [UIColor withRepeatingRGBA:115 alpha:1.0f],
+                                                            kColorExtraDarkGray: [UIColor withRepeatingRGBA:80 alpha:1.0f],
+                                                            kColorLightGray: [UIColor withRepeatingRGBA:146 alpha:1.0f],
+                                                            kColorVeryLightGray: [UIColor withRepeatingRGBA:238 alpha:1.0f],
+                                                            kColorExtraLightGray: [UIColor withRepeatingRGBA:186 alpha:1.0f],
+                                                            kColorExtraExtraLightGray: [UIColor withRepeatingRGBA:222 alpha:1.0f],
+                                                            kColorRed: [UIColor withRGBA:185 green:15 blue:0 alpha:1.0f],
+                                                            kColorExtraLightRed: [UIColor withRGBA:254 green:243 blue:242 alpha:1.0f],
+                                                            kColorExtraDarkBlue: [UIColor withHexString:@"#1a365e"],
+                                                            kColorOrange1: [UIColor withRGBA:254 green:107 blue:12 alpha:1],
+                                                            kColorOrange10: [UIColor withHexString:@"FAF0E6"],
+                                                            kColorDarkGreen: [UIColor withRGBA:22 green:145 blue:140 alpha:1],
+                                                            kColorDarkGreen3: [UIColor withHexString:@"#16918c"],
+                                                            kColorPrimaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.87],
+                                                            kColorSecondaryGray1: [UIColor withRGBA:83 green:88 blue:91 alpha:0.54],
+                                                            kColorGray1: [UIColor withHexString:@"#53585b"],
+                                                            kColorGray2: [UIColor withHexString:@"#656668"],
+                                                            kColorGray3: [UIColor withHexString:@"#747577"],
+                                                            kColorGray3: [UIColor withHexString:@"#747577"],
+                                                            kColorGray4: [UIColor withHexString:@"#858688"],
+                                                            kColorGray5: [UIColor withHexString:@"#959698"],
+                                                            kColorGray7: [UIColor withHexString:@"#b8b8b8"],
+                                                            kColorGray8: [UIColor withHexString:@"#959698"],
+                                                            kColorGray9: [UIColor withHexString:@"#d2d2d2"],
+                                                            kColorGray10: [UIColor withHexString:@"#ededed"],
+                                                            kColorGreen1: [UIColor withHexString:@"#00B09B"],
+                                                            kColorGreen3: [UIColor withHexString:@"#01c2ad"],
+                                                            kColorGreen5: [UIColor withHexString:@"#3fd2c0"],
+                                                            kColorPink1 : [UIColor withHexString:@"#D80056"],
+                                                            kColorPink3: [UIColor withHexString:@"#e74775"],
+                                                            kColorPink10: [UIColor withHexString:@"#fbe8ec"],
+                                                            }];
     [[ThemeManager sharedInstance] addThemeColor:cPrimaryPalette color:themeColor];
-
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontRegularNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Light" forKey:kFontLightNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Bold" forKey:kFontBoldNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans" forKey:kFontMediumNameKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"Bamilo-Sans-Black" forKey:kFontBlackNameKey];
     [[GSDAppIndexing sharedInstance] registerApp:kAppStoreIdBamiloInteger];
-
+    
     [[SessionManager sharedInstance] evaluateActiveSessions];
-
+    
     [[UINavigationBar appearance] setBarTintColor:JABlack300Color];
     
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]] setTitleTextAttributes:@{
-                              NSFontAttributeName: [Theme font:kFontVariationLight size:18],
-                              NSForegroundColorAttributeName: JABackgroundGrey
-                              } forState:UIControlStateSelected];
-
+                                                                                                                   NSFontAttributeName: [Theme font:kFontVariationLight size:18],
+                                                                                                                   NSForegroundColorAttributeName: JABackgroundGrey
+                                                                                                                   } forState:UIControlStateSelected];
+    
     NSString* phpSessIDCookie = [NSString stringWithFormat:@"%@%@",kPHPSESSIDCookie,[RIApi getCountryIsoInUse]];
     NSDictionary *cookieProperties = [[NSUserDefaults standardUserDefaults] objectForKey:phpSessIDCookie];
     if(VALID_NOTEMPTY(cookieProperties, NSDictionary)) {
@@ -131,27 +131,26 @@
     //#########################################################################################################
     //Start Crashlytics
     [Fabric with:@[[Crashlytics class]]];
-
+    
     //Crashlytics Integration with PushWoosh
     //http://docs.pushwoosh.com/docs/crashlytics-integration
     NSString *userId = [[PushNotificationManager pushManager] getHWID];
     [[Crashlytics sharedInstance] setUserIdentifier:userId];
-
+    
     //PUSH WOOSH
     //********************************************************************
     // set custom delegate for push handling, in our case AppDelegate
-    PushNotificationManager *pushManager = [PushNotificationManager pushManager];
+    PushNotificationManager * pushManager = [PushNotificationManager pushManager];
     pushManager.delegate = [PushWooshTracker sharedTracker];
-
+    
     // set default Pushwoosh delegate for iOS10 foreground push handling
-    [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
-
-    // handling push on app start
-    [[PushNotificationManager pushManager] handlePushReceived:launchOptions];
-
+    if (@available(iOS 10.0, *)) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+    }
+    
     // track application open statistics
     [[PushNotificationManager pushManager] sendAppOpen];
-
+    
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
     
@@ -182,7 +181,7 @@
     [self.trace stop];
     self.trace = [FIRPerformance startTraceWithName:@"App in background"];
 }
-    
+
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     //register to receive notifications
@@ -268,18 +267,23 @@
 }
 
 // system push notifications callback, delegate to pushManager
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
     //PUSH WOOSH
-    [[PushNotificationManager pushManager] handlePushReceived:userInfo];
+    if (@available(iOS 10.0, *)) {
+        completionHandler(UIBackgroundFetchResultNoData);
+    } else {
+        [[PushNotificationManager pushManager] handlePushReceived:userInfo];
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-//    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
+    //    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
 }
 
 #pragma mark - Open URL Scheme
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-
+    
     [Adjust appWillOpenUrl:url = [GSDDeepLink handleDeepLink:url]];
     if (url) {
         [DeepLinkManager handleUrl:url];
@@ -287,7 +291,7 @@
         [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypeDeeplink]];
         return YES;
     }
-
+    
     return NO;
 }
 
