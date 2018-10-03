@@ -112,6 +112,8 @@ extension UIImageView: DisplaceableView {}
         } else {
             self.getContent()
         }
+        
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,7 +135,6 @@ extension UIImageView: DisplaceableView {}
                 if self.tableView.contentOffset.y < -100  {
                     self.sliderCell?.openCurrentImage()
                 }
-                
             }
             
             if self.tableView.contentOffset.y >= 0 && self.tableView.contentOffset.y < cellSliderHeight {
@@ -645,12 +646,13 @@ extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate
 
 //MARK: - ProductMoreInfoViewControllerDelegate
 extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
-
     func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
+        shuouldGoToCardAfterAddToCard = true
         self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
     }
     
     func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
+        self.shuouldGoToCardAfterAddToCard = true
         prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
     }
 }

@@ -162,4 +162,5 @@ let STRING_BUY_PRODUCT = RILocalizationWrapper.localizedString("buy_product")!
 let STRING_UPDATE_NOW = RILocalizationWrapper.localizedString("update_now")!
 let STRING_NOT_NOW = RILocalizationWrapper.localizedString("not_now")!
 let STRING_BUY_RIGHT_NOW = RILocalizationWrapper.localizedString("buy_right_now")!
+let STRING_APP_SOCIAL = RILocalizationWrapper.localizedString("app_social")!
 

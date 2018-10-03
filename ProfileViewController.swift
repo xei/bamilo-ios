@@ -84,6 +84,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "contact_us_profile", notificationName: nil, selector: #selector(callContctUs)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "feedback_profile", notificationName: nil, selector: #selector(sendIdeaOrReport)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_EMAIL_TO_CS, iconName: "email_profile", notificationName: nil, selector: #selector(sendEmailToCS)),
+//                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_APP_SOCIAL, iconName: "ShareGray", notificationName: nil, selector: #selector(shareApplication)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "faq_profile", notificationName: nil, selector: #selector(showFAQ))
             ]
         ]
@@ -159,6 +160,11 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     }
     
     //MARK: - helper functions
+    
+    @objc func shareApplication() {
+//        Utility.shareUrl(url: "https://app.adjust.com/eq8uike", message: "Share Bamilo Application", viewController: self)
+    }
+    
     @objc func showLogin() {
         if !RICustomer.checkIfUserIsLogged() {
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)

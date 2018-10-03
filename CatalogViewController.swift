@@ -119,6 +119,7 @@ import SwiftyJSON
         }
         
         if let tabBar = self.tabBarController?.tabBar {
+            tabBar.isHidden = false
             self.initialTabBarHeight = tabBar.frame.height
             noResultContainerBottomConstraint.constant = self.initialTabBarHeight
         }
@@ -683,6 +684,7 @@ import SwiftyJSON
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
             destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
             destinationViewCtrl?.subCatsFilters = catalogData?.subCatFilters
+            destinationViewCtrl?.hidesBottomBarWhenPushed = true
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }

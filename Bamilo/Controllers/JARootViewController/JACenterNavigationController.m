@@ -145,6 +145,7 @@
             viewController.searchTarget = target;
             viewController.purchaseTrackingInfo = purchaseInfo;
             viewController.initiatorScreenName = screenName;
+            viewController.hidesBottomBarWhenPushed = NO;
             [self pushViewController:viewController animated:true];
             return YES;
         }
