@@ -50,10 +50,10 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
         seperatorView.backgroundColor = Theme.color(kColorGray10)
         
         addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
-        addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        addToCartButton.setTitle("همین الان بخر", for: .normal)
         addToCartButton.backgroundColor = Theme.color(kColorOrange1)
         
-        let image = #imageLiteral(resourceName: "btn_cart").withRenderingMode(.alwaysTemplate)
+        let image = #imageLiteral(resourceName: "buy_now").withRenderingMode(.alwaysTemplate)
         addToCartButton.setImage(image, for: .normal)
         addToCartButton.tintColor = .white
     }
@@ -86,7 +86,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
             if let selectedSizeSimpleSku = selectedSize?.simpleSku {
                 delegate?.requestsForAddToCart(sku: selectedSizeSimpleSku, viewCtrl: self)
             } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0 {
-                self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
+                self.performSegue(withIdentifier: "showAddToCartViewController", sender: nil)
             } else if let simpleSku = self.product?.simpleSku {
                 delegate?.requestsForAddToCart(sku: simpleSku, viewCtrl: self)
             }

@@ -184,7 +184,7 @@
                                 </constraints>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zc7-Vb-nIS">
-                                <rect key="frame" x="0.0" y="80" width="375" height="487"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="YAa-kj-ypS" id="4cQ-iA-kbV"/>
@@ -192,13 +192,13 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Li-YY-i0n">
-                                <rect key="frame" x="187" y="323.5" width="0.0" height="0.0"/>
+                                <rect key="frame" x="187" y="373.5" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FE1-oX-yO3" userLabel="Cart Entity Summary View" customClass="CartEntitySummaryViewControl">
-                                <rect key="frame" x="0.0" y="572" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="45"/>
                                 <color key="backgroundColor" red="0.090531297028064728" green="0.52686542272567749" blue="0.11270476132631302" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="mz0-2q-Y9s"/>
@@ -219,7 +219,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAO-l3-ogF" customClass="OrangeButton">
-                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <rect key="frame" x="10" y="607" width="355" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="SIc-FD-Oua"/>
                                 </constraints>
@@ -234,19 +234,19 @@
                         <color key="backgroundColor" red="1" green="0.57953985223996241" blue="0.58901249803895506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="FE1-oX-yO3" firstAttribute="left" secondItem="hA3-mv-iin" secondAttribute="left" id="1Zr-gH-Nw9"/>
-                            <constraint firstItem="FE1-oX-yO3" firstAttribute="top" secondItem="zc7-Vb-nIS" secondAttribute="bottom" constant="5" id="2sn-Im-H1w"/>
-                            <constraint firstItem="dAO-l3-ogF" firstAttribute="left" secondItem="hA3-mv-iin" secondAttribute="left" id="8c4-09-UwQ"/>
+                            <constraint firstItem="dAO-l3-ogF" firstAttribute="left" secondItem="hA3-mv-iin" secondAttribute="left" constant="10" id="8c4-09-UwQ"/>
                             <constraint firstItem="zc7-Vb-nIS" firstAttribute="left" secondItem="hA3-mv-iin" secondAttribute="left" id="B5w-oo-f6K"/>
                             <constraint firstAttribute="right" secondItem="zc7-Vb-nIS" secondAttribute="right" id="Gmq-KJ-Ngb"/>
                             <constraint firstAttribute="right" secondItem="FE1-oX-yO3" secondAttribute="right" id="Gvo-30-ygt"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="left" secondItem="hA3-mv-iin" secondAttribute="left" id="Q1F-uK-rx7"/>
-                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="dAO-l3-ogF" secondAttribute="bottom" id="SVx-nL-sf5"/>
+                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="dAO-l3-ogF" secondAttribute="bottom" constant="10" id="SVx-nL-sf5"/>
                             <constraint firstAttribute="right" secondItem="7Bg-pG-uxa" secondAttribute="right" id="T6W-xc-0fk"/>
                             <constraint firstItem="zc7-Vb-nIS" firstAttribute="top" secondItem="7Bg-pG-uxa" secondAttribute="bottom" id="VoH-5k-HXv"/>
-                            <constraint firstItem="dAO-l3-ogF" firstAttribute="top" secondItem="FE1-oX-yO3" secondAttribute="bottom" id="WCz-bc-rHe"/>
-                            <constraint firstAttribute="right" secondItem="dAO-l3-ogF" secondAttribute="right" id="b4t-Pp-xhU"/>
+                            <constraint firstItem="ll1-YN-aeW" firstAttribute="top" secondItem="zc7-Vb-nIS" secondAttribute="bottom" id="YPO-FH-nAn"/>
+                            <constraint firstAttribute="right" secondItem="dAO-l3-ogF" secondAttribute="right" constant="10" id="b4t-Pp-xhU"/>
                             <constraint firstItem="7Bg-pG-uxa" firstAttribute="top" secondItem="Rb1-m2-ocz" secondAttribute="bottom" id="d8f-Zr-zbO"/>
                             <constraint firstItem="8Li-YY-i0n" firstAttribute="centerX" secondItem="zc7-Vb-nIS" secondAttribute="centerX" id="lde-sX-hza"/>
+                            <constraint firstItem="FE1-oX-yO3" firstAttribute="top" secondItem="7Bg-pG-uxa" secondAttribute="bottom" id="rVh-mH-d5G"/>
                             <constraint firstItem="8Li-YY-i0n" firstAttribute="centerY" secondItem="zc7-Vb-nIS" secondAttribute="centerY" id="seo-VQ-512"/>
                         </constraints>
                     </view>
@@ -254,6 +254,7 @@
                         <outlet property="cartEntitySummaryViewControl" destination="FE1-oX-yO3" id="8Th-0M-DjB"/>
                         <outlet property="checkoutProgressViewControl" destination="7Bg-pG-uxa" id="9Vi-Co-9mf"/>
                         <outlet property="continueButton" destination="dAO-l3-ogF" id="Iyt-m0-eWg"/>
+                        <outlet property="continueButtonHeightConstraint" destination="SIc-FD-Oua" id="MaM-vv-Nqo"/>
                         <outlet property="noPaymentLabel" destination="8Li-YY-i0n" id="IAr-4S-VmO"/>
                         <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
                         <segue destination="DJI-Ev-Zxb" kind="show" identifier="SuccessPaymentViewController" id="CTo-Jx-FjS"/>

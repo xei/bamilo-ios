@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIView *cartSummeryView;
 @property (weak, nonatomic) IBOutlet UILabel *totalPrice;
 @property (weak, nonatomic) IBOutlet UILabel *totalDiscountedPrice;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerTopToWholeCostTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *costSummeryContainerBottomToWholeCostBottomConstraint;
 @property (weak, nonatomic) IBOutlet CartEntitySummaryViewControl *summeryView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *summeryViewToBottomConstraint;
 @property (weak, nonatomic) IBOutlet OrangeButton *submitButton;
@@ -74,7 +74,8 @@
     [self.tableView registerNib:[UINib nibWithNibName: [CartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[CartTableViewCell nibName]];
     [self.tableView registerNib:[UINib nibWithNibName: [RecieptViewCartTableViewCell nibName] bundle:nil] forCellReuseIdentifier:[RecieptViewCartTableViewCell nibName]];
     self.summeryView.delegate = self;
-    
+    self.submitButton.cornerRadius = 48 / 2;
+    self.submitButton.clipsToBounds = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedOut) name:kUserLoggedOutNotification object:nil];
 }
 
@@ -209,7 +210,7 @@
 
 #pragma mark - CartEntitySummaryViewControlDelegate
 - (void)cartEntityTapped:(id)cartEntityControl {
-    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant == 0) {
+    if (self.costSummeryContainerBottomToWholeCostBottomConstraint.constant == 0) {
         [self showDetailSummeryView:YES];
     } else { 
         [self showDetailSummeryView:NO];
@@ -299,39 +300,35 @@
     if (self.tableView.contentSize.height < self.tableView.frame.size.height) {
         [self showSummeryView:NO];
         [self showDetailSummeryView:NO];
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 58, 0);
     } else {
         [self showSummeryView:YES];
         [self showDetailSummeryView:YES];
+        self.tableView.contentInset = UIEdgeInsetsMake(45, 0, 58, 0);
     }
 }
 
 - (void)showSummeryView:(Boolean)show {
     if (show) {
-        if (self.summeryViewToBottomConstraint.constant != 0) {
-            [self changeTheSummeryBottomConstraintByAnimationTo:0];
+        if (self.summeryViewToBottomConstraint.constant != -45) {
+            [self changeTheSummeryBottomConstraintByAnimationTo:-45];
         }
         return;
     }
-    if (self.summeryViewToBottomConstraint.constant != -45) {
-        [self changeTheSummeryBottomConstraintByAnimationTo:-45];
+    if (self.summeryViewToBottomConstraint.constant != 0) {
+        [self changeTheSummeryBottomConstraintByAnimationTo:0];
     }
 }
 
 - (void)showDetailSummeryView:(Boolean)show {
-    if (show){
-        if (self.costSummeryContainerTopToWholeCostTopConstraint.constant != 75) {
-            [self changeTheSummeryTopConstraintByAnimationTo:75];
-            return;
-        }
-    }
-    if (self.costSummeryContainerTopToWholeCostTopConstraint.constant != 0) {
-        [self changeTheSummeryTopConstraintByAnimationTo:0];
+    if (self.costSummeryContainerBottomToWholeCostBottomConstraint.constant != (show ? 75 : 0)) {
+        [self changeTheSummeryTopConstraintByAnimationTo:(show ? 75 : 0)];
     }
 }
 
 - (void)changeTheSummeryTopConstraintByAnimationTo:(CGFloat)constant {
     [UIView animateWithDuration:0.15 animations:^{
-        self.costSummeryContainerTopToWholeCostTopConstraint.constant = constant;
+        self.costSummeryContainerBottomToWholeCostBottomConstraint.constant = constant;
         [self.view layoutIfNeeded];
     } completion:nil];
 }

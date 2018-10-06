@@ -100,7 +100,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.0</string>
+	<string>2.6.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>51</string>
+	<string>56</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
@@ -236,7 +236,7 @@
 	<key>PW_USE_GPS</key>
 	<true/>
 	<key>Pushwoosh_APPID</key>
-	<string>82449-6B792</string>
+	<string>54916-053AA </string>
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo</string>
 	<key>Pushwoosh_LOG_LEVEL</key>

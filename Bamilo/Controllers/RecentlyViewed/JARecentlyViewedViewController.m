@@ -338,7 +338,9 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
             [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
-            //[self hideLoading];
+            
+            //Go to cart
+            [MainTabBarViewController showCart];
         } else {
             //EVENT: ADD TO CART
             

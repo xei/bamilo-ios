@@ -31,8 +31,11 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
         
         //it's possible that previous view controllers hides bottom bar so content edges will be disturbed
         //by this trick this view always shows proper boundary
-        self.submitButtonBottomToSuperViewConstaint.constant = MainTabBarViewController.sharedInstance()?.tabBar.frame.height ?? 0
-        
+        self.submitButtonBottomToSuperViewConstaint.constant = (MainTabBarViewController.sharedInstance()?.tabBar.frame.height ?? 0) + 10
+        cancelOrderSubmitButton.layer.cornerRadius = 46 / 2
+        cancelOrderSubmitButton.clipsToBounds = true
+        let insets = orderCancellationTableViewCtrl.tableView.contentInset
+        orderCancellationTableViewCtrl.tableView.contentInset = UIEdgeInsets(top: insets.top, left: insets.left, bottom: insets.bottom + 56, right: insets.right)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -75,14 +78,14 @@ class OrderDetailCancellationViewController: BaseViewController, DataServiceProt
         let keyboardFrame: NSValue? = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
         let keyboardRectangle = keyboardFrame?.cgRectValue
         if let keyboardHeight = keyboardRectangle?.height {
-            self.submitButtonBottomToSuperViewConstaint.constant = keyboardHeight
+            self.submitButtonBottomToSuperViewConstaint.constant = keyboardHeight + 10
         }
         self.orderCancellationTableViewCtrl.scrollToMoreDescriptionField()
     }
     
     @objc func keyboardWillBeHidden(notification: Notification) {
         if let tabbarHeight = self.navigationController?.tabBarController?.tabBar.frame.height {
-            self.submitButtonBottomToSuperViewConstaint.constant = tabbarHeight
+            self.submitButtonBottomToSuperViewConstaint.constant = tabbarHeight + 10
         }
     }
     

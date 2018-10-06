@@ -101,7 +101,7 @@
                                         <rect key="frame" x="147" y="137" width="120" height="57"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSz-D5-qwc">
-                                        <rect key="frame" x="194" y="69" width="27.333333333333343" height="23"/>
+                                        <rect key="frame" x="193.66666666666666" y="69" width="27.333333333333343" height="23"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -401,7 +401,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="جستجو نام، برند یا دسته بندی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U0h-Rg-tEL">
-                                        <rect key="frame" x="64" y="11.666666666666668" width="342" height="23.000000000000004"/>
+                                        <rect key="frame" x="64" y="12.333333333333336" width="342" height="23"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" red="0.23921568630000001" green="0.23921568630000001" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
@@ -469,14 +469,14 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="e6q-Xi-hP9">
-                                        <rect key="frame" x="197" y="279" width="20" height="20"/>
+                                        <rect key="frame" x="197" y="301.66666666666669" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ig0-vW-kqW">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="623"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                     <view alpha="0.93999999999999995" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fm5-0g-qnq" userLabel="Cart Summery View">
-                                        <rect key="frame" x="0.0" y="578" width="414" height="75"/>
+                                        <rect key="frame" x="0.0" y="-75" width="414" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
                                                 <rect key="frame" x="326.33333333333331" y="9.9999999999999982" width="67.666666666666686" height="21.333333333333329"/>
@@ -485,7 +485,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="316" y="43.666666666666629" width="78" height="21.333333333333329"/>
+                                                <rect key="frame" x="316" y="43.666666666666664" width="78" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -497,7 +497,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43.666666666666629" width="286" height="21.333333333333329"/>
+                                                <rect key="frame" x="20" y="43.666666666666664" width="286" height="21.333333333333336"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -533,16 +533,16 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5o-k2-OAi" userLabel="Cart Entity Summary View" customClass="CartEntitySummaryViewControl">
-                                        <rect key="frame" x="0.0" y="578" width="414" height="45"/>
+                                        <rect key="frame" x="0.0" y="-45" width="414" height="45"/>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.59215686270000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="JYW-zf-s8H"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8h-QL-QyM" customClass="OrangeButton">
-                                        <rect key="frame" x="0.0" y="578" width="414" height="45"/>
+                                        <rect key="frame" x="10" y="565" width="394" height="48"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="hPB-NM-phs"/>
+                                            <constraint firstAttribute="height" constant="48" id="hPB-NM-phs"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                         <state key="normal" title="ثبت سفارش"/>
@@ -563,21 +563,21 @@
                                     <constraint firstAttribute="right" secondItem="ig0-vW-kqW" secondAttribute="right" id="1yX-ly-RDu"/>
                                     <constraint firstItem="e6q-Xi-hP9" firstAttribute="centerY" secondItem="ig0-vW-kqW" secondAttribute="centerY" id="4dA-x7-UBT"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="6CI-FM-OM4"/>
-                                    <constraint firstAttribute="right" secondItem="f8h-QL-QyM" secondAttribute="right" id="8yX-IY-Sbo"/>
+                                    <constraint firstAttribute="right" secondItem="f8h-QL-QyM" secondAttribute="right" constant="10" id="8yX-IY-Sbo"/>
+                                    <constraint firstItem="Fm5-0g-qnq" firstAttribute="bottom" secondItem="R5o-k2-OAi" secondAttribute="bottom" id="CVq-1A-yub"/>
                                     <constraint firstItem="e6q-Xi-hP9" firstAttribute="centerX" secondItem="ig0-vW-kqW" secondAttribute="centerX" id="G0z-KB-UcR"/>
+                                    <constraint firstAttribute="top" secondItem="R5o-k2-OAi" secondAttribute="bottom" id="Ia7-Vk-PTu"/>
                                     <constraint firstAttribute="right" secondItem="Fm5-0g-qnq" secondAttribute="right" id="MhF-KG-bfK"/>
                                     <constraint firstAttribute="right" secondItem="3Zb-5G-jna" secondAttribute="right" id="Ppk-aB-US8"/>
                                     <constraint firstItem="R5o-k2-OAi" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="Snz-ea-lP3"/>
-                                    <constraint firstAttribute="bottom" secondItem="f8h-QL-QyM" secondAttribute="bottom" id="Wg7-fO-RXM"/>
+                                    <constraint firstAttribute="bottom" secondItem="f8h-QL-QyM" secondAttribute="bottom" constant="10" id="Wg7-fO-RXM"/>
                                     <constraint firstItem="3Zb-5G-jna" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="Wzb-zV-b4S"/>
-                                    <constraint firstItem="R5o-k2-OAi" firstAttribute="top" secondItem="Fm5-0g-qnq" secondAttribute="top" id="X0X-t0-0Fo"/>
-                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="ig0-vW-kqW" secondAttribute="bottom" id="YMd-KB-IjR"/>
                                     <constraint firstItem="3Zb-5G-jna" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="bBQ-ji-pOp"/>
                                     <constraint firstAttribute="right" secondItem="R5o-k2-OAi" secondAttribute="right" id="lor-Iy-sop"/>
-                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="top" secondItem="R5o-k2-OAi" secondAttribute="bottom" constant="-45" id="rSD-k0-cZW"/>
                                     <constraint firstAttribute="bottom" secondItem="3Zb-5G-jna" secondAttribute="bottom" id="tdF-6P-nLv"/>
                                     <constraint firstItem="Fm5-0g-qnq" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="uIf-kq-CEM"/>
-                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" id="x3I-Ed-hU9"/>
+                                    <constraint firstAttribute="bottom" secondItem="ig0-vW-kqW" secondAttribute="bottom" id="x0k-9Y-OHe"/>
+                                    <constraint firstItem="f8h-QL-QyM" firstAttribute="left" secondItem="qMZ-Vq-mnw" secondAttribute="left" constant="10" id="x3I-Ed-hU9"/>
                                     <constraint firstItem="ig0-vW-kqW" firstAttribute="top" secondItem="qMZ-Vq-mnw" secondAttribute="top" id="y7A-sY-3qT"/>
                                 </constraints>
                             </view>
@@ -595,11 +595,11 @@
                         <outlet property="activityIndicator" destination="e6q-Xi-hP9" id="BJV-gd-ass"/>
                         <outlet property="cartSummeryView" destination="Fm5-0g-qnq" id="8eC-Pb-QM4"/>
                         <outlet property="contentWrapper" destination="qMZ-Vq-mnw" id="sgB-Sg-cim"/>
-                        <outlet property="costSummeryContainerTopToWholeCostTopConstraint" destination="X0X-t0-0Fo" id="cTb-d9-4G3"/>
+                        <outlet property="costSummeryContainerBottomToWholeCostBottomConstraint" destination="CVq-1A-yub" id="F5H-EV-6XL"/>
                         <outlet property="emptyCartViewContainer" destination="3Zb-5G-jna" id="yQv-o3-Ddr"/>
                         <outlet property="submitButton" destination="f8h-QL-QyM" id="cyv-F4-PSH"/>
                         <outlet property="summeryView" destination="R5o-k2-OAi" id="vdI-bl-chs"/>
-                        <outlet property="summeryViewToBottomConstraint" destination="rSD-k0-cZW" id="il2-eP-QnQ"/>
+                        <outlet property="summeryViewToBottomConstraint" destination="Ia7-Vk-PTu" id="vS3-OO-yTF"/>
                         <outlet property="tableView" destination="ig0-vW-kqW" id="RND-tc-DDe"/>
                         <outlet property="totalDiscountedPrice" destination="Co6-Dd-SGv" id="0bN-5P-QFj"/>
                         <outlet property="totalPrice" destination="Vgt-Lp-1Ci" id="7zs-aA-CeE"/>
@@ -1025,7 +1025,7 @@
         <!--Product Detail View Controller-->
         <scene sceneID="5ke-tP-boY">
             <objects>
-                <viewController storyboardIdentifier="ProductDetailViewController" extendedLayoutIncludesOpaqueBars="YES" id="1MH-zt-PDO" customClass="ProductDetailViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductDetailViewController" extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="1MH-zt-PDO" customClass="ProductDetailViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1ze-x0-lQB"/>
                         <viewControllerLayoutGuide type="bottom" id="pSA-3I-mdU"/>
@@ -1048,21 +1048,9 @@
                                             <constraint firstAttribute="width" secondItem="j1a-Y5-LfC" secondAttribute="height" multiplier="1:1" id="iUD-hQ-V51"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادامه و پرداخت" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
-                                        <rect key="frame" x="263.66666666666669" y="9" width="87.333333333333314" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="15" id="NUc-dy-97z"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادامه و پرداخت" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
+                                        <rect key="frame" x="36" y="10.333333333333371" width="315" height="27"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="محصول با موفقیت به سبد خرید اضافه شد" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-qw-zz3">
-                                        <rect key="frame" x="160.33333333333337" y="23.666666666666629" width="190.66666666666663" height="15"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="15" id="B58-7H-m64"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="10"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1113,18 +1101,17 @@
                                     <constraint firstItem="PS7-Qp-bSL" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" constant="8" id="1VV-44-kVd"/>
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="left" secondItem="SiN-i9-VzX" secondAttribute="right" constant="11" id="3wQ-89-iAO"/>
                                     <constraint firstItem="BaJ-9v-Rjs" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" id="4T0-zA-daq"/>
-                                    <constraint firstItem="7XB-qw-zz3" firstAttribute="right" secondItem="SiN-i9-VzX" secondAttribute="right" id="66K-Cv-gFY"/>
                                     <constraint firstAttribute="bottom" secondItem="Pcw-BS-a8g" secondAttribute="bottom" id="9bN-TG-d0j"/>
                                     <constraint firstAttribute="bottom" secondItem="kWx-nR-vD0" secondAttribute="bottom" id="9gV-bC-qi6"/>
                                     <constraint firstItem="PS7-Qp-bSL" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="AKs-pn-9eT"/>
-                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="SiN-i9-VzX" secondAttribute="centerY" constant="8" id="NWb-YH-KJ8"/>
+                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="SiN-i9-VzX" secondAttribute="centerY" id="NWb-YH-KJ8"/>
                                     <constraint firstAttribute="right" secondItem="kWx-nR-vD0" secondAttribute="right" id="PU4-0H-ndh"/>
                                     <constraint firstItem="BaJ-9v-Rjs" firstAttribute="width" secondItem="kWx-nR-vD0" secondAttribute="width" id="Sbn-Oi-KaU"/>
                                     <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="U9V-Vx-VYf"/>
+                                    <constraint firstItem="SiN-i9-VzX" firstAttribute="left" secondItem="PS7-Qp-bSL" secondAttribute="right" constant="10" id="XFp-g4-gqJ"/>
                                     <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
                                     <constraint firstItem="kWx-nR-vD0" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="bwE-Lf-y0n"/>
                                     <constraint firstItem="Pcw-BS-a8g" firstAttribute="leading" secondItem="F7n-Ry-Jdc" secondAttribute="leading" id="cmo-WG-Tl9"/>
-                                    <constraint firstItem="7XB-qw-zz3" firstAttribute="top" secondItem="SiN-i9-VzX" secondAttribute="bottom" id="cp2-w2-43S"/>
                                     <constraint firstItem="Pcw-BS-a8g" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="ej3-oT-pvM"/>
                                     <constraint firstAttribute="trailing" secondItem="Pcw-BS-a8g" secondAttribute="trailing" id="gvO-sA-LBn"/>
                                     <constraint firstAttribute="right" secondItem="j1a-Y5-LfC" secondAttribute="right" constant="8" id="wLM-kL-PaY"/>
@@ -1189,10 +1176,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBk-Uf-I5W">
-                                <rect key="frame" x="0.0" y="443" width="414" height="293"/>
+                                <rect key="frame" x="0.0" y="432" width="414" height="304"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dAE-sU-el0" userLabel="backgroundView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="293"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="304"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6P-nI-ZSY">
@@ -1232,7 +1219,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfD-Mb-Oh3">
-                                                <rect key="frame" x="231.33333333333334" y="38.666666666666686" width="20.333333333333343" height="21.666666666666671"/>
+                                                <rect key="frame" x="231.33333333333334" y="38.333333333333314" width="20.333333333333343" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1308,9 +1295,9 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4R-pn-lJE" customClass="IconButton">
-                                        <rect key="frame" x="0.0" y="248" width="414" height="45"/>
+                                        <rect key="frame" x="10" y="248" width="394" height="46"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="cba-v3-g3W"/>
+                                            <constraint firstAttribute="height" constant="46" id="cba-v3-g3W"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="btn_cart"/>
                                         <userDefinedRuntimeAttributes>
@@ -1337,15 +1324,15 @@
                                     <constraint firstItem="o6P-nI-ZSY" firstAttribute="bottom" secondItem="CAV-1w-WJs" secondAttribute="top" id="Imt-Yb-izw"/>
                                     <constraint firstAttribute="right" secondItem="dAE-sU-el0" secondAttribute="right" id="PlF-7w-ECd"/>
                                     <constraint firstAttribute="right" secondItem="CAV-1w-WJs" secondAttribute="right" id="aeg-L8-lpa"/>
-                                    <constraint firstItem="t4R-pn-lJE" firstAttribute="left" secondItem="CBk-Uf-I5W" secondAttribute="left" id="dRr-e1-BoS"/>
+                                    <constraint firstItem="t4R-pn-lJE" firstAttribute="left" secondItem="CBk-Uf-I5W" secondAttribute="left" constant="10" id="dRr-e1-BoS"/>
                                     <constraint firstAttribute="bottom" secondItem="dAE-sU-el0" secondAttribute="bottom" id="fHm-mU-qcA"/>
                                     <constraint firstItem="CAV-1w-WJs" firstAttribute="left" secondItem="CBk-Uf-I5W" secondAttribute="left" id="heq-oH-UNo"/>
                                     <constraint firstItem="o6P-nI-ZSY" firstAttribute="left" secondItem="CBk-Uf-I5W" secondAttribute="left" id="jiE-pp-uNe"/>
                                     <constraint firstItem="t4R-pn-lJE" firstAttribute="top" secondItem="CAV-1w-WJs" secondAttribute="bottom" id="k8G-Eb-wxg"/>
                                     <constraint firstAttribute="right" secondItem="o6P-nI-ZSY" secondAttribute="right" id="ljb-hS-peU"/>
                                     <constraint firstItem="o6P-nI-ZSY" firstAttribute="top" secondItem="CBk-Uf-I5W" secondAttribute="top" id="ori-Cn-ysh"/>
-                                    <constraint firstAttribute="bottom" secondItem="t4R-pn-lJE" secondAttribute="bottom" id="trZ-kR-QdN"/>
-                                    <constraint firstAttribute="right" secondItem="t4R-pn-lJE" secondAttribute="right" id="xCD-S4-v1R"/>
+                                    <constraint firstAttribute="bottom" secondItem="t4R-pn-lJE" secondAttribute="bottom" constant="10" id="trZ-kR-QdN"/>
+                                    <constraint firstAttribute="right" secondItem="t4R-pn-lJE" secondAttribute="right" constant="10" id="xCD-S4-v1R"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1689,7 +1676,7 @@
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فقط با تخفیف ها" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEn-nz-ntR">
-                                                <rect key="frame" x="59.666666666666679" y="14.999999999999998" width="85.333333333333314" height="21.333333333333329"/>
+                                                <rect key="frame" x="59.666666666666679" y="15.666666666666663" width="85.333333333333314" height="21.333333333333329"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2177,9 +2164,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgD-Hp-azO" customClass="OrangeButton">
-                                <rect key="frame" x="0.0" y="691" width="414" height="45"/>
+                                <rect key="frame" x="10" y="690" width="394" height="46"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="dqQ-ld-Tyt"/>
+                                    <constraint firstAttribute="height" constant="46" id="dqQ-ld-Tyt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
                                 <state key="normal" title="ثبت درخواست"/>
@@ -2188,17 +2175,17 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48P-4t-6dq">
-                                <rect key="frame" x="0.0" y="20" width="414" height="671"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="GgD-Hp-azO" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="BCv-07-fTr"/>
+                            <constraint firstItem="GgD-Hp-azO" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" constant="10" id="BCv-07-fTr"/>
                             <constraint firstItem="48P-4t-6dq" firstAttribute="left" secondItem="dhX-4m-5b3" secondAttribute="left" id="JEW-DO-L7C"/>
-                            <constraint firstItem="Ea4-Xc-Ggb" firstAttribute="top" secondItem="GgD-Hp-azO" secondAttribute="bottom" id="cAY-RW-luy"/>
-                            <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="48P-4t-6dq" secondAttribute="bottom" id="hRr-7n-12U"/>
-                            <constraint firstAttribute="right" secondItem="GgD-Hp-azO" secondAttribute="right" id="ly5-eZ-zVL"/>
+                            <constraint firstAttribute="bottom" secondItem="GgD-Hp-azO" secondAttribute="bottom" id="cAY-RW-luy"/>
+                            <constraint firstItem="GgD-Hp-azO" firstAttribute="top" secondItem="48P-4t-6dq" secondAttribute="bottom" constant="10" id="hRr-7n-12U"/>
+                            <constraint firstAttribute="right" secondItem="GgD-Hp-azO" secondAttribute="right" constant="10" id="ly5-eZ-zVL"/>
                             <constraint firstAttribute="right" secondItem="48P-4t-6dq" secondAttribute="right" id="mFa-5N-kqX"/>
                             <constraint firstItem="48P-4t-6dq" firstAttribute="top" secondItem="kOf-WS-Exx" secondAttribute="bottom" id="rhj-aA-cGb"/>
                         </constraints>
@@ -2230,7 +2217,7 @@
                                 <rect key="frame" x="187" y="100" width="40" height="40"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="فیلترهای کمتری را برای جستجو انتخاب نمایید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SU1-vf-mKc">
-                                <rect key="frame" x="83.333333333333329" y="165" width="247.33333333333337" height="23"/>
+                                <rect key="frame" x="84.000000000000014" y="165" width="247.33333333333337" height="23"/>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -3025,9 +3012,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qrz-C2-bq8"/>
-        <segue reference="iB6-A7-uY0"/>
-        <segue reference="Ned-FL-dUc"/>
-        <segue reference="yLY-Re-RCl"/>
+        <segue reference="hAx-Pw-RUJ"/>
+        <segue reference="Ib5-ij-N9c"/>
+        <segue reference="vMD-eI-z0K"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

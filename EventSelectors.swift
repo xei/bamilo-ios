@@ -87,4 +87,7 @@ import Foundation
         return Selector(("searchSuggestionTappedWithAttributes:"))
     }
     
+    class func buyNowTappedSelector() -> Selector {
+        return Selector(("buyNowTappedWithAttributes:"))
+    }
 }
