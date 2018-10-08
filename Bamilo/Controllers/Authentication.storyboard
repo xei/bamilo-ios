@@ -262,6 +262,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3f-ba-HIr">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <connections>
+                                    <action selector="dismissButtonTapped:" destination="07Y-oI-dJa" eventType="touchUpInside" id="lr0-GY-PbL"/>
+                                </connections>
+                            </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQw-nN-FGx">
                                 <rect key="frame" x="0.0" y="417" width="375" height="250"/>
                                 <constraints>
@@ -274,12 +280,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="GCI-CO-kJ7" firstAttribute="top" secondItem="h3f-ba-HIr" secondAttribute="bottom" id="71P-qM-vJX"/>
+                            <constraint firstAttribute="trailing" secondItem="h3f-ba-HIr" secondAttribute="trailing" id="Lgd-hf-Wj5"/>
+                            <constraint firstItem="h3f-ba-HIr" firstAttribute="top" secondItem="YEg-pk-re2" secondAttribute="bottom" id="WzL-F1-2a6"/>
                             <constraint firstItem="CQw-nN-FGx" firstAttribute="left" secondItem="HOn-7J-G8v" secondAttribute="left" id="bzK-rM-DDO"/>
                             <constraint firstItem="GCI-CO-kJ7" firstAttribute="top" secondItem="CQw-nN-FGx" secondAttribute="bottom" id="eLg-fJ-q7j"/>
+                            <constraint firstItem="h3f-ba-HIr" firstAttribute="leading" secondItem="HOn-7J-G8v" secondAttribute="leading" id="hh2-B0-0nK"/>
                             <constraint firstAttribute="right" secondItem="CQw-nN-FGx" secondAttribute="right" id="xNq-3J-pzk"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="contentHeightConstraint" destination="tG5-7B-2sZ" id="2u7-1T-RL6"/>
                         <outlet property="signInViewContainer" destination="CQw-nN-FGx" id="t0H-UB-uQ7"/>
                     </connections>
                 </viewController>

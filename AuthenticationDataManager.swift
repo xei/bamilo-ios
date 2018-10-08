@@ -80,8 +80,4 @@ class AuthenticationDataManager: DataManagerSwift {
             }
         }
     }
-    
-    
-    
-    // --- DataBase for User --- 
 }

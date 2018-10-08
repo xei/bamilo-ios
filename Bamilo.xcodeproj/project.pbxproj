@@ -268,6 +268,8 @@
 		619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */; };
 		619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */; };
 		61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A166B91FB6A7AA003FBA56 /* TourManager.swift */; };
+		61A2FE43216A56AA0041645B /* FormButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */; };
+		61A2FE44216A56AA0041645B /* FormButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */; };
 		61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyViewController.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
 		61A93A282131907A00C9B113 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61A93A272131907A00C9B113 /* GoogleService-Info.plist */; };
@@ -1388,6 +1390,8 @@
 		619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyDealsCollectionViewCell.xib; sourceTree = "<group>"; };
 		619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCellSwift.swift; sourceTree = "<group>"; };
 		61A166B91FB6A7AA003FBA56 /* TourManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourManager.swift; sourceTree = "<group>"; };
+		61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormButtonTableViewCell.swift; sourceTree = "<group>"; };
+		61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormButtonTableViewCell.xib; sourceTree = "<group>"; };
 		61A4D1A91EA6256A003E203C /* EmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		61A4D1AA1EA6256A003E203C /* EmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
@@ -3281,6 +3285,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61A2FE3F216A56730041645B /* Authentication */,
 				615E44AC2115BBB000210C41 /* Checkout */,
 				61B80E6520F61AAA0028FA87 /* OtherSellerView */,
 				614927B820EB8DCA00B16B27 /* ProductReviewListView */,
@@ -4460,6 +4465,23 @@
 			children = (
 			);
 			name = "New Group";
+			sourceTree = "<group>";
+		};
+		61A2FE3F216A56730041645B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				61A2FE40216A567F0041645B /* FormButtonTableViewCell */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		61A2FE40216A567F0041645B /* FormButtonTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */,
+				61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */,
+			);
+			name = FormButtonTableViewCell;
 			sourceTree = "<group>";
 		};
 		61A4D1A81EA62541003E203C /* EmptyViewController */ = {
@@ -8603,6 +8625,7 @@
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
 				61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */,
 				615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */,
+				61A2FE44216A56AA0041645B /* FormButtonTableViewCell.xib in Resources */,
 				875744621EA60E8E001B518A /* Yalda-76.png in Resources */,
 				8757441E1EA60E48001B518A /* Tragedy-Small.png in Resources */,
 				616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */,
@@ -9324,6 +9347,7 @@
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */,
+				61A2FE43216A56AA0041645B /* FormButtonTableViewCell.swift in Sources */,
 				617585F61F88FF8D00D66541 /* Ext+UIColor.swift in Sources */,
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,

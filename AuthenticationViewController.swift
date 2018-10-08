@@ -15,10 +15,14 @@ enum AuthenticationViewMode {
     case phoneVerify
 }
 
+protocol AuthenticationViewsDelegate: class {
+    func contentSizeChanged(height: CGFloat)
+}
 
 class AuthenticationViewController: BaseViewController {
     
-    @IBOutlet weak var signInViewContainer: UIView!
+    @IBOutlet private weak var contentHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var signInViewContainer: UIView!
 //    @IBOutlet weak var signUpViewContainer: UIView!
 //    @IBOutlet weak var forgetPassViewContainer: UIView!
 //    @IBOutlet weak var phoneVerifyViewContainer: UIView!
@@ -29,6 +33,12 @@ class AuthenticationViewController: BaseViewController {
         self.view.backgroundColor = .clear
         
     }
+    
+    @IBAction func dismissButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     
 //    private func renderView(mode: AuthenticationViewMode) {
 //        [signInViewContainer, signUpViewContainer, forgetPassViewContainer, phoneVerifyViewContainer].forEach { $0?.isHidden = true }
@@ -43,4 +53,20 @@ class AuthenticationViewController: BaseViewController {
 //            self.phoneVerifyViewContainer.isHidden = false
 //        }
 //    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "embedSignInViewController", let siginViewController = segue.destination as? SignInViewController {
+            siginViewController.delegate = self
+        }
+    }
+}
+
+
+//MARK: AuthenticationViewsDelegate
+extension AuthenticationViewController: AuthenticationViewsDelegate {
+    func contentSizeChanged(height: CGFloat) {
+        self.contentHeightConstraint.constant = height
+    }
 }

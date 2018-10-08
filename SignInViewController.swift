@@ -12,9 +12,12 @@ class SignInViewController: BaseViewController, DataServiceProtocol, FormViewCon
     
     @IBOutlet weak var tableview: UITableView!
     private var formController: FormViewControl?
+    weak var delegate: AuthenticationViewsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableview.register(UINib(nibName: FormButtonTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: FormButtonTableViewCell.nibName())
         
         self.formController = FormViewControl()
         
@@ -31,9 +34,19 @@ class SignInViewController: BaseViewController, DataServiceProtocol, FormViewCon
                                               validation: nil,
                                               selectOptions: nil),
             let password =  FormItemModel.passWord(withFieldName: "login[password]") {
-            self.formController?.formModelList = [firstName, firstName, firstName, firstName, password]
+            let customCell = FormCustomFiled()
+            customCell.cellName = FormButtonTableViewCell.nibName()
+            self.formController?.formModelList = [firstName, password, "submit", customCell]
         }
         self.formController?.setupTableView()
+        
+        Utility.delay(duration: 0.15) {
+            self.delegate?.contentSizeChanged(height: self.tableview.contentSize.height + self.tableview.contentInset.top + self.tableview.contentInset.bottom)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +80,7 @@ class SignInViewController: BaseViewController, DataServiceProtocol, FormViewCon
     }
     
     func customCell(forIndexPath tableView: UITableView!, cellName: String!, indexPath: IndexPath!) -> UITableViewCell! {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: FormButtonTableViewCell.nibName(), for: indexPath)
+        return cell
     }
 }
