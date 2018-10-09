@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>58</string>
+	<string>59</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
@@ -240,7 +240,7 @@
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
+	<string>VERBOSE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -256,7 +256,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>launchScreen</string>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
