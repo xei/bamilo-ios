@@ -136,7 +136,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>60</string>
+	<string>61</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
@@ -240,7 +240,7 @@
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo (Staging)</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>VERBOSE</string>
+	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
