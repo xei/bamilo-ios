@@ -134,7 +134,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>59</string>
+	<string>60</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
@@ -234,7 +234,7 @@
 	<key>PW_USE_GPS</key>
 	<true/>
 	<key>Pushwoosh_APPID</key>
-	<string>54916-053AA </string>
+	<string>54916-053AA</string>
 	<key>Pushwoosh_APPNAME</key>
 	<string>Bamilo</string>
 	<key>Pushwoosh_LOG_LEVEL</key>
