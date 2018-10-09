@@ -1038,86 +1038,11 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-Ry-Jdc">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-Ry-Jdc" customClass="TwoButtonsPurchaseControl" customModule="Bamilo" customModuleProvider="target">
                                 <rect key="frame" x="10" y="679" width="394" height="47"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle_checked" translatesAutoresizingMaskIntoConstraints="NO" id="j1a-Y5-LfC">
-                                        <rect key="frame" x="362" y="11.666666666666629" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="A2o-zu-0H1"/>
-                                            <constraint firstAttribute="width" secondItem="j1a-Y5-LfC" secondAttribute="height" multiplier="1:1" id="iUD-hQ-V51"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ادامه و پرداخت" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiN-i9-VzX">
-                                        <rect key="frame" x="36" y="10.333333333333371" width="315" height="27"/>
-                                        <fontDescription key="fontDescription" name="Bamilo-Sans-Bold" family="Bamilo-Sans" pointSize="14"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pcw-BS-a8g">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="47"/>
-                                        <connections>
-                                            <action selector="gotoCartButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="NAL-dO-GND"/>
-                                        </connections>
-                                    </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_left" translatesAutoresizingMaskIntoConstraints="NO" id="PS7-Qp-bSL">
-                                        <rect key="frame" x="8" y="14.666666666666629" width="18" height="18"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="9Wy-yC-4Fk"/>
-                                            <constraint firstAttribute="width" secondItem="PS7-Qp-bSL" secondAttribute="height" multiplier="1:1" id="LAE-5H-qyJ"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaJ-9v-Rjs" customClass="IconButton">
-                                        <rect key="frame" x="0.0" y="0.0" width="197" height="47"/>
-                                        <state key="normal" title="همین الان بخر" image="buy_now">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
-                                                <real key="value" value="0.29999999999999999"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="buyNowButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="qgH-Ky-NdO"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWx-nR-vD0" customClass="IconButton">
-                                        <rect key="frame" x="197" y="0.0" width="197" height="47"/>
-                                        <state key="normal" title="افزودن به سبد" image="tabbar_button_cart_highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
-                                                <real key="value" value="0.29999999999999999"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="addToCartButtonTapped:" destination="1MH-zt-PDO" eventType="touchUpInside" id="YR9-ur-Oi7"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="PS7-Qp-bSL" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" constant="8" id="1VV-44-kVd"/>
-                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="left" secondItem="SiN-i9-VzX" secondAttribute="right" constant="11" id="3wQ-89-iAO"/>
-                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="left" secondItem="F7n-Ry-Jdc" secondAttribute="left" id="4T0-zA-daq"/>
-                                    <constraint firstAttribute="bottom" secondItem="Pcw-BS-a8g" secondAttribute="bottom" id="9bN-TG-d0j"/>
-                                    <constraint firstAttribute="bottom" secondItem="kWx-nR-vD0" secondAttribute="bottom" id="9gV-bC-qi6"/>
-                                    <constraint firstItem="PS7-Qp-bSL" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="AKs-pn-9eT"/>
-                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="SiN-i9-VzX" secondAttribute="centerY" id="NWb-YH-KJ8"/>
-                                    <constraint firstAttribute="right" secondItem="kWx-nR-vD0" secondAttribute="right" id="PU4-0H-ndh"/>
-                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="width" secondItem="kWx-nR-vD0" secondAttribute="width" id="Sbn-Oi-KaU"/>
-                                    <constraint firstItem="j1a-Y5-LfC" firstAttribute="centerY" secondItem="F7n-Ry-Jdc" secondAttribute="centerY" id="U9V-Vx-VYf"/>
-                                    <constraint firstItem="SiN-i9-VzX" firstAttribute="left" secondItem="PS7-Qp-bSL" secondAttribute="right" constant="10" id="XFp-g4-gqJ"/>
                                     <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
-                                    <constraint firstItem="kWx-nR-vD0" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="bwE-Lf-y0n"/>
-                                    <constraint firstItem="Pcw-BS-a8g" firstAttribute="leading" secondItem="F7n-Ry-Jdc" secondAttribute="leading" id="cmo-WG-Tl9"/>
-                                    <constraint firstItem="Pcw-BS-a8g" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="ej3-oT-pvM"/>
-                                    <constraint firstAttribute="trailing" secondItem="Pcw-BS-a8g" secondAttribute="trailing" id="gvO-sA-LBn"/>
-                                    <constraint firstAttribute="right" secondItem="j1a-Y5-LfC" secondAttribute="right" constant="8" id="wLM-kL-PaY"/>
-                                    <constraint firstItem="BaJ-9v-Rjs" firstAttribute="top" secondItem="F7n-Ry-Jdc" secondAttribute="top" id="wcl-Rn-rLF"/>
-                                    <constraint firstItem="kWx-nR-vD0" firstAttribute="left" secondItem="BaJ-9v-Rjs" secondAttribute="right" id="xBT-4s-q6Z"/>
-                                    <constraint firstAttribute="bottom" secondItem="BaJ-9v-Rjs" secondAttribute="bottom" id="z0Z-Ft-S0v"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1134,14 +1059,10 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="addToCartButton" destination="kWx-nR-vD0" id="6wX-WH-bvO"/>
-                        <outlet property="bottomButtonsWrapperHeightConstraint" destination="a1Z-Wl-c0w" id="gHc-2l-5MO"/>
-                        <outlet property="bottomButtonsWrapperView" destination="F7n-Ry-Jdc" id="CwH-1k-FYl"/>
-                        <outlet property="buyNowButton" destination="BaJ-9v-Rjs" id="KW4-1s-bNu"/>
-                        <outlet property="circleCheckedImageView" destination="j1a-Y5-LfC" id="lKS-8y-AcK"/>
-                        <outlet property="leftArrowImageView" destination="PS7-Qp-bSL" id="8e8-QC-lcG"/>
                         <outlet property="tableView" destination="r8W-fi-eb9" id="ED9-JS-VlY"/>
                         <outlet property="topTableViewConstraint" destination="IQR-WZ-Rpl" id="dUW-Ex-Sqd"/>
+                        <outlet property="twoButtonViewControl" destination="F7n-Ry-Jdc" id="FVK-3t-KCf"/>
+                        <outlet property="twoButtonsHightConstraint" destination="a1Z-Wl-c0w" id="qAF-EB-3oK"/>
                         <segue destination="r4K-gO-BGF" kind="presentation" identifier="showAddToCartModal" id="Ib5-ij-N9c"/>
                         <segue destination="Euc-aP-Z3x" kind="show" identifier="showProductMoreInfoViewController" id="z7z-aj-U36"/>
                         <segue destination="nRm-FT-QBP" kind="show" identifier="showProductReviewListViewController" id="48P-L7-x2V"/>
@@ -2390,7 +2311,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFc-6p-Nyp">
-                                <rect key="frame" x="0.0" y="125" width="414" height="553"/>
+                                <rect key="frame" x="0.0" y="125" width="414" height="554"/>
                                 <connections>
                                     <segue destination="Wvd-KZ-cDU" kind="embed" identifier="embedProductDescriptionsViewController" id="oVW-xf-18W"/>
                                 </connections>
@@ -2401,21 +2322,13 @@
                                     <segue destination="OG6-Vy-q8q" kind="embed" identifier="embedProductSpecificsTableViewController" id="OPR-OY-NTR"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVT-fU-Cg0" customClass="IconButton">
-                                <rect key="frame" x="10" y="678" width="394" height="48"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yay-tU-peJ" customClass="TwoButtonsPurchaseControl" customModule="Bamilo" customModuleProvider="target">
+                                <rect key="frame" x="10" y="679" width="394" height="47"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="OMD-TP-rY0"/>
+                                    <constraint firstAttribute="height" constant="47" id="HxL-uy-nUV"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="addToCartButtonTapped:" destination="Euc-aP-Z3x" eventType="touchUpInside" id="aY7-0i-xwE"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -2423,28 +2336,28 @@
                             <constraint firstAttribute="right" secondItem="CFc-6p-Nyp" secondAttribute="right" id="2am-D7-ehp"/>
                             <constraint firstItem="l9X-ae-4TZ" firstAttribute="centerX" secondItem="g9h-5V-fvo" secondAttribute="centerX" id="3ov-kG-wap"/>
                             <constraint firstAttribute="right" secondItem="m46-db-3Hh" secondAttribute="right" id="43T-4O-8q2"/>
-                            <constraint firstAttribute="right" secondItem="ZVT-fU-Cg0" secondAttribute="right" constant="10" id="4Np-qg-Jpm"/>
                             <constraint firstItem="l9X-ae-4TZ" firstAttribute="top" secondItem="eZI-XO-Zgu" secondAttribute="bottom" constant="23" id="8D8-s0-MOh"/>
-                            <constraint firstItem="wbk-Ua-h7w" firstAttribute="top" secondItem="ZVT-fU-Cg0" secondAttribute="bottom" constant="10" id="95f-Hd-ve5"/>
+                            <constraint firstItem="wbk-Ua-h7w" firstAttribute="top" secondItem="Yay-tU-peJ" secondAttribute="bottom" constant="10" id="Aym-RP-sZx"/>
                             <constraint firstItem="CFc-6p-Nyp" firstAttribute="top" secondItem="yLJ-dx-EO0" secondAttribute="bottom" id="CWV-ZP-Dfn"/>
                             <constraint firstAttribute="right" secondItem="yLJ-dx-EO0" secondAttribute="right" id="E8R-bb-FwM"/>
                             <constraint firstItem="m46-db-3Hh" firstAttribute="top" secondItem="yLJ-dx-EO0" secondAttribute="bottom" id="F8q-Yb-2gm"/>
                             <constraint firstItem="yLJ-dx-EO0" firstAttribute="top" secondItem="l9X-ae-4TZ" secondAttribute="bottom" constant="14" id="ISa-cy-sI6"/>
-                            <constraint firstItem="ZVT-fU-Cg0" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" constant="10" id="RkK-mE-G7f"/>
+                            <constraint firstItem="Yay-tU-peJ" firstAttribute="leading" secondItem="g9h-5V-fvo" secondAttribute="leading" constant="10" id="MeB-lu-zT2"/>
+                            <constraint firstItem="Yay-tU-peJ" firstAttribute="top" secondItem="CFc-6p-Nyp" secondAttribute="bottom" id="NdX-yE-fL3"/>
                             <constraint firstItem="wbk-Ua-h7w" firstAttribute="top" secondItem="m46-db-3Hh" secondAttribute="bottom" id="VnP-wD-4Zl"/>
                             <constraint firstItem="yLJ-dx-EO0" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" id="j1e-jp-FDT"/>
-                            <constraint firstItem="ZVT-fU-Cg0" firstAttribute="top" secondItem="CFc-6p-Nyp" secondAttribute="bottom" id="k5b-Nl-Hza"/>
+                            <constraint firstAttribute="trailing" secondItem="Yay-tU-peJ" secondAttribute="trailing" constant="10" id="mC7-MQ-jTs"/>
                             <constraint firstItem="CFc-6p-Nyp" firstAttribute="left" secondItem="g9h-5V-fvo" secondAttribute="left" id="pkg-T3-3Ff"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addToCartButton" destination="ZVT-fU-Cg0" id="nDx-JY-9pI"/>
-                        <outlet property="addToCartButtonHeightConstraint" destination="OMD-TP-rY0" id="wTD-2Q-TZj"/>
                         <outlet property="descriptionContainerView" destination="CFc-6p-Nyp" id="aMQ-JS-SDl"/>
                         <outlet property="segmentControl" destination="l9X-ae-4TZ" id="yFV-xX-Kgm"/>
                         <outlet property="seperatorView" destination="yLJ-dx-EO0" id="Zn9-cf-l30"/>
                         <outlet property="specificationsContainerView" destination="m46-db-3Hh" id="Iz4-4k-wHT"/>
-                        <segue destination="r4K-gO-BGF" kind="modal" identifier="showAddToCartViewController" id="Ned-FL-dUc"/>
+                        <outlet property="twoButtonCtrl" destination="Yay-tU-peJ" id="9Kv-TU-def"/>
+                        <segue destination="r4K-gO-BGF" kind="modal" identifier="showAddToCartModal" id="Ned-FL-dUc"/>
+                        <segue destination="1MH-zt-PDO" kind="show" identifier="showProductViewController" id="khd-bm-9kJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJc-Iz-HlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2753,11 +2666,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Bl0-eG-ayZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mbD-dk-8nk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="553"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X4C-Il-Tw1">
-                                <rect key="frame" x="0.0" y="20" width="414" height="533"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="534"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -2860,7 +2773,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="addToCartButtonTapped:" destination="Euc-aP-Z3x" eventType="touchUpInside" id="bxD-dd-6iE"/>
                                     <action selector="updateButtonTapped:" destination="J97-sY-HjC" eventType="touchUpInside" id="hW8-dr-rhk"/>
                                 </connections>
                             </button>
@@ -2941,7 +2853,6 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="addToCartButtonTapped:" destination="Euc-aP-Z3x" eventType="touchUpInside" id="djA-Oi-6no"/>
                                             <action selector="updateButtonTapped:" destination="YEo-xI-MK5" eventType="touchUpInside" id="c3h-mD-gkN"/>
                                             <action selector="updateButtonTapped:" destination="J97-sY-HjC" eventType="touchUpInside" id="wgf-Le-dkW"/>
                                         </connections>
@@ -2988,10 +2899,7 @@
         <image name="ArrowLeft" width="48" height="48"/>
         <image name="ProductComment" width="48" height="48"/>
         <image name="app-update" width="185" height="205"/>
-        <image name="arrow_left" width="24" height="24"/>
         <image name="btn_cart" width="22" height="22"/>
-        <image name="buy_now" width="10" height="20"/>
-        <image name="circle_checked" width="24" height="24"/>
         <image name="filtered_list_no_result" width="40" height="40"/>
         <image name="img_emptyCart" width="102" height="92"/>
         <image name="img_navbar_logo" width="83" height="20"/>
@@ -3013,8 +2921,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="qrz-C2-bq8"/>
         <segue reference="hAx-Pw-RUJ"/>
-        <segue reference="Ib5-ij-N9c"/>
-        <segue reference="vMD-eI-z0K"/>
+        <segue reference="Ned-FL-dUc"/>
+        <segue reference="khd-bm-9kJ"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

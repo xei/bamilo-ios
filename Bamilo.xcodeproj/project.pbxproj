@@ -214,6 +214,9 @@
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		6184CDC8216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */; };
+		6184CDCA216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */; };
+		6184CDCC216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */; };
 		6187ABAE207B451600B08EE5 /* Ext+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */; };
 		6189438620D652C9007D6526 /* SellerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438520D652C9007D6526 /* SellerViewControl.swift */; };
 		6189438A20D65541007D6526 /* ProductOldSellerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */; };
@@ -1321,6 +1324,9 @@
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsPurchaseView.swift; sourceTree = "<group>"; };
+		6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsPurchaseControl.swift; sourceTree = "<group>"; };
+		6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TwoButtonsPurchaseView.xib; sourceTree = "<group>"; };
 		6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImage.swift"; sourceTree = "<group>"; };
 		6189438520D652C9007D6526 /* SellerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerViewControl.swift; sourceTree = "<group>"; };
 		6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOldSellerViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -2862,6 +2868,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				6184CDC4216B5B2300A4AD7E /* TwoButtonsPurchaseView */,
 				6192F70920E7C3770048E543 /* ProductReviewCarouselView */,
 				6194224420D7E90200445845 /* ProductVariationView */,
 				61E6EE5E209DCF5A0007ED5F /* Pager */,
@@ -4027,6 +4034,32 @@
 			children = (
 				61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */,
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		6184CDC4216B5B2300A4AD7E /* TwoButtonsPurchaseView */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC6216B5B4D00A4AD7E /* Control */,
+				6184CDC5216B5B4900A4AD7E /* View */,
+			);
+			name = TwoButtonsPurchaseView;
+			sourceTree = "<group>";
+		};
+		6184CDC5216B5B4900A4AD7E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */,
+				6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		6184CDC6216B5B4D00A4AD7E /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -8487,6 +8520,7 @@
 				87B684EB1E49FE0B0042C09F /* ReceiptItemView.xib in Resources */,
 				8757438B1EA60DB9001B518A /* National-72.png in Resources */,
 				875743C91EA60DFD001B518A /* SpecialOffer-72.png in Resources */,
+				6184CDCC216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib in Resources */,
 				61338CF61EACA1690017BB06 /* EmarsysRecommendationMinimalCarouselCollectionViewCell.xib in Resources */,
 				61DA163E1FEE5011001C5071 /* CategoryTableViewCell.xib in Resources */,
 				61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */,
@@ -9077,6 +9111,7 @@
 				6113E2B22055419D00CE20BE /* HPCollectionVC.swift in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */,
+				6184CDCA216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift in Sources */,
 				614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				6170AECB20F9F3C2007A4905 /* SellerList.swift in Sources */,
@@ -9084,6 +9119,7 @@
 				879F88351E51DFB90033FE87 /* CartForm.m in Sources */,
 				CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */,
 				619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */,
+				6184CDC8216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift in Sources */,
 				6147F74B1FB6ED9E000CBA85 /* TourSpotLight.swift in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				61540C822006482300D2F03F /* Ext+Array.swift in Sources */,
