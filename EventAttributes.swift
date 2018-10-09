@@ -193,6 +193,10 @@ public typealias EventAttributeType = [String:Any]
         return self.getCommonAttributes()
     }
     
+    class func shareApp() -> EventAttributeType {
+        return self.getCommonAttributes()
+    }
+    
     class func buyNowTapped(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
