@@ -30,7 +30,7 @@
 
 - (void)initViews {
     [super initViews];
-    [self addSubview:self.addToCartBar];
+    [self addSubview: self.addToCartBar];
     [self.favoriteButton setImage:[UIImage imageNamed:@"btn_delete_saved"] forState:UIControlStateNormal];
     [self.favoriteButton setImage:[UIImage imageNamed:@"btn_delete_saved"] forState:UIControlStateSelected];
 }
@@ -60,7 +60,7 @@
     [self.addToCartBar setXRightAligned:10.f];
     [self setForRTL:self.addToCartBar];
     [self.discountLabel setY:self.priceLine.y];
-    [self.sizeButton setY: self.addToCartBar.y + self.addToCartBar.height/2 - self.sizeButton.height/2];
+    [self.sizeButton setY: self.addToCartBar.y + self.addToCartBar.height / 2 - self.sizeButton.height / 2];
 }
 
 - (void)setForRTL:(UIView *)view {

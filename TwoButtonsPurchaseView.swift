@@ -58,21 +58,25 @@ class TwoButtonsPurchaseView: BaseControlView {
         
         [circleCheckedImageView, leftArrowImageView].forEach { $0.applyTintColor(color: .white) }
         
-        self.wrapperView.applyGradient(colours: [
-            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-            ])
-        self.addToBasketButton.applyGradient(colours: [
-            UIColor(red:0.1, green:0.21, blue:0.37, alpha:1),
-            UIColor(red:0.12, green:0.31, blue:0.56, alpha:1)
-            ])
-        self.buyNowButton.applyGradient(colours: [
-            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-            ])
-        
         self.addToBasketButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         self.wrapperView.layer.cornerRadius = self.frame.height / 2
+        self.wrapperView.clipsToBounds = true
+        
+        //wait for rendering the module
+        Utility.delay(duration: 0.15) {
+            self.wrapperView.applyGradient(colours: [
+                UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+                UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+                ])
+            self.addToBasketButton.applyGradient(colours: [
+                UIColor(red:0.1, green:0.21, blue:0.37, alpha:1),
+                UIColor(red:0.12, green:0.31, blue:0.56, alpha:1)
+                ])
+            self.buyNowButton.applyGradient(colours: [
+                UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+                UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+                ])
+        }
     }
     
     func hideBuyNowAndAddToBasketButtons(animated: Bool) {
