@@ -2219,7 +2219,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="3aG-Ax-hCT"/>
-                            <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" constant="10" id="6ll-dY-1K3"/>
+                            <constraint firstAttribute="bottom" secondItem="1hV-h5-tPH" secondAttribute="bottom" constant="10" id="6ll-dY-1K3"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="top" secondItem="dzF-yr-ery" secondAttribute="top" constant="15" id="Hdx-6m-NbZ"/>
                             <constraint firstAttribute="right" secondItem="1hV-h5-tPH" secondAttribute="right" constant="10" id="O2m-k5-rBz"/>
                             <constraint firstItem="1hV-h5-tPH" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" constant="10" id="Qpb-je-S5r"/>

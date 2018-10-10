@@ -58,11 +58,14 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        let currentContentInset = self.collectionView.contentInset
-        self.collectionView.contentInset = UIEdgeInsetsMake(currentContentInset.top,
-                                                            currentContentInset.left,
-                                                            currentContentInset.bottom + submitButtonHightConstraint.constant + 10,
-                                                            currentContentInset.right)
+        self.collectionView.contentInset.bottom = self.submitButtonHightConstraint.constant + 15
+        
+        submitButton.applyGradient(colours: [
+            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+        ])
+        submitButton.layer.cornerRadius = submitButtonHightConstraint.constant / 2
+        submitButton.clipsToBounds = true
     }
     
     deinit {
@@ -143,7 +146,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.collectionView.frame.size
+        return CGSize(width: self.collectionView.frame.size.width, height: self.collectionView.frame.size.height - self.submitButtonHightConstraint.constant - 15)
     }
     
     private func updateView(by survey: ReviewSurvery) {
