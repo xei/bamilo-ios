@@ -2184,19 +2184,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hV-h5-tPH" customClass="OrangeButton">
-                                <rect key="frame" x="0.0" y="691" width="414" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="ae1-lH-lLu"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
-                                <state key="normal" title="تایید"/>
-                                <connections>
-                                    <action selector="submitButtonTapped:" destination="fLe-zv-MEV" eventType="touchUpInside" id="59f-oa-sEl"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pzc-hC-CNZ">
-                                <rect key="frame" x="0.0" y="51" width="414" height="640"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="685"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KsG-uT-q0X" customClass="AnimatedCollectionViewLayout" customModule="AnimatedCollectionViewLayout">
                                     <size key="itemSize" width="50" height="50"/>
@@ -2206,6 +2195,17 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hV-h5-tPH" customClass="OrangeButton">
+                                <rect key="frame" x="10" y="680" width="394" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="ae1-lH-lLu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="15"/>
+                                <state key="normal" title="تایید"/>
+                                <connections>
+                                    <action selector="submitButtonTapped:" destination="fLe-zv-MEV" eventType="touchUpInside" id="59f-oa-sEl"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="aQb-4C-eHr" customClass="CHIPageControlJaloro" customModule="Bamilo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="15" width="414" height="6"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2219,15 +2219,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="3aG-Ax-hCT"/>
-                            <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" id="6ll-dY-1K3"/>
+                            <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="1hV-h5-tPH" secondAttribute="bottom" constant="10" id="6ll-dY-1K3"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="top" secondItem="dzF-yr-ery" secondAttribute="top" constant="15" id="Hdx-6m-NbZ"/>
-                            <constraint firstAttribute="right" secondItem="1hV-h5-tPH" secondAttribute="right" id="O2m-k5-rBz"/>
-                            <constraint firstItem="1hV-h5-tPH" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="Qpb-je-S5r"/>
+                            <constraint firstAttribute="right" secondItem="1hV-h5-tPH" secondAttribute="right" constant="10" id="O2m-k5-rBz"/>
+                            <constraint firstItem="1hV-h5-tPH" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" constant="10" id="Qpb-je-S5r"/>
                             <constraint firstAttribute="right" secondItem="Pzc-hC-CNZ" secondAttribute="right" id="SSg-TU-d6m"/>
                             <constraint firstAttribute="bottom" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="715" id="aPe-xt-3OL"/>
-                            <constraint firstItem="1hV-h5-tPH" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" id="b6A-5v-u4q"/>
                             <constraint firstItem="aQb-4C-eHr" firstAttribute="centerX" secondItem="dzF-yr-ery" secondAttribute="centerX" id="evb-vW-Waz"/>
                             <constraint firstItem="Pzc-hC-CNZ" firstAttribute="top" secondItem="aQb-4C-eHr" secondAttribute="bottom" constant="30" id="fyZ-Qd-FyE"/>
+                            <constraint firstItem="99h-Ky-lOg" firstAttribute="top" secondItem="Pzc-hC-CNZ" secondAttribute="bottom" id="lxh-RU-RUF"/>
                             <constraint firstItem="Pzc-hC-CNZ" firstAttribute="left" secondItem="dzF-yr-ery" secondAttribute="left" id="sWb-b1-kjf"/>
                         </constraints>
                     </view>
@@ -2237,6 +2237,7 @@
                         <outlet property="pagerControl" destination="aQb-4C-eHr" id="5YF-wQ-Z1K"/>
                         <outlet property="submitButton" destination="1hV-h5-tPH" id="9sh-cr-cPc"/>
                         <outlet property="submitButtonBottomConstraint" destination="6ll-dY-1K3" id="D8b-nK-CV5"/>
+                        <outlet property="submitButtonHightConstraint" destination="ae1-lH-lLu" id="Iqm-f3-7aU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9oh-c1-tHn" userLabel="First Responder" sceneMemberID="firstResponder"/>

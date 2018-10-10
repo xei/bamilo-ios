@@ -13,6 +13,7 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
 
     @IBOutlet weak private var submitButton: OrangeButton!
     @IBOutlet weak private var collectionView: UICollectionView!
+    @IBOutlet weak private var submitButtonHightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var pagerControl: CHIPageControlJaloro!
     @IBOutlet weak private var submitButtonBottomConstraint: NSLayoutConstraint!
     
@@ -56,6 +57,12 @@ class ReviewSurveyViewController: BaseViewController, UICollectionViewDelegate, 
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        let currentContentInset = self.collectionView.contentInset
+        self.collectionView.contentInset = UIEdgeInsetsMake(currentContentInset.top,
+                                                            currentContentInset.left,
+                                                            currentContentInset.bottom + submitButtonHightConstraint.constant + 10,
+                                                            currentContentInset.right)
     }
     
     deinit {
