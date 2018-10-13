@@ -138,7 +138,15 @@ import UIKit
         option33.title = "نظر سوم من این است که "
         option33.id = 125
         
-        question30.options = [option31, option32, option33]
+        let option34 = SurveyQuestionOption()
+        option34.title = "نظر سوم من این است که "
+        option34.id = 1254
+        
+        let option35 = SurveyQuestionOption()
+        option35.title = "نظر سوم من این است که "
+        option35.id = 1255
+        
+        question30.options = [option31, option32, option33, option34, option35]
         question30.id = 12342
         
         let question33 = SurveyQuestion()
