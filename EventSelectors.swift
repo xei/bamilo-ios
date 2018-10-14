@@ -86,7 +86,9 @@ import Foundation
     class func suggestionTappedSelector() -> Selector {
         return Selector(("searchSuggestionTappedWithAttributes:"))
     }
-    
+    class func shareAppSelector() -> Selector {
+        return Selector(("shareAppWithAttributes:"))
+    }
     class func buyNowTappedSelector() -> Selector {
         return Selector(("buyNowTappedWithAttributes:"))
     }

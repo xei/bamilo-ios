@@ -19,20 +19,15 @@ extension UIImageView: DisplaceableView {}
     var productSku: String?
     var animator: ZFModalTransitionAnimator?
     
+    @IBOutlet weak private var twoButtonViewControl: TwoButtonsPurchaseControl!
     @IBOutlet weak private var tableView: UITableView!
-    @IBOutlet weak var bottomButtonsWrapperView: UIView!
-    @IBOutlet weak private var bottomButtonsWrapperHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var buyNowButton: IconButton!
-    @IBOutlet weak private var addToCartButton: IconButton!
     @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var circleCheckedImageView: UIImageView!
-    @IBOutlet weak private var leftArrowImageView: UIImageView!
+    @IBOutlet weak private var twoButtonsHightConstraint: NSLayoutConstraint!
     
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
     private var recommendItems: [RecommendItem]?
     private var calculatedDeliveryTimeMessage: String?
-    private var shuouldGoToCardAfterAddToCard: Bool = false
     
     enum CellType {
         case slider
@@ -73,31 +68,8 @@ extension UIImageView: DisplaceableView {}
         self.tableView.clipsToBounds = true
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomButtonsWrapperHeightConstraint.constant, right: 0)
-        [addToCartButton, buyNowButton].forEach {
-            $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
-            $0?.positionStatus = 1
-        }
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: twoButtonsHightConstraint.constant, right: 0)
         
-        [circleCheckedImageView, leftArrowImageView].forEach { $0.applyTintColor(color: .white) }
-        
-        self.bottomButtonsWrapperView.layer.cornerRadius =
-        bottomButtonsWrapperHeightConstraint.constant / 2
-        
-        self.bottomButtonsWrapperView.applyGradient(colours: [
-            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-        ])
-        self.addToCartButton.applyGradient(colours: [
-            UIColor(red:0.1, green:0.21, blue:0.37, alpha:1),
-            UIColor(red:0.12, green:0.31, blue:0.56, alpha:1)
-            ])
-        self.buyNowButton.applyGradient(colours: [
-            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-        ])
-        
-        self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         // remove extra white gaps between sections & top and bottom of tableview
         self.tableView.sectionFooterHeight = 0
         
@@ -114,6 +86,10 @@ extension UIImageView: DisplaceableView {}
         }
         
         self.tabBarController?.tabBar.isHidden = true
+        
+        self.twoButtonViewControl.product = product
+        self.twoButtonViewControl.viewCtrl = self
+        self.twoButtonViewControl.purchaseTrackingInfo = purchaseTrackingInfo
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,15 +128,7 @@ extension UIImageView: DisplaceableView {}
         }
     }
     
-    private func hideButtons(animated: Bool) {
-        if animated {
-            self.addToCartButton.hide()
-            self.buyNowButton.hide()
-        } else {
-            self.addToCartButton.isHidden = true
-            self.buyNowButton.isHidden = true
-        }
-    }
+    
     
     private func getContent(completion: ((Bool)-> Void)? = nil) {
         ProductDataManager.sharedInstance.getProductDetailInfo(self, sku: product?.sku ?? productSku ??  "") { (data, error) in
@@ -227,6 +195,7 @@ extension UIImageView: DisplaceableView {}
     
     private func updateViewByProduct(product: NewProduct) {
         self.product = product
+        self.twoButtonViewControl.product = product
         self.title = product.name
         RIRecentlyViewedProductSku.add(toRecentlyViewed: product, successBlock: nil, andFailureBlock: nil)
         ThreadManager.execute {
@@ -272,60 +241,6 @@ extension UIImageView: DisplaceableView {}
             callBack?(succes)
         }
     }
-
-    
-    @IBAction func buyNowButtonTapped(_ sender: Any) {
-        shuouldGoToCardAfterAddToCard = true
-        prepareToAddToCart()
-    }
-    
-    
-    @IBAction func addToCartButtonTapped(_ sender: Any) {
-        shuouldGoToCardAfterAddToCard = false
-        prepareToAddToCart()
-    }
-    
-    @IBAction func gotoCartButtonTapped(_ sender: Any) {
-        MainTabBarViewController.showCart()
-    }
-    
-    private func prepareToAddToCart() {
-        if let variations = product?.variations, variations.count >= 1 {
-            let sizeVariations = variations.filter { $0.type == .size }.first
-            let selectedSize = sizeVariations?.products?.filter { $0.isSelected }.first
-            if let selectedSizeSimpleSku = selectedSize?.simpleSku {
-                requestAddToCart(simpleSku: selectedSizeSimpleSku, inViewCtrl: self)
-                return
-            } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0 {
-                self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
-                return
-            }
-        }
-        
-        if let simpleSku = self.product?.simpleSku {
-            requestAddToCart(simpleSku: simpleSku, inViewCtrl: self)
-        }
-    }
-    
-    private func requestAddToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, inViewCtrl: T) {
-        if let productEntity = self.product {
-            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: inViewCtrl) { (success, error) in
-                if success {
-                    if let info = self.purchaseTrackingInfo, success {
-                        PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
-                    }
-                    
-                    if self.shuouldGoToCardAfterAddToCard {
-                        MainTabBarViewController.showCart()
-                        TrackerManager.postEvent(selector: EventSelectors.buyNowTappedSelector(), attributes: EventAttributes.buyNowTapped(product: productEntity, screenName: self.getScreenName(), success: true))
-                        //Track BuyNow action
-                    } else {
-                        self.hideButtons(animated: true)
-                    }
-                }
-            }
-        }
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
@@ -333,7 +248,6 @@ extension UIImageView: DisplaceableView {}
             prepareAddToCartView(addToCartViewController: addToCartViewController)
         } else if segueName == "showProductMoreInfoViewController", let viewCtrl = segue.destination as? ProductMoreInfoViewController {
             viewCtrl.selectedViewType = sender as? MoreInfoSelectedViewType ?? .description
-            viewCtrl.delegate = self
             viewCtrl.product = product
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showProductReviewListViewController", let viewCtrl = segue.destination as? ProductReviewListViewController {
@@ -555,10 +469,10 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
 //MARK: - AddToCartViewControllerDelegate
 extension ProductDetailViewController: AddToCartViewControllerDelegate {
     func submitAddToCartSimple(product: NewProduct, refrence: UIViewController) {
-        self.requestAddToCart(simpleSku: product.simpleSku ?? product.sku, inViewCtrl: self)
+        self.twoButtonViewControl.requestAddToCart(simpleSku: product.simpleSku ?? product.sku, inViewCtrl: self)
     }
     
-    func didSelectOtherVariation(product: NewProduct, completionHandler: @escaping ((NewProduct) -> Void)) {
+    func didSelectOtherVariation(product: NewProduct, source: AddToCartViewController,  completionHandler: @escaping ((NewProduct) -> Void)) {
         //if we are in the same page of product
         if let sku = self.product?.sku, (product.sku == sku) { return }
         if let sku = self.productSku, product.sku == sku { return }
@@ -638,17 +552,17 @@ extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate
 }
 
 //MARK: - ProductMoreInfoViewControllerDelegate
-extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
-    func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
-        shuouldGoToCardAfterAddToCard = true
-        self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
-    }
-    
-    func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
-        self.shuouldGoToCardAfterAddToCard = true
-        prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
-    }
-}
+//extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
+//    func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
+////        shuouldGoToCardAfterAddToCard = true
+////        self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
+//    }
+//    
+//    func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
+////        self.shuouldGoToCardAfterAddToCard = true
+////        prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
+//    }
+//}
 
 
 //MARK: - SellerViewDelegate

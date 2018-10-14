@@ -10,7 +10,7 @@ import UIKit
 
 protocol AddToCartViewControllerDelegate: class {
     func submitAddToCartSimple(product: NewProduct, refrence: UIViewController)
-    func didSelectOtherVariation(product: NewProduct, completionHandler: @escaping ((_ prodcut: NewProduct)->Void))
+    func didSelectOtherVariation(product: NewProduct, source: AddToCartViewController, completionHandler: @escaping ((_ prodcut: NewProduct)->Void))
     func didSelectSizeVariationFromAddToCartView(product: NewProduct)
 }
 
@@ -115,9 +115,9 @@ extension AddToCartViewController: ProductVariationViewDelegate {
     }
     
     func didSelectOtherVariety(product: NewProduct) {
-        self.delegate?.didSelectOtherVariation(product: product, completionHandler: { (productInfo) in
+        self.delegate?.didSelectOtherVariation(product: product, source: self) { (productInfo) in
             self.update(product: productInfo)
-        })
+        }
     }
     
 }

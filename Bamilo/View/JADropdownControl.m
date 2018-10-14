@@ -30,7 +30,7 @@
     if (!VALID(_dropdownImageView, UIImageView)) {
         UIImage *image = [UIImage imageNamed:@"ic_dropdown"];
         _dropdownImageView = [[UIImageView alloc] initWithImage:image];
-        [_dropdownImageView setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+        [_dropdownImageView setFrame:CGRectMake(0, 0, 15, 15)];
         [self addSubview:_dropdownImageView];
     }
     return _dropdownImageView;
