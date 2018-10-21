@@ -1,23 +1,23 @@
+////
+////  AuthenticationBaseViewController.h
+////  Bamilo
+////
+////  Created by Narbeh Mirzaei on 2/12/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  AuthenticationBaseViewController.h
-//  Bamilo
+//#import "BaseViewController.h"
 //
-//  Created by Narbeh Mirzaei on 2/12/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
+//    AuthenticationStatusCanceled,
+//    AuthenticationStatusSigninFinished,
+//    AuthenticationStatusSignupFinished
+//};
 //
-
-#import "BaseViewController.h"
-
-typedef NS_ENUM(NSUInteger, AuthenticationStatus) {
-    AuthenticationStatusCanceled,
-    AuthenticationStatusSigninFinished,
-    AuthenticationStatusSignupFinished
-};
-
-typedef void(^AuthenticationCompletion)(AuthenticationStatus status);
-
-@interface AuthenticationBaseViewController : BaseViewController
-
-@property (copy, nonatomic) AuthenticationCompletion completion;
-
-@end
+////typedef void(^AuthenticationCompletion)(AuthenticationStatus status);
+//
+//@interface AuthenticationBaseViewController : BaseViewController
+//
+////@property (copy, nonatomic) AuthenticationCompletion completion;
+////
+//@end

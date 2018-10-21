@@ -8,16 +8,31 @@
 
 import UIKit
 
+protocol FormButtonTableViewCellDelegate: class {
+    func buttonTapped(for target: AuthenticationViewMode)
+}
+
 class FormButtonTableViewCell: BaseTableViewCell {
 
     @IBOutlet weak private var buttonHightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var button: UIButton!
+    weak var delegate: FormButtonTableViewCellDelegate?
+    var tagretMode: AuthenticationViewMode = .signUp
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.button.layer.cornerRadius = buttonHightConstraint.constant / 2
         self.button.clipsToBounds = true
         self.button.applyBorder(width: 1, color: .gray)
-        self.button.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: .gray)
+        self.button.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: .gray)
+    }
+    
+    func setTitle(title: String) {
+        self.button.setTitle(title, for: .normal)
+    }
+    
+    @IBAction func buttonTapped(_ sender: Any) {
+        self.delegate?.buttonTapped(for: tagretMode)
     }
     
     

@@ -84,7 +84,7 @@ static NotificationBarView *instance;
     
     float spaceForCurrentView = floor(viewController.view.size.width / basicSpaceOfOneLine);
     int actualNumberOfLines = ceilf(self.textLabel.text.length / (spaceForCurrentView * basicNumberOfCharsPerLine));
-    CGFloat startY = 0;
+    CGFloat startY = [[UIApplication sharedApplication] statusBarFrame].size.height;
     if (viewController.extendedLayoutIncludesOpaqueBars) {
         startY = viewController.navigationController.navigationBar.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
     }

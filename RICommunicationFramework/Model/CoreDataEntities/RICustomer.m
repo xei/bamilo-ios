@@ -157,22 +157,22 @@
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
         if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
-            [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
-                if (error == nil) {
-                    if (returnBlock != nil) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(YES);
-                        });
-                    }
-                } else {
-                    [Utility resetUserBehaviours];
-                    if (returnBlock != nil) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO);
-                        });
-                    }
-                }
-            }];
+//            [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
+//                if (error == nil) {
+//                    if (returnBlock != nil) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            returnBlock(YES);
+//                        });
+//                    }
+//                } else {
+//                    [Utility resetUserBehaviours];
+//                    if (returnBlock != nil) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            returnBlock(NO);
+//                        });
+//                    }
+//                }
+//            }];
             
             //Set auto logged in customer
             [EmarsysPredictManager setCustomer:customerObject];

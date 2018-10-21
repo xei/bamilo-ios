@@ -261,10 +261,7 @@
     if ([self showAndCheckIfUserAlreadyLoggedIn]) {
         return;
     }
-
-    AuthenticationContainerViewController *authenticationViewController = (AuthenticationContainerViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationContainerViewController" resetCache:YES];
-    authenticationViewController.startWithSignUpViewController = YES;
-    [self pushViewController:authenticationViewController animated:YES];
+    [self pushAuthenticationViewController:nil byAniamtion:NO byForce:YES];
 }
 
 - (BOOL)showAndCheckIfUserAlreadyLoggedIn {
@@ -592,34 +589,12 @@
 }
 
 - (void)pushAuthenticationViewController:(void (^)(void))completion byAniamtion:(BOOL)animation byForce:(BOOL)force {
-    AuthenticationCompletion _authenticationCompletion = ^(AuthenticationStatus status) {
-        switch (status) {
-            case AuthenticationStatusSigninFinished:
-                [self popViewControllerAnimated:NO];
-                if(completion) completion();
-                break;
-            case AuthenticationStatusSignupFinished:
-//                if ([[MainTabBarViewController topViewController] isKindOfClass:[PhoneVerificationViewController class]]) {
-//                    [self popWithStep:2 animated:NO];
-//                } else if ([[MainTabBarViewController topViewController] isKindOfClass:[SignUpViewController class]]) {
-//                    [self popViewControllerAnimated:NO];
-//                }
-                if(completion) completion();
-                break;
-            default:
-                break;
-        }
-    };
     
     AuthenticationViewController *authViewController = (AuthenticationViewController *)[[ViewControllerManager sharedInstance] loadViewController:@"Authentication" nibName:@"AuthenticationViewController" resetCache:YES];
     self.authenticationModalAnimation = [Utility createModalBounceAnimatorWithViewCtrl:authViewController];
     [self.authenticationModalAnimation setDragable:NO];
     authViewController.transitioningDelegate = self.authenticationModalAnimation;
-//    authViewController.fromSideMenu = NO;
-//    authViewController.isForcedToLogin = force;
-//    authViewController.signInViewController.completion = _authenticationCompletion;
-//    authViewController.signUpViewController.completion = _authenticationCompletion;
-//    [self pushViewController:authViewController animated:animation];
+    authViewController.successCallBack = completion;
     [[MainTabBarViewController sharedInstance] presentViewController:authViewController animated:YES completion:nil];
 }
 

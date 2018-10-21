@@ -48,24 +48,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.tableView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40))
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -40, 0)
         
-        
+        CurrentUserManager.loadLocal()
         self.updateTableViewDataSource()
-        self.tableView.reloadData()
         
         //start tour if it's necessary
         TourManager.shared.onBoard(presenter: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if self.viewWillApearedOnceOrMore {
-            self.updateTableViewDataSource()
-            self.tableView.reloadData()
-        }
         
-        CurrentUserManager.loadLocal()
-        self.viewWillApearedOnceOrMore = true
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByLogin(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByLogin(notification:)), name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -197,23 +187,34 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func logoutUser() {
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
-            self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT
             TrackerManager.postEvent(
                 selector: EventSelectors.logoutEventSelector(),
                 attributes: EventAttributes.logout(success: true)
             )
             
-            //Reset some actions
-            EmarsysPredictManager.userLoggedOut()
-            CurrentUserManager.cleanFromDB()
-            RICart.sharedInstance().cartEntity?.cartItems = []
-            RICart.sharedInstance().cartEntity?.cartCount = nil
-            LocalSearchSuggestion().clearAllHistories()
-            
-            UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
+            self.cleanAllUserInformations()
+            self.bind(data, forRequestId: 0)
         }
-        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
+    }
+    
+    private func cleanAllUserInformations() {
+        UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
+        EmarsysPredictManager.userLoggedOut()
+        CurrentUserManager.cleanFromDB()
+        RICart.sharedInstance().cartEntity?.cartItems = []
+        RICart.sharedInstance().cartEntity?.cartCount = nil
+        LocalSearchSuggestion().clearAllHistories()
+        RICommunicationWrapper.deleteSessionCookie()
+        ViewControllerManager.sharedInstance().clearCache()
+    }
+    
+    @objc func updateByLogin(notification: Notification) {
+        ThreadManager.execute {
+            CurrentUserManager.loadLocal()
+            self.updateTableViewDataSource()
+            self.tableView.reloadData()
+        }
     }
     
     @objc func showFAQ() {
@@ -273,13 +274,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
+        self.updateTableViewDataSource()
+        self.tableView.reloadData()
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
         
-        RICommunicationWrapper.deleteSessionCookie()
-        ViewControllerManager.sharedInstance().clearCache()
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
     }
     
     //MARK: - DataTrackerProtocol & TourPresenter

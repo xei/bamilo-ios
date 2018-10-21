@@ -121,8 +121,9 @@ class SavingUser: Object {
     }()
     
     static func loadLocal() {
-        if let userID = self.user.userID, userID != 0 { return }
+        if let userID = self.user.userID, userID != 0 { return } //no need to continue
         self.user.userID = UInt64(self.shareUser?.userID ?? 0)
+        if let userID = self.user.userID, userID == 0 { return } //no need to continue
         self.user.firstName = self.shareUser?.firstName
         self.user.lastName = self.shareUser?.lastName
         self.user.gender = Gender(rawValue: self.shareUser?.gender ?? "")
@@ -140,8 +141,12 @@ class SavingUser: Object {
         if let user = self.shareUser, user.userID != 0 {
             try! realm.write {
                 self.realm.delete(user)
+                self.shareUser = nil
             }
         }
+        
+        self.user = User()
+        self.user.userID = 0
     }
     
     //TODO: the plainPass param should be removed

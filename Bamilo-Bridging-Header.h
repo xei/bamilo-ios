@@ -51,7 +51,6 @@
 
 #import "JABaseViewController.h"
 #import "BaseViewController.h"
-#import "AuthenticationBaseViewController.h"
 
 #import "BaseTableViewCell.h"
 #import "PlainTableViewHeaderCell.h"
@@ -73,4 +72,3 @@
 #import "ZFModalTransitionAnimator.h"
 #import "EmarsysRecommendationGridWidget.h"
 #import "AddressList.h"
-

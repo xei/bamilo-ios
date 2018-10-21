@@ -96,6 +96,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - ObjectMapper (3.3.0)
+  - PinCodeTextField (0.1.0)
   - Protobuf (3.6.1)
   - Pushwoosh (5.9.1)
   - RAlertView (0.1.1):
@@ -138,6 +139,7 @@ DEPENDENCIES:
   - M13Checkbox
   - MobileEngageSDK
   - ObjectMapper
+  - PinCodeTextField
   - Pushwoosh
   - RAlertView
   - RealmSwift
@@ -181,6 +183,7 @@ SPEC REPOS:
     - MobileEngageSDK
     - nanopb
     - ObjectMapper
+    - PinCodeTextField
     - Protobuf
     - Pushwoosh
     - RAlertView
@@ -226,6 +229,7 @@ SPEC CHECKSUMS:
   MobileEngageSDK: f14d74940c5f62f8b704cc9238aa72b038d44dbb
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  PinCodeTextField: a3c39be58bde3ed1d6888d0fb1d88b0a4a2277cc
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Pushwoosh: 38e31c3da27ba6c072f8b96884fe3660bd16cd2d
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
@@ -238,6 +242,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
 
-PODFILE CHECKSUM: 514b438d67ee2f0b65ed075fcecba2e0428f32a9
+PODFILE CHECKSUM: 1fd7fd0ba02cb4291f45f95ae8e50d719b6f966f
 
 COCOAPODS: 1.5.3

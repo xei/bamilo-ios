@@ -56,6 +56,14 @@ extension String {
         return attributeString
     }
     
+    static func phoneRegx() -> String {
+        return "^(((\\+|00)98)|0)?9[01239]\\d{8}$"
+    }
+    
+    static func emailRegx() -> String {
+        return "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
+    }
+    
     //MARK: Private Methods
     private func convertSingleCharTo(character: String, language: LocalLang) -> String {
         let formatter: NumberFormatter = NumberFormatter()

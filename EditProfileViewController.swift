@@ -13,7 +13,7 @@ struct EditProfileDataSource {
     var warningMsg: String?
 }
 
-class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol, PhoneChangeViewControllerDelegate {
+class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol {
 
     @IBOutlet weak var tableview: UITableView!
     private var formController: FormViewControl?
@@ -21,6 +21,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     private var phoneFieldModel : FormItemModel?
     private var bankCartFieldModel : FormItemModel?
     private var previousBankCartNumber: String?
+    private var animator: ZFModalTransitionAnimator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             email.disabled = true
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone
-            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard]
+            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard, "submit"]
         }
         self.formController?.setupTableView()
         self.getContent()
@@ -105,24 +106,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     func fieldHasBeenFocuced(_ field: InputTextFieldControl!, inFieldIndex fieldIndex: UInt) {
         if field.model == self.phoneFieldModel {
             field.input.textField.resignFirstResponder()
-            self.performSegue(withIdentifier: "showPhoneChangeViewController", sender: nil)
-        }
-    }
-    
-    //MARK: - DataServiceProtocol
-    func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
-            ThreadManager.execute(onMainThread: {
-                self.updateFormWithCustomer(customer: customer)
-                if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
-                    self.setHeaderMessage(message: warningMessage)
-                }
-            })
-        } else if rid == 1 {
-            if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
-                self.navigationController?.popViewController(animated: true)
-                viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
-            }
+            self.performSegue(withIdentifier: "presentPhoneChangeViewController", sender: nil)
         }
     }
     
@@ -146,6 +130,23 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         self.tableview.tableHeaderView = headerView
     }
     
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+            ThreadManager.execute(onMainThread: {
+                self.updateFormWithCustomer(customer: customer)
+                if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
+                    self.setHeaderMessage(message: warningMessage)
+                }
+            })
+        } else if rid == 1 {
+            if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+                self.navigationController?.popViewController(animated: true)
+                viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
+            }
+        }
+    }
+
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
         self.getContent { (success) in
             callBack(success)
@@ -222,17 +223,25 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         return STRING_PROFILE
     }
     
-    //MARK: - PhoneChangeViewControllerDelegate
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "presentPhoneChangeViewController", let athenticationViewCtrl = segue.destination as? AuthenticationViewController {
+            athenticationViewCtrl.viewMode = .changePhone
+            if animator == nil {
+                animator = Utility.createModalBounceAnimator(viewCtrl: athenticationViewCtrl)
+            }
+            athenticationViewCtrl.delegate = self
+            athenticationViewCtrl.transitioningDelegate = animator
+            athenticationViewCtrl.modalPresentationStyle = .overFullScreen
+        }
+    }
+}
+
+//MARK: - PhoneChangeViewControllerDelegate
+extension EditProfileViewController: AuthenticationViewControllerDelegate {
     func successfullyHasChangedPhone(phone: String) {
         self.phoneFieldModel?.inputTextValue = phone
         self.tableview.tableHeaderView = nil
         self.formController?.refreshView()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let segueName = segue.identifier
-        if segueName == "showPhoneChangeViewController", let navigationViewCtrl = segue.destination as? UINavigationController, let phoneChangeViewCtrl = navigationViewCtrl.viewControllers.first as? PhoneChangeViewController {
-            phoneChangeViewCtrl.delegate = self
-        }
     }
 }

@@ -48,7 +48,7 @@ import Crashlytics
         
         //wait for tabbar to be rendered
         Utility.delay(duration: 0.1) {
-//            self.requestTheAppConfiguration()
+            self.requestTheAppConfiguration()
         }
     }
     
@@ -89,6 +89,13 @@ import Crashlytics
     
     //MARk: - UITabBarControllerDelegate
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        CurrentUserManager.loadLocal()
+        if let rootViewController = (viewController as? JACenterNavigationController)?.viewControllers.first, rootViewController.isKind(of: WishListViewController.self), !CurrentUserManager.isUserLoggedIn() {
+            MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
+                MainTabBarViewController.showWishList()
+            })
+            return false
+        }
         return true
     }
     

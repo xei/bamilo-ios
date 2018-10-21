@@ -11,20 +11,14 @@ import Foundation
 class AuthenticationDataManager: DataManagerSwift {
     static let sharedInstance = AuthenticationDataManager()
 
-    func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
-        
-        let params : [String: String] = [
-            "login[email]" : username,
-            "login[password]" : password
-        ]
-        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGIN_CUSTOMER, params: params, type: .foreground) { (responseType, data, errorMessages) in
+    func loginUser(_ target:DataServiceProtocol?, fields:[String : String], completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_LOGIN_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
            self.processResponse(responseType, aClass: CustomerEntity.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
     func signupUser(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
         fields["customer[phone_prefix]"] = "100"
-//        let customerPassword = fields["customer[password]"]
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_REGISTER_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: CustomerEntity.self, data: data, errorMessages: errorMessages, completion: completion)
         }

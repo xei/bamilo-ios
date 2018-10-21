@@ -73,7 +73,7 @@
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    [self.formController.formModelList addObjectsFromArray:@[ addressHeader, region, city, vicinity, address, postalCode ]];
+    [self.formController.formModelList addObjectsFromArray:@[ addressHeader, region, city, vicinity, address, postalCode, @"submit" ]];
     
     //ADDRESS - USER INFO SECTION
     FormHeaderModel *personalInfoHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_RECIPIENT_INFO];

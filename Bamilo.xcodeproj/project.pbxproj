@@ -428,7 +428,6 @@
 		61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466F201DC044000141FA /* EditProfileViewController.swift */; };
 		61FC4673201F3CCC000141FA /* CMSTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */; };
 		61FC4675201F4042000141FA /* CMSTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FC4674201F4042000141FA /* CMSTableViewHeader.xib */; };
-		61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */; };
 		61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FC467C201F75BF000141FA /* BaseNavigationController.m */; };
 		61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCF0811FD69DF900084872 /* Ext+Error.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
@@ -441,6 +440,12 @@
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
+		791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */; };
+		791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */; };
+		79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B02FB12172FE0E009D51F8 /* FormCustomField.m */; };
+		79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */; };
+		79F743B521771BB4004D7155 /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B421771BB4004D7155 /* ChangePassViewController.swift */; };
+		79FEC0AD2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */; };
 		8702FBB61E98E720001D1AA9 /* LoginEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB51E98E720001D1AA9 /* LoginEvent.m */; };
 		8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB91E98FE3A001D1AA9 /* EmailUtility.m */; };
 		8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBBD1E9901AE001D1AA9 /* EventFactory.m */; };
@@ -1582,7 +1587,6 @@
 		61FC466F201DC044000141FA /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSTableViewHeader.swift; sourceTree = "<group>"; };
 		61FC4674201F4042000141FA /* CMSTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CMSTableViewHeader.xib; sourceTree = "<group>"; };
-		61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
 		61FC467B201F75BF000141FA /* BaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
 		61FC467C201F75BF000141FA /* BaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		61FCF0811FD69DF900084872 /* Ext+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Error.swift"; sourceTree = "<group>"; };
@@ -1597,6 +1601,13 @@
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
+		791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLinkButtonTableViewCell.swift; sourceTree = "<group>"; };
+		791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormLinkButtonTableViewCell.xib; sourceTree = "<group>"; };
+		79B02FB02172FE0E009D51F8 /* FormCustomField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormCustomField.h; sourceTree = "<group>"; };
+		79B02FB12172FE0E009D51F8 /* FormCustomField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormCustomField.m; sourceTree = "<group>"; };
+		79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
+		79F743B421771BB4004D7155 /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassViewController.swift; sourceTree = "<group>"; };
+		79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthenticationViewCtrl.swift; sourceTree = "<group>"; };
 		8702FBB41E98E720001D1AA9 /* LoginEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginEvent.h; sourceTree = "<group>"; };
 		8702FBB51E98E720001D1AA9 /* LoginEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginEvent.m; sourceTree = "<group>"; };
 		8702FBB81E98FE3A001D1AA9 /* EmailUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailUtility.h; sourceTree = "<group>"; };
@@ -3384,7 +3395,7 @@
 		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				61A2FE3E2168FE640041645B /* New Group */,
+				79FEC0AB2175A066008A69F1 /* Authentications */,
 				6194224020D7E67700445845 /* ProductDetailView */,
 				61B2C7FB1F9CA42300930435 /* OrderDetail */,
 				6157A3DD1F8376B700B8D501 /* Home */,
@@ -3401,18 +3412,12 @@
 				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
 				6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */,
 				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
-				61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */,
 				6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */,
 				614927BE20EBAD5200B16B27 /* ProductReviewListViewController.swift */,
 				61BB83F920F0B24A00758F30 /* SubmitProductReviewViewController.swift */,
 				61813B8A20FB2202002E9F46 /* OtherSellerViewController.swift */,
 				61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */,
 				61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */,
-				612B5E872158CBD800751E36 /* AuthenticationViewController.swift */,
-				612B5E89215A20B800751E36 /* SignInViewController.swift */,
-				612B5E8B215A20C500751E36 /* SignUpViewController.swift */,
-				612B5E8D215A43EE00751E36 /* ForgetPassViewController.swift */,
-				612B5E8F215A44A500751E36 /* PhoneVerifyViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -4493,16 +4498,10 @@
 			name = DailyDealsCollectionViewCell;
 			sourceTree = "<group>";
 		};
-		61A2FE3E2168FE640041645B /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
 		61A2FE3F216A56730041645B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				791856BF21745AF400E05A26 /* FormLinkButtonTableViewCell */,
 				61A2FE40216A567F0041645B /* FormButtonTableViewCell */,
 			);
 			name = Authentication;
@@ -4924,6 +4923,7 @@
 		61CBA0461E51D169005673F7 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				79B02FAF2172FDBB009D51F8 /* FormCustomFiled */,
 				87EA03181E6D6F8700B1E062 /* FormHeaderTableViewCell */,
 				61CBA04C1E51D563005673F7 /* FormItem */,
 			);
@@ -5458,6 +5458,39 @@
 				CEED472A1A7B973B006D9CE7 /* JAPDVBundleSingleItem.xib */,
 			);
 			name = Bundles;
+			sourceTree = "<group>";
+		};
+		791856BF21745AF400E05A26 /* FormLinkButtonTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */,
+				791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */,
+			);
+			name = FormLinkButtonTableViewCell;
+			sourceTree = "<group>";
+		};
+		79B02FAF2172FDBB009D51F8 /* FormCustomFiled */ = {
+			isa = PBXGroup;
+			children = (
+				79B02FB02172FE0E009D51F8 /* FormCustomField.h */,
+				79B02FB12172FE0E009D51F8 /* FormCustomField.m */,
+			);
+			name = FormCustomFiled;
+			sourceTree = "<group>";
+		};
+		79FEC0AB2175A066008A69F1 /* Authentications */ = {
+			isa = PBXGroup;
+			children = (
+				612B5E872158CBD800751E36 /* AuthenticationViewController.swift */,
+				612B5E89215A20B800751E36 /* SignInViewController.swift */,
+				612B5E8B215A20C500751E36 /* SignUpViewController.swift */,
+				612B5E8D215A43EE00751E36 /* ForgetPassViewController.swift */,
+				612B5E8F215A44A500751E36 /* PhoneVerifyViewController.swift */,
+				79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */,
+				79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */,
+				79F743B421771BB4004D7155 /* ChangePassViewController.swift */,
+			);
+			name = Authentications;
 			sourceTree = "<group>";
 		};
 		8702FBB21E98E6F2001D1AA9 /* SearchEvent */ = {
@@ -8644,6 +8677,7 @@
 				8757436B1EA60DA5001B518A /* Birthday-72@2x.png in Resources */,
 				875743C11EA60DFD001B518A /* SpecialOffer-Small.png in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
+				791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */,
 				61C51E6F1FDC155500DC75EE /* ErrorControlView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				8757436A1EA60DA5001B518A /* Birthday-76.png in Resources */,
@@ -8907,6 +8941,7 @@
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/MobileEngageSDK/MobileEngageSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/PinCodeTextField/PinCodeTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RAlertView/RAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/RGB/RGB.framework",
@@ -8941,6 +8976,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileEngageSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinCodeTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RGB.framework",
@@ -9146,7 +9182,6 @@
 				6187ABAE207B451600B08EE5 /* Ext+UIImage.swift in Sources */,
 				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
-				61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */,
 				61EB3932200B43AC00F98C95 /* OrderCancellationResultViewController.swift in Sources */,
 				613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
@@ -9277,12 +9312,15 @@
 				611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */,
 				61BA9B4E1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
+				791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
+				79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */,
 				611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */,
 				87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */,
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
+				79F743B521771BB4004D7155 /* ChangePassViewController.swift in Sources */,
 				618D8B431FADEF5B0006A936 /* LoadingFooterView.swift in Sources */,
 				875AD5721E38C0C900584ABF /* RISellerReviewInfo.m in Sources */,
 				61B2C7F71F9C96B900930435 /* AccordionTableTableViewController.swift in Sources */,
@@ -9351,6 +9389,7 @@
 				87EA031B1E6D6F9900B1E062 /* FormHeaderTableViewCell.m in Sources */,
 				8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */,
 				61338D001EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m in Sources */,
+				79FEC0AD2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift in Sources */,
 				CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */,
 				9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */,
 				6119576D2003C0A600B7B9D8 /* Ext+Dictionary.swift in Sources */,
@@ -9362,6 +9401,7 @@
 				CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */,
 				87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */,
 				61CBA8861F691D05009F0EEF /* SearchViewController.swift in Sources */,
+				79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */,
 				9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */,

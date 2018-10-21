@@ -8,79 +8,111 @@
 
 import UIKit
 
-class SignInViewController: BaseViewController, DataServiceProtocol, FormViewControlDelegate {
+class SignInViewController: BaseAuthenticationViewCtrl {
     
-    @IBOutlet weak var tableview: UITableView!
-    private var formController: FormViewControl?
-    weak var delegate: AuthenticationViewsDelegate?
+    private var passwordFieldModel: FormItemModel?
+    
+    var submitButtonDisabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.formParamsName = "login"
+        self.viewMode = .signIn
         
         self.tableview.register(UINib(nibName: FormButtonTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: FormButtonTableViewCell.nibName())
-        
-        self.formController = FormViewControl()
+        self.tableview.register(UINib(nibName: FormLinkButtonTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: FormLinkButtonTableViewCell.nibName())
         
         self.tableview.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-        self.formController?.tableView = self.tableview
-        self.formController?.delegate = self
-        self.formController?.submitTitle = STRING_REGISTRATION_SUBMIT
+        self.formController?.submitTitle = STRING_USER_SIGNIN
         
-        if let firstName = FormItemModel.init(textValue: "",
-                                              fieldName: "login[identifier]",
+        if let phoneOrEamil = FormItemModel.init(textValue: "",
+                                              fieldName: "\(formParamsName)[identifier]",
                                               andIcon: UIImage(named: "ic_user_form") ,
                                               placeholder: "موبایل یا تلفن",
                                               type: .string,
-                                              validation: nil,
+                                              validation: FormItemValidation.init(required: true, max: 0, min: 0, withRegxPatter: "\(String.emailRegx())|\(String.phoneRegx())"),
                                               selectOptions: nil),
             let password =  FormItemModel.passWord(withFieldName: "login[password]") {
-            let customCell = FormCustomFiled()
-            customCell.cellName = FormButtonTableViewCell.nibName()
-            self.formController?.formModelList = [firstName, password, "submit", customCell]
+            let signUpButtonCell = FormCustomFiled()
+            signUpButtonCell.cellName = FormButtonTableViewCell.nibName()
+            
+            let forgetPass = FormCustomFiled()
+            forgetPass.cellName = FormLinkButtonTableViewCell.nibName()
+            passwordFieldModel = password
+            self.formController?.formModelList = [phoneOrEamil, password, forgetPass,"submit", signUpButtonCell]
         }
+        self.formController?.delegate = self
         self.formController?.setupTableView()
-        
-        Utility.delay(duration: 0.15) {
-            self.delegate?.contentSizeChanged(height: self.tableview.contentSize.height + self.tableview.contentInset.top + self.tableview.contentInset.bottom)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.formController?.registerForKeyboardNotifications()
     }
+}
 
+//MARK: - DataServiceProtocol
+extension SignInViewController: DataServiceProtocol {
     
-    //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        
+        if let password = self.passwordFieldModel?.getValue() {
+            if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
+                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+            }
+            if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+            }
+        }
     }
     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
-        
     }
-    
-    //MARK: - FormViewControlDelegate
+    func errorHandler(_ error: Error!, forRequestID rid: Int32) {
+        self.baseErrorHandler(error, forRequestID: rid)
+    }
+}
+
+//MARK: - FormViewControlDelegate
+extension SignInViewController: FormViewControlDelegate {
     func formSubmitButtonTapped() {
-        //        CurrentUserManager.loadLocal()
-        //        if CurrentUserManager.isUserLoggedIn() {
-        //            let user = CurrentUserManager.user
-        //            print(user)
-        //        } else {
-        //            AuthenticationDataManager.sharedInstance.loginUser(self, username: "aliunco90@gmail.com", password: "ali1123581321") { (data, error) in
-        //                if let dict = data as? [String: Any], let user = dict[kDataContent] as? CustomerEntity, let userEntity = user.entity {
-        //                    CurrentUserManager.saveUser(user: userEntity)
-        //                }
-        //            }
-        //        }
+        if let valid = self.formController?.isFormValid() {
+            if !valid {
+                self.formController?.showAnyErrorInForm()
+                return
+            }
+            if let fields = self.formController?.getMutableDictionaryOfForm() as? [String: String] {
+                AuthenticationDataManager.sharedInstance.loginUser(self, fields: fields) { (data, error) in
+                    if error == nil {
+                        self.bind(data, forRequestId: 0)
+                        return
+                    }
+                    self.errorHandler(error, forRequestID: 0)
+                }
+            }
+        }
     }
     
     func customCell(forIndexPath tableView: UITableView!, cellName: String!, indexPath: IndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCell(withIdentifier: FormButtonTableViewCell.nibName(), for: indexPath)
-        return cell
+        if indexPath.row == 4 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: FormButtonTableViewCell.nibName(), for: indexPath) as! FormButtonTableViewCell
+            cell.setTitle(title: STRING_SIGNUP)
+            cell.tagretMode = .signUp
+            cell.delegate = self
+            return cell
+        } else if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: FormLinkButtonTableViewCell.nibName(), for: indexPath) as! FormLinkButtonTableViewCell
+            cell.setTitle(title: STRING_FORGET_PASS)
+            cell.tagretMode = .forgetPass
+            cell.delegate = self
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+
+
+extension SignInViewController: FormButtonTableViewCellDelegate {
+    func buttonTapped(for target: AuthenticationViewMode) {
+        self.delegate?.switchTo(viewMode: target)
     }
 }

@@ -74,7 +74,7 @@
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"ic_phone_form"]
                                     placeholder: STRING_CELLPHONE
                                            type: InputTextFieldControlTypePhone
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString mobileRegxPattern]]
@@ -104,7 +104,7 @@
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"ic_email_form"]
                                     placeholder: STRING_EMAIL
                                            type: InputTextFieldControlTypeEmail
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[EmailUtility emailRegexPattern]]
@@ -114,7 +114,7 @@
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"ic_password_form"]
                                     placeholder: STRING_PASSWORD
                                            type: InputTextFieldControlTypePassword
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]

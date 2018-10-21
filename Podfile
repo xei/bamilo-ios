@@ -39,6 +39,7 @@ target 'Bamilo' do
   pod 'UICircularProgressRing'
   pod 'Firebase/Core'
   pod 'Firebase/Performance'
+  pod 'PinCodeTextField'
 
   target 'BamiloUITests' do
     inherit! :search_paths
