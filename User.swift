@@ -55,12 +55,9 @@ enum Gender: String {
         nationalID <- map["national_id"]
         bankCartNumber <- map["card_number"]
         
-        if let addressJson = JSON(map.JSON)["address_list"].dictionary {
-            self.addressList = AddressList()
-            do {
-                try self.addressList?.merge(from: addressJson, useKeyMapping: true, error: ())
-            } catch {}
-        }
+        let json = JSON(map.JSON)
+        self.addressList = AddressList.init()
+        try? self.addressList?.merge(from: json["address_list"].dictionaryObject, useKeyMapping: true, error: ())
         
         if let wishListSkus = JSON(map.JSON)["wishlist_products"].array {
             self.wishListSkus = wishListSkus.map { $0.dictionary?.values.first?.stringValue }.compactMap { $0 }
