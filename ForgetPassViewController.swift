@@ -18,7 +18,7 @@ class ForgetPassViewController: BaseAuthenticationViewCtrl {
         self.formController?.submitTitle = STRING_PASSWORD_RECOVERY
         if let phoneOrEamil = FormItemModel.init(textValue: "", fieldName: "login[identifier]",
                                                  andIcon: UIImage(named: "ic_user_form") ,
-                                                 placeholder: "موبایل یا تلفن",
+                                                 placeholder: "ایمیل یا شماره موبایل",
                                                  type: .string,
                                                  validation: FormItemValidation.init(required: true, max: 0, min: 0, withRegxPatter: "\(String.emailRegx())|\(String.phoneRegx())"),
                                                  selectOptions: nil) {

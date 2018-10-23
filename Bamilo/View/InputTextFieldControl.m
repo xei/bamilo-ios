@@ -121,7 +121,9 @@
     _model = model;
     
     //Trim input of model
-    model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (VALID_NOTEMPTY(model.inputTextValue, [NSString class])) {
+        model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    }
     
     [self.input showDisabledMode:model.disabled];
     //update UI
