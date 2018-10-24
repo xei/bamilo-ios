@@ -29,7 +29,6 @@
 #import <Masonry/Masonry.h>
 #import <RGB/RRGB.h>
 #import "UIBarButtonItem+Badge.h"
-#import "CAPSPageMenu.h"
 
 #import "DataManager.h"
 #import "DeepLinkManager.h"
@@ -37,10 +36,7 @@
 #import "ProtectedViewControllerProtocol.h"
 
 #import "DataTrackerProtocol.h"
-#import "EmarsysPredictProtocol.h"
-#import "EmarsysPredictManager.h"
 #import "InputTextFieldControl.h"
-#import "PushWooshTracker.h"
 #import "StepperViewControl.h"
 
 #import "BaseControlView.h"

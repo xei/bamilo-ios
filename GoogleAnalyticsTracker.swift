@@ -466,4 +466,8 @@
         return gaProduct
     }
     
+    func shareApp(attributes: EventAttributeType) {
+        
+    }
+    
 }

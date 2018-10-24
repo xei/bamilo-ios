@@ -1,115 +1,115 @@
+////
+////  PushWooshTracker.m
+////  Bamilo
+////
+////  Created by Narbeh Mirzaei on 3/14/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  PushWooshTracker.m
-//  Bamilo
+//#import "PushWooshTracker.h"
+//#import <Pushwoosh/PWInAppManager.h>
+//#import "RITrackingWrapper.h"
+////#import "DeepLinkManager.h"
+//#import "Bamilo-Swift.h"
 //
-//  Created by Narbeh Mirzaei on 3/14/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@implementation PushWooshTracker
 //
-
-#import "PushWooshTracker.h"
-#import <Pushwoosh/PWInAppManager.h>
-#import "RITrackingWrapper.h"
-//#import "DeepLinkManager.h"
-#import "Bamilo-Swift.h"
-
-@implementation PushWooshTracker
-
-static PushWooshTracker *instance;
-
-+(instancetype)sharedTracker {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [PushWooshTracker new];
-    });
-    
-    return instance;
-}
-
-+ (void)setUserID:(NSString *)userId {
-    [[PWInAppManager sharedManager] setUserId:userId];
-}
-
-#pragma mark - PushNotificationTrackerProtocol
--(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
-    NSLog(@"PushWooshTracker > onPushAccepted : %@", pushNotification);
-    
-    NSString *customDataString = [pushManager getCustomPushData:pushNotification];
-    
-    if (customDataString) {
-        [self handleCustomData:[NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil]];
-    }
-
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        //App already open
-    } else {
-        //EVENT: OPEN APP
-        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypePushNotification]];
-    }
-}
-
-#pragma mark - TagTrackerProtocol
--(void)sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion {
-    [[PushNotificationManager pushManager] setTags:tags withCompletion:^(NSError *error) {
-        if(completion) {
-            completion(error);
-        }
-    }];
-}
-
-#pragma mark - Helpers
--(void) handleCustomData:(NSDictionary *)jsonData {
-    [self handleActions:[jsonData objectForKey:@"actions"]];
-    
-    // -- UTM tracking
-    __block NSMutableDictionary *utmDictionary = [NSMutableDictionary new];
-    [jsonData enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        NSString *lowerCaseKey = [key lowercaseString];
-        if ([lowerCaseKey isEqualToString:kUTMSource] ||
-            [lowerCaseKey isEqualToString:kUTMMedium] ||
-            [lowerCaseKey isEqualToString:kUTMCampaign] ||
-            [lowerCaseKey isEqualToString:kUTMTerm] ||
-            [lowerCaseKey isEqualToString:kUTMContent]) {
-            [utmDictionary setObject:obj forKey:lowerCaseKey];
-        }
-    }];
-    
-    if (utmDictionary.allKeys.count) {
-        [[GoogleAnalyticsTracker sharedTracker] trackCampaignDataWithCampaignDictionary:utmDictionary];
-    }
-}
-
--(void) handleActions:(NSArray *)actions {
-    if(actions && actions.count) {
-        for(NSDictionary *action in actions) {
-            NSString *actionKey = [action objectForKey:@"key"];
-            NSDictionary *actionData = [action objectForKey:@"data"];
-        
-            //Handle alternative icon for iOS 10.3+ action
-            if ([actionKey isEqualToString:@"change_icon"]) {
-                NSString *icon = [actionData objectForKey:@"icon"];
-                if(icon) {
-                    if([icon isEqualToString:@"Default"]) {
-                        [[AppManager sharedInstance] resetAppIconToDefault];
-                    } else {
-                        //If there is an expiryDate, consider that. If not, default is 1 week
-                        NSDateFormatter *dateFormatter = [NSDateFormatter new];
-                        [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
-                        //[dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-                        //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-                        NSDate *expiryDate = [dateFormatter dateFromString:[actionData objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
-                        [[AppManager sharedInstance] addAltAppIcon:icon expires:expiryDate];
-                        [[AppManager sharedInstance] executeScheduledAppIcons];
-                    }
-                }
-            }
-        }
-    }
-}
-
-//Override
-- (void)postEventByName:(NSString *)eventName attributes:(NSDictionary *)attributes {
-    [super postEventByName:eventName attributes:attributes];
-    [[PWInAppManager sharedManager] postEvent:eventName withAttributes:attributes];
-}
-
-@end
+//static PushWooshTracker *instance;
+//
+//+(instancetype)sharedTracker {
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        instance = [PushWooshTracker new];
+//    });
+//    
+//    return instance;
+//}
+//
+//+ (void)setUserID:(NSString *)userId {
+//    [[PWInAppManager sharedManager] setUserId:userId];
+//}
+//
+//#pragma mark - PushNotificationTrackerProtocol
+//-(void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification {
+//    NSLog(@"PushWooshTracker > onPushAccepted : %@", pushNotification);
+//    
+//    NSString *customDataString = [pushManager getCustomPushData:pushNotification];
+//    
+//    if (customDataString) {
+//        [self handleCustomData:[NSJSONSerialization JSONObjectWithData:[customDataString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil]];
+//    }
+//
+//    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+//        //App already open
+//    } else {
+//        //EVENT: OPEN APP
+//        [TrackerManager postEventWithSelector:[EventSelectors openAppSelector] attributes:[EventAttributes openAppWithSource:OpenAppEventSourceTypePushNotification]];
+//    }
+//}
+//
+//#pragma mark - TagTrackerProtocol
+//-(void)sendTags:(NSDictionary *)tags completion:(TagTrackerCompletion)completion {
+//    [[PushNotificationManager pushManager] setTags:tags withCompletion:^(NSError *error) {
+//        if(completion) {
+//            completion(error);
+//        }
+//    }];
+//}
+//
+//#pragma mark - Helpers
+//-(void) handleCustomData:(NSDictionary *)jsonData {
+//    [self handleActions:[jsonData objectForKey:@"actions"]];
+//    
+//    // -- UTM tracking
+//    __block NSMutableDictionary *utmDictionary = [NSMutableDictionary new];
+//    [jsonData enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        NSString *lowerCaseKey = [key lowercaseString];
+//        if ([lowerCaseKey isEqualToString:kUTMSource] ||
+//            [lowerCaseKey isEqualToString:kUTMMedium] ||
+//            [lowerCaseKey isEqualToString:kUTMCampaign] ||
+//            [lowerCaseKey isEqualToString:kUTMTerm] ||
+//            [lowerCaseKey isEqualToString:kUTMContent]) {
+//            [utmDictionary setObject:obj forKey:lowerCaseKey];
+//        }
+//    }];
+//    
+//    if (utmDictionary.allKeys.count) {
+//        [[GoogleAnalyticsTracker sharedTracker] trackCampaignDataWithCampaignDictionary:utmDictionary];
+//    }
+//}
+//
+//-(void) handleActions:(NSArray *)actions {
+//    if(actions && actions.count) {
+//        for(NSDictionary *action in actions) {
+//            NSString *actionKey = [action objectForKey:@"key"];
+//            NSDictionary *actionData = [action objectForKey:@"data"];
+//        
+//            //Handle alternative icon for iOS 10.3+ action
+//            if ([actionKey isEqualToString:@"change_icon"]) {
+//                NSString *icon = [actionData objectForKey:@"icon"];
+//                if(icon) {
+//                    if([icon isEqualToString:@"Default"]) {
+//                        [[AppManager sharedInstance] resetAppIconToDefault];
+//                    } else {
+//                        //If there is an expiryDate, consider that. If not, default is 1 week
+//                        NSDateFormatter *dateFormatter = [NSDateFormatter new];
+//                        [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
+//                        //[dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+//                        //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+//                        NSDate *expiryDate = [dateFormatter dateFromString:[actionData objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
+//                        [[AppManager sharedInstance] addAltAppIcon:icon expires:expiryDate];
+//                        [[AppManager sharedInstance] executeScheduledAppIcons];
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+//
+////Override
+//- (void)postEventByName:(NSString *)eventName attributes:(NSDictionary *)attributes {
+//    [super postEventByName:eventName attributes:attributes];
+//    [[PWInAppManager sharedManager] postEvent:eventName withAttributes:attributes];
+//}
+//
+//@end

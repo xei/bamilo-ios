@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -35,7 +34,7 @@
                                 </constraints>
                             </containerView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="laJ-I1-m1T">
-                                <rect key="frame" x="177" y="363.5" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="363.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQv-Qa-EDH">
                                 <rect key="frame" x="0.0" y="80" width="375" height="587"/>
@@ -105,7 +104,7 @@
                                 </constraints>
                             </containerView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bgX-Hf-Vck">
-                                <rect key="frame" x="177" y="363.5" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="363.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dCv-DP-nKy">
                                 <rect key="frame" x="0.0" y="80" width="375" height="587"/>
@@ -192,7 +191,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Li-YY-i0n">
-                                <rect key="frame" x="187" y="373.5" width="0.0" height="0.0"/>
+                                <rect key="frame" x="187.5" y="373.5" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -280,7 +279,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="356"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMC-xp-BYm">
-                                        <rect key="frame" x="67" y="93" width="240" height="170"/>
+                                        <rect key="frame" x="67.5" y="93" width="240" height="170"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="successIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aqz-cZ-E7n">
                                                 <rect key="frame" x="167" y="5" width="50" height="50"/>
@@ -290,7 +289,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="پرداخت ناموفق" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tr4-mC-OYm">
-                                                <rect key="frame" x="23.5" y="12.5" width="133.5" height="36.5"/>
+                                                <rect key="frame" x="23.5" y="12" width="133.5" height="36.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="133.5" id="Ekl-Q2-L5u"/>
                                                 </constraints>
@@ -336,7 +335,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-Po-4VA">
-                                        <rect key="frame" x="9" y="168.5" width="356" height="20.5"/>
+                                        <rect key="frame" x="10" y="168" width="355" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -351,7 +350,7 @@
                                     <constraint firstItem="Ft2-Po-4VA" firstAttribute="centerX" secondItem="JMC-xp-BYm" secondAttribute="centerX" id="geX-cZ-06g"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-Wx-p8b" customClass="EmarsysRecommendationMinimalCarouselWidget">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUh-Wx-p8b" customClass="EmarsysRecommendationMinimalCarouselWidget">
                                 <rect key="frame" x="0.0" y="376" width="375" height="247"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -372,7 +371,6 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
-                        <outlet property="carouselWidget" destination="RUh-Wx-p8b" id="Fjt-1D-Ah7"/>
                         <outlet property="descLabel" destination="Ft2-Po-4VA" id="rMS-lh-umz"/>
                         <outlet property="iconImageView" destination="aqz-cZ-E7n" id="2o5-ed-9jF"/>
                         <outlet property="orderDetailButton" destination="fcY-30-Vag" id="ySR-ie-Lgb"/>

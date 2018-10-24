@@ -20,15 +20,14 @@
 #import "URLUtility.h"
 
 //#######################################################################################
-#import <Pushwoosh/PushNotificationManager.h>
-#import <MobileEngageSDK/MobileEngage.h>
+//#import <MobileEngageSDK/MobileEngage.h>
 #import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
-#import "PushWooshTracker.h"
-#import "EmarsysPredictManager.h"
+//#import "PushWooshTracker.h"
+//#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
 @interface JAAppDelegate ()
@@ -134,32 +133,32 @@
     
     //Crashlytics Integration with PushWoosh
     //http://docs.pushwoosh.com/docs/crashlytics-integration
-    NSString *userId = [[PushNotificationManager pushManager] getHWID];
-    [[Crashlytics sharedInstance] setUserIdentifier:userId];
+//    NSString *userId = [[PushNotificationManager pushManager] getHWID];
+//    [[Crashlytics sharedInstance] setUserIdentifier:userId];                  //check this out later
     
     //PUSH WOOSH
     //********************************************************************
     // set custom delegate for push handling, in our case AppDelegate
-    PushNotificationManager * pushManager = [PushNotificationManager pushManager];
-    pushManager.delegate = [PushWooshTracker sharedTracker];
+//    PushNotificationManager * pushManager = [PushNotificationManager pushManager];
+//    pushManager.delegate = [PushWooshTracker sharedTracker];
     
     // set default Pushwoosh delegate for iOS10 foreground push handling
-    if (@available(iOS 10.0, *)) {
-        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
-    }
+//    if (@available(iOS 10.0, *)) {
+//        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+//    }
     
     // track application open statistics
-    [[PushNotificationManager pushManager] sendAppOpen];
+//    [[PushNotificationManager pushManager] sendAppOpen];
     
     // register for push notifications!
-    [[PushNotificationManager pushManager] registerForPushNotifications];
+//    [[PushNotificationManager pushManager] registerForPushNotifications];
     
     //SETUP TRACKERS
     //********************************************************************
-    [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
+//    [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
-    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
+//    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[FirebaseTracker sharedTracker]];
     
     NSDictionary *configs = [[NSBundle mainBundle] objectForInfoDictionaryKey:kConfigs];
@@ -173,7 +172,7 @@
             }];
         }
     }
-    [EmarsysPredictManager setConfigs];
+//    [EmarsysPredictManager setConfigs];
     return YES;
 }
 
@@ -204,7 +203,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    [[PushNotificationManager pushManager] stopLocationTracking];
+//    [[PushNotificationManager pushManager] stopLocationTracking];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAppDidEnterBackground object:nil];
 }
 
@@ -238,7 +237,7 @@
     [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
-    [[PushNotificationManager pushManager] startLocationTracking];
+//    [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -254,16 +253,16 @@
 #pragma mark - Push Notification
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     //MOBILE ENGAGE
-    [MobileEngage setPushToken:deviceToken];
+//    [MobileEngage setPushToken:deviceToken];
     
     //PUSH WOOSH
-    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
+//    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }
 
 // system push notification registration error callback, delegate to pushManager
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     //PUSH WOOSH
-    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
+//    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
 }
 
 // system push notifications callback, delegate to pushManager
@@ -272,7 +271,7 @@
     if (@available(iOS 10.0, *)) {
         completionHandler(UIBackgroundFetchResultNoData);
     } else {
-        [[PushNotificationManager pushManager] handlePushReceived:userInfo];
+//        [[PushNotificationManager pushManager] handlePushReceived:userInfo];
         completionHandler(UIBackgroundFetchResultNoData);
     }
 }

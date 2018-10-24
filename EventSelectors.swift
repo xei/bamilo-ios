@@ -54,7 +54,7 @@ import Foundation
         return #selector(EventTrackerProtocol.itemTapped(attributes:))
     }
     class func behaviourPurchasedSelector() -> Selector {
-        return Selector(("purchaseBehaviourWithAttributes:"))
+        return #selector(EventTrackerProtocol.purchaseBehaviour(attributes:))
     }
     class func viewProductSelector() -> Selector {
         return #selector(EventTrackerProtocol.viewProduct(attributes:))
@@ -84,12 +84,12 @@ import Foundation
         return #selector(EventTrackerProtocol.checkoutFinished(attributes:))
     }
     class func suggestionTappedSelector() -> Selector {
-        return Selector(("searchSuggestionTappedWithAttributes:"))
+        return #selector(EventTrackerProtocol.searchSuggestionTapped(attributes:))
     }
     class func shareAppSelector() -> Selector {
-        return Selector(("shareAppWithAttributes:"))
+        return #selector(EventTrackerProtocol.shareApp(attributes:))
     }
     class func buyNowTappedSelector() -> Selector {
-        return Selector(("buyNowTappedWithAttributes:"))
+        return #selector(EventTrackerProtocol.buyNowTapped(attributes:))
     }
 }

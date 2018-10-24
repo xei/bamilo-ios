@@ -8,10 +8,8 @@ PODS:
     - ObjectMapper (~> 3.3)
   - AnimatedCollectionViewLayout (0.4.0)
   - CHIPageControl/Jalapeno (0.1.7)
-  - CoreSDK (1.7.1)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
-  - EmarsysPredictSDK (1.0.38)
   - Fabric (1.7.13)
   - Firebase/Core (5.10.0):
     - Firebase/CoreOnly
@@ -88,8 +86,6 @@ PODS:
   - Kingfisher (4.10.0)
   - M13Checkbox (3.2.2)
   - Masonry (1.1.0)
-  - MobileEngageSDK (1.4.2):
-    - CoreSDK (= 1.7.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -98,7 +94,6 @@ PODS:
   - ObjectMapper (3.3.0)
   - PinCodeTextField (0.1.0)
   - Protobuf (3.6.1)
-  - Pushwoosh (5.9.1)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -123,7 +118,6 @@ DEPENDENCIES:
   - AnimatedCollectionViewLayout
   - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
-  - EmarsysPredictSDK
   - Fabric
   - Firebase/Core
   - Firebase/Performance
@@ -137,10 +131,8 @@ DEPENDENCIES:
   - JSONModel
   - Kingfisher
   - M13Checkbox
-  - MobileEngageSDK
   - ObjectMapper
   - PinCodeTextField
-  - Pushwoosh
   - RAlertView
   - RealmSwift
   - SDWebImage (~> 3.8)
@@ -156,9 +148,7 @@ SPEC REPOS:
     - AlamofireObjectMapper
     - AnimatedCollectionViewLayout
     - CHIPageControl
-    - CoreSDK
     - Crashlytics
-    - EmarsysPredictSDK
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -180,12 +170,10 @@ SPEC REPOS:
     - Kingfisher
     - M13Checkbox
     - Masonry
-    - MobileEngageSDK
     - nanopb
     - ObjectMapper
     - PinCodeTextField
     - Protobuf
-    - Pushwoosh
     - RAlertView
     - Realm
     - RealmSwift
@@ -202,9 +190,7 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
   AnimatedCollectionViewLayout: f0295119f94d8492fc6ac39e2ced64a471b12699
   CHIPageControl: bbe1ddd0c688c02ec65b7f7e7d34551a3d16f37c
-  CoreSDK: 543b45266b9b74bdb0b756be0d6bc49f8af9cc20
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
-  EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   Firebase: 6691d47562a780c26281ce8464518faafc90c610
   FirebaseAnalytics: 831f1f127f4a75698e9875a87bf7e2668730d953
@@ -226,12 +212,10 @@ SPEC CHECKSUMS:
   Kingfisher: 43c4b802d8b5256cf1f4379e9cd10b329be6d3e2
   M13Checkbox: a8c2491cfbbca10797925fd0b9154a782bf40d89
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MobileEngageSDK: f14d74940c5f62f8b704cc9238aa72b038d44dbb
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   PinCodeTextField: a3c39be58bde3ed1d6888d0fb1d88b0a4a2277cc
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  Pushwoosh: 38e31c3da27ba6c072f8b96884fe3660bd16cd2d
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 92f09a102692b96a9a10e9617f214f15c5ab85fc
   RealmSwift: 5f0481cd658bb751c509314b964a35eaa264d2cf
@@ -242,6 +226,6 @@ SPEC CHECKSUMS:
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
 
-PODFILE CHECKSUM: 1fd7fd0ba02cb4291f45f95ae8e50d719b6f966f
+PODFILE CHECKSUM: 9f97477f0279e28ac90f7b52c83401246fc2f9f2
 
 COCOAPODS: 1.5.3

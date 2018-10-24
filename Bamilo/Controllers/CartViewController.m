@@ -17,7 +17,6 @@
 #import "AlertManager.h"
 #import "CartEntitySummaryViewControl.h"
 #import "EmptyViewController.h"
-#import "EmarsysPredictManager.h"
 #import "LoadingManager.h"
 #import "Bamilo-Swift.h"
 #import "OrangeButton.h"
@@ -262,7 +261,7 @@
 
         //When cart is ready & not empty
         if (self.cart.cartEntity.cartCount.integerValue) {
-            [EmarsysPredictManager sendTransactionsOf:self];
+//            [EmarsysPredictManager sendTransactionsOf:self];
             [TrackerManager postEventWithSelector:[EventSelectors viewCartEventSelector] attributes:[EventAttributes viewCartWithCart:self.cart success:YES]];
         }
         

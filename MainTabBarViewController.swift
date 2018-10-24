@@ -23,7 +23,7 @@ import Crashlytics
         self.tabBar.isTranslucent = false
         self.delegate = self
         
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomePageViewController.self)
         
         self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 9), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkBlue)], for: .selected)
@@ -61,9 +61,10 @@ import Crashlytics
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
         if let userID = CurrentUserManager.user.userID, userID != 0 {
-            EmarsysPredictManager.setCustomer(CurrentUserManager.user)
-            PushWooshTracker.setUserID("\(userID)")
+//            EmarsysPredictManager.setCustomer(CurrentUserManager.user)
+//            PushWooshTracker.setUserID("\(userID)")
             Crashlytics.sharedInstance().setUserName(CurrentUserManager.user.email)
+            Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
         }
         self.getAndUpdateCart()
     }
@@ -176,7 +177,7 @@ import Crashlytics
     
     //TODO: Temprory helper functions (for objective c codes)
     class func showHome() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomePageViewController.self)
     }
     
     class func showWishList() {

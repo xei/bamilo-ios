@@ -10,9 +10,7 @@
 #import "RIForm.h"
 #import "RIField.h"
 #import "ViewControllerManager.h"
-#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
-#import "PushWooshTracker.h"
 #import <Crashlytics/Crashlytics.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
@@ -175,9 +173,10 @@
 //            }];
             
             //Set auto logged in customer
-            [EmarsysPredictManager setCustomer:customerObject];
-            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
+//            [EmarsysPredictManager setCustomer:customerObject];
+//            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
             [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
+            [[Crashlytics sharedInstance] setUserIdentifier: [NSString stringWithFormat:@"%ld", (long)customerObject.customerId.integerValue]];
             
         } else {
             [Utility resetUserBehaviours];

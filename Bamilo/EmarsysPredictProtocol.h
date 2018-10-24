@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @protocol EmarsysPredictProtocolBase <NSObject>
 
@@ -19,13 +18,13 @@
 
 @protocol EmarsysRecommendationsProtocol<EmarsysPredictProtocolBase>
 
-@optional - (NSArray<EMRecommendationRequest *> *)getRecommendations;
+//@optional - (NSArray<EMRecommendationRequest *> *)getRecommendations;
 
 @end
 
 @protocol EmarsysWebExtendProtocol<EmarsysPredictProtocolBase>
 
-@optional - (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
+//@optional - (EMTransaction *)getDataCollection:(EMTransaction *)transaction;
 
 @end
 

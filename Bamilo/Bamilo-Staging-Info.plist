@@ -145,19 +145,8 @@
 		<string>https://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.11</string>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
-		<key>EmarsysMobileEngage</key>
-		<dict>
-			<key>Application_CODE</key>
-			<string>82449-6B792</string>
-			<key>Application_PASSWORD</key>
-			<string>oKjusj5sk9ebqCYgi38XdM/PtPCPqLTl</string>
-		</dict>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-52004541-5</string>
-		<key>Pushwoosh_BETA</key>
-		<string>1</string>
 		<key>Tour</key>
 		<dict>
 			<key>HomePage</key>
@@ -233,14 +222,6 @@
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Pushwoosh_APPID</key>
-	<string>54916-053AA </string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>

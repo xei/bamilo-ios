@@ -200,7 +200,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     private func cleanAllUserInformations() {
         UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
-        EmarsysPredictManager.userLoggedOut()
+//        EmarsysPredictManager.userLoggedOut()
         CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil
@@ -281,7 +281,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
         
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        MainTabBarViewController.showHome()
     }
     
     //MARK: - DataTrackerProtocol & TourPresenter

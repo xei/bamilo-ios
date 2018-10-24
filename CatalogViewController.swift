@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import EmarsysPredictSDK
+//import EmarsysPredictSDK
 import SwiftyJSON
 
 @objcMembers class CatalogViewController: BaseViewController,
@@ -206,7 +206,7 @@ import SwiftyJSON
                 if rid == 0 {
                     self.catalogData = receivedCatalogData
                     self.processCatalogData()
-                    EmarsysPredictManager.sendTransactions(of: self)
+//                    EmarsysPredictManager.sendTransactions(of: self)
                     self.collectionView.reloadData()
                     if let receivedCatalogData = data as? Catalog, let totalProducts = receivedCatalogData.totalProductsCount {
                         if totalProducts <= receivedCatalogData.products.count {
@@ -706,20 +706,20 @@ import SwiftyJSON
         }
     }
     
-    //MARK: - EmarsysWebExtendProtocol
-    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if self.searchTarget.targetType == .CATALOG_SEARCH {
-            transaction.setSearchTerm(self.searchTarget.node)
-        }
-        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
-            transaction.setCategory(breadcrumbsFullPath)
-        }
-        return transaction
-    }
-    
-    func isPreventSendTransactionInViewWillAppear() -> Bool {
-        return true
-    }
+//    //MARK: - EmarsysWebExtendProtocol
+//    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+//        if self.searchTarget.targetType == .CATALOG_SEARCH {
+//            transaction.setSearchTerm(self.searchTarget.node)
+//        }
+//        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
+//            transaction.setCategory(breadcrumbsFullPath)
+//        }
+//        return transaction
+//    }
+//
+//    func isPreventSendTransactionInViewWillAppear() -> Bool {
+//        return true
+//    }
     
     //MARK: -DataTrackerProtocol
     override func getScreenName() -> String! {

@@ -15,7 +15,6 @@
 #import "JACenterNavigationController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
-#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
 
@@ -241,15 +240,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
     
-    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
-        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
-            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
-                [EmarsysPredictManager sendTransactionsOf:self];
-            }
-        } else {
-            [EmarsysPredictManager sendTransactionsOf:self];
-        }
-    }
+//    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
+//        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
+//            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
+//                [EmarsysPredictManager sendTransactionsOf:self];
+//            }
+//        } else {
+//            [EmarsysPredictManager sendTransactionsOf:self];
+//        }
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

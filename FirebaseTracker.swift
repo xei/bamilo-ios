@@ -88,7 +88,7 @@ import Firebase
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent(AnalyticsEventAddToWishlist, parameters: [
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterPrice: price,
                 "screen": screenName,
                 AnalyticsParameterItemName: name])
@@ -101,7 +101,7 @@ import Firebase
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent("remove_from_wishlist", parameters: [
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterPrice: price,
                 "screen": screenName,
                 AnalyticsParameterItemName: name])
@@ -114,7 +114,7 @@ import Firebase
            let price = product.payablePrice {
             Analytics.logEvent(AnalyticsEventAddToCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 "screen": screenName
             ])
         }
@@ -125,7 +125,7 @@ import Firebase
             let price = product.payablePrice {
             Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku
+                AnalyticsParameterItemID: product.sku ?? ""
             ])
         }
     }
@@ -136,7 +136,7 @@ import Firebase
             let name = product.name {
             Analytics.logEvent(AnalyticsEventViewItem, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterItemName: name,
                 AnalyticsParameterItemBrand: product.brand ?? ""
             ])
@@ -144,6 +144,10 @@ import Firebase
     }
     
     func itemTapped(attributes: EventAttributeType) {
+        
+    }
+    
+    func purchaseBehaviour(attributes: EventAttributeType) {
         
     }
     
@@ -184,9 +188,6 @@ import Firebase
                 ])
             }
         }
-    }
-    
-    func purchaseBehaviour(attributes: EventAttributeType) {
     }
     
     func searchSuggestionTapped(attributes: EventAttributeType) {

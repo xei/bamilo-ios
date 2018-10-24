@@ -10,7 +10,6 @@
 #import "JSONVerboseModel.h"
 #import "CartEntity.h"
 #import "FormEntity.h"
-#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
 
 @class User;
 @interface RICart : NSObject <JSONVerboseModel>
@@ -34,7 +33,7 @@
 
 + (instancetype)sharedInstance;
 
-- (NSArray<EMCartItem *> *)convertItems;
+//- (NSArray<EMCartItem *> *)convertItems;
 
 /**
  *  Method to add a product to the cart
