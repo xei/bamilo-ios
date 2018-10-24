@@ -23,6 +23,7 @@ target 'Bamilo' do
   pod 'JSONModel'
   pod 'CHIPageControl/Jalapeno'
   pod 'RAlertView'
+  pod 'WebEngage'
   pod 'AnimatedCollectionViewLayout'
   pod 'ObjectMapper'
   pod 'SwiftyJSON'

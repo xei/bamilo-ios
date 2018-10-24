@@ -127,6 +127,7 @@ class SavingUser: Object {
         self.user.wishListSkus = self.shareUser?.wishListSkus
         self.user.phone = self.shareUser?.phone
         self.user.email = self.shareUser?.email
+        self.user.password = self.shareUser?.plainPassword
     }
     
     static func isUserLoggedIn() -> Bool {
@@ -148,13 +149,12 @@ class SavingUser: Object {
     
     //TODO: the plainPass param should be removed
     static func saveUser(user: User, plainPassword: String) {
+        
+        if let currentUserID = self.shareUser?.userID, currentUserID != 0 {
+            cleanFromDB()
+        }
         if shareUser == nil {
             self.shareUser = SavingUser()
-        }
-        if let inputUserID = user.userID, let previousID = self.shareUser?.userID, inputUserID == previousID {
-            try! realm.write {
-                self.realm.add(shareUser!)
-            }
         }
         
         self.shareUser?.userID = Int(user.userID ?? 0)

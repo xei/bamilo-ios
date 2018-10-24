@@ -34,7 +34,7 @@ class SignUpViewController: BaseAuthenticationViewCtrl {
             
             let signinButtonCell = FormCustomFiled()
             signinButtonCell.cellName = FormButtonTableViewCell.nibName()
-            self.formController?.formModelList = [email, phone, nationID, password, "submit", signinButtonCell]
+            self.formController?.formModelList = [email, phone, password, nationID, "submit", signinButtonCell]
             
             self.phoneFieldModel = phone
         }

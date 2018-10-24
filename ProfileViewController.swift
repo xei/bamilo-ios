@@ -154,7 +154,12 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - helper functions
     @objc func shareApplication() {
         TrackerManager.postEvent(selector: EventSelectors.shareAppSelector(), attributes: EventAttributes.shareApp())
-        Utility.shareUrl(url: "app.adjust.com/gj8sf8k", message: "اپلیکشین بامیلو را به اشتراک بگذارید", viewController: self)
+        var url = "app.adjust.com/gj8sf8k"
+        if CurrentUserManager.isUserLoggedIn(), let userID = CurrentUserManager.user.userID {
+            url += "?label=\(userID)"
+        }
+        
+        Utility.shareUrl(url: url, message: "اپلیکشین بامیلو را به اشتراک بگذارید", viewController: self)
     }
     
     @objc func showLogin() {

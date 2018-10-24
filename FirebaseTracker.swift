@@ -120,6 +120,18 @@ import Firebase
         }
     }
     
+    func buyNowTapped(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+            let price = product.payablePrice {
+            Analytics.logEvent("buy_now", parameters: [
+                AnalyticsParameterPrice: price,
+                AnalyticsParameterItemID: product.sku ?? "",
+                "screen": screenName
+                ])
+        }
+    }
+    
     func removeFromCart(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
@@ -144,11 +156,25 @@ import Firebase
     }
     
     func itemTapped(attributes: EventAttributeType) {
-        
+        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+            let labelEventName = attributes[kGAEventLabel] as? String {
+            Analytics.logEvent("tap_teaser", parameters: [
+                AnalyticsParameterCampaign: categoryEventName,
+                AnalyticsParameterItemName: labelEventName,
+                
+            ])
+        }
     }
     
     func purchaseBehaviour(attributes: EventAttributeType) {
-        
+        if let category = attributes[kGAEventCategory] as? String,
+            let label = attributes[kGAEventLabel] as? String {
+            Analytics.logEvent("purchase_teaser", parameters: [
+                AnalyticsParameterCampaign: category,
+                AnalyticsParameterItemName: label,
+                
+                ])
+        }
     }
     
     func signup(attributes: EventAttributeType) {

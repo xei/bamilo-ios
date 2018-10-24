@@ -42,11 +42,15 @@ class RequestManagerSwift {
                 print(params)
             }
             let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
-            return RequestManagerSwift.sharedManager.request(requestUrl ?? "\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).responseJSON(completionHandler: { (response) in
-                if let url = response.request?.url {
+            return RequestManagerSwift.sharedManager.request(requestUrl ?? "\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).response(completionHandler: { (response) in
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8), let url = response.request?.url {
                     print("------------ Start response for : \(url)")
+                    print("DataResponse: \(utf8Text)")
                 }
-                print(response)
+                
+                if let header = response.response?.allHeaderFields {
+                    print("headerResponse: \(header)")
+                }
             }).responseObject { (response: DataResponse<ApiResponseData>) in
                 switch response.result {
                     case .success:
@@ -92,16 +96,23 @@ class RequestManagerSwift {
     }
     
     private func autoLoginWith(_ method: HTTPMethod, target: Any?, path: String, params: Parameters?, type: ApiRequestExecutionType, completion: @escaping ResponseClosure) {
-//        RICustomer.autoLogin({ (success) in
-//            if (success) {
-//                self.async(method, target: target, path: path, params: params, type: type, completion: completion)
-//            } else {
-//                Utility.resetUserBehaviours()
-//                MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
-//                    self.async(method, target: target, path: path, params: params, type: type, completion: completion)
-//                })
-//            }
-//        })
+        CurrentUserManager.loadLocal()
+        if CurrentUserManager.isUserLoggedIn(), let pass = CurrentUserManager.user.password, let email = CurrentUserManager.user.email {
+            AuthenticationDataManager.sharedInstance.loginUser(nil, fields: ["login[identifier]":email, "login[password]": pass]) { (data, error) in
+                if error == nil {
+                    if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
+                        CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+                        self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+                    }
+                    if let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+                        CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+                        self.async(method, target: target, path: path, params: params, type: type, completion: completion)
+                    }
+                } else {
+                    Utility.resetUserBehaviours()
+                }
+            }
+        }
     }
     
     //MARK: Private Methods

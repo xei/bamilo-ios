@@ -41,7 +41,7 @@
         if let campaignString = self.campaginDataString {
             builder = builder?.setCampaignParametersFromUrl(campaignString)
         }
-        tracker?.send(builder!.build() as! [AnyHashable : Any])
+        tracker?.send(builder!.build() as? [AnyHashable : Any])
     }
     
     func trackCampaignData(campaignDictionary: [String: String]) {
@@ -354,7 +354,7 @@
         if let campaignStrig = self.campaginDataString,  campaignStrig.count > 0 {
             let _ = params.setCampaignParametersFromUrl(campaignStrig)
         }
-        GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])
+        GAI.sharedInstance().defaultTracker.send(params.build() as? [AnyHashable : Any])
     }
     
     

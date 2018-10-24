@@ -42,7 +42,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             let birthday = FormItemModel.birthdayFieldName("customer[birthday]"),
             let nationalID = FormItemModel.nationalID("customer[national_id]"),
             let bankCard = FormItemModel.bankAccountFieldName("customer[card_number]") {
-
+            phone.icon = nil
             email.disabled = true
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone

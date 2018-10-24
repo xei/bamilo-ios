@@ -110,6 +110,9 @@ PODS:
   - TBActionSheet (1.6.2)
   - TTRangeSlider (1.0.6)
   - UICircularProgressRing (4.1.0)
+  - WebEngage (4.0.21):
+    - WebEngage/Xcode9 (= 4.0.21)
+  - WebEngage/Xcode9 (4.0.21)
 
 DEPENDENCIES:
   - Adjust
@@ -140,6 +143,7 @@ DEPENDENCIES:
   - TBActionSheet
   - TTRangeSlider (~> 1.0.5)
   - UICircularProgressRing
+  - WebEngage
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -183,6 +187,7 @@ SPEC REPOS:
     - TBActionSheet
     - TTRangeSlider
     - UICircularProgressRing
+    - WebEngage
 
 SPEC CHECKSUMS:
   Adjust: 30d2cf13dad1a8ba08cf5082d312a26b21da3f29
@@ -225,7 +230,8 @@ SPEC CHECKSUMS:
   TBActionSheet: 8b810e7f51f53a25666b5e620add84ce826815ab
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
+  WebEngage: 3b901b794cf8a5b2f837ca8af638ff65df6067fd
 
-PODFILE CHECKSUM: 9f97477f0279e28ac90f7b52c83401246fc2f9f2
+PODFILE CHECKSUM: b95137c7325226c32bbd1fc511074be676b6bef4
 
 COCOAPODS: 1.5.3
