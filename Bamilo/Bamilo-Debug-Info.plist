@@ -237,6 +237,10 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>WEGLicenseCode</key>
+	<string>76ab187</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

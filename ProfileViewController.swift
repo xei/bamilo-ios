@@ -205,7 +205,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     private func cleanAllUserInformations() {
         UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
-//        EmarsysPredictManager.userLoggedOut()
         CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil

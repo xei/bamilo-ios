@@ -29,6 +29,7 @@
 //#import "PushWooshTracker.h"
 //#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
+#import <WebEngage/WebEngage.h>
 
 @interface JAAppDelegate ()
 
@@ -130,6 +131,9 @@
     //#########################################################################################################
     //Start Crashlytics
     [Fabric with:@[[Crashlytics class]]];
+    
+    //Notification Configs
+    [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     
     //Crashlytics Integration with PushWoosh
     //http://docs.pushwoosh.com/docs/crashlytics-integration
@@ -267,17 +271,19 @@
 
 // system push notifications callback, delegate to pushManager
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-    //PUSH WOOSH
-    if (@available(iOS 10.0, *)) {
-        completionHandler(UIBackgroundFetchResultNoData);
-    } else {
-//        [[PushNotificationManager pushManager] handlePushReceived:userInfo];
-        completionHandler(UIBackgroundFetchResultNoData);
-    }
+    
 }
+
+
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     //    [[RITrackingWrapper sharedInstance] applicationDidReceiveLocalNotification:notification];
+}
+
+-(void)WEGHandleDeeplink:(NSString*)deeplink userData:(NSDictionary*)data {
+    if (VALID_NOTEMPTY(deeplink, NSString)) {
+        [DeepLinkManager handleUrl:[NSURL URLWithString:deeplink]];
+    }
 }
 
 #pragma mark - Open URL Scheme

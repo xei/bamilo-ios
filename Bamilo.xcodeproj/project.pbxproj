@@ -439,6 +439,7 @@
 		791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */; };
 		791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */; };
 		79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B02FB12172FE0E009D51F8 /* FormCustomField.m */; };
+		79F5BA782184456B00705209 /* WebEnganeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5BA772184456B00705209 /* WebEnganeTracker.swift */; };
 		79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */; };
 		79F743B521771BB4004D7155 /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B421771BB4004D7155 /* ChangePassViewController.swift */; };
 		79FEC0AD2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */; };
@@ -1596,6 +1597,7 @@
 		791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormLinkButtonTableViewCell.xib; sourceTree = "<group>"; };
 		79B02FB02172FE0E009D51F8 /* FormCustomField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormCustomField.h; sourceTree = "<group>"; };
 		79B02FB12172FE0E009D51F8 /* FormCustomField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormCustomField.m; sourceTree = "<group>"; };
+		79F5BA772184456B00705209 /* WebEnganeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebEnganeTracker.swift; sourceTree = "<group>"; };
 		79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
 		79F743B421771BB4004D7155 /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassViewController.swift; sourceTree = "<group>"; };
 		79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthenticationViewCtrl.swift; sourceTree = "<group>"; };
@@ -4242,6 +4244,7 @@
 				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
 				61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */,
 				61E17E6F2129799A00481794 /* FirebaseTracker.swift */,
+				79F5BA772184456B00705209 /* WebEnganeTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -9374,6 +9377,7 @@
 				613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */,
 				6157A73D20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
+				79F5BA782184456B00705209 /* WebEnganeTracker.swift in Sources */,
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */,

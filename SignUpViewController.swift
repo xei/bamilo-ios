@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class SignUpViewController: BaseAuthenticationViewCtrl {
     
@@ -51,6 +52,7 @@ class SignUpViewController: BaseAuthenticationViewCtrl {
                     return
                 }
                 self.errorHandler(error, forRequestID: 0)
+                self.trackSignUp(user: nil, success: false)
             }
         }
     }
@@ -66,6 +68,20 @@ class SignUpViewController: BaseAuthenticationViewCtrl {
                 self.requestForSignUp(target: target)
             }
         }
+    }
+    
+    private func trackSignUp(user: User?, success: Bool) {
+        if let userID = user?.userID {
+            Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
+        }
+        if let name = user?.firstName, let lastName = user?.lastName {
+            Crashlytics.sharedInstance().setUserName("\(name) \(lastName)")
+        }
+        if let email = user?.email {
+            Crashlytics.sharedInstance().setUserEmail(email)
+        }
+        
+        TrackerManager.postEvent(selector: EventSelectors.signupEventSelector(), attributes: EventAttributes.signup(method: "normal", user: user, success: success))
     }
 }
 
@@ -103,9 +119,11 @@ extension SignUpViewController: DataServiceProtocol {
         if let password = self.passwordFieldModel?.getValue() {
             if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
                 self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+                self.trackSignUp(user: customer, success: true)
             }
             if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
                 self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+                self.trackSignUp(user: customer, success: true)
             }
         }
     }

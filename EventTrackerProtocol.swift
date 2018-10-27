@@ -16,7 +16,6 @@
     @objc optional func search(attributes: EventAttributeType)
     @objc optional func purchased(attributes: EventAttributeType)
     @objc optional func purchaseBehaviour(attributes: EventAttributeType)
-    @objc optional func teaserPurchased(attributes: EventAttributeType)
     @objc optional func itemTapped(attributes: EventAttributeType)
     @objc optional func addToCart(attributes: EventAttributeType)
     @objc optional func removeFromCart(attributes: EventAttributeType)

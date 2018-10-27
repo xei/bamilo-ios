@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class SignInViewController: BaseAuthenticationViewCtrl {
     
@@ -49,6 +50,20 @@ class SignInViewController: BaseAuthenticationViewCtrl {
         super.viewWillAppear(animated)
         self.formController?.registerForKeyboardNotifications()
     }
+    
+    private func trackSignIn(user: User?, success: Bool) {
+        if let userID = user?.userID {
+            Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
+        }
+        if let name = user?.firstName, let lastName = user?.lastName {
+            Crashlytics.sharedInstance().setUserName("\(name) \(lastName)")
+        }
+        if let email = user?.email {
+            Crashlytics.sharedInstance().setUserEmail(email)
+        }
+        
+        TrackerManager.postEvent(selector: EventSelectors.loginEventSelector(), attributes: EventAttributes.login(loginMethod: "normal", user: user, success: success))
+    }
 }
 
 //MARK: - DataServiceProtocol
@@ -58,9 +73,11 @@ extension SignInViewController: DataServiceProtocol {
         if let password = self.passwordFieldModel?.getValue() {
             if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
                 self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+                self.trackSignIn(user: customer, success: true)
             }
             if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
                 self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+                self.trackSignIn(user: customer, success: true)
             }
         }
     }
@@ -87,6 +104,7 @@ extension SignInViewController: FormViewControlDelegate {
                         return
                     }
                     self.errorHandler(error, forRequestID: 0)
+                    self.trackSignIn(user: nil, success: false)
                 }
             }
         }
