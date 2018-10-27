@@ -37,19 +37,19 @@ class RequestManagerSwift {
             if(type == .container || type == .foreground) {
                 LoadingManager.showLoading(on: target)
             }
-            print("------------ Start request for : \(baseUrl)/\(path)")
+            NSLog("------------ Start request for : \(baseUrl)/\(path)")
             if let params = params {
                 print(params)
             }
             let requestUrl = "\(baseUrl)/\(path)".addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
             return RequestManagerSwift.sharedManager.request(requestUrl ?? "\(baseUrl)/\(path)", method: method, parameters: params, encoding: URLEncoding(destination: .methodDependent), headers: self.createHeaders()).response(completionHandler: { (response) in
                 if let data = response.data, let utf8Text = String(data: data, encoding: .utf8), let url = response.request?.url {
-                    print("------------ Start response for : \(url)")
-                    print("DataResponse: \(utf8Text)")
+                    NSLog("------------ Start response for : \(url)")
+                    NSLog("DataResponse: \(utf8Text)")
                 }
                 
                 if let header = response.response?.allHeaderFields {
-                    print("headerResponse: \(header)")
+                    NSLog("headerResponse: \(header)")
                 }
             }).responseObject { (response: DataResponse<ApiResponseData>) in
                 switch response.result {

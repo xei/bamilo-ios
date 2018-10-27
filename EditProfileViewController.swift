@@ -44,6 +44,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             let bankCard = FormItemModel.bankAccountFieldName("customer[card_number]") {
             phone.icon = nil
             email.disabled = true
+            nationalID.icon = nil
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone
             self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard, "submit"]

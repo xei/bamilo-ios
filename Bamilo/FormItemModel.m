@@ -168,7 +168,7 @@
 + (FormItemModel *)nationalID: (NSString *)fieldName {
     return  [[FormItemModel alloc] initWithTextValue: nil
                                            fieldName: fieldName
-                                             andIcon: nil
+                                             andIcon: [UIImage imageNamed:@"national_ID"]
                                          placeholder: STRING_NATIONAL_ID
                                                 type: InputTextFieldControlTypeNumerical
                                           validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]

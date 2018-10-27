@@ -128,6 +128,8 @@
     [self.input showDisabledMode:model.disabled];
     //update UI
     self.input.icon.image = model.icon;
+    self.input.icon.image = [model.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.input.icon setTintColor:[UIColor lightGrayColor]];
     self.input.textField.placeholder = model.placeholder;
     self.validation = model.validation;
     [self setType: model.type];
