@@ -91,13 +91,21 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         }
     }
     
-    func purchased(attributes: EventAttributeType) {
-        if let category = attributes[kGAEventCategory] as? String,
-            let label = attributes[kGAEventLabel] as? String {
-            
+    func checkoutStart(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            analytics.trackEvent(withName: "checkout_start", andValue: [
+                "cart_price": cart.cartEntity.cartValue
+            ])
         }
     }
     
+    func checkoutFinished(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            analytics.trackEvent(withName: "checkout_finsih", andValue: [
+                "cart_price": cart.cartEntity.cartValue
+            ])
+        }
+    }
     
     func trackScreenName(screenName: String) {
         analytics.navigatingToScreen(withName: screenName)

@@ -61,8 +61,6 @@ import Crashlytics
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
         if let userID = CurrentUserManager.user.userID, userID != 0 {
-//            EmarsysPredictManager.setCustomer(CurrentUserManager.user)
-//            PushWooshTracker.setUserID("\(userID)")
             Crashlytics.sharedInstance().setUserName(CurrentUserManager.user.email)
             Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
         }

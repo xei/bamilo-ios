@@ -166,14 +166,17 @@ import Firebase
         }
     }
     
+    func purchased(attributes: EventAttributeType) {
+        //becasues we have the checkout finish it's not necessary
+    }
+    
     func purchaseBehaviour(attributes: EventAttributeType) {
         if let category = attributes[kGAEventCategory] as? String,
             let label = attributes[kGAEventLabel] as? String {
             Analytics.logEvent("purchase_teaser", parameters: [
                 AnalyticsParameterCampaign: category,
-                AnalyticsParameterItemName: label,
-                
-                ])
+                AnalyticsParameterItemName: label
+            ])
         }
     }
     
