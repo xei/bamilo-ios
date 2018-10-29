@@ -336,19 +336,21 @@
     NSString* filterPush = [selectedItem objectForKey:@"filter"];
     NSString* sorting = [selectedItem objectForKey:@"sorting"];
     
+    
+    CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
     if (category) {
-        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:category.urlKey];
-        
-        [self pushViewController:catalog animated:YES];
     } else if (categoryUrlKey.length) {
-        CatalogViewController *catalog = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"catalogViewController"];
         catalog.searchTarget = [RITarget getTarget:CATALOG_CATEGORY node:categoryUrlKey];
-        catalog.pushFilterQueryString = filterPush;
-
-        catalog.sortingMethodString = sorting;
-        [self pushViewController:catalog animated:YES];
     }
+    if (VALID_NOTEMPTY(filterPush, NSString)) {
+        catalog.pushFilterQueryString = filterPush;
+    }
+    if (VALID_NOTEMPTY(sorting, NSString)) {
+        catalog.sortingMethodString = sorting;
+    }
+    
+    [self pushViewController:catalog animated:YES];
 }
 
 #pragma mark - PDV Actions

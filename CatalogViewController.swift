@@ -37,7 +37,7 @@ import SwiftyJSON
     @IBOutlet private weak var topCollectionViewConstraint: NSLayoutConstraint!
     
     var navBarTitle: String?
-    var searchTarget: RITarget!
+    var searchTarget: RITarget?
     var sortingMethod: Catalog.CatalogSortType? = nil
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
@@ -417,8 +417,8 @@ import SwiftyJSON
             return
         }
         
-        if self.pageNumber == 1 {
-            self.trackSearch(searchTarget: self.searchTarget)
+        if self.pageNumber == 1, let target = self.searchTarget {
+            self.trackSearch(searchTarget: target)
         }
         
         //Sequence of these functions are important
@@ -430,8 +430,8 @@ import SwiftyJSON
         if let _ = self.pushFilterQueryString {
             self.filteredNoResultContainer.isHidden = false
         } else {
-            if self.searchTarget.type.contains("catalog_") {
-                self.noResultViewController?.searchQuery = self.searchTarget.node
+            if let type = self.searchTarget?.type, type.contains("catalog_") {
+                self.noResultViewController?.searchQuery = self.searchTarget?.node
             }
             self.noResultViewController?.getSuggestions()
             self.noResultViewContainer.isHidden = false
@@ -537,7 +537,7 @@ import SwiftyJSON
                 callBack?(false)
             } else {
                 self.bind(data, forRequestId: 0)
-                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget.node)
+                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget?.node ?? "all_products")
                 callBack?(true)
             }
             self.resetBarFollowers(animated: true)
