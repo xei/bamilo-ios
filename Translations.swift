@@ -171,4 +171,5 @@ let STRING_USER_SIGNIN = RILocalizationWrapper.localizedString("user_signin")!
 let STRING_EMAIL = RILocalizationWrapper.localizedString("email")!
 let STRING_CELLPHONE = RILocalizationWrapper.localizedString("cellphone")!
 let STRING_CHANGE_PASSWORD = RILocalizationWrapper.localizedString("change_password")!
+let STRING_SUCCESS_FORGET_PASS = RILocalizationWrapper.localizedString("forgotten_password_successtext")!
 

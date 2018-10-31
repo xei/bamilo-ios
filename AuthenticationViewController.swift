@@ -184,6 +184,9 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
                     })
                 }
             }
+        } else if viewMode == .forgetPass {
+            self.phoneVerificationRequestedFromViewMode = viewMode
+            self.switchTo(viewMode: .phoneVerify)
         }
     }
     
@@ -209,6 +212,8 @@ extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
             self.signUpViewController?.verifyPhoneForSignUp(with: phoneVerifyViewCtrl ,pinCode: pinCode)
         } else if viewMode == .changePhone {
             self.phoneChangeViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
+        } else if viewMode == .changePhone {
+            self.forgetPassViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
         }
     }
 }

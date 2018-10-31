@@ -74,4 +74,24 @@ class AuthenticationDataManager: DataManagerSwift {
             }
         }
     }
+    
+    func forgetPassReq(_ target:DataServiceProtocol?, params: [String: String], completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_FORGET_PASS_REQUEST, params: params, type: .foreground) { (responseType, data, errors) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
+        }
+    }
+    
+    
+    func forgetPassReset(_ target:DataServiceProtocol?, params: [String: String], newPass: String, completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_FORGET_PASS_RESET, params: params, type: .foreground) { (responseType, data, errors) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
+        }
+    }
+    
+    
+    func forgetPassVerify(_ target:DataServiceProtocol?, params: [String: String], completion: @escaping DataClosure) {
+        AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_FORGET_PASS_VERIFY, params: params, type: .foreground) { (responseType, data, errors) in
+            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
+        }
+    }
 }

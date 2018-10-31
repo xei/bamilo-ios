@@ -192,14 +192,20 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func logoutUser() {
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
-            //EVENT: LOGOUT
-            TrackerManager.postEvent(
-                selector: EventSelectors.logoutEventSelector(),
-                attributes: EventAttributes.logout(success: true)
-            )
-            
-            self.cleanAllUserInformations()
-            self.bind(data, forRequestId: 0)
+            if let error = error {
+                if !Utility.handleErrorMessages(error: error, viewController: self) {
+                    self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
+                }
+            } else {
+                //EVENT: LOGOUT
+                TrackerManager.postEvent(
+                    selector: EventSelectors.logoutEventSelector(),
+                    attributes: EventAttributes.logout(success: true)
+                )
+                
+                self.cleanAllUserInformations()
+                self.bind(data, forRequestId: 0)
+            }
         }
     }
     

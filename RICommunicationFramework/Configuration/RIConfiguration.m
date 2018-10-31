@@ -163,3 +163,7 @@ NSString *const RI_API_REVIEW_LIST = @"catalog/reviews/sku/";
 NSString *const RI_API_SPECIFICATION = @"catalog/specification/sku/";
 NSString *const RI_API_PRODUCT_DESCRIPTIONS = @"catalog/description/sku/";
 NSString *const RI_API_ADD_PRODUCT_REVIEW = @"rating/addproductreview/";
+
+NSString *const RI_API_FORGET_PASS_REQUEST = @"customer/forgotpasswordrequest/";
+NSString *const RI_API_FORGET_PASS_VERIFY = @"customer/forgotpasswordverify/";
+NSString *const RI_API_FORGET_PASS_RESET = @"customer/forgotpasswordreset/";
