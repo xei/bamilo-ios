@@ -73,6 +73,8 @@
 
     self.neeedsExternalPaymentMethod = NO;
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    [CurrentUserManager loadLocal];
 }
 
 - (void)registerObservingOnNotifications {

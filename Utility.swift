@@ -73,10 +73,10 @@ import Adjust
     class func resetUserBehaviours() {
         //Reset some actions
 //        EmarsysPredictManager.userLoggedOut()
-        CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil
         LocalSearchSuggestion().clearAllHistories()
+        MainTabBarViewController.showHome()
     }
     
     class func delay (duration: TimeInterval, completion: @escaping ()->() ) {

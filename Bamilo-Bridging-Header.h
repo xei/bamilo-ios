@@ -39,6 +39,9 @@
 #import "InputTextFieldControl.h"
 #import "StepperViewControl.h"
 
+#import "EmarsysPredictProtocol.h"
+#import "EmarsysPredictManager.h"
+
 #import "BaseControlView.h"
 #import "BaseViewControl.h"
 #import "ViewControllerManager.h"

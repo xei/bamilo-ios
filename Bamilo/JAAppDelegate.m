@@ -27,7 +27,7 @@
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
 //#import "PushWooshTracker.h"
-//#import "EmarsysPredictManager.h"
+#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 #import <WebEngage/WebEngage.h>
 
@@ -176,7 +176,7 @@
             }];
         }
     }
-//    [EmarsysPredictManager setConfigs];
+    [EmarsysPredictManager setConfigs];
     return YES;
 }
 

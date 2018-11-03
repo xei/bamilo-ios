@@ -37,6 +37,8 @@ class BaseAuthenticationViewCtrl: BaseViewController {
                             if let fieldNameParam = error["field"], fieldNameParam.count > 0, let errorMsg = error[kMessage] {
                                 if let result = self.formController?.showErrorMessage(forField: "\(formParamsName)[\(fieldNameParam)]", errorMsg: errorMsg), result {
                                     errorHandled = true
+                                } else if let result = self.formController?.showErrorMessage(forField: "\(fieldNameParam)", errorMsg: errorMsg), result {
+                                    errorHandled = true
                                 }
                             }
                         }

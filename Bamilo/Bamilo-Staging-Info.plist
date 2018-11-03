@@ -144,7 +144,9 @@
 		<key>API_BaseUrl</key>
 		<string>https://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
-		<string>2.11</string>
+		<string>2.12</string>
+        <key>EMMerchantID</key>
+        <string>18146DE34FE0B8C9</string>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-52004541-5</string>
 		<key>Tour</key>

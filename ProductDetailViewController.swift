@@ -26,7 +26,7 @@ extension UIImageView: DisplaceableView {}
     
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
-//    private var recommendItems: [RecommendItem]?
+    private var recommendItems: [RecommendItem]?
     private var calculatedDeliveryTimeMessage: String?
     
     enum CellType {
@@ -137,7 +137,7 @@ extension UIImageView: DisplaceableView {}
                 completion?(true)
                 
                 //request for emarsys recommendations
-//                EmarsysPredictManager.sendTransactions(of: self)
+                EmarsysPredictManager.sendTransactions(of: self)
             } else {
                 self.errorHandler(error, forRequestID: 0)
                 completion?(false)
@@ -181,10 +181,10 @@ extension UIImageView: DisplaceableView {}
             }
             
             //related items
-//            if let items = self.recommendItems, items.count > 0 {
-//                self.sectionNames[self.availableSections.count] = STRING_RELATED_ITEMS
-//                self.availableSections[self.availableSections.count] = [.relatedItems]
-//            }
+            if let items = self.recommendItems, items.count > 0 {
+                self.sectionNames[self.availableSections.count] = STRING_RELATED_ITEMS
+                self.availableSections[self.availableSections.count] = [.relatedItems]
+            }
             
             //breadcrumbs
             if let items = self.product?.breadCrumbs, items.count > 0 {
@@ -262,7 +262,7 @@ extension UIImageView: DisplaceableView {}
             viewCtrl.product = self.product
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showAllRecommendationViewController", let viewCtrl = segue.destination as? AllRecommendationViewController {
-//            viewCtrl.recommendItems = self.recommendItems ?? []
+            viewCtrl.recommendItems = self.recommendItems ?? []
             viewCtrl.hidesBottomBarWhenPushed = false
         }
     }
@@ -354,10 +354,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             return cell
         case .relatedItems:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductRecommendationWidgetTableViewCell
-//            if let firstSix = recommendItems?.prefix(6) {
-//                cell.update(withModel: Array(firstSix))
-//                cell.setDelegate(delegate: self)
-//            }
+            if let firstSix = recommendItems?.prefix(6) {
+                cell.update(withModel: Array(firstSix))
+                cell.setDelegate(delegate: self)
+            }
             return cell
         case .breadcrumbs:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! ProductBreadCrumbTableViewCell
@@ -585,32 +585,32 @@ extension ProductDetailViewController: SellerViewDelegate {
 }
 
 
-////MARK: - EmarsysPredictProtocol
-//extension ProductDetailViewController: EmarsysPredictProtocol {
-//    func getRecommendations() -> [EMRecommendationRequest]! {
-//        let recommend = EMRecommendationRequest(logic: "RELATED")
-//        recommend.limit = 100
-//        recommend.completionHandler = { (result) in
-//            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
-//            ThreadManager.execute(onMainThread: {
-//                self.updateAvaibleSections()
-//                self.tableView.reloadData()
-//            })
-//        }
-//        return [recommend]
-//    }
-//
-//    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-//        if let sku = self.product?.sku {
-//            transaction.setView(sku)
-//        }
-//        return transaction;
-//    }
-//
-//    func isPreventSendTransactionInViewWillAppear() -> Bool {
-//        return true
-//    }
-//}
+//MARK: - EmarsysPredictProtocol
+extension ProductDetailViewController: EmarsysPredictProtocol {
+    func getRecommendations() -> [EMRecommendationRequest]! {
+        let recommend = EMRecommendationRequest(logic: "RELATED")
+        recommend.limit = 100
+        recommend.completionHandler = { (result) in
+            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
+            ThreadManager.execute(onMainThread: {
+                self.updateAvaibleSections()
+                self.tableView.reloadData()
+            })
+        }
+        return [recommend]
+    }
+
+    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+        if let sku = self.product?.sku {
+            transaction.setView(sku)
+        }
+        return transaction;
+    }
+
+    func isPreventSendTransactionInViewWillAppear() -> Bool {
+        return true
+    }
+}
 
 //MARK: - BreadcrumbsViewDelegate
 extension ProductDetailViewController: BreadcrumbsViewDelegate {
@@ -619,18 +619,18 @@ extension ProductDetailViewController: BreadcrumbsViewDelegate {
     }
 }
 
-////MARK: - FeatureBoxCollectionViewWidgetViewDelegate
-//extension ProductDetailViewController: FeatureBoxCollectionViewWidgetViewDelegate {
-//
-//    func selectFeatureItem(_ item: NSObject!, widgetBox: Any!) {
-//        if let recommendItem = item as? RecommendItem {
-//            let productDetailViewCtrl =  ViewControllerManager.sharedInstance().loadViewController("ProductDetailViewController") as! ProductDetailViewController
-//            productDetailViewCtrl.productSku = recommendItem.sku
-//            self.navigationController?.pushViewController(productDetailViewCtrl, animated: true)
-//        }
-//    }
-//
-//    func moreButtonTapped(inWidgetView widgetView: Any!) {
-//        self.performSegue(withIdentifier: "showAllRecommendationViewController", sender: nil)
-//    }
-//}
+//MARK: - FeatureBoxCollectionViewWidgetViewDelegate
+extension ProductDetailViewController: FeatureBoxCollectionViewWidgetViewDelegate {
+
+    func selectFeatureItem(_ item: NSObject!, widgetBox: Any!) {
+        if let recommendItem = item as? RecommendItem {
+            let productDetailViewCtrl =  ViewControllerManager.sharedInstance().loadViewController("ProductDetailViewController") as! ProductDetailViewController
+            productDetailViewCtrl.productSku = recommendItem.sku
+            self.navigationController?.pushViewController(productDetailViewCtrl, animated: true)
+        }
+    }
+
+    func moreButtonTapped(inWidgetView widgetView: Any!) {
+        self.performSegue(withIdentifier: "showAllRecommendationViewController", sender: nil)
+    }
+}

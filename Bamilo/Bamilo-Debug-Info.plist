@@ -145,6 +145,8 @@
 		<string>2.12</string>
 		<key>AdjustTokenID</key>
 		<string>pttex2kff47v</string>
+        <key>EMMerchantID</key>
+        <string>18146DE34FE0B8C9</string>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-52004541-5</string>
 		<key>Tour</key>

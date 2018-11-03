@@ -10,6 +10,7 @@ PODS:
   - CHIPageControl/Jalapeno (0.1.7)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
+  - EmarsysPredictSDK (1.0.38)
   - Fabric (1.7.13)
   - Firebase/Core (5.10.0):
     - Firebase/CoreOnly
@@ -121,6 +122,7 @@ DEPENDENCIES:
   - AnimatedCollectionViewLayout
   - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
+  - EmarsysPredictSDK
   - Fabric
   - Firebase/Core
   - Firebase/Performance
@@ -153,6 +155,7 @@ SPEC REPOS:
     - AnimatedCollectionViewLayout
     - CHIPageControl
     - Crashlytics
+    - EmarsysPredictSDK
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -196,6 +199,7 @@ SPEC CHECKSUMS:
   AnimatedCollectionViewLayout: f0295119f94d8492fc6ac39e2ced64a471b12699
   CHIPageControl: bbe1ddd0c688c02ec65b7f7e7d34551a3d16f37c
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
+  EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   Firebase: 6691d47562a780c26281ce8464518faafc90c610
   FirebaseAnalytics: 831f1f127f4a75698e9875a87bf7e2668730d953
@@ -232,6 +236,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
   WebEngage: 3b901b794cf8a5b2f837ca8af638ff65df6067fd
 
-PODFILE CHECKSUM: b95137c7325226c32bbd1fc511074be676b6bef4
+PODFILE CHECKSUM: 25edf28c4f7519762ea6413de0b4df9397895c88
 
 COCOAPODS: 1.5.3
