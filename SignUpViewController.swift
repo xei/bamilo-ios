@@ -112,7 +112,7 @@ extension SignUpViewController: DataServiceProtocol {
         // and it's better to be refactored in both platforms
         if let messageList = data as? ApiDataMessageList {
             if let reason = messageList.success?.first?.reason, reason == "CUSTOMER_REGISTRATION_STEP_1_VALIDATED", let phone = phoneFieldModel?.getValue() {
-                self.delegate?.requestForPhoneVerification(from: .signUp, phone: phone, target: self, rid: 9)
+                self.delegate?.requestForVerification(from: .signUp, identifier: phone, target: self, rid: 9)
             }
         }
         //End TODO

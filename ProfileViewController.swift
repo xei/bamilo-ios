@@ -154,12 +154,12 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - helper functions
     @objc func shareApplication() {
         TrackerManager.postEvent(selector: EventSelectors.shareAppSelector(), attributes: EventAttributes.shareApp())
-        var url = "app.adjust.com/gj8sf8k"
+        var url = "http://app.adjust.com/gj8sf8k"
         if CurrentUserManager.isUserLoggedIn(), let userID = CurrentUserManager.user.userID {
             url += "?label=\(userID)"
         }
         
-        Utility.shareUrl(url: url, message: "اپلیکشین بامیلو را به اشتراک بگذارید", viewController: self)
+        Utility.shareUrl(url: url, message: "اپلیکیشن بامیلو رو دانلود کن و تخفیف بگیر!", viewController: self)
     }
     
     @objc func showLogin() {
@@ -192,20 +192,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func logoutUser() {
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
-            if let error = error {
-                if !Utility.handleErrorMessages(error: error, viewController: self) {
-                    self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
-                }
-            } else {
-                //EVENT: LOGOUT
-                TrackerManager.postEvent(
-                    selector: EventSelectors.logoutEventSelector(),
-                    attributes: EventAttributes.logout(success: true)
-                )
-                
-                self.cleanAllUserInformations()
-                self.bind(data, forRequestId: 0)
-            }
+            //EVENT: LOGOUT
+            TrackerManager.postEvent(
+                selector: EventSelectors.logoutEventSelector(),
+                attributes: EventAttributes.logout(success: true)
+            )
+            
+            self.cleanAllUserInformations()
+            self.bind(data, forRequestId: 0)
         }
     }
     
@@ -217,6 +211,18 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         LocalSearchSuggestion().clearAllHistories()
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()
+        removeAllCookies()
+    }
+    
+    private func removeAllCookies() {
+        let cstorage = HTTPCookieStorage.shared
+        if let baseUrlString = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
+            let url = URL(string: baseUrlString),
+            let cookies = cstorage.cookies(for: url) {
+            for cookie in cookies {
+                cstorage.deleteCookie(cookie)
+            }
+        }
     }
     
     @objc func updateByLogin(notification: Notification) {

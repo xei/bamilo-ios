@@ -49,7 +49,7 @@ extension PhoneChangeViewController: FormViewControlDelegate {
                 return
             }
             if let phone = phoneField?.getValue() {
-                self.delegate?.requestForPhoneVerification(from: .changePhone, phone: phone, target: self, rid: 0)
+                self.delegate?.requestForVerification(from: .changePhone, identifier: phone, target: self, rid: 0)
             }
         }
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="07Y-oI-dJa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="07Y-oI-dJa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -343,8 +343,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-ya-SR4">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد بازیابی را ارسال کنید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-ZS-A8y">
-                                        <rect key="frame" x="115.5" y="16.5" width="144.5" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تایید را ارسال کنید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-ZS-A8y">
+                                        <rect key="frame" x="120" y="16.5" width="135" height="27"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -397,6 +397,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                 <state key="normal" title="ارسال کد مجدد"/>
+                                <connections>
+                                    <action selector="retrySMSButtonTapped:" destination="iat-nh-NBz" eventType="touchUpInside" id="2QU-HA-58q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fM-ZC-zAT">
                                 <rect key="frame" x="30" y="256" width="315" height="38"/>
@@ -449,12 +452,20 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSW-Tc-JkU">
+                                <rect key="frame" x="166.5" y="220" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="RSW-Tc-JkU" firstAttribute="centerX" secondItem="hjs-Mx-B8q" secondAttribute="centerX" id="1Ns-7B-gCl"/>
                             <constraint firstItem="hjs-Mx-B8q" firstAttribute="top" secondItem="S72-Tz-Szl" secondAttribute="bottom" constant="17" id="64i-eI-Pdl"/>
                             <constraint firstItem="hmj-iX-nbs" firstAttribute="trailing" secondItem="LzA-et-evT" secondAttribute="trailing" constant="15" id="8hx-K8-3cJ"/>
                             <constraint firstItem="Imj-ya-SR4" firstAttribute="trailing" secondItem="hmj-iX-nbs" secondAttribute="trailing" id="BGW-gN-jd8"/>
+                            <constraint firstItem="RSW-Tc-JkU" firstAttribute="centerY" secondItem="hjs-Mx-B8q" secondAttribute="centerY" id="TUC-ym-hPA"/>
                             <constraint firstItem="S72-Tz-Szl" firstAttribute="top" secondItem="PG7-7j-SY8" secondAttribute="bottom" constant="8" id="XnC-gY-U5D"/>
                             <constraint firstItem="2fM-ZC-zAT" firstAttribute="leading" secondItem="hmj-iX-nbs" secondAttribute="leading" constant="30" id="Yg0-H3-U1M"/>
                             <constraint firstItem="S72-Tz-Szl" firstAttribute="centerX" secondItem="PG7-7j-SY8" secondAttribute="centerX" id="Z3e-gP-F5N"/>
@@ -472,7 +483,10 @@
                     </view>
                     <connections>
                         <outlet property="pinCodeField" destination="S72-Tz-Szl" id="z7h-Qb-ATX"/>
+                        <outlet property="sendSMSRetryButton" destination="hjs-Mx-B8q" id="6tU-fK-aR5"/>
+                        <outlet property="sendingMessageLabel" destination="LzA-et-evT" id="eEg-kM-f8U"/>
                         <outlet property="submitButton" destination="2fM-ZC-zAT" id="Vs7-gQ-E2U"/>
+                        <outlet property="timerLabel" destination="RSW-Tc-JkU" id="Gcc-ua-OOX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vCk-UR-iAo" userLabel="First Responder" sceneMemberID="firstResponder"/>

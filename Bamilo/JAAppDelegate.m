@@ -162,6 +162,7 @@
 //    [TrackerManager addTrackerWithTracker:[PushWooshTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[GoogleAnalyticsTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[AdjustTracker sharedTracker]];
+    [TrackerManager addTrackerWithTracker: [WebEnganeTracker sharedTracker]];
 //    [TrackerManager addTrackerWithTracker:[EmarsysMobileEngageTracker sharedTracker]];
     [TrackerManager addTrackerWithTracker:[FirebaseTracker sharedTracker]];
     

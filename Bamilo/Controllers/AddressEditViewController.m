@@ -73,7 +73,7 @@
     FormItemModel *postalCode = [FormItemModel postalCodeWithFieldName:@"address_form[address2]"];
     postalCode.validation.isRequired = NO;
     
-    [self.formController.formModelList addObjectsFromArray:@[ addressHeader, region, city, vicinity, address, postalCode, @"submit" ]];
+    [self.formController.formModelList addObjectsFromArray:@[ addressHeader, region, city, vicinity, address, postalCode ]];
     
     //ADDRESS - USER INFO SECTION
     FormHeaderModel *personalInfoHeader = [[FormHeaderModel alloc] initWithHeaderTitle:STRING_RECIPIENT_INFO];
@@ -92,7 +92,7 @@
         [phone setInputTextValue:customer.phone];
     }
     
-    [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
+    [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone, @"submit" ]];
     if (![CurrentUserManager.user getGender] && self.address == nil) {
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];

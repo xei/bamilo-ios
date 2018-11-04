@@ -47,23 +47,7 @@ class ForgetPassViewController: BaseAuthenticationViewCtrl {
     
     private func requestForForgetPass(params: [String: String]) {
         if let phoneOrEmail = phoneOrEamil?.getValue() {
-            AuthenticationDataManager.sharedInstance.forgetPassReq(self, params: params) { (data, error) in
-                if error == nil {
-                    let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
-                    let isMobile = regex.firstMatch(in: phoneOrEmail, options: [], range: NSMakeRange(0, phoneOrEmail.utf16.count)) != nil
-                    
-                    if isMobile {
-                        self.delegate?.requestForPhoneVerification(from: .forgetPass, phone: phoneOrEmail, target: self, rid: 0)
-                    } else {
-                        (self.delegate as? BaseViewController)?.showNotificationBarMessage(STRING_SUCCESS_FORGET_PASS, isSuccess: true)
-                        Utility.delay(duration: 2, completion: {
-                            self.dismiss(animated: true, completion: nil)
-                        })
-                    }
-                } else {
-                    self.errorHandler(error, forRequestID: 0)
-                }
-            }
+            self.delegate?.requestForVerification(from: .forgetPass, identifier: phoneOrEmail, target: self, rid: 0)
         }
     }
 }

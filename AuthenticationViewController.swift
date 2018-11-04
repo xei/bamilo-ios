@@ -25,7 +25,7 @@ protocol AuthenticationViewsDelegate: class {
     func contentSizeChanged(height: CGFloat, for viewMode: AuthenticationViewMode)
     func switchTo(viewMode: AuthenticationViewMode)
     func successSignUpOrSignInWithUser(user: User, password: String)
-    func requestForPhoneVerification(from viewMode: AuthenticationViewMode, phone: String, target: DataServiceProtocol, rid: Int32)
+    func requestForVerification(from viewMode: AuthenticationViewMode, identifier: String, target: DataServiceProtocol, rid: Int32)
     func successfullyHasChangedPhone(phone: String)
 }
 
@@ -103,7 +103,7 @@ class AuthenticationViewController: BaseViewController {
             forgetPassViewController?.updateHeightContent()
         case .phoneVerify:
             phoneVerifyViewContainer.fadeIn(duration: 0.15)
-            phoneVerifyViewController?.updateHeightContent()
+            phoneVerifyViewController?.prepareToPresent()
         case .changePhone:
             changePhoneViewContainer.fadeIn(duration: 0.15)
             phoneChangeViewController?.updateHeightContent()
@@ -111,7 +111,6 @@ class AuthenticationViewController: BaseViewController {
             changePassViewContainer.fadeIn(duration: 0.15)
             changePassViewController?.updateHeightContent()
         }
-        
         //update self view mode
         viewMode = mode
     }
@@ -171,22 +170,39 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func requestForPhoneVerification(from viewMode: AuthenticationViewMode, phone: String, target: DataServiceProtocol, rid: Int32) {
+    func requestForVerification(from viewMode: AuthenticationViewMode, identifier: String, target: DataServiceProtocol, rid: Int32) {
         if viewMode == .signUp || viewMode == .changePhone {
-            LoadingManager.showLoading(on: target)
-            AuthenticationDataManager.sharedInstance.phoneVerification(target, phone: phone, token: nil) { (data, errors) in
+            AuthenticationDataManager.sharedInstance.phoneVerification(target, phone: identifier, token: nil) { (data, errors) in
                 if let errors = errors {
                     target.errorHandler?(errors, forRequestID: rid)
                 } else {
                     self.phoneVerificationRequestedFromViewMode = viewMode
+                    self.phoneVerifyViewController?.phone = identifier
                     ThreadManager.execute(onMainThread: {
                         self.switchTo(viewMode: .phoneVerify)
                     })
                 }
             }
         } else if viewMode == .forgetPass {
-            self.phoneVerificationRequestedFromViewMode = viewMode
-            self.switchTo(viewMode: .phoneVerify)
+            AuthenticationDataManager.sharedInstance.forgetPassReq(target, params: ["identifier": identifier]) { (data, error) in
+                if let errors = error {
+                    target.errorHandler?(errors, forRequestID: rid)
+                } else {
+                    let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
+                    let isMobile = regex.firstMatch(in: identifier, options: [], range: NSMakeRange(0, identifier.utf16.count)) != nil
+
+                    if isMobile {
+                        self.phoneVerifyViewController?.phone = identifier
+                        self.phoneVerificationRequestedFromViewMode = viewMode
+                        self.switchTo(viewMode: .phoneVerify)
+                    } else {
+                        self.showNotificationBarMessage(STRING_SUCCESS_FORGET_PASS, isSuccess: true)
+                        Utility.delay(duration: 2, completion: {
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                    }
+                }
+            }
         }
     }
     
@@ -198,6 +214,12 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
 
 //MARK: PhoneVerifyViewControllerDelegate
 extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
+    
+    func retrySendingCode(for identifier: String) {
+        if let previousMode = self.phoneVerificationRequestedFromViewMode, let target = self.phoneVerifyViewController {
+            self.requestForVerification(from: previousMode, identifier: identifier, target: target, rid: 0)
+        }
+    }
 
     func goBackToPreviousView() {
         if let previousMode = self.phoneVerificationRequestedFromViewMode {
@@ -216,4 +238,5 @@ extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
             self.forgetPassViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
         }
     }
+    
 }

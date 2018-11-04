@@ -56,10 +56,24 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         }
     }
     
-    func removeFromCart(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
+    func viewProduct(attributes: EventAttributeType) {
+        if let parentScreenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? TrackableProductProtocol {
-            analytics.trackEvent(withName: "remove_from_cart", andValue: ["product_sku": product.sku ?? "", "screen": screenName])
+            let attributes: [String:Any]  = [
+                "Price": product.payablePrice?.intValue ?? 0,
+                "Quantity": 1,
+                "Product": product.name ?? "",
+                "Category": product.categoryUrlKey ?? "",
+                "Previous_View_name": parentScreenName
+            ]
+            
+            analytics.trackEvent(withName: "view_product", andValue: attributes)
+        }
+    }
+    
+    func removeFromCart(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            analytics.trackEvent(withName: "remove_from_cart", andValue: ["product_sku": product.sku ?? ""])
         }
     }
     
@@ -72,10 +86,9 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
     }
     
     func removeFromWishList(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
-            analytics.trackEvent(withName: "add_to_wishlist", andValue: ["product_sku": product.sku ?? "", "screen": screenName, "price": price.intValue])
+            analytics.trackEvent(withName: "remove_from_wishlist", andValue: ["product_sku": product.sku ?? "", "price": price.intValue])
         }
     }
     

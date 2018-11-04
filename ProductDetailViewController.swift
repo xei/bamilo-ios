@@ -551,20 +551,6 @@ extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate
     }
 }
 
-//MARK: - ProductMoreInfoViewControllerDelegate
-//extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
-//    func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
-////        shuouldGoToCardAfterAddToCard = true
-////        self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
-//    }
-//    
-//    func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
-////        self.shuouldGoToCardAfterAddToCard = true
-////        prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
-//    }
-//}
-
-
 //MARK: - SellerViewDelegate
 extension ProductDetailViewController: SellerViewDelegate {
     func otherSellerButtonTapped() {
