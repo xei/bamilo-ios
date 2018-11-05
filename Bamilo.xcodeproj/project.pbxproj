@@ -438,6 +438,7 @@
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
 		791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */; };
 		791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */; };
+		795D7C32218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */; };
 		79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B02FB12172FE0E009D51F8 /* FormCustomField.m */; };
 		79F5BA782184456B00705209 /* WebEnganeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5BA772184456B00705209 /* WebEnganeTracker.swift */; };
 		79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */; };
@@ -1595,6 +1596,7 @@
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
 		791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLinkButtonTableViewCell.swift; sourceTree = "<group>"; };
 		791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormLinkButtonTableViewCell.xib; sourceTree = "<group>"; };
+		795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReturnPolicyViewController.swift; sourceTree = "<group>"; };
 		79B02FB02172FE0E009D51F8 /* FormCustomField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormCustomField.h; sourceTree = "<group>"; };
 		79B02FB12172FE0E009D51F8 /* FormCustomField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormCustomField.m; sourceTree = "<group>"; };
 		79F5BA772184456B00705209 /* WebEnganeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebEnganeTracker.swift; sourceTree = "<group>"; };
@@ -4290,6 +4292,7 @@
 				6157A73F20E22C23001B8361 /* ProductMoreInfoViewController.swift */,
 				6157A74120E24C02001B8361 /* ProductDescriptionsViewController.swift */,
 				6157A74320E24D0B001B8361 /* ProductSpecificsTableViewController.swift */,
+				795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */,
 			);
 			name = ProductDetailView;
 			sourceTree = "<group>";
@@ -9411,6 +9414,7 @@
 				87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */,
 				619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
+				795D7C32218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,

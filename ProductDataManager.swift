@@ -78,6 +78,12 @@ class ProductDataManager: DataManagerSwift {
         }
     }
     
+    func getReturnPolicy(_ target: DataServiceProtocol, returnPolicyKey: String, completion:@escaping DataClosure) {
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_RETURN_POLICY)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+            self.processResponse(responseType, aClass: ProductReturnPolicyContent.self, data: data, errorMessages: errorMessages, completion: completion)
+        }
+    }
+    
     func addReview(_ target: DataServiceProtocol, sku: String, rate: Int, title: String?, comment: String?, completion:@escaping DataClosure) {
         var params: [String: Any] = [
             "sku": sku,

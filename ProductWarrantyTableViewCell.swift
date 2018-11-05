@@ -9,12 +9,16 @@
 import UIKit
 import Kingfisher
 
+protocol ProductWarrantyTableViewCellDelegate: class {
+    func didSelectWarrantyMoreInfo()
+}
+
 class ProductWarrantyTableViewCell: BaseProductTableViewCell {
 
     @IBOutlet private weak var warrantyImageView: UIImageView!
     @IBOutlet private weak var warrantyTitleLabel: UILabel!
     @IBOutlet private weak var seeMoreButton: UIButton!
-    
+    weak var delegate: ProductWarrantyTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +27,10 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
         seeMoreButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
         
         seeMoreButton.setTitle(STRING_PRIVACY_POLICY, for: .normal)
-        
-        seeMoreButton.isHidden = true
+    }
+    
+    @IBAction func seeMoreTapped(_ sender: Any) {
+        delegate?.didSelectWarrantyMoreInfo()
     }
     
     override func update(withModel model: Any!) {

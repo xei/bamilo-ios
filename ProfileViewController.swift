@@ -74,9 +74,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "recently_viewed", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
             ], [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "contact_us_profile", notificationName: nil, selector: #selector(callContctUs)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_APP_SOCIAL, iconName: "share_vector", notificationName: nil, selector: #selector(shareApplication)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "feedback_profile", notificationName: nil, selector: #selector(sendIdeaOrReport)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_EMAIL_TO_CS, iconName: "email_profile", notificationName: nil, selector: #selector(sendEmailToCS)),
-                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_APP_SOCIAL, iconName: "share_vector", notificationName: nil, selector: #selector(shareApplication)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "faq_profile", notificationName: nil, selector: #selector(showFAQ))
             ]
         ]

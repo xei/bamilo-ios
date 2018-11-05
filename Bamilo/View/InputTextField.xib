@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -42,7 +42,7 @@
                                 <constraint firstAttribute="height" constant="0.59999999999999998" id="kZO-LK-odJ"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="متن خالی" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-q2-461">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="متن خالی" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-q2-461">
                             <rect key="frame" x="61.5" y="0.0" width="248.5" height="61.5"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="textColor" red="0.23921568630000001" green="0.23921568630000001" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,9 +76,9 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="GiY-9V-qjX" secondAttribute="bottom" id="8Cy-wi-Rmd"/>
                         <constraint firstItem="ZZk-q2-461" firstAttribute="top" secondItem="6Fa-Ht-d6l" secondAttribute="top" id="AEm-xi-88P"/>
-                        <constraint firstItem="ZZk-q2-461" firstAttribute="left" secondItem="8tS-5R-CSo" secondAttribute="right" id="KKp-Hq-hBn"/>
+                        <constraint firstItem="ZZk-q2-461" firstAttribute="left" secondItem="8tS-5R-CSo" secondAttribute="right" priority="750" id="KKp-Hq-hBn"/>
                         <constraint firstItem="8tS-5R-CSo" firstAttribute="centerY" secondItem="6Fa-Ht-d6l" secondAttribute="centerY" id="KcA-Zh-FVI"/>
-                        <constraint firstItem="ZZk-q2-461" firstAttribute="left" secondItem="6Fa-Ht-d6l" secondAttribute="left" priority="750" id="LVu-l2-uLA"/>
+                        <constraint firstItem="ZZk-q2-461" firstAttribute="left" secondItem="6Fa-Ht-d6l" secondAttribute="left" priority="250" id="LVu-l2-uLA"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="width" secondItem="KsS-gh-5m4" secondAttribute="height" multiplier="1:1" id="LjN-7g-Rxb"/>
                         <constraint firstAttribute="right" secondItem="GiY-9V-qjX" secondAttribute="right" id="NC3-yf-8Ga"/>
                         <constraint firstItem="KsS-gh-5m4" firstAttribute="centerY" secondItem="ZZk-q2-461" secondAttribute="centerY" id="U6P-za-nU8"/>
@@ -116,6 +116,8 @@
                 <outlet property="icon" destination="KsS-gh-5m4" id="HYy-x2-oR2"/>
                 <outlet property="iconTrailingConstraint" destination="lFj-GL-qVW" id="dHP-9Q-cUJ"/>
                 <outlet property="iconVisibleConstraint" destination="ubK-Vl-Vrz" id="sfb-t6-Sxr"/>
+                <outlet property="lefttextFieldToSuperViewConstraint" destination="LVu-l2-uLA" id="hgK-W4-727"/>
+                <outlet property="lettTextFieldToEyeIconButtonConstraint" destination="KKp-Hq-hBn" id="0jD-Vb-fw5"/>
                 <outlet property="seperatorBorderView" destination="GiY-9V-qjX" id="vfD-bi-gSl"/>
                 <outlet property="textField" destination="ZZk-q2-461" id="W3q-Hj-1x0"/>
             </connections>
@@ -123,7 +125,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Email" width="20" height="16"/>
+        <image name="Email" width="30" height="22"/>
         <image name="btn_eye_closed" width="20" height="10"/>
         <image name="ic_dropdown" width="48" height="48"/>
     </resources>

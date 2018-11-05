@@ -264,7 +264,11 @@ extension UIImageView: DisplaceableView {}
         } else if segueName == "showAllRecommendationViewController", let viewCtrl = segue.destination as? AllRecommendationViewController {
             viewCtrl.recommendItems = self.recommendItems ?? []
             viewCtrl.hidesBottomBarWhenPushed = false
+        } else if segueName == "showProductReturnPolicyViewController", let viewCtrl = segue.destination as? ProductReturnPolicyViewController {
+            viewCtrl.product = self.product
+            viewCtrl.hidesBottomBarWhenPushed = true
         }
+        
     }
     
     override func navBarleftButton() -> NavBarButtonType {
@@ -348,6 +352,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             
             if cellType == .reviewSummery {
                 (cell as? ProductReviewSummeryTableViewCell)?.delegate = self
+            }
+            
+            if cellType == .warranty {
+                (cell as? ProductWarrantyTableViewCell)?.delegate = self
             }
             
             cell.update(withModel: product)
@@ -618,5 +626,12 @@ extension ProductDetailViewController: FeatureBoxCollectionViewWidgetViewDelegat
 
     func moreButtonTapped(inWidgetView widgetView: Any!) {
         self.performSegue(withIdentifier: "showAllRecommendationViewController", sender: nil)
+    }
+}
+
+
+extension ProductDetailViewController: ProductWarrantyTableViewCellDelegate {
+    func didSelectWarrantyMoreInfo() {
+        self.performSegue(withIdentifier: "showProductReturnPolicyViewController", sender: nil)
     }
 }
