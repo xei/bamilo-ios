@@ -25,6 +25,7 @@ target 'Bamilo' do
   pod 'CHIPageControl/Jalapeno'
   pod 'RAlertView'
   pod 'WebEngage'
+  pod 'Pushwoosh'
   pod 'AnimatedCollectionViewLayout'
   pod 'ObjectMapper'
   pod 'SwiftyJSON'
@@ -38,6 +39,7 @@ target 'Bamilo' do
   pod 'UICircularProgressRing'
   pod 'Firebase/Core'
   pod 'Firebase/Performance'
+  pod 'PinCodeTextField'
   pod 'PinCodeTextField'
 
   target 'BamiloUITests' do
