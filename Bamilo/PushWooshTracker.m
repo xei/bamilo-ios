@@ -58,7 +58,9 @@ static PushWooshTracker *instance;
 
 #pragma mark - Helpers
 -(void) handleCustomData:(NSDictionary *)jsonData {
-    [self handleActions:[jsonData objectForKey:@"actions"]];
+    if (VALID_NOTEMPTY([jsonData objectForKey:@"change_icon"], NSDictionary)) {
+        [self handleChangingIcon:[jsonData objectForKey:@"change_icon"]];
+    }
     
     // -- UTM tracking
     __block NSMutableDictionary *utmDictionary = [NSMutableDictionary new];
@@ -78,30 +80,20 @@ static PushWooshTracker *instance;
     }
 }
 
--(void) handleActions:(NSArray *)actions {
-    if(actions && actions.count) {
-        for(NSDictionary *action in actions) {
-            NSString *actionKey = [action objectForKey:@"key"];
-            NSDictionary *actionData = [action objectForKey:@"data"];
-        
-            //Handle alternative icon for iOS 10.3+ action
-            if ([actionKey isEqualToString:@"change_icon"]) {
-                NSString *icon = [actionData objectForKey:@"icon"];
-                if(icon) {
-                    if([icon isEqualToString:@"Default"]) {
-                        [[AppManager sharedInstance] resetAppIconToDefault];
-                    } else {
-                        //If there is an expiryDate, consider that. If not, default is 1 week
-                        NSDateFormatter *dateFormatter = [NSDateFormatter new];
-                        [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
-                        //[dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-                        //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-                        NSDate *expiryDate = [dateFormatter dateFromString:[actionData objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
-                        [[AppManager sharedInstance] addAltAppIcon:icon expires:expiryDate];
-                        [[AppManager sharedInstance] executeScheduledAppIcons];
-                    }
-                }
-            }
+-(void) handleChangingIcon:(NSDictionary *)iconConfig {
+    NSString *iconName = [iconConfig objectForKey:@"icon"];
+    if(VALID_NOTEMPTY(iconName, NSString)) {
+        if([iconName isEqualToString:@"Default"]) {
+            [[AppManager sharedInstance] resetAppIconToDefault];
+        } else {
+            //If there is an expiryDate, consider that. If not, default is 1 week
+            NSDateFormatter *dateFormatter = [NSDateFormatter new];
+            [dateFormatter setDateFormat:cWebNormalizedDateTimeFormat];
+            //[dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+            //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+            NSDate *expiryDate = [dateFormatter dateFromString:[iconConfig objectForKey:@"expires"]] ?: [[NSDate date] addWeeks:1];
+            [[AppManager sharedInstance] addAltAppIcon:iconName expires:expiryDate];
+            [[AppManager sharedInstance] executeScheduledAppIcons];
         }
     }
 }

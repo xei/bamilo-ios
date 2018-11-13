@@ -36,10 +36,10 @@ class ForgetPassViewController: BaseAuthenticationViewCtrl {
     
     func verifyPhone(with target: DataServiceProtocol, pinCode: String) {
         if let phone = self.phoneOrEamil?.getValue() {
-            let params = ["identifier": phone, "verification": pinCode]
+            let params = ["identifier": phone, "verification": pinCode.convertTo(language: .english)]
             AuthenticationDataManager.sharedInstance.forgetPassVerify(target, params: params) { (data, error) in
                 if error == nil {
-                    
+                    self.delegate?.switchTo(viewMode: .changePass)
                 }
             }
         }

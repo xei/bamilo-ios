@@ -1043,16 +1043,22 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0qK-wc-Seo">
+                                <rect key="frame" x="197" y="390" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0qK-wc-Seo" firstAttribute="centerY" secondItem="1q2-wY-O5J" secondAttribute="centerY" id="2jI-Ls-h9u"/>
                             <constraint firstAttribute="trailing" secondItem="1q2-wY-O5J" secondAttribute="trailing" id="9zr-aw-Zwc"/>
                             <constraint firstItem="ynR-Le-DgM" firstAttribute="top" secondItem="1q2-wY-O5J" secondAttribute="bottom" id="DBD-aS-1MJ"/>
                             <constraint firstItem="1q2-wY-O5J" firstAttribute="leading" secondItem="tZl-Gv-U5j" secondAttribute="leading" id="U55-XJ-Vdu"/>
+                            <constraint firstItem="0qK-wc-Seo" firstAttribute="centerX" secondItem="1q2-wY-O5J" secondAttribute="centerX" id="frC-u9-Vfq"/>
                             <constraint firstItem="1q2-wY-O5J" firstAttribute="top" secondItem="NR6-4f-JdX" secondAttribute="bottom" id="qQF-JT-g4j"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="0qK-wc-Seo" id="xMs-1T-d6x"/>
                         <outlet property="webView" destination="1q2-wY-O5J" id="ExC-F8-mdv"/>
                     </connections>
                 </viewController>
@@ -2979,8 +2985,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="qrz-C2-bq8"/>
         <segue reference="iB6-A7-uY0"/>
-        <segue reference="Ib5-ij-N9c"/>
-        <segue reference="yLY-Re-RCl"/>
+        <segue reference="Ned-FL-dUc"/>
+        <segue reference="khd-bm-9kJ"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

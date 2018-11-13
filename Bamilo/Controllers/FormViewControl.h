@@ -32,6 +32,7 @@
 @property (nonatomic, copy) NSString *submitTitle;
 @property (nonatomic, strong) NSMutableArray *formModelList;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
+@property (nonatomic) BOOL canBeSubmited;
 
 typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 

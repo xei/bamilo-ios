@@ -11,6 +11,7 @@ import UIKit
 class ProductReturnPolicyViewController: BaseViewController {
 
     @IBOutlet weak private var webView: UIWebView!
+    @IBOutlet weak private var activityIndicator: UIActivityIndicatorView!
     var product: NewProduct?
     var isLoaded = false
     
@@ -34,8 +35,10 @@ class ProductReturnPolicyViewController: BaseViewController {
     var gettinSpecificationBussy = false
     func getContent(completion: ((Bool)-> Void)? = nil) {
         if !gettinSpecificationBussy, !isLoaded {
+            activityIndicator.startAnimating()
             ProductDataManager.sharedInstance.getReturnPolicy(self, returnPolicyKey: "") { (data, error) in
                 self.gettinSpecificationBussy = false
+                self.activityIndicator.stopAnimating()
                 if (error == nil) {
                     self.bind(data, forRequestId: 0)
                     completion?(true)
@@ -47,6 +50,13 @@ class ProductReturnPolicyViewController: BaseViewController {
         }
     }
     
+    override func navBarTitleString() -> String! {
+        return STRING_PRIVACY_POLICY
+    }
+    
+    override func getScreenName() -> String! {
+        return "returnPolicyView"
+    }
 }
 
 

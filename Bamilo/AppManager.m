@@ -48,7 +48,10 @@ static AppManager *instance;
 }
 
 -(void)addAltAppIcon:(NSString *)icon expires:(NSDate *)expires {
-    [UserDefaultsManager update:kUDMAltIcons insert:@{ @"icon": icon, @"expires": expires }];
+    [UserDefaultsManager remove:kUDMAltIcons]; //remove all the rests
+    if (VALID_NOTEMPTY(expires, NSData)) {
+        [UserDefaultsManager set:kUDMAltIcons value:@[@{ @"icon": icon, @"expires": expires }]];
+    }
 }
 
 -(void)updateScheduledAppIcons {
@@ -56,9 +59,11 @@ static AppManager *instance;
     if(altIcons.count) {
         NSMutableArray *discardedItems = [NSMutableArray new];
         for(NSDictionary *altIcon in altIcons) {
-            NSDate *altIconExpiryDate = [altIcon objectForKey:@"expires"];
-            if([[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
-                [discardedItems addObject:altIcon];
+            if (VALID_NOTEMPTY([altIcon objectForKey:@"expires"], NSDate)) {
+                NSDate *altIconExpiryDate = [altIcon objectForKey:@"expires"];
+                if([[NSDate date] compare:altIconExpiryDate] == NSOrderedDescending) {
+                    [discardedItems addObject:altIcon];
+                }
             }
         }
         

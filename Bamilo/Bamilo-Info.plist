@@ -10,6 +10,13 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
+            <key>BlackFriday</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>BlackFriday</string>
+                </array>
+            </dict>
 			<key>Autumn</key>
 			<dict>
 				<key>CFBundleIconFiles</key>

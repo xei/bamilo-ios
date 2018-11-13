@@ -110,6 +110,7 @@ class AuthenticationViewController: BaseViewController {
         case .changePass:
             changePassViewContainer.fadeIn(duration: 0.15)
             changePassViewController?.updateHeightContent()
+            changePassViewController?.identifier = self.phoneVerifyViewController?.phone
         }
         //update self view mode
         viewMode = mode
@@ -130,9 +131,12 @@ class AuthenticationViewController: BaseViewController {
         } else if segueName == "embedPhoneVerifyViewController", let phoneVerify = segue.destination as? PhoneVerifyViewController {
             phoneVerify.delegate = self
             phoneVerifyViewController = phoneVerify
-        } else if segueName == "embedChangePhoneViewController", let phoneVerify = segue.destination as? PhoneChangeViewController {
-            phoneVerify.delegate = self
-            phoneChangeViewController = phoneVerify
+        } else if segueName == "embedChangePhoneViewController", let phoneChange = segue.destination as? PhoneChangeViewController {
+            phoneChange.delegate = self
+            phoneChangeViewController = phoneChange
+        } else if segueName == "embedChangePassViewController", let changePass = segue.destination as? ChangePassViewController {
+            changePassViewController = changePass
+            changePassViewController?.delegate = self
         }
     }
     
@@ -178,6 +182,7 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
                 } else {
                     self.phoneVerificationRequestedFromViewMode = viewMode
                     self.phoneVerifyViewController?.phone = identifier
+                    self.phoneVerifyViewController?.setNumberOfDigitLimit(limit: 6)
                     ThreadManager.execute(onMainThread: {
                         self.switchTo(viewMode: .phoneVerify)
                     })
@@ -194,10 +199,11 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
                     if isMobile {
                         self.phoneVerifyViewController?.phone = identifier
                         self.phoneVerificationRequestedFromViewMode = viewMode
+                        self.phoneVerifyViewController?.setNumberOfDigitLimit(limit: 5)
                         self.switchTo(viewMode: .phoneVerify)
                     } else {
                         self.showNotificationBarMessage(STRING_SUCCESS_FORGET_PASS, isSuccess: true)
-                        Utility.delay(duration: 2, completion: {
+                        Utility.delay(duration: 4, completion: {
                             self.dismiss(animated: true, completion: nil)
                         })
                     }
@@ -234,7 +240,7 @@ extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
             self.signUpViewController?.verifyPhoneForSignUp(with: phoneVerifyViewCtrl ,pinCode: pinCode)
         } else if viewMode == .changePhone {
             self.phoneChangeViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
-        } else if viewMode == .changePhone {
+        } else if viewMode == .forgetPass {
             self.forgetPassViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
         }
     }

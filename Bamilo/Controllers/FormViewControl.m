@@ -45,6 +45,7 @@
     self.tableView.multipleTouchEnabled = NO;
     tableViewInitialInsets = self.tableView.contentInset;
     self.tableViewRegistered = YES;
+    self.canBeSubmited = YES;
 }
 
 - (void)setFormModelList:(NSMutableArray *)formModelList {
@@ -57,6 +58,7 @@
 }
 
 - (NSMutableDictionary *)getMutableDictionaryOfForm {
+    if (!self.canBeSubmited) { return nil; }
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [self.formModelList enumerateObjectsUsingBlock:^(FormItemModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (![obj isKindOfClass:[FormItemModel class]]) {

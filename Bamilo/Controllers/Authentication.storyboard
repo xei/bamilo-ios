@@ -343,8 +343,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-ya-SR4">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تایید را ارسال کنید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-ZS-A8y">
-                                        <rect key="frame" x="120" y="16.5" width="135" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="کد تایید را وارد کنید" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZY-ZS-A8y">
+                                        <rect key="frame" x="125.5" y="16.5" width="124.5" height="27"/>
                                         <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -389,14 +389,13 @@
                                     <action selector="editPhoneButtonTapped:" destination="iat-nh-NBz" eventType="touchUpInside" id="Ll9-EF-cFU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-Mx-B8q" customClass="IconButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-Mx-B8q" customClass="IconButton">
                                 <rect key="frame" x="127.5" y="213" width="120" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="8vt-vr-dDE"/>
                                     <constraint firstAttribute="width" constant="120" id="Di8-AR-fbU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
-                                <state key="normal" title="ارسال کد مجدد"/>
+                                <state key="normal" title="ارسال مجدد کد" image="reload_vector"/>
                                 <connections>
                                     <action selector="retrySMSButtonTapped:" destination="iat-nh-NBz" eventType="touchUpInside" id="2QU-HA-58q"/>
                                 </connections>
@@ -406,7 +405,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="qRy-n3-hCj"/>
                                 </constraints>
-                                <state key="normal" title="مرحله بعد"/>
+                                <state key="normal" title="ثبت کد تایید"/>
                                 <connections>
                                     <action selector="nextStepButtonTapped:" destination="iat-nh-NBz" eventType="touchUpInside" id="J5f-MC-441"/>
                                 </connections>
@@ -634,5 +633,6 @@
     </scenes>
     <resources>
         <image name="GrayClose" width="26.5" height="26.5"/>
+        <image name="reload_vector" width="24" height="24"/>
     </resources>
 </document>

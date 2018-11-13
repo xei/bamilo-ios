@@ -43,16 +43,22 @@ class PhoneVerifyViewController: BaseViewController {
         submitButton.layer.cornerRadius = 38 / 2
         submitButton.clipsToBounds = true
         pinCodeField.delegate = self
-        pinCodeField.placeholderText = "XXXXXX"
+        pinCodeField.characterLimit = 5
         pinCodeField.textColor = .gray
+        pinCodeField.placeholderText = "XXXXXX"
         pinCodeField.underlineColor = .gray
-        pinCodeField.characterLimit = pinCodeLimitCount
         pinCodeField.font = Theme.font(kFontVariationBold, size: 18)
         if #available(iOS 10.0, *) {
             pinCodeField.keyboardType = .asciiCapableNumberPad
         } else {
             pinCodeField.keyboardType = .numberPad
         }
+        sendSMSRetryButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 11), color: UIColor(red:0, green:0.68, blue:0.9, alpha:1))
+    }
+    
+    func setNumberOfDigitLimit(limit: Int) {
+        pinCodeField.characterLimit = limit
+        pinCodeLimitCount = limit
     }
     
     override func viewWillDisappear(_ animated: Bool) {
