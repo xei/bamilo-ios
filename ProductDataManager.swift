@@ -79,7 +79,7 @@ class ProductDataManager: DataManagerSwift {
     }
     
     func getReturnPolicy(_ target: DataServiceProtocol, returnPolicyKey: String, completion:@escaping DataClosure) {
-        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_RETURN_POLICY)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
+        ProductDataManager.requestManager.async(.get, target: target, path: "\(RI_API_RETURN_POLICY)\(returnPolicyKey)", params: nil, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: ProductReturnPolicyContent.self, data: data, errorMessages: errorMessages, completion: completion)
         }
     }

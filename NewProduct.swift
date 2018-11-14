@@ -93,11 +93,13 @@ enum ProdoctVariationItemType: String {
 class ProductReturnPolicy:NSObject, Mappable {
     var title: String?
     var icon: URL?
+    var cmsKey: String?
     
     required init?(map: Map) {}
     
     func mapping(map: Map) {
         title <- map["title"]
+        cmsKey <- map["cms_key"]
         icon <- (map["icon"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }

@@ -34,9 +34,9 @@ class ProductReturnPolicyViewController: BaseViewController {
     
     var gettinSpecificationBussy = false
     func getContent(completion: ((Bool)-> Void)? = nil) {
-        if !gettinSpecificationBussy, !isLoaded {
+        if let key = product?.returnPolicy?.cmsKey, !gettinSpecificationBussy, !isLoaded {
             activityIndicator.startAnimating()
-            ProductDataManager.sharedInstance.getReturnPolicy(self, returnPolicyKey: "") { (data, error) in
+            ProductDataManager.sharedInstance.getReturnPolicy(self, returnPolicyKey: key) { (data, error) in
                 self.gettinSpecificationBussy = false
                 self.activityIndicator.stopAnimating()
                 if (error == nil) {
@@ -47,6 +47,8 @@ class ProductReturnPolicyViewController: BaseViewController {
                     completion?(false)
                 }
             }
+        } else {
+            self.showNotificationBarMessage(STRING_SERVER_ERROR_MESSAGE, isSuccess: false)
         }
     }
     

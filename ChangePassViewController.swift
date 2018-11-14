@@ -16,10 +16,13 @@ class ChangePassViewController: BaseAuthenticationViewCtrl {
         super.viewDidLoad()
         viewMode = .changePass
         self.formController?.submitTitle = STRING_CHANGE_PASSWORD
-        if let password =  FormItemModel.passWord(withFieldName: "new_password") {
-            self.formController?.formModelList = [password, "submit"]
+        if let password =  FormItemModel.passWord(withFieldName: "new_password"),
+           let header = FormHeaderModel(headerTitle: "رمز عبور باید حداقل ۶ حرف و حداکثر ۱۲ حرف باشد") {
+            header.alignMent = .center
+            header.backgroundColor = .white
+            self.formController?.formModelList = [header, password, "submit"]
         }
-        self.tableview.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        self.tableview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         self.formController?.delegate = self
         self.formController?.setupTableView()
     }

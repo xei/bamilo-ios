@@ -167,4 +167,4 @@ NSString *const RI_API_ADD_PRODUCT_REVIEW = @"rating/addproductreview/";
 NSString *const RI_API_FORGET_PASS_REQUEST = @"customer/forgotpasswordrequest/";
 NSString *const RI_API_FORGET_PASS_VERIFY = @"customer/forgotpasswordverify/";
 NSString *const RI_API_FORGET_PASS_RESET = @"customer/forgotpasswordreset/";
-NSString *const RI_API_RETURN_POLICY = @"catalog/returnpolicy/category/returnpolicy_fashion";
+NSString *const RI_API_RETURN_POLICY = @"catalog/returnpolicy/category/";

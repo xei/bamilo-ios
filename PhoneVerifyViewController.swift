@@ -87,6 +87,7 @@ class PhoneVerifyViewController: BaseViewController {
     
     @IBAction func retrySMSButtonTapped(_ sender: Any) {
         if let phone = phone  {
+            self.pinCodeField.text = nil
             self.delegate?.retrySendingCode(for: phone)
         }
     }
@@ -145,7 +146,7 @@ extension PhoneVerifyViewController: DataServiceProtocol {
                 if let errors = (error as NSError?)?.userInfo [kErrorMessages] as? [[String: String]] {
                     for var error in errors {
                         if let fieldNameParam = error["field"], fieldNameParam.count > 0, let errorMsg = error[kMessage] {
-                            parent.showNotificationBar(errorMsg, isSuccess: false)
+                            parent.showNotificationBarMessage(errorMsg, isSuccess: false)
                             errorHandled = true
                         }
                     }

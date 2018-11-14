@@ -38,7 +38,9 @@ class ForgetPassViewController: BaseAuthenticationViewCtrl {
         if let phone = self.phoneOrEamil?.getValue() {
             let params = ["identifier": phone, "verification": pinCode.convertTo(language: .english)]
             AuthenticationDataManager.sharedInstance.forgetPassVerify(target, params: params) { (data, error) in
-                if error == nil {
+                if let error = error {
+                    (target as? PhoneVerifyViewController)?.errorHandler(error, forRequestID: 0)
+                } else {
                     self.delegate?.switchTo(viewMode: .changePass)
                 }
             }

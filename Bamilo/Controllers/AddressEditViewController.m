@@ -56,7 +56,6 @@
     self.formController.submitTitle = @"ذخیره آدرس";
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
-    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
     
     self.formController.formModelList = [NSMutableArray new];
     

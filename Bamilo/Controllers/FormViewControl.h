@@ -27,7 +27,6 @@
 
 @interface FormViewControl :NSObject <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate, InputTextFieldControlDelegate>
 
-@property (nonatomic, strong) UIColor *submissionButtonColor;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, copy) NSString *submitTitle;
 @property (nonatomic, strong) NSMutableArray *formModelList;
