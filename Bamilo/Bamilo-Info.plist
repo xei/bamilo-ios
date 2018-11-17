@@ -10,13 +10,13 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-            <key>BlackFriday</key>
-            <dict>
-                <key>CFBundleIconFiles</key>
-                <array>
-                    <string>BlackFriday</string>
-                </array>
-            </dict>
+			<key>BlackFriday</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>BlackFriday</string>
+				</array>
+			</dict>
 			<key>Autumn</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -229,14 +229,14 @@
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-    <key>PW_USE_GPS</key>
-    <true/>
-    <key>Pushwoosh_APPID</key>
-    <string>54916-053AA</string>
-    <key>Pushwoosh_APPNAME</key>
-    <string>Bamilo</string>
-    <key>Pushwoosh_LOG_LEVEL</key>
-    <string>VERBOSE</string>
+	<key>PW_USE_GPS</key>
+	<true/>
+	<key>Pushwoosh_APPID</key>
+	<string>54916-053AA</string>
+	<key>Pushwoosh_APPNAME</key>
+	<string>Bamilo</string>
+	<key>Pushwoosh_LOG_LEVEL</key>
+	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>

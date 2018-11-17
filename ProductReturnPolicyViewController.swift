@@ -15,7 +15,6 @@ class ProductReturnPolicyViewController: BaseViewController {
     var product: NewProduct?
     var isLoaded = false
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         [view, webView].forEach{ $0?.backgroundColor = .white }
@@ -24,7 +23,7 @@ class ProductReturnPolicyViewController: BaseViewController {
             isLoaded = true
             updateWithDescription(description: model)
         }
-        
+        webView.delegate = self
         getContent()
     }
     
@@ -68,8 +67,8 @@ extension ProductReturnPolicyViewController : DataServiceProtocol {
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if let model = data as? ProductReturnPolicyContent, let policy = model.policy {
             product?.returnPolicyContent = ProductReturnPolicyContent(with: policy)
-            isLoaded = true
             updateWithDescription(description: model.policy ?? "")
+            isLoaded = true
         }
     }
     
@@ -85,5 +84,11 @@ extension ProductReturnPolicyViewController : DataServiceProtocol {
         self.getContent() { (succes) in
             callBack?(succes)
         }
+    }
+}
+
+extension ProductReturnPolicyViewController: UIWebViewDelegate {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        return !isLoaded
     }
 }

@@ -199,7 +199,7 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
                     if isMobile {
                         self.phoneVerifyViewController?.phone = identifier
                         self.phoneVerificationRequestedFromViewMode = viewMode
-                        self.phoneVerifyViewController?.setNumberOfDigitLimit(limit: 5)
+                        self.phoneVerifyViewController?.setNumberOfDigitLimit(limit: 6)
                         self.switchTo(viewMode: .phoneVerify)
                     } else {
                         self.showNotificationBarMessage(STRING_SUCCESS_FORGET_PASS, isSuccess: true)
