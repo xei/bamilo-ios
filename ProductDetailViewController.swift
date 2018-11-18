@@ -268,7 +268,6 @@ extension UIImageView: DisplaceableView {}
             viewCtrl.product = self.product
             viewCtrl.hidesBottomBarWhenPushed = true
         }
-        
     }
     
     override func navBarleftButton() -> NavBarButtonType {
@@ -277,9 +276,7 @@ extension UIImageView: DisplaceableView {}
     
     private func prepareAddToCartView(addToCartViewController: AddToCartViewController){
         addToCartViewController.product = self.product
-        if animator == nil {
-            animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
-        }
+        animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
         addToCartViewController.delegate = self
         addToCartViewController.transitioningDelegate = animator
     }

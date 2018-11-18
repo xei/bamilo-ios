@@ -73,8 +73,14 @@ class AuthenticationViewController: BaseViewController {
     
     //Keyboard events
     @objc private func keyboardWillShown(notification: Notification) {
-        print(view.bounds.size.height)
-        self.setHeight(height: view.bounds.size.height, animated: true)
+        var height: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            let guide = view.safeAreaLayoutGuide
+            height = guide.layoutFrame.size.height
+        } else {
+            height = view.bounds.size.height
+        }
+        self.setHeight(height: height, animated: true)
     }
     
     @objc private func keyboardWillHide(notification: Notification) {

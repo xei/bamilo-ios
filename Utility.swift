@@ -46,7 +46,13 @@ import Adjust
     
     class func shareUrl(url: String, message: String, viewController: BaseViewController) {
         let textToShare = message
-        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let myWebsite = NSURL(string: encodeUrl) {
+        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),var myWebsite = NSURL(string: encodeUrl) {
+            if myWebsite.scheme == nil {
+                myWebsite = NSURL(string: "https://\(encodeUrl)")!
+            } else if let schema = myWebsite.scheme, !schema.hasPrefix("http") && !schema.hasPrefix("https") {
+                myWebsite = NSURL(string: "https://\(encodeUrl)")!
+            }
+            
             let objectsToShare: [Any] = ["\(textToShare)", myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             viewController.present(activityVC, animated: true, completion: nil)

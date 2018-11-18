@@ -141,7 +141,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>65</string>
+	<string>66</string>
 	<key>Configs</key>
 	<dict>
 		<key>API_BaseUrl</key>
@@ -201,7 +201,7 @@
 		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

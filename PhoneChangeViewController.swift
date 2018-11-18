@@ -14,6 +14,7 @@ class PhoneChangeViewController: BaseAuthenticationViewCtrl {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewMode = .changePhone
+        formParamsName = "customer"
         
         if let phoneField = FormItemModel.phone(withFieldName: "customer[phone]") {
             self.formController?.formModelList = [phoneField, "submit"]
