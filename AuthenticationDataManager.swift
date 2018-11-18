@@ -18,15 +18,8 @@ class AuthenticationDataManager: DataManagerSwift {
     }
     
     func signupUser(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
-        fields["customer[phone_prefix]"] = "100"
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_REGISTER_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: CustomerEntity.self, data: data, errorMessages: errorMessages, completion: completion)
-        }
-    }
-    
-    func forgetPassword(_ target:DataServiceProtocol?, with fields:[String : String], completion: @escaping DataClosure) {
-        AuthenticationDataManager.requestManager.async(.post, target: target, path:RI_API_FORGET_PASS_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }
     }
     
@@ -76,7 +69,7 @@ class AuthenticationDataManager: DataManagerSwift {
     
     func forgetPassReq(_ target:DataServiceProtocol?, params: [String: String], completion: @escaping DataClosure) {
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_FORGET_PASS_REQUEST, params: params, type: .foreground) { (responseType, data, errors) in
-            self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
+            self.processResponse(responseType, aClass: ForgetPassResponse.self, data: data, errorMessages: errors, completion: completion)
         }
     }
     

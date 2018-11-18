@@ -171,3 +171,11 @@ class SavingUser: Object {
         }
     }
 }
+
+class ForgetPassResponse: Mappable {
+    var isNextStepVerification = false
+    required init?(map: Map) {}
+    func mapping(map: Map) {
+        isNextStepVerification <- map["nextStepVerification"]
+    }
+}

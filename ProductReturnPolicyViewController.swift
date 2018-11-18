@@ -89,6 +89,6 @@ extension ProductReturnPolicyViewController : DataServiceProtocol {
 
 extension ProductReturnPolicyViewController: UIWebViewDelegate {
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        return !isLoaded
+        return navigationType != .linkClicked
     }
 }

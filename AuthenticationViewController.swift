@@ -199,10 +199,18 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
                 if let errors = error {
                     target.errorHandler?(errors, forRequestID: rid)
                 } else {
-                    let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
-                    let isMobile = regex.firstMatch(in: identifier, options: [], range: NSMakeRange(0, identifier.utf16.count)) != nil
+                    var needVerification = false
+                    if let response = data as? ForgetPassResponse {
+                        needVerification = response.isNextStepVerification
+                    } else if let dict = data as? [String: Any], let response = dict[kDataContent] as? ForgetPassResponse {
+                        needVerification = response.isNextStepVerification
+                    } else {
+                        let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
+                        let isMobile = regex.firstMatch(in: identifier, options: [], range: NSMakeRange(0, identifier.utf16.count)) != nil
+                        needVerification = isMobile
+                    }
 
-                    if isMobile {
+                    if needVerification {
                         self.phoneVerifyViewController?.phone = identifier
                         self.phoneVerificationRequestedFromViewMode = viewMode
                         self.phoneVerifyViewController?.setNumberOfDigitLimit(limit: 6)
