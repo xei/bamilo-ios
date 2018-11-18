@@ -154,7 +154,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     //MARK: - helper functions
     @objc func shareApplication() {
         TrackerManager.postEvent(selector: EventSelectors.shareAppSelector(), attributes: EventAttributes.shareApp())
-        var url = "http://app.adjust.com/gj8sf8k"
+        var url = "https://app.adjust.com/eq8uike"
         if CurrentUserManager.isUserLoggedIn(), let userID = CurrentUserManager.user.userID {
             url += "?label=\(userID)"
         }
