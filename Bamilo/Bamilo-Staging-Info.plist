@@ -10,13 +10,13 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-            <key>BlackFriday</key>
-            <dict>
-                <key>CFBundleIconFiles</key>
-                <array>
-                    <string>BlackFriday</string>
-                </array>
-            </dict>
+			<key>BlackFriday</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>BlackFriday</string>
+				</array>
+			</dict>
 			<key>Autumn</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -107,7 +107,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.1</string>
+	<string>2.6.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -143,7 +143,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>63</string>
+	<string>64</string>
 	<key>Configs</key>
 	<dict>
 		<key>AdjustTokenID</key>
@@ -152,8 +152,8 @@
 		<string>https://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.12</string>
-        <key>EMMerchantID</key>
-        <string>18146DE34FE0B8C9</string>
+		<key>EMMerchantID</key>
+		<string>18146DE34FE0B8C9</string>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-52004541-5</string>
 		<key>Tour</key>
@@ -231,14 +231,14 @@
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-    <key>PW_USE_GPS</key>
-    <true/>
-    <key>Pushwoosh_APPID</key>
-    <string>54916-053AA </string>
-    <key>Pushwoosh_APPNAME</key>
-    <string>Bamilo</string>
-    <key>Pushwoosh_LOG_LEVEL</key>
-    <string>NONE</string>
+	<key>PW_USE_GPS</key>
+	<true/>
+	<key>Pushwoosh_APPID</key>
+	<string>54916-053AA </string>
+	<key>Pushwoosh_APPNAME</key>
+	<string>Bamilo</string>
+	<key>Pushwoosh_LOG_LEVEL</key>
+	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -257,10 +257,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-    <key>WEGLicenseCode</key>
-    <string>76ab187</string>
-    <key>WEGLogLevel</key>
-    <string>DEFAULT</string>
+	<key>WEGLicenseCode</key>
+	<string>76ab187</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -49,7 +49,7 @@
         return validation;
     }
     
-    if (self.max != nil && self.min != nil && self.max == self.min && self.min != lengthOfInputText) {
+    if (lengthOfInputText > 0 && self.max != nil && self.min != nil && self.max == self.min && self.min != lengthOfInputText) {
         validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorExactLenght];
         validation.boolValue = NO;
         return validation;

@@ -189,6 +189,9 @@
     }
 }
 
+- (void)clearError {
+    [self.input clearError];
+}
 
 - (NSString *)getStringValue {
         return self.input.textField.text;

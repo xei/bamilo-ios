@@ -44,5 +44,7 @@ typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 - (Boolean)isFormValid;
 - (void)showAnyErrorInForm;
 - (void)refreshView;
+- (void)clearErrors;
+- (void)clearErrorForField: (NSString *)fieldName;
 
 @end

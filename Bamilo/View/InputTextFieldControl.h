@@ -31,5 +31,6 @@
 - (void)resetAndClear;
 - (void)checkValidation;
 - (void)updateModel:(FormItemModel *(^)(FormItemModel *))updateBlock;
+- (void)clearError;
 
 @end

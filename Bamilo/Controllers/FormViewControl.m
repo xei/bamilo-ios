@@ -217,10 +217,23 @@
     return NO;
 }
 
+- (void)clearErrorForField: (NSString *)fieldName {
+    InputTextFieldControl *inputTextFieldControl = [self.inputControlsDictionary objectForKey:fieldName];
+    if(inputTextFieldControl) {
+        [self.inputControlsDictionary[fieldName] clearError];
+    }
+}
+
 - (void)showAnyErrorInForm {
     allErrorsHaveBeenShown = YES;
     [self.inputControlsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, InputTextFieldControl * _Nonnull obj, BOOL * _Nonnull stop) {
         [obj checkValidation];
+    }];
+}
+
+- (void)clearErrors {
+    [self.inputControlsDictionary enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, InputTextFieldControl * _Nonnull obj, BOOL * _Nonnull stop) {
+        [obj clearError];
     }];
 }
 

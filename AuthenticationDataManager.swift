@@ -39,7 +39,6 @@ class AuthenticationDataManager: DataManagerSwift {
     }
     
     func submitEditedProfile(_ target:DataServiceProtocol?, with fields: inout [String : String], completion: @escaping DataClosure) {
-        fields["customer[phone_prefix]"] = "100"
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_EDIT_CUSTOMER, params: fields, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }

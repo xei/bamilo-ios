@@ -73,7 +73,6 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.formController?.unregisterForKeyboardNotifications()
-        
         self.view.resignFirstResponder()
     }
     
@@ -134,12 +133,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
         if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
-            ThreadManager.execute(onMainThread: {
-                self.updateFormWithCustomer(customer: customer)
-                if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
+            self.updateFormWithCustomer(customer: customer)
+            if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
+                ThreadManager.execute(onMainThread: {
                     self.setHeaderMessage(message: warningMessage)
-                }
-            })
+                })
+            }
         } else if rid == 1 {
             if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
                 self.navigationController?.popViewController(animated: true)
@@ -197,21 +196,24 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             fieldValues["customer[gender]"] = genderMapper[gender.rawValue] ?? ""
         }
         
-        if let modelList = self.formController?.formModelList {
-            for (index, model) in modelList.enumerated() {
-                if model is FormItemModel {
-                    self.formController?.updateFieldIndex(UInt(index), withUpdateModelBlock: { (model) -> FormItemModel? in
-                        if let fieldName = model?.fieldName {
-                            model?.inputTextValue = fieldValues[fieldName]
-                        }
-                        return model
-                    })
+        //udpate UI
+        ThreadManager.execute(onMainThread: {
+            if let modelList = self.formController?.formModelList {
+                for (index, model) in modelList.enumerated() {
+                    if model is FormItemModel {
+                        self.formController?.updateFieldIndex(UInt(index), withUpdateModelBlock: { (model) -> FormItemModel? in
+                            if let fieldName = model?.fieldName {
+                                model?.inputTextValue = fieldValues[fieldName]
+                            }
+                            return model
+                        })
+                    }
                 }
             }
-        }
-        
-        self.previousBankCartNumber = customer.bankCartNumber
-        self.formController?.refreshView()
+            
+            self.previousBankCartNumber = customer.bankCartNumber
+            self.formController?.refreshView()
+        })
     }
     
     //MARK: - DataTrackerProtocol
@@ -242,7 +244,9 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
 extension EditProfileViewController: AuthenticationViewControllerDelegate {
     func successfullyHasChangedPhone(phone: String) {
         self.phoneFieldModel?.inputTextValue = phone
+        self.phoneFieldModel?.lastErrorMessage = nil
         self.tableview.tableHeaderView = nil
         self.formController?.refreshView()
+        self.formController?.tableView.layoutIfNeeded()
     }
 }
