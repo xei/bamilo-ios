@@ -73,10 +73,26 @@ import Adjust
     class func resetUserBehaviours() {
         //Reset some actions
 //        EmarsysPredictManager.userLoggedOut()
+        CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil
         LocalSearchSuggestion().clearAllHistories()
+        RICommunicationWrapper.deleteSessionCookie()
+        ViewControllerManager.sharedInstance().clearCache()
+        removeAllCookies()
+        
         MainTabBarViewController.showHome()
+    }
+    
+    static func removeAllCookies() {
+        let cstorage = HTTPCookieStorage.shared
+        if let baseUrlString = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
+            let url = URL(string: baseUrlString),
+            let cookies = cstorage.cookies(for: url) {
+            for cookie in cookies {
+                cstorage.deleteCookie(cookie)
+            }
+        }
     }
     
     class func delay (duration: TimeInterval, completion: @escaping ()->() ) {

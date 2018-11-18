@@ -91,11 +91,12 @@
         [phone setInputTextValue:customer.phone];
     }
     
-    [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone, @"submit" ]];
+    [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
     if (![CurrentUserManager.user getGender] && self.address == nil) {
         FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
         [self.formController.formModelList addObject:gender];
     }
+    [self.formController.formModelList addObject:@"submit"];
     [self.formController setupTableView];
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)

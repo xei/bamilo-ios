@@ -211,18 +211,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         LocalSearchSuggestion().clearAllHistories()
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()
-        removeAllCookies()
-    }
-    
-    private func removeAllCookies() {
-        let cstorage = HTTPCookieStorage.shared
-        if let baseUrlString = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
-            let url = URL(string: baseUrlString),
-            let cookies = cstorage.cookies(for: url) {
-            for cookie in cookies {
-                cstorage.deleteCookie(cookie)
-            }
-        }
+        Utility.removeAllCookies()
     }
     
     @objc func updateByLogin(notification: Notification) {
