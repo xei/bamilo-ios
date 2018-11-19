@@ -116,7 +116,7 @@ class CatalogHeaderView: BaseControlView, UIPickerViewDataSource, UIPickerViewDe
         sortToolBar.tintColor = Theme.color(kColorExtraLightGray)
         sortToolBar.backgroundColor = Theme.color(kColorExtraLightGray)
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        sortToolBar.items = [self.cancelButton, flexible, self.doneButton]
+        sortToolBar.items = [self.doneButton, flexible, self.cancelButton]
         sortToolBar.sizeToFit()
         
         return sortToolBar

@@ -26,7 +26,7 @@
 }
 
 - (NSString *)getValue {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions) {
         return self.selectOption[self.inputTextValue];
@@ -39,7 +39,7 @@
 }
 
 - (void)setValue:(NSString *)value {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         self.inputTextValue = [value numbersToPersian];
     } else if (self.type == InputTextFieldControlTypeOptions) {
          self.inputTextValue = [[self.selectOption allKeysForObject:value] lastObject];

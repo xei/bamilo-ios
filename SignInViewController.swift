@@ -30,7 +30,7 @@ class SignInViewController: BaseAuthenticationViewCtrl {
                                               fieldName: "\(formParamsName)[identifier]",
                                               andIcon: UIImage(named: "ic_user_form") ,
                                               placeholder: "ایمیل یا شماره موبایل",
-                                              type: .phone,
+                                              type: .mobileOrEmail,
                                               validation: FormItemValidation.init(required: true, max: 0, min: 0, withRegxPatter: "\(String.emailRegx())|\(String.phoneRegx())"),
                                               selectOptions: nil),
             let password =  FormItemModel.passWord(withFieldName: "login[password]") {

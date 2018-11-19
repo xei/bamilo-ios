@@ -61,14 +61,13 @@ class AddToCartViewController: UIViewController {
         
         productImageView.kf.setImage(with: product.imageList?.first?.medium, options: [.transition(.fade(0.20))])
         productTitleLabel.text = product.name
-        
-        
         productPriceLabel.text = "\(product.price?.value ?? 0)".convertTo(language: .arabic).priceFormat()
         if let oldPrice = product.price?.oldPrice {
             oldPriceLabel.attributedText = "\(oldPrice)".formatPriceWithCurrency().strucThroughPriceFormat()
         } else {
             oldPriceLabel.text = nil
         }
+        oldPriceLabel.isHidden = (product.price?.oldPrice ?? 0) == 0
         
         productVariationView.update(withModel: product)
         seperatorView.backgroundColor = Theme.color(kColorGray10)

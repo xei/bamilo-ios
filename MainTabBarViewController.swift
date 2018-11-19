@@ -52,6 +52,10 @@ import Crashlytics
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     func updateCartListener(notification: Notification) {
         if let cart = notification.userInfo?[NotificationKeys.NotificationCart] as? RICart {
             MainTabBarViewController.updateCartValue(cart: cart)
@@ -150,6 +154,8 @@ import Crashlytics
     class func updateCartValue(cart: RICart) {
         if let cartItemsCount = cart.cartEntity?.cartCount?.intValue {
             MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
+        } else {
+            MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = nil
         }
         
         MainTabBarViewController.sharedInstance()?.viewControllers?.forEach {

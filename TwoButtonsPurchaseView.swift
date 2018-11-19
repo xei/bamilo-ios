@@ -80,13 +80,21 @@ class TwoButtonsPurchaseView: BaseControlView {
     }
     
     func hideBuyNowAndAddToBasketButtons(animated: Bool) {
-        if animated {
-            self.addToBasketButton.hide()
-            self.buyNowButton.hide()
-        } else {
-            self.addToBasketButton.isHidden = true
-            self.buyNowButton.isHidden = true
-        }
+        makeVisibleTwoButtons(false, animated: animated)
     }
     
+    func makeVisibleTwoButtons(_ isVisible: Bool, animated: Bool) {
+        if animated {
+            if isVisible {
+                [self.addToBasketButton, self.buyNowButton].map{ $0.fadeIn(duration: 0.15) }
+            } else {
+                [self.addToBasketButton, self.buyNowButton].map { $0.hide() }
+            }
+        } else {
+            self.addToBasketButton.isHidden = !isVisible
+            self.buyNowButton.isHidden = !isVisible
+            self.addToBasketButton.alpha = isVisible ? 1: 0
+            self.buyNowButton.alpha = isVisible ? 1: 0
+        }
+    }
 }

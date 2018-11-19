@@ -212,6 +212,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         RICommunicationWrapper.deleteSessionCookie()
         ViewControllerManager.sharedInstance().clearCache()
         Utility.removeAllCookies()
+        
+        MainTabBarViewController.updateCartValue(cart: RICart.sharedInstance())
     }
     
     @objc func updateByLogin(notification: Notification) {

@@ -95,6 +95,7 @@ extension UIImageView: DisplaceableView {}
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = true
+        self.twoButtonViewControl.makeVisibleTwoButtons(true, animated: false)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

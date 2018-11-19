@@ -64,7 +64,10 @@ class TwoButtonsPurchaseControl: BaseViewControl {
             }
         }
     }
-
+    
+    func makeVisibleTwoButtons(_ isVisible: Bool, animated: Bool) {
+        self.controlView?.makeVisibleTwoButtons(isVisible, animated: animated)
+    }
 }
 
 extension TwoButtonsPurchaseControl: TwoButtonsPurchaseViewDelegate {

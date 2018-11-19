@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, InputTextFieldControlType) {
     InputTextFieldControlTypeEmail,
     InputTextFieldControlTypeString,
     InputTextFieldControlTypeOptions,
-    InputTextFieldControlTypeDatePicker
+    InputTextFieldControlTypeDatePicker,
+    InputTextFieldControlTypeMobileOrEmail
 };
 
 @interface FormItemModel : NSObject <FormElementProtocol>

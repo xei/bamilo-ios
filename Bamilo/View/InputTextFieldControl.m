@@ -94,6 +94,7 @@
         case InputTextFieldControlTypeNumerical:
             self.input.textField.keyboardType = UIKeyboardTypeNumberPad;
             break;
+        case InputTextFieldControlTypeMobileOrEmail:
         case InputTextFieldControlTypeEmail:
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
@@ -142,7 +143,7 @@
     }
     
     if (model.inputTextValue.length) {
-        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical || model.type == InputTextFieldControlTypePhone) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical || model.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
     } else {
         self.input.textField.text = nil;
@@ -253,7 +254,7 @@
 }
 
 - (void)textFieldEditingChanged:(UITextField *)textField {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         textField.text = [textField.text numbersToPersian];
     }
 }
