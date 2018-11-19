@@ -49,7 +49,7 @@ static AppManager *instance;
 
 -(void)addAltAppIcon:(NSString *)icon expires:(NSDate *)expires {
     [UserDefaultsManager remove:kUDMAltIcons]; //remove all the rests
-    if (VALID_NOTEMPTY(expires, NSData)) {
+    if (VALID_NOTEMPTY(expires, NSDate)) {
         [UserDefaultsManager set:kUDMAltIcons value:@[@{ @"icon": icon, @"expires": expires }]];
     }
 }
