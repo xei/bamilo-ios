@@ -155,6 +155,43 @@
     // track application open statistics
     [[PushNotificationManager pushManager] sendAppOpen];
     
+    NSString *Ver = [UserDefaultsManager get:@"Version"];
+    NSString *CurVer = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    if(!VALID_NOTEMPTY(Ver, NSString) || (VALID_NOTEMPTY(Ver, NSString) && [Ver compare:CurVer] != 0)) {
+        if(!VALID(Ver, NSString)) {
+            //Run once per lifetime code
+            
+            
+            NSError *error;
+            
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+            NSURL *url = [NSURL URLWithString:@"https://cp.pushwoosh.com/json/1.3/unregisterDevice"];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                               timeoutInterval:60.0];
+            
+            [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+            
+            [request setHTTPMethod:@"POST"];
+            NSDictionary *mapData = @{@"request": @{@"application": @"82449-6B792", @"hwid": userId}};
+            NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+            [request setHTTPBody:postData];
+            
+            
+            NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+            }];
+            
+            [postDataTask resume];
+            
+            
+        }
+        //Run once-per-upgrade code, if any
+        [UserDefaultsManager setValue:CurVer forKey:@"Version"];
+    }
+    
     // register for push notifications!
     [[PushNotificationManager pushManager] registerForPushNotifications];
     
