@@ -21,7 +21,7 @@
 
 //#######################################################################################
 //#import <MobileEngageSDK/MobileEngage.h>
-#import <Pushwoosh/PushNotificationManager.h>
+//#import <Pushwoosh/PushNotificationManager.h>
 #import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
@@ -148,9 +148,9 @@
 //    pushManager.delegate = [PushWooshTracker sharedTracker];
     
     // set default Pushwoosh delegate for iOS10 foreground push handling
-    if (@available(iOS 10.0, *)) {
-        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
-    }
+//    if (@available(iOS 10.0, *)) {
+//        [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+//    }
     
     // track application open statistics
 //    [[PushNotificationManager pushManager] sendAppOpen];

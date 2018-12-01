@@ -69,9 +69,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
     
     private func prepareAddToCartView(addToCartViewController: AddToCartViewController){
         addToCartViewController.product = self.product
-        if animator == nil {
-            animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
-        }
+        animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
         addToCartViewController.delegate = self
         addToCartViewController.transitioningDelegate = animator
     }
@@ -86,6 +84,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
             viewCtrl.product = product
         } else if segueName == "showAddToCartModal", let viewCtrl = segue.destination as? AddToCartViewController {
             prepareAddToCartView(addToCartViewController: viewCtrl)
+            viewCtrl.isBuyNow = sender as? Bool ?? false
         } else if segueName == "showProductViewController", let viewCtrl = segue.destination as? ProductDetailViewController, let product = sender as? NewProduct {
             viewCtrl.productSku = product.sku
         }

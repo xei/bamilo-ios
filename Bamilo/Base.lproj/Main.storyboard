@@ -484,25 +484,25 @@
                                         <rect key="frame" x="0.0" y="-75" width="414" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="مجموع خرید:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiG-ZB-Lk2">
-                                                <rect key="frame" x="326.33333333333331" y="9.9999999999999982" width="67.666666666666686" height="21.333333333333329"/>
+                                                <rect key="frame" x="342.33333333333331" y="10" width="51.666666666666686" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="مجموع تخفیف:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIn-JG-WlR">
-                                                <rect key="frame" x="316" y="43.666666666666664" width="78" height="21.333333333333336"/>
+                                                <rect key="frame" x="335.66666666666669" y="52" width="58.333333333333314" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgt-Lp-1Ci" userLabel="total price">
-                                                <rect key="frame" x="20" y="9.9999999999999982" width="296.33333333333331" height="21.333333333333329"/>
+                                                <rect key="frame" x="20" y="10" width="312.33333333333331" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="در حال محاسبه" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-Dd-SGv" userLabel="total discounted Price">
-                                                <rect key="frame" x="20" y="43.666666666666664" width="286" height="21.333333333333336"/>
+                                                <rect key="frame" x="20" y="52" width="305.66666666666669" height="13"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans" family="Bamilo-Sans" pointSize="11"/>
                                                 <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1175,7 +1175,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱،۵۳۰،۹۳۲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0f-D9-LmY">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="۱،۵۳۰،۹۳۲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0f-D9-LmY">
                                                 <rect key="frame" x="255.66666666666666" y="38" width="62.333333333333343" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="PtW-If-4zY"/>
@@ -1184,8 +1184,8 @@
                                                 <color key="textColor" red="0.99607843139999996" green="0.41960784309999999" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfD-Mb-Oh3">
-                                                <rect key="frame" x="231.33333333333334" y="38.333333333333314" width="20.333333333333343" height="21.666666666666671"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfD-Mb-Oh3">
+                                                <rect key="frame" x="14.999999999999986" y="38.333333333333314" width="236.66666666666663" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Bamilo-Sans-Light" family="Bamilo-Sans" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1214,8 +1214,8 @@
                                                 <color key="textColor" red="0.0" green="0.6588235294" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱،۴۴۲،۲۳۴ ریال" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKt-5N-O2T">
-                                                <rect key="frame" x="247" y="60" width="71" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="۱،۴۴۲،۲۳۴ ریال" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKt-5N-O2T">
+                                                <rect key="frame" x="15" y="60" width="303" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="hSS-WY-aIw"/>
                                                 </constraints>
@@ -1237,6 +1237,7 @@
                                             <constraint firstItem="p3O-vZ-Oyc" firstAttribute="centerY" secondItem="PW4-ny-XZd" secondAttribute="centerY" id="1Vb-ca-Lhr"/>
                                             <constraint firstItem="PW4-ny-XZd" firstAttribute="right" secondItem="KKt-5N-O2T" secondAttribute="right" id="1cX-Ft-40R"/>
                                             <constraint firstItem="1uX-P1-f8h" firstAttribute="left" secondItem="5Nb-3l-qnl" secondAttribute="right" constant="4" id="2pr-ph-UL1"/>
+                                            <constraint firstItem="KKt-5N-O2T" firstAttribute="left" secondItem="W6q-2D-V3x" secondAttribute="left" id="4on-5Z-Is1"/>
                                             <constraint firstItem="ee1-rA-b52" firstAttribute="centerY" secondItem="o6P-nI-ZSY" secondAttribute="centerY" id="5Nd-64-HeI"/>
                                             <constraint firstItem="rdZ-J0-NOH" firstAttribute="left" secondItem="W6q-2D-V3x" secondAttribute="left" id="6cf-8q-KkP"/>
                                             <constraint firstItem="gfD-Mb-Oh3" firstAttribute="centerY" secondItem="k0f-D9-LmY" secondAttribute="centerY" id="6rf-Jp-qN4"/>
@@ -1256,6 +1257,7 @@
                                             <constraint firstItem="1uX-P1-f8h" firstAttribute="bottom" secondItem="ee1-rA-b52" secondAttribute="bottom" id="ljV-tu-yxR"/>
                                             <constraint firstItem="W6q-2D-V3x" firstAttribute="left" secondItem="o6P-nI-ZSY" secondAttribute="left" constant="15" id="m8I-LA-1en"/>
                                             <constraint firstItem="PW4-ny-XZd" firstAttribute="bottom" secondItem="ee1-rA-b52" secondAttribute="bottom" id="pID-cZ-Vl3"/>
+                                            <constraint firstItem="gfD-Mb-Oh3" firstAttribute="left" secondItem="W6q-2D-V3x" secondAttribute="left" id="ymH-nF-HLL"/>
                                             <constraint firstItem="KKt-5N-O2T" firstAttribute="right" secondItem="k0f-D9-LmY" secondAttribute="right" id="zkM-Ph-k0B"/>
                                             <constraint firstAttribute="right" secondItem="ee1-rA-b52" secondAttribute="right" constant="15" id="zuY-4k-oDI"/>
                                         </constraints>
@@ -1268,7 +1270,10 @@
                                         <state key="normal" title="Button" image="btn_cart"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="positionStatus">
-                                                <integer key="value" value="0"/>
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="imageHeightToButtonHeightRatio">
+                                                <real key="value" value="0.40000000000000002"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>

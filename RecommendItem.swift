@@ -34,9 +34,9 @@ import ObjectMapper
     required init?(map: Map) {
     }
     
-    convenience init?(item: EMRecommendationItem) {
-        self.init(JSON: item.data)
-    }
+//    convenience init?(item: EMRecommendationItem) {
+//        self.init(JSON: item.data)
+//    }
     
     func mapping(map: Map) {
         self.sku <- map["item"]

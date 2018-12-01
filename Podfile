@@ -11,7 +11,7 @@ target 'Bamilo' do
   # Pods for Bamilo
   pod 'Adjust'
   pod 'Fabric'
-  pod 'EmarsysPredictSDK'
+#  pod 'EmarsysPredictSDK'
   pod 'Crashlytics', '~> 3.9'
   pod 'FXBlurView','~> 1.6.4'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
@@ -25,7 +25,7 @@ target 'Bamilo' do
   pod 'CHIPageControl/Jalapeno'
   pod 'RAlertView'
   pod 'WebEngage'
-  pod 'Pushwoosh'
+#  pod 'Pushwoosh'
   pod 'AnimatedCollectionViewLayout'
   pod 'ObjectMapper'
   pod 'SwiftyJSON'

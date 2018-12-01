@@ -85,8 +85,6 @@ extension UIImageView: DisplaceableView {}
             self.getContent()
         }
         
-        self.tabBarController?.tabBar.isHidden = true
-        
         self.twoButtonViewControl.product = product
         self.twoButtonViewControl.viewCtrl = self
         self.twoButtonViewControl.purchaseTrackingInfo = purchaseTrackingInfo
@@ -95,6 +93,7 @@ extension UIImageView: DisplaceableView {}
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
         self.twoButtonViewControl.makeVisibleTwoButtons(true, animated: false)
     }
     
@@ -247,6 +246,7 @@ extension UIImageView: DisplaceableView {}
         let segueName = segue.identifier
         if segueName == "showAddToCartModal", let addToCartViewController = segue.destination as? AddToCartViewController {
             prepareAddToCartView(addToCartViewController: addToCartViewController)
+            addToCartViewController.isBuyNow = sender as? Bool ?? false
         } else if segueName == "showProductMoreInfoViewController", let viewCtrl = segue.destination as? ProductMoreInfoViewController {
             viewCtrl.selectedViewType = sender as? MoreInfoSelectedViewType ?? .description
             viewCtrl.product = product

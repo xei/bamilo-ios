@@ -35,7 +35,7 @@ class TwoButtonsPurchaseControl: BaseViewControl {
                 self.requestAddToCart(simpleSku: selectedSizeSimpleSku, inViewCtrl: viewCtrl)
                 return
             } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0, let viewCtrl = self.viewCtrl {
-                viewCtrl.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
+                viewCtrl.performSegue(withIdentifier: "showAddToCartModal", sender: shuouldGoToCardAfterAddToCard)
                 return
             }
         }

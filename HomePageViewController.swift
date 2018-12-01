@@ -118,6 +118,10 @@ class HomePageViewController:   BaseViewController,
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    func scrollToTop() {
+        self.tableView.setContentOffset(.zero, animated: true)
+    }
+    
     private func getHomePage(callBack: ((Bool)->Void)? = nil) {
         self.recordStartLoadTime()
         HomeDataManager.sharedInstance.getHomeData(self, requestType: .background) { (data, errors) in

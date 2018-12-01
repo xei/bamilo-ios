@@ -31,6 +31,7 @@ class AddToCartViewController: UIViewController {
     @IBOutlet private weak var seperatorView: UIView!
     
     weak var delegate: AddToCartViewControllerDelegate?
+    var isBuyNow: Bool = false
     var product: NewProduct?
     
     override func viewDidLoad() {
@@ -46,8 +47,6 @@ class AddToCartViewController: UIViewController {
         backgroundView.backgroundColor = .white
         backgroundView.alpha = 0.95
         backgroundView.addBlurView()
-        submitButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
-        submitButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         submitButton.backgroundColor = Theme.color(kColorOrange1)
         
         [currencyLabel, titleSizeLabel, titleColorLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray8)) }
@@ -55,6 +54,25 @@ class AddToCartViewController: UIViewController {
         
         submitButton.layer.cornerRadius = 46 / 2
         submitButton.clipsToBounds = true
+        
+        
+        //wait for rendering the module
+        Utility.delay(duration: 0.15) {
+            self.submitButton.setTitle(self.isBuyNow ? STRING_BUY_NOW : STRING_ADD_TO_SHOPPING_CART, for: .normal)
+            self.submitButton.setImage(self.isBuyNow ? UIImage(named: "buy_now") : UIImage(named: "tabbar_button_cart_highlighted"), for: .normal)
+            self.submitButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 13), color: .white)
+            if self.isBuyNow {
+                self.submitButton.applyGradient(colours: [
+                    UIColor(red:1, green:0.65, blue:0.05, alpha:1),
+                    UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
+                    ])
+            } else {
+                self.submitButton.applyGradient(colours: [
+                    UIColor(red:0.1, green:0.21, blue:0.37, alpha:1),
+                    UIColor(red:0.12, green:0.31, blue:0.56, alpha:1)
+                    ])
+            }
+        }
     }
     
     private func update(product: NewProduct) {

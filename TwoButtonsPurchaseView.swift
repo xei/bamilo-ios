@@ -55,6 +55,8 @@ class TwoButtonsPurchaseView: BaseControlView {
             $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 13), color: .white)
             $0?.positionStatus = 1
         }
+        addToBasketButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
+        buyNowButton.setTitle(STRING_BUY_RIGHT_NOW, for: .normal)
         
         [circleCheckedImageView, leftArrowImageView].forEach { $0.applyTintColor(color: .white) }
         
@@ -86,9 +88,9 @@ class TwoButtonsPurchaseView: BaseControlView {
     func makeVisibleTwoButtons(_ isVisible: Bool, animated: Bool) {
         if animated {
             if isVisible {
-                [self.addToBasketButton, self.buyNowButton].map{ $0.fadeIn(duration: 0.15) }
+                [self.addToBasketButton, self.buyNowButton].forEach { $0.fadeIn(duration: 0.15) }
             } else {
-                [self.addToBasketButton, self.buyNowButton].map { $0.hide() }
+                [self.addToBasketButton, self.buyNowButton].forEach { $0.hide() }
             }
         } else {
             self.addToBasketButton.isHidden = !isVisible

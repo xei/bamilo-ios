@@ -103,15 +103,20 @@ import Crashlytics
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let centerNav = viewController as? JACenterNavigationController, centerNav != MainTabBarViewController.previousSelectedViewController {
-            MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
-            centerNav.registerObservingOnNotifications()
-            MainTabBarViewController.previousSelectedViewController = centerNav
-            
-            
-            //Whenever we go to cart tab bar item, we need to go to the root of this tab bar item
-            if centerNav.viewControllers.first is CartViewController {
-               centerNav.popToRootViewController(animated: false)
+        if let centerNav = viewController as? JACenterNavigationController {
+            if centerNav != MainTabBarViewController.previousSelectedViewController {
+                MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+                centerNav.registerObservingOnNotifications()
+                MainTabBarViewController.previousSelectedViewController = centerNav
+                
+                //Whenever we go to cart tab bar item, we need to go to the root of this tab bar item
+                if centerNav.viewControllers.first is CartViewController {
+                    centerNav.popToRootViewController(animated: false)
+                }
+            } else {
+                if let homePage = centerNav.topViewController as? HomePageViewController {
+                    homePage.scrollToTop()
+                }
             }
         }
     }

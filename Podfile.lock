@@ -10,7 +10,6 @@ PODS:
   - CHIPageControl/Jalapeno (0.1.7)
   - Crashlytics (3.10.9):
     - Fabric (~> 1.7.13)
-  - EmarsysPredictSDK (1.0.38)
   - Fabric (1.7.13)
   - Firebase/Core (5.10.0):
     - Firebase/CoreOnly
@@ -95,7 +94,6 @@ PODS:
   - ObjectMapper (3.3.0)
   - PinCodeTextField (0.1.0)
   - Protobuf (3.6.1)
-  - Pushwoosh (5.9.1)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -123,7 +121,6 @@ DEPENDENCIES:
   - AnimatedCollectionViewLayout
   - CHIPageControl/Jalapeno
   - Crashlytics (~> 3.9)
-  - EmarsysPredictSDK
   - Fabric
   - Firebase/Core
   - Firebase/Performance
@@ -139,7 +136,6 @@ DEPENDENCIES:
   - M13Checkbox
   - ObjectMapper
   - PinCodeTextField
-  - Pushwoosh
   - RAlertView
   - RealmSwift
   - SDWebImage (~> 3.8)
@@ -157,7 +153,6 @@ SPEC REPOS:
     - AnimatedCollectionViewLayout
     - CHIPageControl
     - Crashlytics
-    - EmarsysPredictSDK
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -183,7 +178,6 @@ SPEC REPOS:
     - ObjectMapper
     - PinCodeTextField
     - Protobuf
-    - Pushwoosh
     - RAlertView
     - Realm
     - RealmSwift
@@ -202,7 +196,6 @@ SPEC CHECKSUMS:
   AnimatedCollectionViewLayout: f0295119f94d8492fc6ac39e2ced64a471b12699
   CHIPageControl: bbe1ddd0c688c02ec65b7f7e7d34551a3d16f37c
   Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
-  EmarsysPredictSDK: fffffb59050eff3bb35b49990fb77acc249def6c
   Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   Firebase: 6691d47562a780c26281ce8464518faafc90c610
   FirebaseAnalytics: 831f1f127f4a75698e9875a87bf7e2668730d953
@@ -228,7 +221,6 @@ SPEC CHECKSUMS:
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   PinCodeTextField: a3c39be58bde3ed1d6888d0fb1d88b0a4a2277cc
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  Pushwoosh: 38e31c3da27ba6c072f8b96884fe3660bd16cd2d
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 92f09a102692b96a9a10e9617f214f15c5ab85fc
   RealmSwift: 5f0481cd658bb751c509314b964a35eaa264d2cf
@@ -240,6 +232,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
   WebEngage: 3b901b794cf8a5b2f837ca8af638ff65df6067fd
 
-PODFILE CHECKSUM: 793d20309d9fe1cc4b00e264c3e554687bbf6efc
+PODFILE CHECKSUM: aa03daac4d66d331a272de41b27ce048e7402e7c
 
 COCOAPODS: 1.5.3
