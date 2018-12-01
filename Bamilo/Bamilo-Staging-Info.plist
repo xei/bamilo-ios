@@ -115,12 +115,6 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.pushwoosh.scheme</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>pw-A9EF7-6FDD2</string>
-			</array>
 		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
@@ -152,8 +146,6 @@
 		<string>https://staging.bamilo.com/mobapi/</string>
 		<key>API_Version</key>
 		<string>2.12</string>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-52004541-5</string>
 		<key>Tour</key>
@@ -231,14 +223,6 @@
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Pushwoosh_APPID</key>
-	<string>54916-053AA </string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>

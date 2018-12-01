@@ -17,7 +17,6 @@ import SwiftyJSON
                                     BaseCatallogCollectionViewCellDelegate,
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate,
-                                    EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     SearchViewControllerDelegate,

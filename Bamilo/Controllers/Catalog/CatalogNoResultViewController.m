@@ -11,13 +11,13 @@
 #import "RITeaserComponent.h"
 #import "PlainTableViewHeaderCell.h"
 #import "EmarsysRecommendationCarouselWidget.h"
-#import "EmarsysPredictManager.h"
-#import "EmarsysPredictProtocol.h"
+//#import "EmarsysPredictManager.h"
+//#import "EmarsysPredictProtocol.h"
 #import "NSArray+Extension.h"
 #import "ThreadManager.h"
 #import "Bamilo-Swift.h"
 
-@interface CatalogNoResultViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface CatalogNoResultViewController () <FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *noResultMessageUILabel;
 @property (weak, nonatomic) IBOutlet UILabel *warningMessageUILabel;
 @property (strong, nonatomic) RITeaserGrouping *teaserGroup;
@@ -46,7 +46,7 @@
 }
 
 - (void)getSuggestions {
-    [EmarsysPredictManager sendTransactionsOf:self];
+//    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 - (void)setSearchQuery:(NSString *)searchQuery {
@@ -64,33 +64,33 @@
     }];
 }
 
-#pragma mark - EmarsysPredictProtocol
-- (BOOL)isPreventSendTransactionInViewWillAppear {
-    return YES;
-}
-
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
-    recommend.limit = 100;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        [ThreadManager executeOnMainThread:^{
-            [self.carouselWidget fadeIn:0.15];
-            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
-                return [[RecommendItem alloc] initWithItem:item];
-            }];
-            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15)    )]];
-        }];
-    };
-
-    return @[recommend];
-}
-
-- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
-    if (self.searchTerm) {
-        [transaction setSearchTerm:self.searchTerm];
-    }
-    return transaction;
-}
+//#pragma mark - EmarsysPredictProtocol
+//- (BOOL)isPreventSendTransactionInViewWillAppear {
+//    return YES;
+//}
+//
+//- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+//    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:@"PERSONAL"];
+//    recommend.limit = 100;
+//    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+//        [ThreadManager executeOnMainThread:^{
+//            [self.carouselWidget fadeIn:0.15];
+//            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+//                return [[RecommendItem alloc] initWithItem:item];
+//            }];
+//            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15)    )]];
+//        }];
+//    };
+//
+//    return @[recommend];
+//}
+//
+//- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+//    if (self.searchTerm) {
+//        [transaction setSearchTerm:self.searchTerm];
+//    }
+//    return transaction;
+//}
 
 #pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {

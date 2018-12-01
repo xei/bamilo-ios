@@ -6,9 +6,9 @@
 //  Copyright © 2017 Rocket Internet. All rights reserved.
 //
 
-#import "EventFactory.h"
+//#import "EventFactory.h"
 
-@implementation EventFactory
+//@implementation EventFactory
 
 //+ (NSDictionary *)login:(NSString *)loginMethod success:(BOOL)success {
 //    NSMutableDictionary *attributes = [LoginEvent attributes];
@@ -126,4 +126,4 @@
 //}
 
 
-@end
+//@end

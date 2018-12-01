@@ -150,8 +150,6 @@
 		<string>2.12</string>
 		<key>AdjustTokenID</key>
 		<string>pttex2kff47v</string>
-		<key>EMMerchantID</key>
-		<string>18146DE34FE0B8C9</string>
 		<key>GoogleAnalyticsID</key>
 		<string>UA-57415371-2</string>
 		<key>Tour</key>
@@ -229,14 +227,6 @@
 	<string>Bamilo would like to access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Bamilo would like to access your photos</string>
-	<key>PW_USE_GPS</key>
-	<true/>
-	<key>Pushwoosh_APPID</key>
-	<string>54916-053AA</string>
-	<key>Pushwoosh_APPNAME</key>
-	<string>Bamilo</string>
-	<key>Pushwoosh_LOG_LEVEL</key>
-	<string>NONE</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Bamilosans Reg.ttf</string>
@@ -272,5 +262,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>WEGLicenseCode</key>
+	<string>~47b657a1</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
 </dict>
 </plist>

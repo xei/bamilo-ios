@@ -138,7 +138,7 @@ extension UIImageView: DisplaceableView {}
                 completion?(true)
                 
                 //request for emarsys recommendations
-                EmarsysPredictManager.sendTransactions(of: self)
+//                EmarsysPredictManager.sendTransactions(of: self)
             } else {
                 self.errorHandler(error, forRequestID: 0)
                 completion?(false)
@@ -578,31 +578,31 @@ extension ProductDetailViewController: SellerViewDelegate {
 
 
 //MARK: - EmarsysPredictProtocol
-extension ProductDetailViewController: EmarsysPredictProtocol {
-    func getRecommendations() -> [EMRecommendationRequest]! {
-        let recommend = EMRecommendationRequest(logic: "RELATED")
-        recommend.limit = 100
-        recommend.completionHandler = { (result) in
-            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
-            ThreadManager.execute(onMainThread: {
-                self.updateAvaibleSections()
-                self.tableView.reloadData()
-            })
-        }
-        return [recommend]
-    }
-
-    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if let sku = self.product?.sku {
-            transaction.setView(sku)
-        }
-        return transaction;
-    }
-
-    func isPreventSendTransactionInViewWillAppear() -> Bool {
-        return true
-    }
-}
+//extension ProductDetailViewController: EmarsysPredictProtocol {
+//    func getRecommendations() -> [EMRecommendationRequest]! {
+//        let recommend = EMRecommendationRequest(logic: "RELATED")
+//        recommend.limit = 100
+//        recommend.completionHandler = { (result) in
+//            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
+//            ThreadManager.execute(onMainThread: {
+//                self.updateAvaibleSections()
+//                self.tableView.reloadData()
+//            })
+//        }
+//        return [recommend]
+//    }
+//
+//    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+//        if let sku = self.product?.sku {
+//            transaction.setView(sku)
+//        }
+//        return transaction;
+//    }
+//
+//    func isPreventSendTransactionInViewWillAppear() -> Bool {
+//        return true
+//    }
+//}
 
 //MARK: - BreadcrumbsViewDelegate
 extension ProductDetailViewController: BreadcrumbsViewDelegate {

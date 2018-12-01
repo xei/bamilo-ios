@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface CatalogNoResultViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource>
+@interface CatalogNoResultViewController : BaseViewController <UITableViewDelegate>
 
 @property (nonatomic, strong) NSString* searchQuery;
 - (void)getSuggestions;
