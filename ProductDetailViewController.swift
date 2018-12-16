@@ -219,9 +219,10 @@ extension UIImageView: DisplaceableView {}
             }
             updateViewByProduct(product: product)
             
-            
-            //Track viewing product
-            TrackerManager.postEvent(selector: EventSelectors.viewProductSelector(), attributes: EventAttributes.viewProduct(parentViewScreenName: getScreenName(), product: product))
+            if let prevCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+                //Track viewing product
+                TrackerManager.postEvent(selector: EventSelectors.viewProductSelector(), attributes: EventAttributes.viewProduct(parentViewScreenName: prevCtrl.getScreenName(), product: product))
+            }
             
             GoogleAnalyticsTracker.shared().trackEcommerceProductClick(product: product)
             self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.sku ?? "")

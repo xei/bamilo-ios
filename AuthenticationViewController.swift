@@ -247,7 +247,7 @@ extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
         }
     }
     
-    func userSendVerificationPinCode(pinCode: String) {
+    func  userSendVerificationPinCode(pinCode: String) {
         guard let viewMode = self.phoneVerificationRequestedFromViewMode, let phoneVerifyViewCtrl = self.phoneVerifyViewController else { return }
         
         if viewMode == .signUp {

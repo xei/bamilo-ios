@@ -181,7 +181,6 @@
                 value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
-            
             //Ecommerce tracking
             self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
         }

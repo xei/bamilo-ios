@@ -13,6 +13,7 @@ class FailPaymentViewController: BaseViewController {
     @IBOutlet weak var imageIcon: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var backToCardButton: UIButton!
+    @objc var cart: RICart?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +25,18 @@ class FailPaymentViewController: BaseViewController {
         self.backToCardButton.setTitle(STRING_BACK_TO_CART, for: .normal)
         self.messageLabel.text = STRING_ORDER_FAIL
         self.backToCardButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        if let cart = cart {
+            TrackerManager.postEvent(selector: EventSelectors.purchaseSelector(),
+                                     attributes: EventAttributes.purchase(cart: cart, success: false))
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = false

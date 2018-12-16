@@ -10,6 +10,7 @@
 #import "RICart.h"
 #import "RIPaymentInformation.h"
 #import "SuccessPaymentViewController.h"
+#import "Bamilo-Swift.h"
 
 @interface JAExternalPaymentsViewController () /*<UIWebViewDelegate>*/
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
@@ -61,9 +62,12 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString: @"showSuccessPaymentViewController"]) {
-        SuccessPaymentViewController *ViewCtrl = (SuccessPaymentViewController *)segue.destinationViewController;
-        ViewCtrl.cart = self.cart;
+    if ([segue.identifier isEqualToString: @"showSuccessPaymentViewController"]) {
+        SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)segue.destinationViewController;
+        viewCtrl.cart = self.cart;
+    } else if ([segue.identifier isEqualToString: @"showFailPaymentViewController"]) {
+        FailPaymentViewController *viewCtrl = (FailPaymentViewController *)segue.destinationViewController;
+        viewCtrl.cart = self.cart;
     }
 }
 

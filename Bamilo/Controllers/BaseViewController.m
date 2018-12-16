@@ -33,7 +33,7 @@
     [self recordStartLoadTime];
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
-    if ([self getScreenName].length) {
+    if (VALID_NOTEMPTY([self getScreenName], NSString)) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
     

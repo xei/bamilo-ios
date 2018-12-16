@@ -34,4 +34,5 @@
     @objc optional func buyNowTapped(attributes: EventAttributeType)
     @objc optional func shareApp(attributes: EventAttributeType)
     @objc optional func searchSuggestionTapped(attributes: EventAttributeType)
+    @objc optional func phoneVerification(attributes: EventAttributeType)
 }

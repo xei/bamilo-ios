@@ -81,7 +81,7 @@ static BOOL performed;
             performed = false;
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
                 JAExternalPaymentsViewController *viewController = (JAExternalPaymentsViewController *)[MainTabBarViewController topViewController];
-                RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
+                RICart *cart = viewController.cart;
                 if (cart && [queryDictionary objectForKey:@"success"]) {
                     BOOL success = [[queryDictionary objectForKey:@"success"] isEqualToString:@"true"];
                     [viewController paymentHappend:success];
