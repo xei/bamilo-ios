@@ -313,6 +313,17 @@
     
     func purchased(attributes: EventAttributeType) {
         //becasues we have the checkout finish it's not necessary
+        
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutFail",
+                label: cart.orderNr,
+                value: cart.cartEntity?.cartValue ?? 0
+            )
+            self.sendParamsToGA(params: params)
+        }
     }
     
     func purchaseBehaviour(attributes: EventAttributeType) {

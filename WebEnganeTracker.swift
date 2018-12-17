@@ -136,6 +136,16 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         }
     }
     
+    func purchased(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            analytics.trackEvent(withName: "checkout_fail", andValue: [
+                "order_number": cart.orderNr,
+                "cart_price": cart.cartEntity.cartValue
+            ])
+        }
+    }
+    
     func trackScreenName(screenName: String) {
         analytics.navigatingToScreen(withName: screenName)
     }

@@ -61,5 +61,7 @@ class BaseAuthenticationViewCtrl: BaseViewController {
         Utility.delay(duration: 0.15) {
             self.delegate?.contentSizeChanged(height: self.tableview.contentSize.height + self.tableview.contentInset.top + self.tableview.contentInset.bottom + self.titleViewHeightConstraint.constant, for: self.viewMode)
         }
+        
+        TrackerManager.trackScreenName(screenName: self.viewMode.rawValue)
     }
 }

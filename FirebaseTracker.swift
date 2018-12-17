@@ -168,6 +168,14 @@ import Firebase
     
     func purchased(attributes: EventAttributeType) {
         //becasues we have the checkout finish it's not necessary
+        
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            Analytics.logEvent("fail_checkout", parameters: [
+                AnalyticsParameterItemID: cart.orderNr,
+                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
+            ])
+        }
     }
     
     func purchaseBehaviour(attributes: EventAttributeType) {
