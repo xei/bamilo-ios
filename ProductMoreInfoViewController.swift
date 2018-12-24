@@ -91,7 +91,7 @@ class ProductMoreInfoViewController: BaseViewController, DataServiceProtocol {
     }
     
     override func getScreenName() -> String! {
-        return "ProductMoreInfoViewController"
+        return "ProductMoreInfoView"
     }
     
     //MARK: - DataServiceProtocol

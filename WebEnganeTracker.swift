@@ -97,14 +97,18 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         if let screenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
-            analytics.trackEvent(withName: "add_to_wishlist", andValue: ["product_sku": product.sku ?? "", "screen": screenName, "price": price.intValue])
+            analytics.trackEvent(withName: "add_to_wishlist", andValue: ["product_sku": product.sku ?? "",
+                                                                         "screen": screenName,
+                                                                         "price": price.intValue
+            ])
         }
     }
     
     func removeFromWishList(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
-            analytics.trackEvent(withName: "remove_from_wishlist", andValue: ["product_sku": product.sku ?? "", "price": price.intValue])
+            analytics.trackEvent(withName: "remove_from_wishlist", andValue: ["product_sku": product.sku ?? "",
+                                                                              "price": price.intValue])
         }
     }
     
