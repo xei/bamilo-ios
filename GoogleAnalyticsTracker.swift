@@ -353,13 +353,13 @@
     
     
     func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
-        if let timingParms = GAIDictionaryBuilder.createTiming(
-            withCategory: "Screen",
-            interval: interval,
-            name: screenName,
-            label: label) {
-            self.sendParamsToGA(params: timingParms)
-        }
+//        if let timingParms = GAIDictionaryBuilder.createTiming(
+//            withCategory: "Screen",
+//            interval: interval,
+//            name: screenName,
+//            label: label) {
+//            self.sendParamsToGA(params: timingParms)
+//        }
     }
     
     //MARK: - Helper functions

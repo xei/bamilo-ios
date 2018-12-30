@@ -25,34 +25,32 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
     func login(attributes: EventAttributeType) {
         if let user = attributes[kEventUser] as? User {
             syncUser(user: user)
-            analytics.trackEvent(withName: "user_logged_in")
+            analytics.trackEvent(withName: "User_Login")
         }
     }
     
     func signup(attributes: EventAttributeType) {
         if let user = attributes[kEventUser] as? User {
             syncUser(user: user)
-            analytics.trackEvent(withName: "user_signged_up")
+            analytics.trackEvent(withName: "User_Register")
         }
     }
     
     func logout(attributes: EventAttributeType) {
         trackingWeUser.logout()
-        analytics.trackEvent(withName: "user_logged_out")
+        analytics.trackEvent(withName: "User_Logout")
     }
     
     func addToCart(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             let addedToCartAttributes: [String:Any]  = [
                 "Price": product.payablePrice?.intValue ?? 0,
                 "Quantity": 1,
-                "Product": product.name ?? "",
-                "Category": product.categoryUrlKey ?? "",
-                "Screen": screenName
+                "Product_ID": product.sku ?? "",
+                "Product_Name": product.name ?? "",
+                "Category_URL": product.categoryUrlKey ?? "",
             ]
-            
-            analytics.trackEvent(withName: "add_to_cart", andValue: addedToCartAttributes)
+            analytics.trackEvent(withName: "Purchase_Add_To_Cart", andValue: addedToCartAttributes)
         }
     }
     
@@ -60,7 +58,7 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         if let screenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
-            let attributes: [String:Any]  = [
+            let _: [String:Any]  = [
                 "Price": price.intValue,
                 "Quantity": 1,
                 "Product": product.name ?? "",
@@ -68,74 +66,87 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
                 "Screen": screenName
             ]
             
-            analytics.trackEvent(withName: "buy_now", andValue: attributes)
+//            analytics.trackEvent(withName: "buy_now", andValue: attributes)
         }
     }
     
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? TrackableProductProtocol {
-            let attributes: [String:Any]  = [
+            let viewProductAttributes: [String:Any]  = [
                 "Price": product.payablePrice?.intValue ?? 0,
                 "Quantity": 1,
-                "Product": product.name ?? "",
-                "Category": product.categoryUrlKey ?? "",
+                "Product_ID": product.sku ?? "",
+                "Product_Name": product.name ?? "",
+                "Category_URL": product.categoryUrlKey ?? "",
                 "Previous_View_name": parentScreenName
             ]
             
-            analytics.trackEvent(withName: "view_product", andValue: attributes)
+            analytics.trackEvent(withName: "Product_View", andValue: viewProductAttributes)
         }
     }
     
     func removeFromCart(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol {
-            analytics.trackEvent(withName: "remove_from_cart", andValue: ["product_sku": product.sku ?? ""])
-        }
-    }
-    
-    func addToWishList(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
-            let price = product.payablePrice {
-            analytics.trackEvent(withName: "add_to_wishlist", andValue: ["product_sku": product.sku ?? "",
-                                                                         "screen": screenName,
-                                                                         "price": price.intValue
+            analytics.trackEvent(withName: "Purchase_Remove_From_Cart", andValue: [
+                "Price": product.payablePrice?.intValue ?? 0,
+                "Product_ID": product.sku ?? "",
+                "Product_Name": product.name ?? "",
             ])
         }
     }
     
+    func addToWishList(attributes: EventAttributeType) {
+//        if let screenName = attributes[kEventScreenName] as? String,
+//            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+//            let price = product.payablePrice {
+//            analytics.trackEvent(withName: "add_to_wishlist", andValue: [
+//                "product_sku": product.sku ?? "",
+//                "screen": screenName,
+//                "price": price.intValue
+//            ])
+//        }
+    }
+    
     func removeFromWishList(attributes: EventAttributeType) {
-        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
-            let price = product.payablePrice {
-            analytics.trackEvent(withName: "remove_from_wishlist", andValue: ["product_sku": product.sku ?? "",
-                                                                              "price": price.intValue])
-        }
+//        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
+//            let price = product.payablePrice {
+//            analytics.trackEvent(withName: "remove_from_wishlist", andValue: ["product_sku": product.sku ?? "",
+//                                                                              "price": price.intValue])
+//        }
     }
     
     func search(attributes: EventAttributeType) {
-        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
-            analytics.trackEvent(withName: "category_search", andValue: ["category_url": target.node])
-        }
+//        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
+//            analytics.trackEvent(withName: "category_search", andValue: ["category_url": target.node])
+//        }
     }
     
     func searchbarSearched(attributes: EventAttributeType) {
-        if let searchString = attributes[kEventKeywords] as? String {
-            analytics.trackEvent(withName: "searchbar_search", andValue: ["query": searchString])
-        }
+//        if let searchString = attributes[kEventKeywords] as? String {
+//            analytics.trackEvent(withName: "searchbar_search", andValue: ["query": searchString])
+//        }
     }
     
     func checkoutStart(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            analytics.trackEvent(withName: "checkout_start", andValue: [
-                "cart_price": cart.cartEntity.cartValue
+            let numberOfProducts = cart.cartEntity?.cartCount?.intValue ?? 0
+            let cartValue = cart.cartEntity?.cartValue?.intValue ?? 0
+            
+            analytics.trackEvent(withName: "Purchase_Chekout_Start", andValue: [
+                "Cart_Value": cartValue,
+                "No_Of_Products": numberOfProducts
             ])
         }
     }
     
     func checkoutFinished(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart {
-            analytics.trackEvent(withName: "checkout_finsih", andValue: [
-                "cart_price": cart.cartEntity.cartValue
+            let cartValue = cart.cartEntity?.cartValue?.intValue ?? 0
+            let numberOfProducts = cart.cartEntity?.cartCount?.intValue ?? 0
+            analytics.trackEvent(withName: "Purchase_Checkout_Complete", andValue: [
+                "Cart_Value": cartValue,
+                "No_Of_Products": numberOfProducts,
             ])
         }
     }
@@ -143,10 +154,19 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
     func purchased(attributes: EventAttributeType) {
         if let cart = attributes[kEventCart] as? RICart,
             let success = attributes[kEventSuccess] as? Bool, !success {
-            analytics.trackEvent(withName: "checkout_fail", andValue: [
-                "order_number": cart.orderNr,
-                "cart_price": cart.cartEntity.cartValue
-            ])
+            let orderNumber = cart.orderNr ?? ""
+            let cartValue = cart.cartEntity?.cartValue?.intValue ?? 0
+            let cityName = cart.cartEntity?.address?.city ?? "NotSet"
+            let numberOfProducts = cart.cartEntity?.cartCount?.intValue ?? 0
+            let paymentMethod = cart.cartEntity?.paymentMethod ?? ""
+            let purchasedAttribute: [String :Any] = [
+                "Order_Number": orderNumber,
+                "Total_Value": cartValue,
+                "City_Name": cityName,
+                "No_Of_Products": numberOfProducts,
+                "Payment_Method": paymentMethod
+            ]
+            analytics.trackEvent(withName: "Purchase_Payment_Failure", andValue: purchasedAttribute)
         }
     }
     
