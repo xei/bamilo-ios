@@ -214,7 +214,6 @@
 #define STRING_UP_TO_DATE RILocalizedString(@"up_to_date", nil)
 #define STRING_APP_VERSION RILocalizedString(@"app_version", nil)
 #define STRING_HELP_CENTER RILocalizedString(@"help_center", nil)
-#define STRING_TERMS_AND_CONDITIONS RILocalizedString(@"terms_and_conditions", nil)
 #define STRING_APP_SOCIAL RILocalizedString(@"app_social", nil)
 #define STRING_RATE_THE_APP RILocalizedString(@"rate_the_app", nil)
 #define STRING_SHOP_SETTINGS RILocalizedString(@"shop_settings", nil)

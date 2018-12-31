@@ -147,6 +147,7 @@ let STRING_WHOLE_SPECIFICATIONS = RILocalizationWrapper.localizedString("see_who
 let STRING_SEE_ALL_COMMENTS = RILocalizationWrapper.localizedString("see_all_comments")!
 let STRING_COMMENT = RILocalizationWrapper.localizedString("comment")!
 let STRING_MORE = RILocalizationWrapper.localizedString("more")!
+let STRING_SEE = RILocalizationWrapper.localizedString("see")!
 let STRING_USER_REVIEWS = RILocalizationWrapper.localizedString("user_reviews")!
 let STRING_STAR = RILocalizationWrapper.localizedString("star")!
 let STRING_ADD_COMMENT = RILocalizationWrapper.localizedString("add_comment")!
@@ -173,5 +174,5 @@ let STRING_CELLPHONE = RILocalizationWrapper.localizedString("cellphone")!
 let STRING_CHANGE_PASSWORD = RILocalizationWrapper.localizedString("change_password")!
 let STRING_SUCCESS_FORGET_PASS = RILocalizationWrapper.localizedString("forgotten_password_successtext")!
 let STRING_SUCCESS_FORGET_PASS_CHANGE = RILocalizationWrapper.localizedString("password_changed_success")!
-
+let STRING_RETURN_POLICY = RILocalizationWrapper.localizedString("return_policy")!
 

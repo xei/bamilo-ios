@@ -56,7 +56,6 @@ PODS:
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - Protobuf (~> 3.5)
   - FSPagerView (0.8.2)
-  - FXBlurView (1.6.4)
   - GoogleAnalytics (3.14.0)
   - GoogleAppIndexing (2.0.3)
   - GoogleAppMeasurement (5.4.0):
@@ -137,7 +136,6 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Performance
   - FSPagerView
-  - FXBlurView (~> 1.6.4)
   - GoogleAnalytics (= 3.14.0)
   - GoogleAppIndexing (~> 2.0.3)
   - GoogleTagManager (= 3.15.0)
@@ -174,7 +172,6 @@ SPEC REPOS:
     - FirebasePerformance
     - FirebaseRemoteConfig
     - FSPagerView
-    - FXBlurView
     - GoogleAnalytics
     - GoogleAppIndexing
     - GoogleAppMeasurement
@@ -219,7 +216,6 @@ SPEC CHECKSUMS:
   FirebasePerformance: 6f77b930f982a54ad487d3de5523ce641db9dcc9
   FirebaseRemoteConfig: 7e11c65f0769c09bff6947997c209515058c5318
   FSPagerView: 816a18842306973cc7cc6df8a5332272f7815c30
-  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleAppIndexing: 176146164d14b30a403f5ba394fc2b51855025da
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
@@ -248,6 +244,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
   WebEngage: 8c1ebcde2d0da51123d40c2d4e10ee0f1fca9f39
 
-PODFILE CHECKSUM: aa03daac4d66d331a272de41b27ce048e7402e7c
+PODFILE CHECKSUM: 9779816a6b6cdae881ef7f1b5b4dea4325374dcb
 
 COCOAPODS: 1.5.3

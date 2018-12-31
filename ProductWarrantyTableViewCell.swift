@@ -18,15 +18,15 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
     @IBOutlet private weak var warrantyImageView: UIImageView!
     @IBOutlet private weak var warrantyTitleLabel: UILabel!
     @IBOutlet private weak var seeMoreButton: UIButton!
+    @IBOutlet private weak var seeMoreLabel: UILabel!
     weak var delegate: ProductWarrantyTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         warrantyTitleLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorGray1))
-        seeMoreButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
-        
-        seeMoreButton.setTitle(STRING_PRIVACY_POLICY, for: .normal)
+        seeMoreLabel.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: Theme.color(kColorBlue))
+        seeMoreLabel.text = STRING_SEE
     }
     
     @IBAction func seeMoreTapped(_ sender: Any) {
@@ -35,7 +35,7 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
     
     override func update(withModel model: Any!) {
         if let product = model as? NewProduct {
-            warrantyTitleLabel.text = product.returnPolicy?.title
+            warrantyTitleLabel.text = STRING_RETURN_POLICY //product.returnPolicy?.title
             warrantyImageView.kf.setImage(with: product.returnPolicy?.icon, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
             
             if let _ = product.returnPolicy?.cmsKey {

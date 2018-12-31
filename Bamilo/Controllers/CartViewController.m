@@ -7,7 +7,6 @@
 //
 
 #import "CartViewController.h"
-#import "JAEmptyCartView.h"
 #import "JAUtils.h"
 #import "RICartItem.h"
 #import "CartTableViewCell.h"
@@ -23,7 +22,6 @@
 
 
 @interface CartViewController() <CartTableViewCellDelegate>
-//@property (nonatomic, strong) JAEmptyCartView *emptyCartView;
 @property (nonatomic, strong) RICartItem *currentItem;
 @property (nonatomic, weak) IBOutlet UIView *contentWrapper;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;

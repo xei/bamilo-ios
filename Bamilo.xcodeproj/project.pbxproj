@@ -837,7 +837,6 @@
 		9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */; };
 		9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */; };
 		9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */; };
-		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E5C1BB31AC70039BC14 /* JAProductInfoHeaderLine.m */; };
 		9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E631BB31AF70039BC14 /* JAProductInfoRatingLine.m */; };
 		9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E651BB31AF70039BC14 /* JAProductInfoSingleLine.m */; };
@@ -871,9 +870,6 @@
 		9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D69B1B4699B800036F1C /* JACatalogCollectionViewCell.m */; };
 		9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
 		9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */; };
-		9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
-		9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */; };
-		9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766C81CBCF31400B63D8E /* JACartResumeView.m */; };
 		9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */; };
 		9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766DD1CBFF31D00B63D8E /* JACartTableViewCell.m */; };
 		9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
@@ -1019,7 +1015,6 @@
 		CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */; };
 		CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
 		CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
-		CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
 		DC0F60F13340D2E91FB1AA4F /* Pods_Bamilo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6AD3F04437DCA923FD6F759 /* Pods_Bamilo.framework */; };
 		E3F6D82EE09161E1EDCE109F /* Pods_BamiloUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42377D674E3AAC5BA2FE0522 /* Pods_BamiloUITests.framework */; };
 		FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */; };
@@ -2224,8 +2219,6 @@
 		8976FB281C0F323700483651 /* JARatingFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingFilterCell.m; sourceTree = "<group>"; };
 		8976FB2D1C0F3F4300483651 /* JATextFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextFilterCell.h; sourceTree = "<group>"; };
 		8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextFilterCell.m; sourceTree = "<group>"; };
-		898A24BE1BCE9EAF00BBEE31 /* JASellerDeliveryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerDeliveryView.h; sourceTree = "<group>"; };
-		898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerDeliveryView.m; sourceTree = "<group>"; };
 		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
@@ -2233,8 +2226,6 @@
 		9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutBottomView.h; path = ../Controllers/Checkout/JACheckoutBottomView.h; sourceTree = "<group>"; };
-		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
 		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
 		9A189E4E1BB1A5780039BC14 /* JAScrolledImageGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScrolledImageGalleryView.h; sourceTree = "<group>"; };
@@ -2308,12 +2299,6 @@
 		9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductCollectionViewFlowLayout.m; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		9ADEA0991C9C0E6D00B2A605 /* JAProductInfoSizeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAProductInfoSizeLine.h; sourceTree = "<group>"; };
 		9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSizeLine.m; sourceTree = "<group>"; };
-		9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartProductsView.h; path = ../Controllers/Checkout/Cart/JACartProductsView.h; sourceTree = "<group>"; };
-		9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartProductsView.m; path = ../Controllers/Checkout/Cart/JACartProductsView.m; sourceTree = "<group>"; };
-		9AE766B91CBBF01C00B63D8E /* JAEmptyCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAEmptyCartView.h; path = ../Controllers/Checkout/Cart/JAEmptyCartView.h; sourceTree = "<group>"; };
-		9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAEmptyCartView.m; path = ../Controllers/Checkout/Cart/JAEmptyCartView.m; sourceTree = "<group>"; };
-		9AE766C71CBCF31400B63D8E /* JACartResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartResumeView.h; path = ../Controllers/Checkout/Cart/JACartResumeView.h; sourceTree = "<group>"; };
-		9AE766C81CBCF31400B63D8E /* JACartResumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartResumeView.m; path = ../Controllers/Checkout/Cart/JACartResumeView.m; sourceTree = "<group>"; };
 		9AE766CE1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoPriceDescriptionLine.h; path = Lines/JAProductInfoPriceDescriptionLine.h; sourceTree = "<group>"; };
 		9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoPriceDescriptionLine.m; path = Lines/JAProductInfoPriceDescriptionLine.m; sourceTree = "<group>"; };
 		9AE766DC1CBFF31D00B63D8E /* JACartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartTableViewCell.h; path = ../../Controllers/Checkout/Cart/JACartTableViewCell.h; sourceTree = "<group>"; };
@@ -7637,12 +7622,7 @@
 		9A17372C1B677A13004905B4 /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
-				9AE766E31CBFFDA700B63D8E /* Cart */,
 				B530D56E19C199690052FEDA /* CheckoutForms */,
-				9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */,
-				9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */,
-				898A24BE1BCE9EAF00BBEE31 /* JASellerDeliveryView.h */,
-				898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */,
 				9AEF74161CD27C1400A5D574 /* JACheckoutButton.h */,
 				9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */,
 			);
@@ -7690,19 +7670,6 @@
 				9A4ADF671C2AF1010019F439 /* JADropdownControl.m */,
 			);
 			name = CustomControls;
-			sourceTree = "<group>";
-		};
-		9AE766E31CBFFDA700B63D8E /* Cart */ = {
-			isa = PBXGroup;
-			children = (
-				9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */,
-				9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */,
-				9AE766B91CBBF01C00B63D8E /* JAEmptyCartView.h */,
-				9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */,
-				9AE766C71CBCF31400B63D8E /* JACartResumeView.h */,
-				9AE766C81CBCF31400B63D8E /* JACartResumeView.m */,
-			);
-			name = Cart;
 			sourceTree = "<group>";
 		};
 		9AE766E41CBFFDE200B63D8E /* Cart */ = {
@@ -8978,7 +8945,6 @@
 				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -9012,7 +8978,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -9147,7 +9112,6 @@
 				61B56D611F9B835E0002BFF3 /* JATopSellersTeaserView.m in Sources */,
 				61D474901F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift in Sources */,
 				875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */,
-				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				875AD56C1E38C0C900584ABF /* RIProductOffer.m in Sources */,
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
@@ -9172,7 +9136,6 @@
 				61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */,
 				6157A74420E24D0B001B8361 /* ProductSpecificsTableViewController.swift in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
-				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */,
 				61BBFC8020038F500000FC8A /* OrderCancellation.swift in Sources */,
 				61420C921F9F03D3009D9ECD /* Utility.swift in Sources */,
@@ -9395,7 +9358,6 @@
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				61B80E6E20F62A670028FA87 /* SellerOfferItemTableViewCell.swift in Sources */,
-				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
 				61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */,
@@ -9505,7 +9467,6 @@
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				614927C220ECC4AA00B16B27 /* ProductReviewItemTableViewCell.swift in Sources */,
-				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */,
 				61B56D591F9B4EC30002BFF3 /* OrderItem.swift in Sources */,
 				619E92CF1F8A1044003885BC /* DailyDealsCollectionViewCell.swift in Sources */,
@@ -9732,7 +9693,6 @@
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
 				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,
-				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,
 				875AD5491E38C0C900584ABF /* RIFieldRatingStars.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

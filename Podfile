@@ -11,22 +11,19 @@ target 'Bamilo' do
   # Pods for Bamilo
   pod 'Adjust'
   pod 'Fabric'
-#  pod 'EmarsysPredictSDK'
   pod 'Crashlytics', '~> 3.9'
-  pod 'FXBlurView','~> 1.6.4'
   pod 'GoogleTagManager', '3.15.0' # ********** Legacy
   pod 'GoogleAnalytics', '3.14.0' # ********** Legacy
   pod 'GoogleAppIndexing','~> 2.0.3'
   pod 'JBWhatsAppActivity', '~> 1.0'
   pod 'SDWebImage', '~> 3.8'
-  pod 'TTRangeSlider', '~> 1.0.5'
+  pod 'TTRangeSlider', '~> 1.0.5' #**** not supported in carthage
   pod 'M13Checkbox'
   pod 'JSONModel'
   pod 'CHIPageControl/Jalapeno'
   pod 'RAlertView'
   pod 'WebEngage'
-#  pod 'Pushwoosh'
-  pod 'AnimatedCollectionViewLayout'
+  pod 'AnimatedCollectionViewLayout' #**** not supported in carthage
   pod 'ObjectMapper'
   pod 'SwiftyJSON'
   pod 'Kingfisher'
@@ -39,7 +36,6 @@ target 'Bamilo' do
   pod 'UICircularProgressRing'
   pod 'Firebase/Core'
   pod 'Firebase/Performance'
-  pod 'PinCodeTextField'
   pod 'PinCodeTextField'
 
   target 'BamiloUITests' do
