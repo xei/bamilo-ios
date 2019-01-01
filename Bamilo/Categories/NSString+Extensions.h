@@ -12,6 +12,7 @@
 
 + (NSString *)mobileRegxPattern;
 
+- (NSString *)convertRailsToTomans;
 - (NSString *)forceRTL;
 - (NSString *)wrapWithMaxSize:(int) maxSize;
 - (NSString *)numbersToPersian;

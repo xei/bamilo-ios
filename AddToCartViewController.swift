@@ -51,7 +51,7 @@ class AddToCartViewController: UIViewController {
         
         [currencyLabel, titleSizeLabel, titleColorLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray8)) }
         productTitleLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 12), color: Theme.color(kColorGray1))
-        
+        currencyLabel.text = STRING_CURRENCY
         submitButton.layer.cornerRadius = 46 / 2
         submitButton.clipsToBounds = true
         

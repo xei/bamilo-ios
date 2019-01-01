@@ -42,7 +42,7 @@
     [self.itemImage sd_setImageWithURL:[ImageManager getCorrectedUrlForCartItemImageUrl:cartItem.imageUrl] placeholderImage:[ImageManager defaultPlaceholder]];
     self.stepper.quantity = cartItem.quantity.intValue;
     self.stepper.maxQuantity = cartItem.maxQuantity.intValue;
-    self.stepper.minQuantity = 1;
+    self.stepper.minQuantity = 0;
     NSString *realPrice = cartItem.priceFormatted;
     NSString *specialPrice = cartItem.specialPriceFormatted;
     self.priceLabel.text = specialPrice ?: realPrice;

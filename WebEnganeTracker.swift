@@ -56,18 +56,17 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
     }
     
     func buyNowTapped(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
-            let _: [String:Any]  = [
+            let buyNowAttributes: [String:Any]  = [
                 "Price": price.intValue,
                 "Quantity": 1,
-                "Product": product.name ?? "",
-                "Category": product.categoryUrlKey ?? "",
-                "Screen": screenName
+                "Product_ID": product.sku ?? "",
+                "Product_Name": product.name ?? "",
+                "Category_URL": product.categoryUrlKey ?? "",
             ]
             
-//            analytics.trackEvent(withName: "buy_now", andValue: attributes)
+            analytics.trackEvent(withName: "Purchase_Buy_Now_Click", andValue: buyNowAttributes)
         }
     }
     

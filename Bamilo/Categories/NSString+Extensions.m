@@ -94,11 +94,15 @@
     return [self stringByReplacingOccurrencesOfString:@"," withString:@""];
 }
 
+- (NSString *)convertRailsToTomans {
+    return [self substringToIndex:[self length] - 1];
+}
+
 - (NSString *)formatPrice {
     if (self.length <= 3) return self;
 
     NSMutableString *formatedPrice = [NSMutableString stringWithString: self];
-    int cammaIndex = ((int)(self.length % 3) ?: 3);
+    int cammaIndex = ((int)(formatedPrice.length % 3) ?: 3);
 
     while (cammaIndex < formatedPrice.length) {
         [formatedPrice insertString: @"," atIndex: cammaIndex];
@@ -108,7 +112,7 @@
 }
 
 - (NSString *)formatPriceWithCurrency {
-    return [NSString stringWithFormat:@"%@ %@", [[self formatPrice] numbersToPersian], STRING_CURRENCY];
+    return [NSString stringWithFormat:@"%@ %@", [[[self convertRailsToTomans] formatPrice] numbersToPersian], STRING_CURRENCY];
 }
 
 -(NSString *)toEncodeBase64 {

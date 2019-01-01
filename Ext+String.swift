@@ -36,13 +36,15 @@ extension String {
     }
     
     func priceFormat() -> String {
-        var cammaIndex: Int = self.count % 3 == 0 ? 3 : self.count % 3
-        var result = self
+        
+        let TPrice = self.dropLast()
+        var cammaIndex: Int = TPrice.count % 3 == 0 ? 3 : TPrice.count % 3
+        var result = TPrice
         while (cammaIndex < result.count) {
             result.insert(",", at: result.index(result.startIndex, offsetBy: cammaIndex))
             cammaIndex += 4;
         }
-        return result
+        return String(result)
     }
     
     func formatPriceWithCurrency() -> String {
