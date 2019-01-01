@@ -105,6 +105,9 @@ PODS:
   - ObjectMapper (3.4.2)
   - PinCodeTextField (0.1.0)
   - Protobuf (3.6.1)
+  - Pushwoosh (5.11.0):
+    - Pushwoosh/Core (= 5.11.0)
+  - Pushwoosh/Core (5.11.0)
   - RAlertView (0.1.1):
     - Masonry
     - RGB
@@ -146,6 +149,7 @@ DEPENDENCIES:
   - M13Checkbox
   - ObjectMapper
   - PinCodeTextField
+  - Pushwoosh
   - RAlertView
   - RealmSwift
   - SDWebImage (~> 3.8)
@@ -189,6 +193,7 @@ SPEC REPOS:
     - ObjectMapper
     - PinCodeTextField
     - Protobuf
+    - Pushwoosh
     - RAlertView
     - Realm
     - RealmSwift
@@ -233,6 +238,7 @@ SPEC CHECKSUMS:
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   PinCodeTextField: a3c39be58bde3ed1d6888d0fb1d88b0a4a2277cc
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  Pushwoosh: 2fca48c8810c8131a0b8486c3a46010a31322aba
   RAlertView: b9996eb63ceb64c7d1879a1d1846af5e386a1808
   Realm: 5edd2ee65406aef591a4f9895de5a3440e51b3d8
   RealmSwift: be5ebc7930e37cd3376b41cec7f21984528aaa16
@@ -244,6 +250,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
   WebEngage: 8c1ebcde2d0da51123d40c2d4e10ee0f1fca9f39
 
-PODFILE CHECKSUM: 9779816a6b6cdae881ef7f1b5b4dea4325374dcb
+PODFILE CHECKSUM: f37b93b982f8f58f4e90c8b1fb6fde458a939ca4
 
 COCOAPODS: 1.5.3

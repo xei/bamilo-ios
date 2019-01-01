@@ -5,6 +5,7 @@
 //  Created by Ali Saeedifar on 10/27/18.
 //  Copyright © 2018 Rocket Internet. All rights reserved.
 //
+// ----- this tracker's parameteres are related to 'TRACKING PROTOCOL API V1.0' -----
 
 import UIKit
 

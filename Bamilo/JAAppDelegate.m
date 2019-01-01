@@ -21,13 +21,13 @@
 
 //#######################################################################################
 //#import <MobileEngageSDK/MobileEngage.h>
-//#import <Pushwoosh/PushNotificationManager.h>
+#import <Pushwoosh/PushNotificationManager.h>
 #import <UserNotifications/UserNotifications.h>
 #import "ViewControllerManager.h"
 #import "BaseViewController.h"
 #import "ThemeManager.h"
 #import "DeepLinkManager.h"
-//#import "PushWooshTracker.h"
+#import "PushWooshTracker.h"
 //#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 #import <WebEngage/WebEngage.h>
@@ -138,14 +138,14 @@
     
     //Crashlytics Integration with PushWoosh
     //http://docs.pushwoosh.com/docs/crashlytics-integration
-//    NSString *userId = [[PushNotificationManager pushManager] getHWID];
-//    [[Crashlytics sharedInstance] setUserIdentifier:userId];                  //check this out later
+    NSString *userId = [[PushNotificationManager pushManager] getHWID];
+    [[Crashlytics sharedInstance] setUserIdentifier:userId];                  //check this out later
     
     //PUSH WOOSH
     //********************************************************************
     // set custom delegate for push handling, in our case AppDelegate
-//    PushNotificationManager * pushManager = [PushNotificationManager pushManager];
-//    pushManager.delegate = [PushWooshTracker sharedTracker];
+    PushNotificationManager * pushManager = [PushNotificationManager pushManager];
+    pushManager.delegate = [PushWooshTracker sharedTracker];
     
     // set default Pushwoosh delegate for iOS10 foreground push handling
 //    if (@available(iOS 10.0, *)) {
@@ -153,47 +153,45 @@
 //    }
     
     // track application open statistics
-//    [[PushNotificationManager pushManager] sendAppOpen];
-//    
-//    NSString *Ver = [UserDefaultsManager get:@"Version"];
-//    NSString *CurVer = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-//    if(!VALID_NOTEMPTY(Ver, NSString) || (VALID_NOTEMPTY(Ver, NSString) && [Ver compare:CurVer] != 0)) {
-//        if(!VALID(Ver, NSString)) {
-//            //Run once per lifetime code
-//            
-//            
-//            NSError *error;
-//            
-//            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
-//            NSURL *url = [NSURL URLWithString:@"https://cp.pushwoosh.com/json/1.3/unregisterDevice"];
-//            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-//                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
-//                                                               timeoutInterval:60.0];
-//            
-//            [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//            [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//            
-//            [request setHTTPMethod:@"POST"];
-//            NSDictionary *mapData = @{@"request": @{@"application": @"82449-6B792", @"hwid": userId}};
-//            NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-//            [request setHTTPBody:postData];
-//            
-//            
-//            NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                
-//            }];
-//            
-//            [postDataTask resume];
-//            
-//            
-//        }
-//        //Run once-per-upgrade code, if any
-//        [UserDefaultsManager setValue:CurVer forKey:@"Version"];
-//    }
+    [[PushNotificationManager pushManager] sendAppOpen];
+
+    NSString *Ver = [UserDefaultsManager get:@"Version"];
+    NSString *CurVer = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
+    if(!VALID_NOTEMPTY(Ver, NSString) || (VALID_NOTEMPTY(Ver, NSString) && [Ver compare:CurVer] != 0)) {
+        if(!VALID(Ver, NSString)) {
+            //Run once per lifetime code
+            NSError *error;
+            
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+            NSURL *url = [NSURL URLWithString:@"https://cp.pushwoosh.com/json/1.3/unregisterDevice"];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                                   cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                               timeoutInterval:60.0];
+            
+            [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+            
+            [request setHTTPMethod:@"POST"];
+            NSDictionary *mapData = @{@"request": @{@"application": @"82449-6B792", @"hwid": userId}};
+            NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+            [request setHTTPBody:postData];
+            
+            
+            NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                
+            }];
+            
+            [postDataTask resume];
+            
+            
+        }
+        //Run once-per-upgrade code, if any
+        [UserDefaultsManager setValue:CurVer forKey:@"Version"];
+    }
     
     // register for push notifications!
-//    [[PushNotificationManager pushManager] registerForPushNotifications];
+    [[PushNotificationManager pushManager] registerForPushNotifications];
     
     //SETUP TRACKERS
     //********************************************************************
@@ -280,6 +278,7 @@
     [[AppManager sharedInstance] updateOpenAppEventSource:OpenAppEventSourceTypeNone];
     [[AppManager sharedInstance] updateScheduledAppIcons];
     [[AppManager sharedInstance] executeScheduledAppIcons];
+    
 //    [[PushNotificationManager pushManager] startLocationTracking];
 }
 
@@ -299,13 +298,13 @@
 //    [MobileEngage setPushToken:deviceToken];
     
     //PUSH WOOSH
-//    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
+    [[PushNotificationManager pushManager] handlePushRegistration:deviceToken];
 }
 
 // system push notification registration error callback, delegate to pushManager
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     //PUSH WOOSH
-//    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
+    [[PushNotificationManager pushManager] handlePushRegistrationFailure:error];
 }
 
 // system push notifications callback, delegate to pushManager

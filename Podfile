@@ -26,6 +26,7 @@ target 'Bamilo' do
   pod 'AnimatedCollectionViewLayout' #**** not supported in carthage
   pod 'ObjectMapper'
   pod 'SwiftyJSON'
+  pod 'Pushwoosh'
   pod 'Kingfisher'
   pod 'Alamofire'
   pod 'AlamofireObjectMapper'
