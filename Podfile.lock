@@ -92,7 +92,6 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
   - ImageViewer (5.0.0)
-  - JBWhatsAppActivity (1.0)
   - JSONModel (1.8.0)
   - Kingfisher (4.10.1)
   - M13Checkbox (3.3.2)
@@ -143,7 +142,6 @@ DEPENDENCIES:
   - GoogleAppIndexing (~> 2.0.3)
   - GoogleTagManager (= 3.15.0)
   - ImageViewer
-  - JBWhatsAppActivity (~> 1.0)
   - JSONModel
   - Kingfisher
   - M13Checkbox
@@ -184,7 +182,6 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - ImageViewer
-    - JBWhatsAppActivity
     - JSONModel
     - Kingfisher
     - M13Checkbox
@@ -229,7 +226,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   ImageViewer: 3def6e39c6979ce3e9d001c78eec0d8b895f2f73
-  JBWhatsAppActivity: e1b4dcf1b967aaf714cc784b42fb49a110972e4a
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   M13Checkbox: d75dca81d61c9903e7f091f32b35a3254bc97dce
@@ -250,6 +246,6 @@ SPEC CHECKSUMS:
   UICircularProgressRing: 5a32c01f54474571b1e66e8fa050c0f83d6d981b
   WebEngage: 8c1ebcde2d0da51123d40c2d4e10ee0f1fca9f39
 
-PODFILE CHECKSUM: f37b93b982f8f58f4e90c8b1fb6fde458a939ca4
+PODFILE CHECKSUM: e47bd6012b64d17f2ca439dae180416c9b85b54b
 
 COCOAPODS: 1.5.3
