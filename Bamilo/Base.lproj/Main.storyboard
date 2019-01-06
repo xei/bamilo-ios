@@ -1443,6 +1443,7 @@
                         <outlet property="reviewTitleTextField" destination="17X-V1-lah" id="PcC-d6-zuO"/>
                         <outlet property="scrollView" destination="EIc-Nm-eqK" id="7aU-7b-fPX"/>
                         <outlet property="starDescriptionLabel" destination="pwh-Rp-YpY" id="pyf-6j-VMO"/>
+                        <outlet property="submitButtonBottomConstraint" destination="kxb-fT-l2m" id="npV-QZ-QY3"/>
                         <outlet property="submitButtonHeightConstraint" destination="dmA-vz-MCY" id="BJN-ni-2ff"/>
                         <outlet property="submitReviewButton" destination="61D-LQ-X80" id="wiD-fK-UXc"/>
                         <outlet property="titleLabel" destination="Nl0-Pz-1yg" id="baM-kC-XwX"/>

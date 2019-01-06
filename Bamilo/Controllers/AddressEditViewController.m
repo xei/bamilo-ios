@@ -22,7 +22,7 @@
 
 @implementation AddressEditViewController {
 @private
-    FormItemModel *region, *city, *vicinity;
+    FormItemModel *region, *city, *vicinity, *gender;
 }
 
 - (void)viewDidLoad {
@@ -93,8 +93,8 @@
     
     [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
     if (![CurrentUserManager.user getGender] && self.address == nil) {
-        FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
-        [self.formController.formModelList addObject:gender];
+        gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
+        [self.formController.formModelList addObject: gender];
     }
     [self.formController.formModelList addObject:@"submit"];
     [self.formController setupTableView];
@@ -136,6 +136,15 @@
         [self.formController showAnyErrorInForm];
         return;
     }
+    
+    if (VALID_NOTEMPTY(gender, [FormItemModel class])) {
+        //update local user object's gender
+        if (VALID_NOTEMPTY(CurrentUserManager.user.password, [NSString class])) {
+            [CurrentUserManager.user setGenderWithGender:[gender getValue]];
+            [CurrentUserManager saveUserWithUser:CurrentUserManager.user plainPassword:CurrentUserManager.user.password];
+        }
+    }
+    
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS

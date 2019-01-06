@@ -72,6 +72,10 @@ enum Gender: String {
     func getGender() -> String? {
         return self.gender?.rawValue
     }
+    
+    func setGender(gender: String) {
+        self.gender = Gender(rawValue: gender)
+    }
 }
 
 

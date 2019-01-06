@@ -18,6 +18,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     @IBOutlet private weak var reviewCommentTextView: UITextView!
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var submitButtonHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var submitButtonBottomConstraint: NSLayoutConstraint!
     
     var prodcutSku: String?
     var rateValue: Int = 0
@@ -88,15 +89,17 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     
     @objc private func keyboardWillShown(notification: Notification) {
         if let kbSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect)?.size {
-            let contentInsets = UIEdgeInsetsMake(0, 0, kbSize.height, 0)
+            self.submitButtonBottomConstraint.constant = kbSize.height + 10
             
+            let contentInsets = UIEdgeInsetsMake(0, 0, submitButtonHeightConstraint.constant + self.submitButtonBottomConstraint.constant, 0)
             self.scrollView.contentInset = contentInsets
             self.scrollView.scrollIndicatorInsets = contentInsets
         }
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
-        let contentInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.submitButtonBottomConstraint.constant = 10
+        let contentInsets = UIEdgeInsetsMake(0, 0, submitButtonHeightConstraint.constant + self.submitButtonBottomConstraint.constant, 0)
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
     }
