@@ -224,6 +224,13 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    func refreshContent() {
+        ThreadManager.execute {
+            self.updateTableViewDataSource()
+            self.tableView.reloadData()
+        }
+    }
+    
     @objc func showFAQ() {
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.SelectTeaserWithShopURL), object: nil, userInfo: ["title": STRING_GUID, "targetString": "shop_in_shop::help-ios", "show_back_button_title": ""])
     }

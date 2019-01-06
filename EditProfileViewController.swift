@@ -112,7 +112,6 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     private func setHeaderMessage(message: String) {
         let headerView = self.tableview.dequeueReusableHeaderFooterView(withIdentifier: CMSTableViewHeader.nibName()) as! CMSTableViewHeader
-        
         //Auto dimenssion for tableview header (with dynamic height for dyamic content size)
         headerView.setMessage(message: message)
         headerView.setNeedsUpdateConstraints()
@@ -132,6 +131,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
+        syncWithCurrentShareUser(data: data)
         if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
             self.updateFormWithCustomer(customer: customer)
             if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
@@ -142,7 +142,20 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         } else if rid == 1 {
             if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
                 self.navigationController?.popViewController(animated: true)
+                (viewCtrl as? ProfileViewController)?.refreshContent()
                 viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
+            }
+        }
+    }
+    
+    func syncWithCurrentShareUser(data: Any) {
+        if let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+            if let pass = CurrentUserManager.user.password {
+                CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+            }
+        } else if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? CustomerEntity, let customer = content.entity {
+            if let pass = CurrentUserManager.user.password {
+                CurrentUserManager.saveUser(user: customer, plainPassword: pass)
             }
         }
     }
@@ -218,7 +231,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
-        return "Profile"
+        return "EditProfile"
     }
     
     //MARK: - NavigationBarPrtocol

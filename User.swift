@@ -162,9 +162,11 @@ class SavingUser: Object {
         self.shareUser?.lastName = user.lastName
         self.shareUser?.email = user.email
         self.shareUser?.plainPassword = plainPassword
+        self.shareUser?.gender = user.gender?.rawValue ?? "male"
         self.shareUser?.phone = user.phone
         self.shareUser?.wishListSkus = user.wishListSkus ?? []
         self.user = user
+        self.user.password = plainPassword
         
         try! realm.write {
             self.realm.add(shareUser!)
