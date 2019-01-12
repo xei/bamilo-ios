@@ -63,8 +63,8 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
     }
     
     //MARK: - OrderDetailTableViewCellDelegate
-    func openRateViewWithSku(sku: String) {
-        self.performSegue(withIdentifier: "showSubmitProductReviewViewController", sender: sku)
+    func openRateViewWithProdcut(product: TrackableProductProtocol) {
+        self.performSegue(withIdentifier: "showSubmitProductReviewViewController", sender: product)
     }
     
     func opensProductDetailWithSku(sku: String) {
@@ -86,9 +86,9 @@ class OrderDetailViewController: BaseViewController, OrderDetailTableViewCellDel
             cancellingOrderViewCtrl.selectedProduct = selectedProduct
             cancellingOrderViewCtrl.order = order
         }
-        if segueName == "showSubmitProductReviewViewController", let sku = sender as? String, let viewCtrl = segue.destination as? SubmitProductReviewViewController {
+        if segueName == "showSubmitProductReviewViewController", let product = sender as? TrackableProductProtocol, let viewCtrl = segue.destination as? SubmitProductReviewViewController {
             viewCtrl.hidesBottomBarWhenPushed = true
-            viewCtrl.prodcutSku = sku
+            viewCtrl.prodcut = product
         }
     }
     

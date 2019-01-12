@@ -14,7 +14,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     @IBOutlet weak var submitButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var submitReviewButton: IconButton!
     
-    var productSku : String?
+    var product : TrackableProductProtocol?
     var rating: ProductRate?
     var review: ProductReview?
     var signleReviewItem: ProductReviewItem?
@@ -68,7 +68,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     }
     
     private func getContent(page: Int = 1, completion: ((Bool)-> Void)? = nil) {
-        if let sku = productSku, !loadingDataInProgress {
+        if let sku = product?.sku, !loadingDataInProgress {
             loadingDataInProgress = true
             ProductDataManager.sharedInstance.getReviewsList(self, sku: sku, pageNumber: page, type: page == 1 ? .foreground : .background) { (data, error) in
                 if (error == nil) {
@@ -94,7 +94,9 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
         if let review = data as? ProductReview {
             if rid == 0 {
                 self.review = review
-                self.publishScreenLoadTime(withName: getScreenName(), withLabel: productSku)
+                if let productSku = product?.sku {
+                    self.publishScreenLoadTime(withName: getScreenName(), withLabel: productSku)
+                }
             } else if let items = review.items {
                 self.review?.items?.append(contentsOf: items)
             }
@@ -122,7 +124,7 @@ class ProductReviewListViewController: BaseViewController, DataServiceProtocol {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
-            viewCtrl.prodcutSku = self.productSku
+            viewCtrl.prodcut = self.product
         }
     }
     

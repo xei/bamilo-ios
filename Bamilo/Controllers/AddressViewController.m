@@ -72,6 +72,7 @@
         if(OK) {
             [DataAggregator deleteAddressWithTarget:self address:_currentAddress completion:^(id data, NSError *error) {
                 if(error == nil) {
+                    [TrackerManager postEventWithSelector:[EventSelectors removeAddressSelector] attributes:[EventAttributes removeAddressWithAddress:_currentAddress]];
                     [self fetchAddressList:nil];
                 } else {
                     if(![self showNotificationBar:error isSuccess:NO]) {

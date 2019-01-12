@@ -20,7 +20,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     @IBOutlet private weak var submitButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var submitButtonBottomConstraint: NSLayoutConstraint!
     
-    var prodcutSku: String?
+    var prodcut: TrackableProductProtocol?
     var rateValue: Int = 0
     
     override func viewDidLoad() {
@@ -73,7 +73,7 @@ class SubmitProductReviewViewController: BaseViewController, ProtectedViewContro
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
-        guard let sku = prodcutSku, self.rateValue != 0 else {
+        guard let sku = prodcut?.sku, self.rateValue != 0 else {
             self.showNotificationBarMessage(STRING_PLZ_ADD_RATE, isSuccess: false)
             return
         }

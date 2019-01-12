@@ -33,13 +33,14 @@
 @property (nonatomic, retain) NSNumber * maxSpecialPrice;
 @property (nonatomic, retain) NSString * maxSpecialPriceFormatted;
 @property (nonatomic, retain) NSNumber * maxSpecialPriceEuroConverted;
-@property (nonatomic, retain) NSString * name;
+@property (nonatomic, copy) NSString * name;
 @property (nonatomic, retain) NSNumber * price;
 @property (nonatomic, retain) NSString * priceFormatted;
 @property (nonatomic, retain) NSNumber * priceEuroConverted;
 @property (nonatomic, retain) NSNumber * shopFirst;
 @property (nonatomic, retain) NSString * shopFirstOverlayText;
-@property (nonatomic, retain) NSString * sku;
+@property (nonatomic, copy) NSString * sku;
+@property (nonatomic, copy) NSString * simpleSku;
 @property (nonatomic, retain) NSNumber *specialPrice;
 @property (nonatomic, retain) NSString *specialPriceFormatted;
 @property (nonatomic, retain) NSNumber *specialPriceEuroConverted;

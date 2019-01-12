@@ -151,6 +151,7 @@
         params[@"address_form[id]"] = self.address.uid;
         [DataAggregator updateAddress:self params:params addressId:self.address.uid completion:^(id data, NSError *error) {
             if (error == nil) {
+                [TrackerManager postEventWithSelector:[EventSelectors editAddressSelector] attributes:[EventAttributes editAdressWithAddress:self.address]];
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {
@@ -174,6 +175,7 @@
         params[@"address_form[is_default_billing]"] = @"1";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
+                [TrackerManager postEventWithSelector:[EventSelectors addAddressSelector] attributes:[EventAttributes addAddress]];
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 if(![self showNotificationBar:error isSuccess:NO]) {

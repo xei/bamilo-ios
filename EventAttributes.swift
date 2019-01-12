@@ -41,7 +41,7 @@ public typealias EventAttributeType = [String:Any]
     class func signup(method: String, user: User?,success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = method
-        attributes[kEventUser] = user
+        if let user = user { attributes[kEventUser] = user }
         attributes[kEventSuccess] = success
         return attributes
     }
@@ -84,10 +84,11 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func removeFromCard(product: TrackableProductProtocol, success: Bool) -> EventAttributeType {
+    class func removeFromCard(product: TrackableProductProtocol, quantity: Int32, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventSuccess] = success
         attributes[kEventProduct] = product
+        attributes[kEventQuantity] = quantity
         return attributes
     }
     
@@ -201,6 +202,38 @@ public typealias EventAttributeType = [String:Any]
         var attributes = self.getCommonAttributes()
         attributes[kEventScreenName] = screenName
         attributes[kEventSuccess] = success
+        attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    class func editProfile(user: User) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventUser] = user
+        return attributes
+    }
+    
+    class func addAddress() -> EventAttributeType {
+        return self.getCommonAttributes()
+    }
+    
+    class func editAdress(address: Address) -> EventAttributeType {
+        return self.getCommonAttributes()
+    }
+    
+    class func removeAddress(address: Address) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventAddress] = address
+        return attributes
+    }
+    
+    class func shareProduct(product: TrackableProductProtocol) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventProduct] = product
+        return attributes
+    }
+    
+    class func submitProductReview(product: TrackableProductProtocol) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
         attributes[kEventProduct] = product
         return attributes
     }

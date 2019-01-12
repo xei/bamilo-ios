@@ -35,4 +35,10 @@
     @objc optional func shareApp(attributes: EventAttributeType)
     @objc optional func searchSuggestionTapped(attributes: EventAttributeType)
     @objc optional func phoneVerification(attributes: EventAttributeType)
+    @objc optional func editProfile(attributes: EventAttributeType)
+    @objc optional func addAddress(attributes: EventAttributeType)
+    @objc optional func editAddress(attributes: EventAttributeType)
+    @objc optional func removeAddress(attributes: EventAttributeType)
+    @objc optional func shareProduct(attributes: EventAttributeType)
+    @objc optional func submitProductReview(attributes: EventAttributeType)
 }

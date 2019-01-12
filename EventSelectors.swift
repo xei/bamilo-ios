@@ -92,4 +92,22 @@ import Foundation
     class func buyNowTappedSelector() -> Selector {
         return #selector(EventTrackerProtocol.buyNowTapped(attributes:))
     }
+    class func editProfileSelector() -> Selector {
+        return #selector(EventTrackerProtocol.editProfile(attributes:))
+    }
+    class func addAddressSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.addAddress(attributes:))
+    }
+    class func editAddressSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.editAddress(attributes:))
+    }
+    class func removeAddressSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.removeAddress(attributes:))
+    }
+    class func shareProductSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.shareProduct(attributes:))
+    }
+    class func submitProductReviewSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.submitProductReview(attributes:))
+    }
 }

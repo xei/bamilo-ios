@@ -38,7 +38,6 @@ class OrderProductItemRefund:NSObject, Mappable {
 class OrderProductItem: Product {
     
     var refaund: OrderProductItemRefund?
-    var simpleSku: String?
     var isCancelable: Bool = false
     var notCancelableReason: String?
     var notCancellableReasonType: OrderProductNotCancellableReasonType?

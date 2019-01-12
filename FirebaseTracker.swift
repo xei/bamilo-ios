@@ -27,8 +27,16 @@ import Firebase
     
     //MARK: - EventTrackerProtocol
     func login(attributes: EventAttributeType) {
-        if let success = attributes[kEventSuccess] {
-            Analytics.logEvent(AnalyticsEventLogin, parameters: [AnalyticsParameterSuccess: success])
+        if let success = attributes[kEventSuccess] as? Bool, success {
+            var params: [String: Any] = [:]
+            if let method = attributes[kEventMethod] as? String {
+                params = ["login_method": method]
+            }
+            if let user = attributes[kEventUser] as? User {
+                params["phone"] = user.phone
+                params["email"] = user.email
+            }
+            Analytics.logEvent(AnalyticsEventLogin, parameters: params)
         }
     }
     
@@ -36,12 +44,30 @@ import Firebase
         Analytics.logEvent("logout", parameters: nil)
     }
     
-    func search(attributes: EventAttributeType) {
-        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
-            Analytics.logEvent(AnalyticsEventSearch, parameters:
-                [AnalyticsParameterItemCategory: target.node]
-            )
+    func editProfile(attributes: EventAttributeType) {
+        if let _ = attributes[kEventUser] as? User {
+            Analytics.logEvent("edit_profile", parameters: nil)
         }
+    }
+    
+    func search(attributes: EventAttributeType) {
+//        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
+//            Analytics.logEvent(AnalyticsEventSearch, parameters:
+//                [AnalyticsParameterItemCategory: target.node]
+//            )
+//        }
+    }
+    
+    func editAddress(attributes: EventAttributeType) {
+        Analytics.logEvent("edit_address", parameters: nil)
+    }
+    
+    func addAddress(attributes: EventAttributeType) {
+        Analytics.logEvent("add_address", parameters: nil)
+    }
+    
+    func removeAddress(attributes: EventAttributeType) {
+        Analytics.logEvent("remove_address", parameters: nil)
     }
     
     func searchbarSearched(attributes: EventAttributeType) {
@@ -53,13 +79,13 @@ import Firebase
     }
     
     func searchFiltered(attributes: EventAttributeType) {
-        if let filterQuery = attributes[kEventFilterQuery] as? String {
-            let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
-            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
-            Analytics.logEvent(AnalyticsEventSearch, parameters: [
-                "filters": filterKeys
-            ])
-        }
+//        if let filterQuery = attributes[kEventFilterQuery] as? String {
+//            let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
+//            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
+//            Analytics.logEvent(AnalyticsEventSearch, parameters: [
+//                "filters": filterKeys
+//            ])
+//        }
     }
     
     func catalogSortChanged(attributes: EventAttributeType) {
@@ -71,27 +97,27 @@ import Firebase
     }
     
     func catalogViewChanged(attributes: EventAttributeType) {
-        if let listType = attributes[kEventCatalogListViewType] as? String {
-            Analytics.logEvent("change_catalog_view", parameters: [AnalyticsParameterContentType: listType])
-        }
+//        if let listType = attributes[kEventCatalogListViewType] as? String {
+//            Analytics.logEvent("change_catalog_view", parameters: [AnalyticsParameterContentType: listType])
+//        }
     }
     
     func recommendationTapped(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
-            Analytics.logEvent("emarsys_click", parameters: ["screen": screenName, "logic": logic])
-        }
+//        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
+//            Analytics.logEvent("emarsys_click", parameters: ["screen": screenName, "logic": logic])
+//        }
     }
     
     func addToWishList(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent(AnalyticsEventAddToWishlist, parameters: [
-                AnalyticsParameterItemID: product.sku ?? "",
+                AnalyticsParameterItemID: product.simpleSku ?? "",
                 AnalyticsParameterPrice: price,
-                "screen": screenName,
-                AnalyticsParameterItemName: name])
+                AnalyticsParameterItemName: name
+                
+            ])
         }
     }
     
@@ -109,35 +135,43 @@ import Firebase
     }
     
     func addToCart(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-           let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
            let price = product.payablePrice {
             Analytics.logEvent(AnalyticsEventAddToCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku ?? "",
-                "screen": screenName
+                AnalyticsParameterItemID: product.simpleSku ?? "",
+                AnalyticsParameterItemName: product.name ?? "",
+                "item_category_url": product.categoryUrlKey ?? "",
+                "item_sku": product.sku ?? "",
+                "quantity": 1
             ])
         }
     }
     
     func buyNowTapped(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if  let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice {
             Analytics.logEvent("buy_now", parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku ?? "",
-                "screen": screenName
-                ])
+                AnalyticsParameterItemID: product.simpleSku ?? "",
+                AnalyticsParameterItemName: product.name ?? "",
+                "item_category_url": product.categoryUrlKey ?? "",
+                "item_sku": product.sku ?? "",
+                "quantity": 1
+            ])
         }
     }
     
     func removeFromCart(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol,
-            let price = product.payablePrice {
+            let price = product.payablePrice, let quantity = attributes[kEventQuantity] as? Int32 {
             Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku ?? ""
+                AnalyticsParameterItemID: product.simpleSku ?? "",
+                AnalyticsParameterItemName: product.name ?? "",
+                "item_category_url": product.categoryUrlKey ?? "",
+                "item_sku": product.sku ?? "",
+                "quantity": quantity
             ])
         }
     }
@@ -148,52 +182,59 @@ import Firebase
             let name = product.name {
             Analytics.logEvent(AnalyticsEventViewItem, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku ?? "",
+                AnalyticsParameterItemID: product.simpleSku ?? "",
                 AnalyticsParameterItemName: name,
+                "item_category_url": product.categoryUrlKey ?? "",
+                "item_sku": product.sku ?? "",
                 AnalyticsParameterItemBrand: product.brand ?? ""
             ])
         }
     }
     
     func itemTapped(attributes: EventAttributeType) {
-        if  let categoryEventName = attributes[kGAEventCategory] as? String,
-            let labelEventName = attributes[kGAEventLabel] as? String {
-            Analytics.logEvent("tap_teaser", parameters: [
-                AnalyticsParameterCampaign: categoryEventName,
-                AnalyticsParameterItemName: labelEventName,
-                
-            ])
-        }
+//        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+//            let labelEventName = attributes[kGAEventLabel] as? String {
+//            Analytics.logEvent("tap_teaser", parameters: [
+//                AnalyticsParameterCampaign: categoryEventName,
+//                AnalyticsParameterItemName: labelEventName,
+//
+//            ])
+//        }
     }
     
     func purchased(attributes: EventAttributeType) {
         //becasues we have the checkout finish it's not necessary
         
-        if let cart = attributes[kEventCart] as? RICart,
-            let success = attributes[kEventSuccess] as? Bool, !success {
-            Analytics.logEvent("fail_checkout", parameters: [
-                AnalyticsParameterItemID: cart.orderNr,
-                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
-            ])
-        }
+//        if let cart = attributes[kEventCart] as? RICart,
+//            let success = attributes[kEventSuccess] as? Bool, !success {
+//            Analytics.logEvent("fail_checkout", parameters: [
+//                AnalyticsParameterItemID: cart.orderNr,
+//                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
+//            ])
+//        }
     }
     
     func purchaseBehaviour(attributes: EventAttributeType) {
-        if let category = attributes[kGAEventCategory] as? String,
-            let label = attributes[kGAEventLabel] as? String {
-            Analytics.logEvent("purchase_teaser", parameters: [
-                AnalyticsParameterCampaign: category,
-                AnalyticsParameterItemName: label
-            ])
-        }
+//        if let category = attributes[kGAEventCategory] as? String,
+//            let label = attributes[kGAEventLabel] as? String {
+//            Analytics.logEvent("purchase_teaser", parameters: [
+//                AnalyticsParameterCampaign: category,
+//                AnalyticsParameterItemName: label
+//            ])
+//        }
     }
     
     func signup(attributes: EventAttributeType) {
-        if let signUpMethod = attributes[kEventMethod] as? String, let success = attributes[kEventSuccess] as? Bool {
-            Analytics.logEvent(AnalyticsEventSignUp, parameters: [
-                AnalyticsParameterSignUpMethod: signUpMethod,
-                AnalyticsParameterSuccess: success
-            ])
+        if let success = attributes[kEventSuccess] as? Bool, success {
+            var params: [String: Any] = [:]
+            if let method = attributes[kEventMethod] as? String {
+                params = ["sign_up_method": method]
+            }
+            if let user = attributes[kEventUser] as? User {
+                params["phone"] = user.phone
+                params["email"] = user.email
+            }
+            Analytics.logEvent(AnalyticsEventSignUp, parameters: params)
         }
     }
     
@@ -228,13 +269,22 @@ import Firebase
     }
     
     func searchSuggestionTapped(attributes: EventAttributeType) {
-        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
-            Analytics.logEvent("search_suggestion", parameters: [
-                AnalyticsParameterSearchTerm: suggestionTitle
+//        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
+//            Analytics.logEvent("search_suggestion", parameters: [
+//                AnalyticsParameterSearchTerm: suggestionTitle
+//            ])
+//        }
+    }
+    
+    func submitProductReview(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            Analytics.logEvent(AnalyticsEventViewItem, parameters: [
+                AnalyticsParameterPrice: product.payablePrice ?? "",
+                AnalyticsParameterItemID: product.simpleSku ?? "",
+                AnalyticsParameterItemName: product.name ?? "",
             ])
         }
     }
-    
     
     
     //MARK: - ScreenTrackerProtocol

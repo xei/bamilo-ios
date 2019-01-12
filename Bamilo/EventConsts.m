@@ -19,7 +19,9 @@ NSString *const kEventDate = @"Date";
 
 NSString *const kEventMethod = @"Method";
 NSString *const kEventUser = @"eventUser";
+NSString *const kEventAddress = @"eventAddress";
 NSString *const kEventProduct = @"eventProduct";
+NSString *const kEventQuantity = @"eventQuantity";
 NSString *const kEventCart = @"eventCart";
 NSString *const kEventTeaser = @"eventTeaser";
 NSString *const kEventTargetString = @"eventTargetString";

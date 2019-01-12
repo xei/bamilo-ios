@@ -13,6 +13,7 @@ import SwiftyJSON
 @objcMembers class Product: NSObject, Mappable, TrackableProductProtocol {
         
     var sku: String!
+    var simpleSku: String?
     var name: String?
     var brand: String?
     var maxSavingPrecentage: Int?

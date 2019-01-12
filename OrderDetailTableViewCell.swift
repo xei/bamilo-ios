@@ -11,7 +11,7 @@ import Kingfisher
 
 protocol OrderDetailTableViewCellDelegate: class {
     func opensProductDetailWithSku(sku: String)
-    func openRateViewWithSku(sku: String)
+    func openRateViewWithProdcut(product: TrackableProductProtocol)
     func cancelProduct(product: OrderProductItem)
 }
 
@@ -180,8 +180,8 @@ class OrderDetailTableViewCell: AccordionTableViewCell {
     }
 
     @IBAction func rateButtonTapped(_ sender: Any) {
-        if let sku = self.product?.sku {
-            self.delegate?.openRateViewWithSku(sku: sku)
+        if let product = self.product {
+            self.delegate?.openRateViewWithProdcut(product: product)
         }
     }
     

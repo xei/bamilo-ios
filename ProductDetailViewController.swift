@@ -253,12 +253,12 @@ extension UIImageView: DisplaceableView {}
             viewCtrl.product = product
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showProductReviewListViewController", let viewCtrl = segue.destination as? ProductReviewListViewController {
-            viewCtrl.productSku = product?.sku
+            viewCtrl.product = product
             viewCtrl.rating = product?.ratings
             viewCtrl.signleReviewItem = sender as? ProductReviewItem
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showSubmitProductReviewViewController", let viewCtrl = segue.destination as? SubmitProductReviewViewController {
-            viewCtrl.prodcutSku = self.product?.sku
+            viewCtrl.prodcut = self.product
             viewCtrl.hidesBottomBarWhenPushed = true
         }  else if segueName == "showOtherSellerViewController", let viewCtrl = segue.destination as? OtherSellerViewController {
             viewCtrl.product = self.product
@@ -300,7 +300,8 @@ extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDeleg
     }
     
     func shareButtonTapped() {
-        if let url = self.product?.shareURL, let name = product?.name {
+        if let product = self.product, let url = product.shareURL, let name = product.name {
+            TrackerManager.postEvent(selector: EventSelectors.shareProductSelector(), attributes: EventAttributes.shareProduct(product: product))
             Utility.shareUrl(url: url, message: name, viewController: self)
         }
     }

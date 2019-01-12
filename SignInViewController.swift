@@ -12,6 +12,7 @@ import Crashlytics
 class SignInViewController: BaseAuthenticationViewCtrl {
     
     private var passwordFieldModel: FormItemModel?
+    private var phoneOrEmail: FormItemModel?
     
     var submitButtonDisabled = false
     
@@ -36,6 +37,7 @@ class SignInViewController: BaseAuthenticationViewCtrl {
             let password =  FormItemModel.passWord(withFieldName: "login[password]") {
             let signUpButtonCell = FormCustomFiled()
             signUpButtonCell.cellName = FormButtonTableViewCell.nibName()
+            self.phoneOrEmail = phoneOrEamil
             
             let forgetPass = FormCustomFiled()
             forgetPass.cellName = FormLinkButtonTableViewCell.nibName()
@@ -62,7 +64,11 @@ class SignInViewController: BaseAuthenticationViewCtrl {
             Crashlytics.sharedInstance().setUserEmail(email)
         }
         
-        TrackerManager.postEvent(selector: EventSelectors.loginEventSelector(), attributes: EventAttributes.login(loginMethod: "normal", user: user, success: success))
+        if let phoneOrEmailString = self.phoneOrEmail?.getValue() {
+            let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
+            let isMobile = regex.firstMatch(in: phoneOrEmailString, options: [], range: NSMakeRange(0, phoneOrEmailString.utf16.count)) != nil
+            TrackerManager.postEvent(selector: EventSelectors.loginEventSelector(), attributes: EventAttributes.login(loginMethod: isMobile ? "phone" : "email", user: user, success: success))
+        }
     }
 }
 

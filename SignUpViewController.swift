@@ -80,7 +80,6 @@ class SignUpViewController: BaseAuthenticationViewCtrl {
         if let email = user?.email {
             Crashlytics.sharedInstance().setUserEmail(email)
         }
-        
         TrackerManager.postEvent(selector: EventSelectors.signupEventSelector(), attributes: EventAttributes.signup(method: "normal", user: user, success: success))
     }
 }

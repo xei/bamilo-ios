@@ -131,14 +131,14 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        syncWithCurrentShareUser(data: data)
-        if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
-            self.updateFormWithCustomer(customer: customer)
-            if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
-                ThreadManager.execute(onMainThread: {
-                    self.setHeaderMessage(message: warningMessage)
-                })
-            }
+        if let user = syncWithCurrentShareUser(data: data) {
+            if rid == 0 { self.updateFormWithCustomer(customer: user) }
+            else if rid == 1 { TrackerManager.postEvent(selector: EventSelectors.editProfileSelector(), attributes: EventAttributes.editProfile(user: user)) }
+        }
+        if rid == 0, let dataSource = data as? CustomerEntity, let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
+            ThreadManager.execute(onMainThread: {
+                self.setHeaderMessage(message: warningMessage)
+            })
         } else if rid == 1 {
             if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
                 self.navigationController?.popViewController(animated: true)
@@ -148,16 +148,19 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         }
     }
     
-    func syncWithCurrentShareUser(data: Any) {
+    func syncWithCurrentShareUser(data: Any) -> User? {
         if let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
             if let pass = CurrentUserManager.user.password {
                 CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+                return customer
             }
         } else if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? CustomerEntity, let customer = content.entity {
             if let pass = CurrentUserManager.user.password {
                 CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+                return customer
             }
         }
+        return nil
     }
 
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {

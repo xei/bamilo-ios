@@ -164,8 +164,9 @@ class OrderDetailTableViewController: AccordionTableViewController, OrderDetailT
         self.delegate?.opensProductDetailWithSku(sku: sku)
     }
     
-    func openRateViewWithSku(sku: String) {
-        self.delegate?.openRateViewWithSku(sku: sku)
+    
+    func openRateViewWithProdcut(product: TrackableProductProtocol) {
+        self.delegate?.openRateViewWithProdcut(product: product)
     }
     
     func cancelProduct(product: OrderProductItem) {

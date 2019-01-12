@@ -13,6 +13,7 @@ import SwiftyJSON
     var name: String? { get set }
     var brand: String? { get set }
     var sku: String! { get set }
+    var simpleSku: String! { get set }
     var isInWishList: Bool { get set }
     var payablePrice: NSNumber? { get }
     var categoryUrlKey: String? { get }
@@ -160,6 +161,7 @@ class ProductDataManager: DataManagerSwift {
             }
             
             //EVENT: ADD TO CART
+            product.simpleSku = simpleSku
             TrackerManager.postEvent(selector: EventSelectors.addToCartEventSelector(), attributes: EventAttributes.addToCart(product: product, screenName: viewCtrl.getScreenName(), success: true))
             
             if let receivedData = data as? [String: Any], let messages = receivedData[DataManagerKeys.DataMessages] {

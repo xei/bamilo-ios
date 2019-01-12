@@ -98,7 +98,7 @@
         Product *product = [Product new];
         [product setPriceWithPrice: cartItem.price];
         product.sku = cartItem.sku;
-        [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product success:YES]];
+        [TrackerManager postEventWithSelector:[EventSelectors removeFromCartEventSelector] attributes:[EventAttributes removeFromCardWithProduct:product quantity:cartItem.quantity.intValue success:YES]];
         
         NSDictionary* userInfo = [NSDictionary dictionaryWithObject:cart forKey:kUpdateCartNotificationValue];
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
