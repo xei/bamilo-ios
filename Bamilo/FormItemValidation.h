@@ -13,6 +13,7 @@ typedef enum : NSUInteger {
     FormItemValidationErrorIsRequired,
     FormItemValidationErrorMax,
     FormItemValidationErrorMin,
+    FormItemValidationErrorExactLenght,
     FormItemValidationErrorRegx
 } FormItemValidationError;
 

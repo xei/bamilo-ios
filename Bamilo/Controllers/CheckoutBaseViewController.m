@@ -27,6 +27,7 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.continueButton.layer.cornerRadius = self.continueButtonHeightConstraint.constant / 2;
     
     //Setup Progress View
     [self.checkoutProgressViewControl setDelegate:self];

@@ -19,6 +19,7 @@
 - (void)formSubmitButtonTapped;
 
 @optional
+- (UITableViewCell *)customCellForIndexPath:(UITableView *)tableView cellName:(NSString *)cellName indexPath:(NSIndexPath *)indexPath;
 - (void)fieldHasBeenUpdatedByNewValidValue:(NSString *)value inFieldIndex:(NSUInteger)fieldIndex;
 - (void)fieldHasBeenFocuced:(InputTextFieldControl *)field inFieldIndex:(NSUInteger)fieldIndex;
 
@@ -26,11 +27,11 @@
 
 @interface FormViewControl :NSObject <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ButtonTableViewCellDelegate, InputTextFieldControlDelegate>
 
-@property (nonatomic, strong) UIColor *submissionButtonColor;
 @property (nonatomic, weak) UITableView *tableView;
 @property (nonatomic, copy) NSString *submitTitle;
 @property (nonatomic, strong) NSMutableArray *formModelList;
 @property (nonatomic, weak) id<FormViewControlDelegate> delegate;
+@property (nonatomic) BOOL canBeSubmited;
 
 typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 
@@ -43,5 +44,7 @@ typedef FormItemModel *(^updateModelWithPreviousModel)(FormItemModel *model);
 - (Boolean)isFormValid;
 - (void)showAnyErrorInForm;
 - (void)refreshView;
+- (void)clearErrors;
+- (void)clearErrorForField: (NSString *)fieldName;
 
 @end

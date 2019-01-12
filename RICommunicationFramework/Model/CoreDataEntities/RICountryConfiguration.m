@@ -204,7 +204,7 @@
 
 + (NSString*)formatPrice:(NSNumber*)price country:(RICountryConfiguration*)country {
     NSString *priceString = [NSString stringWithFormat:@"%ld", price.longValue ?: 0];
-    return [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
+    return [priceString formatPriceWithCurrency];
 }
 
 + (void)saveConfiguration:(RICountryConfiguration *)configuration andContext:(BOOL)save {

@@ -25,6 +25,7 @@ class AdjustTracker: BaseTracker, EventTrackerProtocol {
     let kCheckoutFinish = "ca8jou"
     let kCallToOrder = "x1e24b"
     let kRateProduct = "3t4nj8"
+    let shareApp = "rmvoj4"
     
     //TODO: Must be changed when we migrate all Trackers
     private static var sharedInstance: AdjustTracker? // = AdjustTracker()
@@ -39,6 +40,7 @@ class AdjustTracker: BaseTracker, EventTrackerProtocol {
     func setConfig() {
         if let ADJUSTID = AppUtility.getInfoConfigs(for: "AdjustTokenID") as? String {
             let adjConfigs = ADJConfig.init(appToken: ADJUSTID, environment: ADJEnvironmentProduction)
+            adjConfigs?.sendInBackground = true
             adjConfigs?.logLevel = ADJLogLevelAssert
             Adjust.appDidLaunch(adjConfigs)
         }
@@ -78,6 +80,11 @@ class AdjustTracker: BaseTracker, EventTrackerProtocol {
     func appOpened(attributes: EventAttributeType) {
         self.createAndSendEvent(name: kOpenAppEvent)
     }
+    
+    func shareApp(attributes: EventAttributeType) {
+        self.createAndSendEvent(name: shareApp)
+    }
+    
     func checkoutFinished(attributes: EventAttributeType) {
         if let event = ADJEvent(eventToken: kCheckoutFinish), let cart = attributes[kEventCart] as? RICart {
             event.setRevenue(cart.cartEntity.cartValue.doubleValue, currency: "RIAL")

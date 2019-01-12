@@ -1,16 +1,16 @@
+////
+////  ForgetPasswordViewController.h
+////  Bamilo
+////
+////  Created by Ali Saeedifar on 2/13/17.
+////  Copyright © 2017 Rocket Internet. All rights reserved.
+////
 //
-//  ForgetPasswordViewController.h
-//  Bamilo
+//#import <Foundation/Foundation.h>
+//#import "FormViewControl.h"
+//#import "AuthenticationBaseViewController.h"
+//#import "Bamilo-Swift.h"
 //
-//  Created by Ali Saeedifar on 2/13/17.
-//  Copyright © 2017 Rocket Internet. All rights reserved.
+//@interface ForgetPasswordViewController : BaseViewController <DataServiceProtocol, FormViewControlDelegate>
 //
-
-#import <Foundation/Foundation.h>
-#import "FormViewControl.h"
-#import "AuthenticationBaseViewController.h"
-#import "Bamilo-Swift.h"
-
-@interface ForgetPasswordViewController : BaseViewController <DataServiceProtocol, FormViewControlDelegate>
-
-@end
+//@end

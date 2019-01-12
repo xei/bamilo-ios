@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PlainTableViewHeaderCell.h"
 
-@interface MutualTitleHeaderCell : PlainTableViewHeaderCell
+@interface MutualTitleHeaderCell: PlainTableViewHeaderCell
 @property (nonatomic, copy) NSString *leftTitleString;
 @property (nonatomic, copy) NSAttributedString *leftTitleAtributedString;
 @property (nonatomic) CGFloat paddingContent;

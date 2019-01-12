@@ -81,7 +81,7 @@ static BOOL performed;
             performed = false;
             if ([[MainTabBarViewController topViewController] isKindOfClass:[JAExternalPaymentsViewController class]]) {
                 JAExternalPaymentsViewController *viewController = (JAExternalPaymentsViewController *)[MainTabBarViewController topViewController];
-                RICart *cart = ((JAExternalPaymentsViewController *)[MainTabBarViewController topViewController]).cart;
+                RICart *cart = viewController.cart;
                 if (cart && [queryDictionary objectForKey:@"success"]) {
                     BOOL success = [[queryDictionary objectForKey:@"success"] isEqualToString:@"true"];
                     [viewController paymentHappend:success];
@@ -99,8 +99,7 @@ static BOOL performed;
                                                  @"o"   : kShowMyOrdersScreenNotification,
                                                  @"l"   : kShowAuthenticationScreenNotification,
                                                  @"r"   : kShowSignUpScreenNotification,
-                                                 @"rv"  : kShowRecentlyViewedScreenNotification,
-                                                 @"rc"  : kShowRecentSearchesScreenNotification
+                                                 @"rv"  : kShowRecentlyViewedScreenNotification
                                                  };
 
     if ([targetKeyToNotificationMap objectForKey:targetKey]) {
@@ -139,10 +138,7 @@ static BOOL performed;
     BOOL successfullyHandled = NO;
 
     NSMutableDictionary* categoryDictionary = [NSMutableDictionary new];
-    if (argument.length) {
-        [categoryDictionary setObject:argument forKey:@"category_url_key"];
-    }
-
+    
     if (filter.length) {
         [categoryDictionary setObject:filter forKey:@"filter"];
     }
@@ -156,12 +152,15 @@ static BOOL performed;
                                  @"cn"  : @"NAME",         //name
                                  @"cb"  : @"BRAND"         //brand
                                  };
-    if ([targetKey isEqualToString:@"c"]) {
+    if ([targetKey isEqualToString:@"c"] && VALID_NOTEMPTY(argument, NSString)) {
         // Catalog view - category url
-        // Do nothing more, everyThing is fine
+        [categoryDictionary setObject:argument forKey:@"category_url_key"];
         successfullyHandled = YES;
     } else if ([sortingMap objectForKey:targetKey] && argument.length) {
         [categoryDictionary setObject:[sortingMap objectForKey:targetKey] forKey:@"sorting"];
+        successfullyHandled = YES;
+    } else if ([targetKey isEqualToString:@"ap"]) {
+        // search with all product
         successfullyHandled = YES;
     }
     if (successfullyHandled) {

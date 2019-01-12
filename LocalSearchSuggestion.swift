@@ -69,14 +69,11 @@ class LocalSearchSuggestion {
             convertedSuggestion.target = product.target
             convertedSuggestion.imageUrl = product.imageUrl?.absoluteString
             convertedSuggestion.type = "product"
-
-            if privousProducts.count >= 3 {
-                try! realm.write {
+        
+            try! realm.write {
+                if privousProducts.count >= 3 {
                     realm.delete(privousProducts.first!)
                 }
-            }
-            
-            try! realm.write {
                 realm.add(convertedSuggestion)
             }
         }
@@ -90,13 +87,10 @@ class LocalSearchSuggestion {
             convertedSuggestion.name = category.name
             convertedSuggestion.target = category.target
             convertedSuggestion.type = "category"
-            
-            if privousCategory.count >= 3 {
-                try! realm.write {
+            try! realm.write {
+                if privousCategory.count >= 3 {
                     realm.delete(privousCategory.first!)
                 }
-            }
-            try! realm.write {
                 realm.add(convertedSuggestion)
             }
         }

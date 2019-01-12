@@ -94,6 +94,7 @@
         case InputTextFieldControlTypeNumerical:
             self.input.textField.keyboardType = UIKeyboardTypeNumberPad;
             break;
+        case InputTextFieldControlTypeMobileOrEmail:
         case InputTextFieldControlTypeEmail:
             self.input.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
@@ -121,11 +122,15 @@
     _model = model;
     
     //Trim input of model
-    model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (VALID_NOTEMPTY(model.inputTextValue, [NSString class])) {
+        model.inputTextValue  = [model.inputTextValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    }
     
     [self.input showDisabledMode:model.disabled];
     //update UI
     self.input.icon.image = model.icon;
+    self.input.icon.image = [model.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.input.icon setTintColor:[UIColor lightGrayColor]];
     self.input.textField.placeholder = model.placeholder;
     self.validation = model.validation;
     [self setType: model.type];
@@ -138,7 +143,7 @@
     }
     
     if (model.inputTextValue.length) {
-        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical || model.type == InputTextFieldControlTypePhone) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
+        self.input.textField.text = (model.type == InputTextFieldControlTypeNumerical || model.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) ? [model.inputTextValue numbersToPersian] : model.inputTextValue;
         [self checkValidation];
     } else {
         self.input.textField.text = nil;
@@ -185,6 +190,9 @@
     }
 }
 
+- (void)clearError {
+    [self.input clearError];
+}
 
 - (NSString *)getStringValue {
         return self.input.textField.text;
@@ -246,7 +254,7 @@
 }
 
 - (void)textFieldEditingChanged:(UITextField *)textField {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         textField.text = [textField.text numbersToPersian];
     }
 }

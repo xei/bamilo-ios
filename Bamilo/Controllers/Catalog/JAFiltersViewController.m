@@ -38,7 +38,6 @@ const int subCatButtonVisibleHeight = 50;
     [super viewDidLoad];
     [self selectIndex:0];
     [self updateTitle];
-    
     self.discountOnlyUISwitch.enabled = YES;
     CatalogPriceFilterItem *priceFilter = (CatalogPriceFilterItem *)[self.filtersArray objectAtIndex:self.priceFilterIndex];
     self.discountOnlyUISwitch.on = priceFilter.discountOnly;
@@ -52,6 +51,8 @@ const int subCatButtonVisibleHeight = 50;
     } else{
         self.subCatButtonHeightConstraint.constant = 0;
     }
+    
+    [self.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

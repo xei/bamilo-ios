@@ -150,14 +150,6 @@
 + (void)resetCustomerAsGuest;
 
 /**
- * Method to check if the user has any addresses stored
- *
- * @return success case user has addresses
- *
- */
-+ (BOOL)checkIfUserHasAddresses;
-
-/**
  * Method to request a password reset
  *
  * @param the block where the success response can be processed

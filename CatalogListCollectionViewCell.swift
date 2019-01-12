@@ -10,6 +10,9 @@ import UIKit
 
 class CatalogListCollectionViewCell: BaseCatallogCollectionViewCell {
     
+    @IBOutlet weak var badgeWrapperBottomToNewTagViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var verticalBadgeToNewTagConstraint: NSLayoutConstraint!
+    
     override func setupView() {
         super.setupView()
     }
@@ -22,6 +25,14 @@ class CatalogListCollectionViewCell: BaseCatallogCollectionViewCell {
             style.minimumLineHeight = 18
             style.maximumLineHeight = 18
             self.titleLabel?.attributedText = NSAttributedString(string: name, attributes: [NSAttributedStringKey.paragraphStyle: style])
+        }
+        
+        if let badge = product.badge, badge.count > 0, product.isNew {
+            badgeWrapperBottomToNewTagViewConstraint.priority = .defaultLow
+            verticalBadgeToNewTagConstraint.priority = .defaultHigh
+        } else {
+            badgeWrapperBottomToNewTagViewConstraint.priority = .defaultHigh
+            verticalBadgeToNewTagConstraint.priority = .defaultLow
         }
     }
 }

@@ -14,6 +14,7 @@
 #import "RIPaymentInformation.h"
 #import "CartForm.h"
 #import "RICartItem.h"
+#import "Bamilo-Swift.h"
 
 @implementation RICart
 
@@ -27,18 +28,18 @@ static RICart *instance;
     return instance;
 }
 
-- (NSArray<EMCartItem *> *)convertItems {
-    NSMutableArray<EMCartItem *> *emCartItems = [[NSMutableArray alloc] init];
-    for (RICartItem *item in self.cartEntity.cartItems) {
-        if ([item.sku isKindOfClass:[NSString class]] && item.sku.length
-            && [item.price isKindOfClass:[NSNumber class]]
-            && [item.quantity isKindOfClass:[NSNumber class]]) {
-            EMCartItem *wrapped = [[EMCartItem alloc] initWithItemID:item.sku price:item.price.floatValue quantity:item.quantity.intValue];
-            [emCartItems addObject:wrapped];
-        }
-    }
-    return emCartItems;
-}
+//- (NSArray<EMCartItem *> *)convertItems {
+//    NSMutableArray<EMCartItem *> *emCartItems = [[NSMutableArray alloc] init];
+//    for (RICartItem *item in self.cartEntity.cartItems) {
+//        if ([item.sku isKindOfClass:[NSString class]] && item.sku.length
+//            && [item.price isKindOfClass:[NSNumber class]]
+//            && [item.quantity isKindOfClass:[NSNumber class]]) {
+//            EMCartItem *wrapped = [[EMCartItem alloc] initWithItemID:item.sku price:item.price.floatValue quantity:item.quantity.intValue];
+//            [emCartItems addObject:wrapped];
+//        }
+//    }
+//    return emCartItems;
+//}
 
 #pragma mark - Get cart
 
@@ -624,7 +625,7 @@ static RICart *instance;
 }
 
 
-+(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, RICustomer *customer))successBlock
++(NSString*)getMultistepAddressWithSuccessBlock:(void (^)(RICart *cart, User *customer))successBlock
                                 andFailureBlock:(void (^)(RIApiResponse apiResponse, NSArray *errorMessages))failureBlock {
     return [[RICommunicationWrapper sharedInstance] sendRequestWithUrl:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", [RIApi getCountryUrlInUse], RI_API_VERSION, RI_API_MULTISTEP_GET_ADDRESSES]]
                                                             parameters:nil
@@ -882,7 +883,7 @@ static RICart *instance;
     //CUSTOMER ENTITY
     NSDictionary *_customerEntity = [dict objectForKey:@"customer_entity"];
     if(_customerEntity) {
-        [RICart sharedInstance].customerEntity = [RICustomer parseToDataModelWithObjects:@[ _customerEntity ]];
+        [RICart sharedInstance].customerEntity = [[User alloc] initWithJson:_customerEntity];
     }
     
     NSDictionary *_estimatedDeliveryTime = [dict objectForKey:@"estimated_delivery_time"];

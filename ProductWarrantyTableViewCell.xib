@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,26 +30,38 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="754" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSE-dq-hVB">
-                                <rect key="frame" x="70" y="27" width="232" height="20.5"/>
+                                <rect key="frame" x="66" y="27" width="236" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="255" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D8Z-mB-YIi">
-                                <rect key="frame" x="12" y="22.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="0.0" y="0.0" width="348" height="74.5"/>
+                                <connections>
+                                    <action selector="seeMoreTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cHu-bI-nAT"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mw-zT-MCS">
+                                <rect key="frame" x="12" y="27" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="cSE-dq-hVB" firstAttribute="left" secondItem="9mw-zT-MCS" secondAttribute="right" constant="12" id="8Um-Cf-JG0"/>
+                            <constraint firstItem="D8Z-mB-YIi" firstAttribute="top" secondItem="7LY-2J-hcn" secondAttribute="top" id="Aak-Pb-lWz"/>
                             <constraint firstItem="cSE-dq-hVB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7LY-2J-hcn" secondAttribute="top" constant="12" id="Frz-tf-aPW"/>
-                            <constraint firstItem="D8Z-mB-YIi" firstAttribute="centerY" secondItem="cSE-dq-hVB" secondAttribute="centerY" id="QDK-pL-uNJ"/>
+                            <constraint firstAttribute="bottom" secondItem="D8Z-mB-YIi" secondAttribute="bottom" id="Kif-VA-EVR"/>
                             <constraint firstItem="8Oy-Kp-Otz" firstAttribute="centerY" secondItem="7LY-2J-hcn" secondAttribute="centerY" id="ajd-9Z-YRz"/>
-                            <constraint firstItem="D8Z-mB-YIi" firstAttribute="left" secondItem="7LY-2J-hcn" secondAttribute="left" constant="12" id="g9P-cb-yEs"/>
+                            <constraint firstAttribute="right" secondItem="D8Z-mB-YIi" secondAttribute="right" id="esN-UY-sEC"/>
+                            <constraint firstItem="D8Z-mB-YIi" firstAttribute="left" secondItem="7LY-2J-hcn" secondAttribute="left" id="g9P-cb-yEs"/>
                             <constraint firstItem="8Oy-Kp-Otz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="7LY-2J-hcn" secondAttribute="top" constant="12" id="gwa-Yt-BXI"/>
                             <constraint firstItem="8Oy-Kp-Otz" firstAttribute="left" secondItem="cSE-dq-hVB" secondAttribute="right" constant="12" id="kCn-1p-84t"/>
-                            <constraint firstItem="cSE-dq-hVB" firstAttribute="left" secondItem="D8Z-mB-YIi" secondAttribute="right" constant="12" id="lRe-if-jU4"/>
                             <constraint firstItem="cSE-dq-hVB" firstAttribute="centerY" secondItem="8Oy-Kp-Otz" secondAttribute="centerY" id="qzX-el-WNJ"/>
+                            <constraint firstItem="9mw-zT-MCS" firstAttribute="centerY" secondItem="cSE-dq-hVB" secondAttribute="centerY" id="rkK-WX-pek"/>
+                            <constraint firstItem="9mw-zT-MCS" firstAttribute="left" secondItem="7LY-2J-hcn" secondAttribute="left" constant="12" id="vfC-f5-unY"/>
                             <constraint firstAttribute="right" secondItem="8Oy-Kp-Otz" secondAttribute="right" constant="12" id="w2S-yt-AMv"/>
                         </constraints>
                     </view>
@@ -67,6 +78,7 @@
                 <outlet property="containerBoxView" destination="7LY-2J-hcn" id="M96-sT-WFM"/>
                 <outlet property="horizontalSpacingConstraint" destination="7c0-6m-3rd" id="a4p-AB-WkD"/>
                 <outlet property="seeMoreButton" destination="D8Z-mB-YIi" id="w3y-nP-AGp"/>
+                <outlet property="seeMoreLabel" destination="9mw-zT-MCS" id="Pcm-Ne-Q7W"/>
                 <outlet property="warrantyImageView" destination="8Oy-Kp-Otz" id="z2o-zd-y3z"/>
                 <outlet property="warrantyTitleLabel" destination="cSE-dq-hVB" id="6HJ-Tp-t79"/>
             </connections>

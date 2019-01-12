@@ -19,10 +19,10 @@ extension UIImageView: DisplaceableView {}
     var productSku: String?
     var animator: ZFModalTransitionAnimator?
     
+    @IBOutlet weak private var twoButtonViewControl: TwoButtonsPurchaseControl!
     @IBOutlet weak private var tableView: UITableView!
-    @IBOutlet weak private var addToCartHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var addToCartButton: IconButton!
     @IBOutlet weak private var topTableViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var twoButtonsHightConstraint: NSLayoutConstraint!
     
     private var sliderCell: ProductDetailViewSliderTableViewCell?
     private let headerCellIdentifier = "Header"
@@ -68,24 +68,14 @@ extension UIImageView: DisplaceableView {}
         self.tableView.clipsToBounds = true
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.showsHorizontalScrollIndicator = false
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: addToCartHeightConstraint.constant, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: twoButtonsHightConstraint.constant, right: 0)
         
-        self.addToCartButton.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: .white)
-        self.addToCartButton.layer.cornerRadius = 0 // addToCartHeightConstraint.constant / 2
-//        self.addToCartButton.applyGradient(colours: [
-//            UIColor(red:1, green:0.65, blue:0.05, alpha:1),
-//            UIColor(red:0.97, green:0.42, blue:0.11, alpha:1)
-//        ])
-        self.addToCartButton.backgroundColor = Theme.color(kColorOrange1)
-        
-        self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         // remove extra white gaps between sections & top and bottom of tableview
         self.tableView.sectionFooterHeight = 0
         
         cellIdentifiers.forEach { (cellId) in
             self.tableView.register(UINib(nibName: cellId.value, bundle: nil), forCellReuseIdentifier: cellId.value)
         }
-
         self.tableView.register(UINib(nibName: TransparentHeaderHeaderTableView.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: headerCellIdentifier)
         self.tableView.tableFooterView = UIView(frame: .zero)
         
@@ -94,11 +84,17 @@ extension UIImageView: DisplaceableView {}
         } else {
             self.getContent()
         }
+        
+        self.twoButtonViewControl.product = product
+        self.twoButtonViewControl.viewCtrl = self
+        self.twoButtonViewControl.purchaseTrackingInfo = purchaseTrackingInfo
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.twoButtonViewControl.makeVisibleTwoButtons(true, animated: false)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -115,7 +111,6 @@ extension UIImageView: DisplaceableView {}
                 if self.tableView.contentOffset.y < -100  {
                     self.sliderCell?.openCurrentImage()
                 }
-                
             }
             
             if self.tableView.contentOffset.y >= 0 && self.tableView.contentOffset.y < cellSliderHeight {
@@ -134,6 +129,7 @@ extension UIImageView: DisplaceableView {}
     }
     
     
+    
     private func getContent(completion: ((Bool)-> Void)? = nil) {
         ProductDataManager.sharedInstance.getProductDetailInfo(self, sku: product?.sku ?? productSku ??  "") { (data, error) in
             if (error == nil) {
@@ -141,7 +137,7 @@ extension UIImageView: DisplaceableView {}
                 completion?(true)
                 
                 //request for emarsys recommendations
-                EmarsysPredictManager.sendTransactions(of: self)
+//                EmarsysPredictManager.sendTransactions(of: self)
             } else {
                 self.errorHandler(error, forRequestID: 0)
                 completion?(false)
@@ -199,6 +195,7 @@ extension UIImageView: DisplaceableView {}
     
     private func updateViewByProduct(product: NewProduct) {
         self.product = product
+        self.twoButtonViewControl.product = product
         self.title = product.name
         RIRecentlyViewedProductSku.add(toRecentlyViewed: product, successBlock: nil, andFailureBlock: nil)
         ThreadManager.execute {
@@ -222,9 +219,10 @@ extension UIImageView: DisplaceableView {}
             }
             updateViewByProduct(product: product)
             
-            
-            //Track viewing product
-            TrackerManager.postEvent(selector: EventSelectors.viewProductSelector(), attributes: EventAttributes.viewProduct(parentViewScreenName: getScreenName(), product: product))
+            if let prevCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+                //Track viewing product
+                TrackerManager.postEvent(selector: EventSelectors.viewProductSelector(), attributes: EventAttributes.viewProduct(parentViewScreenName: prevCtrl.getScreenName(), product: product))
+            }
             
             GoogleAnalyticsTracker.shared().trackEcommerceProductClick(product: product)
             self.publishScreenLoadTime(withName: getScreenName(), withLabel: product.sku ?? "")
@@ -245,44 +243,13 @@ extension UIImageView: DisplaceableView {}
         }
     }
     
-    @IBAction func addToCartButtonTapped(_ sender: Any) {
-        if let variations = product?.variations, variations.count >= 1 {
-            let sizeVariations = variations.filter { $0.type == .size }.first
-            let selectedSize = sizeVariations?.products?.filter { $0.isSelected }.first
-            if let selectedSizeSimpleSku = selectedSize?.simpleSku {
-                requestAddToCart(simpleSku: selectedSizeSimpleSku, inViewCtrl: self)
-                return
-            } else if let sizeVariationProducts = sizeVariations?.products, sizeVariationProducts.count > 0 {
-                self.performSegue(withIdentifier: "showAddToCartModal", sender: nil)
-                return
-            }
-        }
-        
-        if let simpleSku = self.product?.simpleSku {
-            requestAddToCart(simpleSku: simpleSku, inViewCtrl: self)
-        }
-    }
-    
-    private func requestAddToCart<T: BaseViewController & DataServiceProtocol>(simpleSku: String, inViewCtrl: T) {
-        if let productEntity = self.product {
-            ProductDataManager.sharedInstance.addToCart(simpleSku: simpleSku, product: productEntity, viewCtrl: inViewCtrl) { (success, error) in
-                if success {
-                    if let info = self.purchaseTrackingInfo, success {
-                        PurchaseBehaviourRecorder.sharedInstance.recordAddToCart(sku: productEntity.sku, trackingInfo: info)
-                    }
-//                    MainTabBarViewController.showCart()
-                }
-            }
-        }
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
         if segueName == "showAddToCartModal", let addToCartViewController = segue.destination as? AddToCartViewController {
             prepareAddToCartView(addToCartViewController: addToCartViewController)
+            addToCartViewController.isBuyNow = sender as? Bool ?? false
         } else if segueName == "showProductMoreInfoViewController", let viewCtrl = segue.destination as? ProductMoreInfoViewController {
             viewCtrl.selectedViewType = sender as? MoreInfoSelectedViewType ?? .description
-            viewCtrl.delegate = self
             viewCtrl.product = product
             viewCtrl.hidesBottomBarWhenPushed = true
         } else if segueName == "showProductReviewListViewController", let viewCtrl = segue.destination as? ProductReviewListViewController {
@@ -299,6 +266,9 @@ extension UIImageView: DisplaceableView {}
         } else if segueName == "showAllRecommendationViewController", let viewCtrl = segue.destination as? AllRecommendationViewController {
             viewCtrl.recommendItems = self.recommendItems ?? []
             viewCtrl.hidesBottomBarWhenPushed = false
+        } else if segueName == "showProductReturnPolicyViewController", let viewCtrl = segue.destination as? ProductReturnPolicyViewController {
+            viewCtrl.product = self.product
+            viewCtrl.hidesBottomBarWhenPushed = true
         }
     }
     
@@ -308,16 +278,7 @@ extension UIImageView: DisplaceableView {}
     
     private func prepareAddToCartView(addToCartViewController: AddToCartViewController){
         addToCartViewController.product = self.product
-        if animator == nil {
-            animator = ZFModalTransitionAnimator(modalViewController: addToCartViewController)
-            animator?.isDragable = true
-            animator?.bounces = true
-            animator?.behindViewAlpha = 0.8
-            animator?.behindViewScale = 1.0
-            animator?.transitionDuration = 0.7
-            animator?.direction = .bottom
-        }
-        addToCartViewController.modalPresentationStyle = .overCurrentContext
+        animator = Utility.createModalBounceAnimator(viewCtrl: addToCartViewController)
         addToCartViewController.delegate = self
         addToCartViewController.transitioningDelegate = animator
     }
@@ -390,6 +351,10 @@ extension ProductDetailViewController: UITableViewDataSource, UITableViewDelegat
             
             if cellType == .reviewSummery {
                 (cell as? ProductReviewSummeryTableViewCell)?.delegate = self
+            }
+            
+            if cellType == .warranty {
+                (cell as? ProductWarrantyTableViewCell)?.delegate = self
             }
             
             cell.update(withModel: product)
@@ -511,10 +476,10 @@ extension ProductDetailViewController: GalleryItemsDataSource, GalleryDisplacedV
 //MARK: - AddToCartViewControllerDelegate
 extension ProductDetailViewController: AddToCartViewControllerDelegate {
     func submitAddToCartSimple(product: NewProduct, refrence: UIViewController) {
-        self.requestAddToCart(simpleSku: product.simpleSku ?? product.sku, inViewCtrl: self)
+        self.twoButtonViewControl.requestAddToCart(simpleSku: product.simpleSku ?? product.sku, inViewCtrl: self)
     }
     
-    func didSelectOtherVariation(product: NewProduct, completionHandler: @escaping ((NewProduct) -> Void)) {
+    func didSelectOtherVariation(product: NewProduct, source: AddToCartViewController,  completionHandler: @escaping ((NewProduct) -> Void)) {
         //if we are in the same page of product
         if let sku = self.product?.sku, (product.sku == sku) { return }
         if let sku = self.productSku, product.sku == sku { return }
@@ -593,19 +558,6 @@ extension ProductDetailViewController: ProductReviewSummeryTableViewCellDelegate
     }
 }
 
-//MARK: - ProductMoreInfoViewControllerDelegate
-extension ProductDetailViewController: ProductMoreInfoViewControllerDelegate {
-
-    func requestsForAddToCart<T>(sku: String, viewCtrl: T) where T : BaseViewController, T : DataServiceProtocol {
-        self.requestAddToCart(simpleSku: sku, inViewCtrl: viewCtrl)
-    }
-    
-    func needToPrepareAddToCartViewCtrl(addToCartViewCtrl: AddToCartViewController) {
-        prepareAddToCartView(addToCartViewController: addToCartViewCtrl)
-    }
-}
-
-
 //MARK: - SellerViewDelegate
 extension ProductDetailViewController: SellerViewDelegate {
     func otherSellerButtonTapped() {
@@ -627,31 +579,31 @@ extension ProductDetailViewController: SellerViewDelegate {
 
 
 //MARK: - EmarsysPredictProtocol
-extension ProductDetailViewController: EmarsysPredictProtocol {
-    func getRecommendations() -> [EMRecommendationRequest]! {
-        let recommend = EMRecommendationRequest(logic: "RELATED")
-        recommend.limit = 100
-        recommend.completionHandler = { (result) in
-            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
-            ThreadManager.execute(onMainThread: {
-                self.updateAvaibleSections()
-                self.tableView.reloadData()
-            })
-        }
-        return [recommend]
-    }
-    
-    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if let sku = self.product?.sku {
-            transaction.setView(sku)
-        }
-        return transaction;
-    }
-    
-    func isPreventSendTransactionInViewWillAppear() -> Bool {
-        return true
-    }
-}
+//extension ProductDetailViewController: EmarsysPredictProtocol {
+//    func getRecommendations() -> [EMRecommendationRequest]! {
+//        let recommend = EMRecommendationRequest(logic: "RELATED")
+//        recommend.limit = 100
+//        recommend.completionHandler = { (result) in
+//            self.recommendItems = result.products.map { RecommendItem(item: $0)! }
+//            ThreadManager.execute(onMainThread: {
+//                self.updateAvaibleSections()
+//                self.tableView.reloadData()
+//            })
+//        }
+//        return [recommend]
+//    }
+//
+//    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+//        if let sku = self.product?.sku {
+//            transaction.setView(sku)
+//        }
+//        return transaction;
+//    }
+//
+//    func isPreventSendTransactionInViewWillAppear() -> Bool {
+//        return true
+//    }
+//}
 
 //MARK: - BreadcrumbsViewDelegate
 extension ProductDetailViewController: BreadcrumbsViewDelegate {
@@ -662,7 +614,7 @@ extension ProductDetailViewController: BreadcrumbsViewDelegate {
 
 //MARK: - FeatureBoxCollectionViewWidgetViewDelegate
 extension ProductDetailViewController: FeatureBoxCollectionViewWidgetViewDelegate {
-    
+
     func selectFeatureItem(_ item: NSObject!, widgetBox: Any!) {
         if let recommendItem = item as? RecommendItem {
             let productDetailViewCtrl =  ViewControllerManager.sharedInstance().loadViewController("ProductDetailViewController") as! ProductDetailViewController
@@ -670,8 +622,15 @@ extension ProductDetailViewController: FeatureBoxCollectionViewWidgetViewDelegat
             self.navigationController?.pushViewController(productDetailViewCtrl, animated: true)
         }
     }
-    
+
     func moreButtonTapped(inWidgetView widgetView: Any!) {
         self.performSegue(withIdentifier: "showAllRecommendationViewController", sender: nil)
+    }
+}
+
+
+extension ProductDetailViewController: ProductWarrantyTableViewCellDelegate {
+    func didSelectWarrantyMoreInfo() {
+        self.performSegue(withIdentifier: "showProductReturnPolicyViewController", sender: nil)
     }
 }

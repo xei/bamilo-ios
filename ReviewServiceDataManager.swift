@@ -34,17 +34,17 @@ class ReviewServiceDataManager: DataManagerSwift {
     }
     
     func getAvaiableUserSurvey(_ target: DataServiceProtocol, executionType: ApiRequestExecutionType = .background, completion: @escaping DataClosure){
-        if let customer = RICustomer.getCurrent(), let customerId = customer.customerId {
-            ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_USER_SURVEY)\(customerId)?device=mobile_app", params: nil, type: executionType) { (responseType, data, errorMessages) in
+        if let customerID = CurrentUserManager.user.userID {
+            ReviewServiceDataManager.requestManager.async(.get, target: target, path: "\(RI_API_USER_SURVEY)\(customerID)?device=mobile_app", params: nil, type: executionType) { (responseType, data, errorMessages) in
                 self.processResponse(responseType, aClass: UserSurvey.self, data: data, errorMessages: errorMessages, completion: completion)
             }
         }
     }
     
     func ignoreSurvey(_ target: DataServiceProtocol, surveyID: String, executionType: ApiRequestExecutionType = .background, completion: @escaping DataClosure) {
-        if let customer = RICustomer.getCurrent(), let customerId = customer.customerId {
+        if let customerID = CurrentUserManager.user.userID {
             let params = ["device": "mobile_app", "status": "ignore", "__method": "PATCH"]
-            ReviewServiceDataManager.requestManager.async(.post, target: target, path: "\(RI_API_USER_SURVEY)\(customerId)", params: params, type: executionType) { (responseType, data, errorMessages) in
+            ReviewServiceDataManager.requestManager.async(.post, target: target, path: "\(RI_API_USER_SURVEY)\(customerID)", params: params, type: executionType) { (responseType, data, errorMessages) in
                 self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
             }
         }

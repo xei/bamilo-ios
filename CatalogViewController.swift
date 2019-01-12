@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import EmarsysPredictSDK
+//import EmarsysPredictSDK
 import SwiftyJSON
 
 @objcMembers class CatalogViewController: BaseViewController,
@@ -17,7 +17,6 @@ import SwiftyJSON
                                     BaseCatallogCollectionViewCellDelegate,
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate,
-                                    EmarsysWebExtendProtocol,
                                     UICollectionViewDelegateFlowLayout,
                                     FilteredListNoResultViewControllerDelegate,
                                     SearchViewControllerDelegate,
@@ -37,7 +36,7 @@ import SwiftyJSON
     @IBOutlet private weak var topCollectionViewConstraint: NSLayoutConstraint!
     
     var navBarTitle: String?
-    var searchTarget: RITarget!
+    var searchTarget: RITarget?
     var sortingMethod: Catalog.CatalogSortType? = nil
     var pushFilterQueryString : String?
     var startCatalogStackIndexInNavigationViewController: Int?
@@ -119,6 +118,7 @@ import SwiftyJSON
         }
         
         if let tabBar = self.tabBarController?.tabBar {
+            tabBar.isHidden = false
             self.initialTabBarHeight = tabBar.frame.height
             noResultContainerBottomConstraint.constant = self.initialTabBarHeight
         }
@@ -164,6 +164,10 @@ import SwiftyJSON
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
@@ -205,7 +209,7 @@ import SwiftyJSON
                 if rid == 0 {
                     self.catalogData = receivedCatalogData
                     self.processCatalogData()
-                    EmarsysPredictManager.sendTransactions(of: self)
+//                    EmarsysPredictManager.sendTransactions(of: self)
                     self.collectionView.reloadData()
                     if let receivedCatalogData = data as? Catalog, let totalProducts = receivedCatalogData.totalProductsCount {
                         if totalProducts <= receivedCatalogData.products.count {
@@ -416,8 +420,8 @@ import SwiftyJSON
             return
         }
         
-        if self.pageNumber == 1 {
-            self.trackSearch(searchTarget: self.searchTarget)
+        if self.pageNumber == 1, let target = self.searchTarget {
+            self.trackSearch(searchTarget: target)
         }
         
         //Sequence of these functions are important
@@ -429,8 +433,8 @@ import SwiftyJSON
         if let _ = self.pushFilterQueryString {
             self.filteredNoResultContainer.isHidden = false
         } else {
-            if self.searchTarget.type.contains("catalog_") {
-                self.noResultViewController?.searchQuery = self.searchTarget.node
+            if let type = self.searchTarget?.type, type.contains("catalog_") {
+                self.noResultViewController?.searchQuery = self.searchTarget?.node
             }
             self.noResultViewController?.getSuggestions()
             self.noResultViewContainer.isHidden = false
@@ -536,7 +540,7 @@ import SwiftyJSON
                 callBack?(false)
             } else {
                 self.bind(data, forRequestId: 0)
-                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget.node)
+                self.publishScreenLoadTime(withName: self.getScreenName(), withLabel: self.searchTarget?.node ?? "all_products")
                 callBack?(true)
             }
             self.resetBarFollowers(animated: true)
@@ -683,6 +687,7 @@ import SwiftyJSON
             let destinationViewCtrl = segue.destination as? JAFiltersViewController
             destinationViewCtrl?.filtersArray = self.catalogData?.copyFilters() //?.filters
             destinationViewCtrl?.subCatsFilters = catalogData?.subCatFilters
+            destinationViewCtrl?.hidesBottomBarWhenPushed = true
             if let index = self.catalogData?.priceFilterIndex {
                 destinationViewCtrl?.priceFilterIndex = Int32(index);
             }
@@ -704,20 +709,20 @@ import SwiftyJSON
         }
     }
     
-    //MARK: - EmarsysWebExtendProtocol
-    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
-        if self.searchTarget.targetType == .CATALOG_SEARCH {
-            transaction.setSearchTerm(self.searchTarget.node)
-        }
-        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
-            transaction.setCategory(breadcrumbsFullPath)
-        }
-        return transaction
-    }
-    
-    func isPreventSendTransactionInViewWillAppear() -> Bool {
-        return true
-    }
+//    //MARK: - EmarsysWebExtendProtocol
+//    func getDataCollection(_ transaction: EMTransaction!) -> EMTransaction! {
+//        if self.searchTarget.targetType == .CATALOG_SEARCH {
+//            transaction.setSearchTerm(self.searchTarget.node)
+//        }
+//        if let breadcrumbsFullPath = self.catalogData?.breadcrumbsFullPath, breadcrumbsFullPath.count > 0 {
+//            transaction.setCategory(breadcrumbsFullPath)
+//        }
+//        return transaction
+//    }
+//
+//    func isPreventSendTransactionInViewWillAppear() -> Bool {
+//        return true
+//    }
     
     //MARK: -DataTrackerProtocol
     override func getScreenName() -> String! {

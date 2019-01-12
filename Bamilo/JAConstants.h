@@ -44,7 +44,6 @@
 #define kSelectedRecentSearchNotification @"NOTIFICATION_SELECTED_RECENT_SEARCH"
 #define kOpenCartNotification @"NOTIFICATION_OPEN_CART"
 #define kOpenOtherOffers @"NOTIFICATION_OPEN_OTHER_OFFERS"
-#define kOpenNewSellerReview @"NOTIFICATION_OPEN_NEW_SELLER_REVIEW"
 
 //************ side menu navigation controller notifications
 #define kShowChooseCountryScreenNotification @"NOTIFICATION_CHOOSE_COUNTRY_SCREEN"
@@ -75,14 +74,7 @@
 //#define kShowMyOrderDetailScreenNotification @"NOTIFICATION_SHOW_MY_ORDER_DETAIL_SCREEN"
 
 // Product
-#define kShowProductSpecificationScreenNotification @"NOTIFICATION_SHOW_PRODUCT_SPECIFICATION_SCREEN"
-#define kShowRatingsScreenNotification @"NOTIFICATION_SHOW_RATINGS_SCREEN"
-#define kShowNewRatingScreenNotification @"NOTIFICATION_SHOW_NEW_RATING_SCREEN"
-#define kShowSizeGuideNotification @"NOTIFICATION_SHOW_SIZE_GUIDE"
 #define kProductChangedNotification @"NOTIFICATION_PRODUCT_CHANGED"
-#define kOpenSpecificationsScreen @"NOTIFICATION_SHOW_SPECIFICATIONS_SCREEN"
-#define kOpenProductBundlesScreen @"NOTIFICATION_SHOW_BUNDLES_SCREEN"
-#define kOpenProductVariationsScreen @"NOTIFICATION_SHOW_VARIATIONS_SCREEN"
 
 //teasers
 #define kDidSelectTeaserWithCatalogUrlNofication @"NOTIFICATION_DID_SELECT_TEASER_WITH_CATALOG_URL"

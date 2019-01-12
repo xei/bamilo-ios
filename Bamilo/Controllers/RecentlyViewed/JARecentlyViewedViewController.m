@@ -11,7 +11,6 @@
 #import "JARecentlyViewedCell.h"
 #import "RIProductSimple.h"
 #import "RICategory.h"
-#import "RICustomer.h"
 #import "JAPicker.h"
 #import "JAUtils.h"
 #import "RICart.h"
@@ -339,7 +338,9 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateCartNotification object:nil userInfo:userInfo];
             
             [self onSuccessResponse:RIApiResponseSuccess messages:[self extractSuccessMessages:[data objectForKey:kDataMessages]] showMessage:YES];
-            //[self hideLoading];
+            
+            //Go to cart
+            [MainTabBarViewController showCart];
         } else {
             //EVENT: ADD TO CART
             
@@ -443,16 +444,6 @@
                          [self.picker removeFromSuperview];
                          self.picker = nil;
                      }];
-}
-
-- (void)leftButtonPressed;
-{
-    RIProduct *product = [self getProductFromIndex:self.picker.tag];
-    if (VALID_NOTEMPTY(product.sizeGuideUrl, NSString)) {
-        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:product.sizeGuideUrl, @"sizeGuideUrl", nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
-        [self closePicker];
-    }
 }
 
 #pragma mark - DataTrackerProtocol

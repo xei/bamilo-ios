@@ -10,7 +10,6 @@
 #import "RIProductOffer.h"
 #import "JAOfferCollectionViewCell.h"
 #import "RICart.h"
-#import "RICustomer.h"
 #import "RISeller.h"
 #import "RIProductSimple.h"
 #import "JAUtils.h"
@@ -381,12 +380,12 @@
                      }];
 }
 
-- (void)leftButtonPressed {
-    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
-        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
-    }
-}
+//- (void)leftButtonPressed {
+//    if (VALID_NOTEMPTY(self.product.sizeGuideUrl, NSString)) {
+//        NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:self.product.sizeGuideUrl, @"sizeGuideUrl", nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kShowSizeGuideNotification object:nil userInfo:dic];
+//    }
+//}
 
 #pragma mark - DataServiceProtocol.h
 -(void)bind:(id)data forRequestId:(int)rid {

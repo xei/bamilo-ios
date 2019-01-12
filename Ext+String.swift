@@ -36,13 +36,15 @@ extension String {
     }
     
     func priceFormat() -> String {
-        var cammaIndex: Int = self.count % 3 == 0 ? 3 : self.count % 3
-        var result = self
+        
+        let TPrice = self.dropLast()
+        var cammaIndex: Int = TPrice.count % 3 == 0 ? 3 : TPrice.count % 3
+        var result = TPrice
         while (cammaIndex < result.count) {
             result.insert(",", at: result.index(result.startIndex, offsetBy: cammaIndex))
             cammaIndex += 4;
         }
-        return result
+        return String(result)
     }
     
     func formatPriceWithCurrency() -> String {
@@ -54,6 +56,14 @@ extension String {
         attributeString.addAttribute(NSAttributedStringKey.baselineOffset, value: 0, range: NSMakeRange(0, attributeString.length))
         attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
         return attributeString
+    }
+    
+    static func phoneRegx() -> String {
+        return "^(((\\+|00)98)|0)?9[01239]\\d{8}$"
+    }
+    
+    static func emailRegx() -> String {
+        return "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$"
     }
     
     //MARK: Private Methods

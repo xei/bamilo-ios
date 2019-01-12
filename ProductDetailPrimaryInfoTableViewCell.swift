@@ -54,7 +54,7 @@ class ProductDetailPrimaryInfoTableViewCell: BaseProductTableViewCell {
         [productNameLabel, rateValueLabel].forEach { $0?.applyStyle(font: Theme.font(kFontVariationBold, size: 15), color: Theme.color(kColorGray1)) }
         [rateTitleLabel, ratingCountLabel, currencyLabel].forEach {$0?.applyStyle(font: Theme.font(kFontVariationLight, size: 12), color: Theme.color(kColorGray1))}
         priceLabel.applyStyle(font: Theme.font(kFontVariationBold, size: 25), color: Theme.color(kColorOrange1))
-        
+        currencyLabel.text = STRING_CURRENCY
         discountPercentageContainerView.backgroundColor = Theme.color(kColorOrange1)
         discountPercentageContainerView.layer.cornerRadius = 4
         discountPercentageContainerView.clipsToBounds = true

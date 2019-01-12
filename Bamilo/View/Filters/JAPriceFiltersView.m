@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *lowerSelectedPriceUITextField;
 @property (weak, nonatomic) IBOutlet UITextField *upperSelectedPriceUITextField;
 @property (nonatomic, strong) CatalogPriceFilterItem* priceFilter;
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *currencyLabels;
 
 @end
 
@@ -30,14 +31,14 @@
     
     self.priceRangeSlider.step = self.priceFilter.interval;
     
-    self.priceRangeSlider.maxValue = self.priceFilter.maxPrice;
-    self.priceRangeSlider.minValue = self.priceFilter.minPrice;
+    self.priceRangeSlider.maxValue = self.priceFilter.maxPrice / 10;
+    self.priceRangeSlider.minValue = self.priceFilter.minPrice / 10;
     self.priceRangeSlider.hideLabels = YES;
     self.priceRangeSlider.handleDiameter = 28.0;
     
     //found out the hard way that self.priceRangeSlider.upperValue has to be set before self.priceRangeSlider.lowerValue
-    self.priceRangeSlider.selectedMaximum = self.priceFilter.upperValue;
-    self.priceRangeSlider.selectedMinimum = self.priceFilter.lowerValue;
+    self.priceRangeSlider.selectedMaximum = self.priceFilter.upperValue / 10; //convert to Tomans
+    self.priceRangeSlider.selectedMinimum = self.priceFilter.lowerValue / 10; //convert to Tomans
     self.priceRangeSlider.delegate = self;
     
     self.priceRangeSlider.hideLabels = YES;
@@ -49,19 +50,23 @@
         label.font = [UIFont fontWithName:kFontRegularName size: 12];
     }
     
-    self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilter.upperValue] formatPrice] numbersToPersian];
+    self.upperSelectedPriceUITextField.text = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceRangeSlider.selectedMaximum] formatPrice] numbersToPersian];
     
-    NSString *lowerValue = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceFilter.lowerValue] formatPrice] numbersToPersian];
+    NSString *lowerValue = [[[NSString stringWithFormat:@"%.0ld", (long)self.priceRangeSlider.selectedMinimum] formatPrice] numbersToPersian];
     self.lowerSelectedPriceUITextField.text = lowerValue.length ? lowerValue : @"۰";
     
     self.upperSelectedPriceUITextField.delegate = self;
     self.lowerSelectedPriceUITextField.delegate = self;
+    
+    [self.currencyLabels enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.text = STRING_CURRENCY;
+    }];
 }
 
 - (void)saveOptions {
     //Save selection in filter
-    self.priceFilter.lowerValue = self.priceRangeSlider.selectedMinimum;
-    self.priceFilter.upperValue = self.priceRangeSlider.selectedMaximum;
+    self.priceFilter.lowerValue = self.priceRangeSlider.selectedMinimum * 10; //conversion to Rials
+    self.priceFilter.upperValue = self.priceRangeSlider.selectedMaximum * 10; //conversion to Rials
     
     [super saveOptions];
 }
@@ -71,7 +76,7 @@
     NSString *lowerTextFieldValue = [self.lowerSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
     NSString *upperTextFieldValue = [self.upperSelectedPriceUITextField.text getPriceStringFromFormatedPrice];
     
-    float validateValue = MAX(self.priceFilter.minPrice, MIN(self.priceFilter.maxPrice, senderValueString.intValue));
+    float validateValue = MAX(self.priceRangeSlider.minValue, MIN(self.priceRangeSlider.maxValue, senderValueString.intValue));
     float valueToBeSet;
     if (sender == self.upperSelectedPriceUITextField) {
         valueToBeSet = MAX(validateValue, lowerTextFieldValue.intValue);
@@ -81,7 +86,7 @@
         self.priceRangeSlider.selectedMinimum = valueToBeSet;
     }
     
-    sender.text = [[[NSString stringWithFormat:@"%.0f", valueToBeSet] formatPrice] numbersToPersian];
+    sender.text =  [[[NSString stringWithFormat:@"%.0f", valueToBeSet] formatPrice] numbersToPersian];
     [self saveOptions];
 }
 

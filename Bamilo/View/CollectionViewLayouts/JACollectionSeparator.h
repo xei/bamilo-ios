@@ -11,3 +11,4 @@
 @interface JACollectionSeparator : UICollectionReusableView
 
 @end
+

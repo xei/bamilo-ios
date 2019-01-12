@@ -41,7 +41,7 @@
         if let campaignString = self.campaginDataString {
             builder = builder?.setCampaignParametersFromUrl(campaignString)
         }
-        tracker?.send(builder!.build() as! [AnyHashable : Any])
+        tracker?.send(builder!.build() as? [AnyHashable : Any])
     }
     
     func trackCampaignData(campaignDictionary: [String: String]) {
@@ -60,19 +60,11 @@
             
             
             if let utmSource = campaignDictionary[kUTMSource], utmSource.count > 0 {
-                if let _ = campaignDictionary[kUTMCampaign] {
-                    params += ["\(kUTMSource)=push"]
-                } else {
-                    params += ["\(kUTMSource)=\(utmSource)"]
-                }
+                params += ["\(kUTMSource)=\(utmSource)"]
             }
             
             if let utmMedium = campaignDictionary[kUTMMedium], utmMedium.count > 0 {
-                if let _ = campaignDictionary[kUTMCampaign] {
-                    params += ["\(kUTMMedium)=referrer"]
-                } else {
-                    params += ["\(kUTMMedium)=\(utmMedium)"]
-                }
+                params += ["\(kUTMMedium)=\(utmMedium)"]
             }
             
             self.campaginDataString = params.joined(separator:"&")
@@ -189,6 +181,21 @@
                 value: product.payablePrice
             )
             self.sendParamsToGA(params: params)
+            //Ecommerce tracking
+            self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
+        }
+    }
+    
+    func buyNowTapped(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: screenName,
+                action: "BuyNow",
+                label: product.sku,
+                value: product.payablePrice
+            )
+            self.sendParamsToGA(params: params)
             
             //Ecommerce tracking
             self.sendEcommerceEvent(product: product, actionName: kGAIPAAdd)
@@ -237,12 +244,12 @@
     }
     
     func login(attributes: EventAttributeType) {
-        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? RICustomer {
+        if let loginMethod = attributes[kEventMethod] as? String, let user = attributes[kEventUser] as? User {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Account",
                 action: "Login",
                 label: "\(loginMethod)",
-                value: user.customerId
+                value: user.getID()
             )
             self.sendParamsToGA(params: params)
         }
@@ -260,12 +267,12 @@
     
     func signup(attributes: EventAttributeType) {
         if let loginMethod = attributes[kEventMethod] as? String, let success = attributes[kEventSuccess] as? Bool {
-            let user = attributes[kEventUser] as? RICustomer
+            let user = attributes[kEventUser] as? User
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Account",
                 action: success ? "SignupSuccess" : "SignupFailed",
                 label: "\(loginMethod)",
-                value: user?.customerId
+                value: user?.getID()
             )
             self.sendParamsToGA(params: params)
         }
@@ -304,6 +311,21 @@
         }
     }
     
+    func purchased(attributes: EventAttributeType) {
+        //becasues we have the checkout finish it's not necessary
+        
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            let params = GAIDictionaryBuilder.createEvent(
+                withCategory: "Checkout",
+                action: "CheckoutFail",
+                label: cart.orderNr,
+                value: cart.cartEntity?.cartValue ?? 0
+            )
+            self.sendParamsToGA(params: params)
+        }
+    }
+    
     func purchaseBehaviour(attributes: EventAttributeType) {
         if let category = attributes[kGAEventCategory] as? String,
             let label = attributes[kGAEventLabel] as? String {
@@ -331,13 +353,13 @@
     
     
     func trackLoadTime(screenName: String, interval: NSNumber, label: String) {
-        if let timingParms = GAIDictionaryBuilder.createTiming(
-            withCategory: "Screen",
-            interval: interval,
-            name: screenName,
-            label: label) {
-            self.sendParamsToGA(params: timingParms)
-        }
+//        if let timingParms = GAIDictionaryBuilder.createTiming(
+//            withCategory: "Screen",
+//            interval: interval,
+//            name: screenName,
+//            label: label) {
+//            self.sendParamsToGA(params: timingParms)
+//        }
     }
     
     //MARK: - Helper functions
@@ -346,7 +368,7 @@
         if let campaignStrig = self.campaginDataString,  campaignStrig.count > 0 {
             let _ = params.setCampaignParametersFromUrl(campaignStrig)
         }
-        GAI.sharedInstance().defaultTracker.send(params.build() as! [AnyHashable : Any])
+        GAI.sharedInstance().defaultTracker.send(params.build() as? [AnyHashable : Any])
     }
     
     
@@ -456,6 +478,10 @@
         }
         gaProduct.setQuantity(1)
         return gaProduct
+    }
+    
+    func shareApp(attributes: EventAttributeType) {
+        
     }
     
 }

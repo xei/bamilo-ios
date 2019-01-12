@@ -26,7 +26,7 @@
 }
 
 - (NSString *)getValue {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         return [self.inputTextValue numbersToEnglish];
     } else if (self.type == InputTextFieldControlTypeOptions) {
         return self.selectOption[self.inputTextValue];
@@ -39,7 +39,7 @@
 }
 
 - (void)setValue:(NSString *)value {
-    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone) {
+    if (self.type == InputTextFieldControlTypeNumerical || self.type == InputTextFieldControlTypePhone || self.type == InputTextFieldControlTypeMobileOrEmail) {
         self.inputTextValue = [value numbersToPersian];
     } else if (self.type == InputTextFieldControlTypeOptions) {
          self.inputTextValue = [[self.selectOption allKeysForObject:value] lastObject];
@@ -74,7 +74,7 @@
 + (FormItemModel *)phoneWithFieldName:(NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"phone_number"]
                                     placeholder: STRING_CELLPHONE
                                            type: InputTextFieldControlTypePhone
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[NSString mobileRegxPattern]]
@@ -104,7 +104,7 @@
 + (FormItemModel *)emailWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"Email"]
                                     placeholder: STRING_EMAIL
                                            type: InputTextFieldControlTypeEmail
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:0 min:0 withRegxPatter:[EmailUtility emailRegexPattern]]
@@ -114,7 +114,7 @@
 + (FormItemModel *)passWordWithFieldName: (NSString *)fieldName {
     return [[FormItemModel alloc] initWithTextValue:nil
                                       fieldName: fieldName
-                                        andIcon: nil
+                                        andIcon: [UIImage imageNamed:@"Password"]
                                     placeholder: STRING_PASSWORD
                                            type: InputTextFieldControlTypePassword
                                      validation: [[FormItemValidation alloc] initWithRequired:YES max:50 min:6 withRegxPatter:nil]
@@ -168,7 +168,7 @@
 + (FormItemModel *)nationalID: (NSString *)fieldName {
     return  [[FormItemModel alloc] initWithTextValue: nil
                                            fieldName: fieldName
-                                             andIcon: nil
+                                             andIcon: [UIImage imageNamed:@"national_ID"]
                                          placeholder: STRING_NATIONAL_ID
                                                 type: InputTextFieldControlTypeNumerical
                                           validation: [[FormItemValidation alloc] initWithRequired:YES max:10 min:10 withRegxPatter:nil]

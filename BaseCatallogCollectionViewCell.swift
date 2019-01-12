@@ -28,6 +28,8 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
     @IBOutlet weak var outOfStockTagView: UIView?
     @IBOutlet weak var outOfStockLabel: UILabel?
     @IBOutlet weak var outOfStockCoverView: UIView?
+    @IBOutlet weak var badgeWrapperView: UIView?
+    @IBOutlet weak var badgeLabel: UILabel?
     
     var product: Product?
     
@@ -106,13 +108,20 @@ class BaseCatallogCollectionViewCell: BaseCollectionViewCellSwift {
         }
         self.addToWishListButton?.isSelected = product.isInWishList
         
-        if (!product.hasStock) {
+        if !product.hasStock {
             self.outOfStockCoverView?.isHidden = false
             self.outOfStockTagView?.isHidden = false
             self.newTagView?.isHidden = true
         } else {
             self.outOfStockCoverView?.isHidden = true
             self.outOfStockTagView?.isHidden = true
+        }
+        
+        if let badge = product.badge, badge.count > 0 {
+            self.badgeWrapperView?.isHidden = false
+            self.badgeLabel?.text = badge
+        } else {
+            self.badgeWrapperView?.isHidden = true
         }
         
         self.product = product

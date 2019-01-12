@@ -51,7 +51,7 @@
     
     if (self.price) {
         NSString *priceString = [NSString stringWithFormat:@"%lld", self.price];
-        self.formatedPrice = [NSString stringWithFormat:@"%@ %@", [[priceString formatPrice] numbersToPersian], STRING_CURRENCY];
+        self.formatedPrice = [priceString formatPriceWithCurrency];
     }
     
     if (VALID_NOTEMPTY([dict objectForKey:@"actions"], NSArray)) {

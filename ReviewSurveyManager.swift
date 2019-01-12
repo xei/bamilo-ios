@@ -10,14 +10,14 @@ import UIKit
 
 @objcMembers class ReviewSurveyManager: NSObject {
     
-    private class func presentSurveyOn(viewController: UIViewController, reviewSurvey: ReviewSurvery, orderID: String) {
+    private class func presentSurveyOn(reviewSurvey: ReviewSurvery, orderID: String) {
         //If we are not going to present any deeplink actions
         if DeepLinkManager.hasSomethingToShow() { return }
         ThreadManager.execute {
             if let reviewStarter = ViewControllerManager.sharedInstance().loadViewController("ReviewSurveyStarter", resetCache: true) as? BaseNavigationController, let surveyViewCtrl = reviewStarter.viewControllers.first as? ReviewSurveyViewController {
                 surveyViewCtrl.surveryModel = reviewSurvey
                 surveyViewCtrl.orderID = orderID
-                viewController.present(reviewStarter, animated: true)
+                MainTabBarViewController.sharedInstance()?.present(reviewStarter, animated: true)
             }
         }
     }
@@ -47,9 +47,7 @@ import UIKit
     
     class func startPresentingSurvey(reviewSurvey: ReviewSurvery, orderId: String) {
         Utility.delay(duration: 2) {
-            if let topViewController = MainTabBarViewController.topViewController() {
-                self.presentSurveyOn(viewController: topViewController, reviewSurvey: reviewSurvey, orderID: orderId)
-            }
+            self.presentSurveyOn(reviewSurvey: reviewSurvey, orderID: orderId)
         }
     }
     
@@ -140,7 +138,15 @@ import UIKit
         option33.title = "نظر سوم من این است که "
         option33.id = 125
         
-        question30.options = [option31, option32, option33]
+        let option34 = SurveyQuestionOption()
+        option34.title = "نظر سوم من این است که "
+        option34.id = 1254
+        
+        let option35 = SurveyQuestionOption()
+        option35.title = "نظر سوم من این است که "
+        option35.id = 1255
+        
+        question30.options = [option31, option32, option33, option34, option35]
         question30.id = 12342
         
         let question33 = SurveyQuestion()

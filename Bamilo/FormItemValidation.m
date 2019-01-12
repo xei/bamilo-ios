@@ -33,6 +33,8 @@
         return [NSString stringWithFormat:@"حداقل %lu کاراکتر وارد نمایید.", (unsigned long) self.min];
     else if (errorType == FormItemValidationErrorRegx)
         return @"لطفا مقدار معتبر وارد نمایید";
+    else if (errorType == FormItemValidationErrorExactLenght)
+        return [NSString stringWithFormat:@"باید %lu کارکتر وارد نمایید", (unsigned long) self.max];
     return nil;
 }
 
@@ -43,6 +45,12 @@
     
     if (self.isRequired && !lengthOfInputText) {
         validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorIsRequired];
+        validation.boolValue = NO;
+        return validation;
+    }
+    
+    if (lengthOfInputText > 0 && self.max != nil && self.min != nil && self.max == self.min && self.min != lengthOfInputText) {
+        validation.errorMsg = [self getErrorMsgOfType:FormItemValidationErrorExactLenght];
         validation.boolValue = NO;
         return validation;
     }

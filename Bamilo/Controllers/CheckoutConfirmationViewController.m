@@ -75,6 +75,8 @@
     
     //remove extra line seperators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.continueButtonHeightConstraint.constant + 20, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

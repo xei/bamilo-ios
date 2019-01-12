@@ -88,7 +88,7 @@ import Firebase
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent(AnalyticsEventAddToWishlist, parameters: [
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterPrice: price,
                 "screen": screenName,
                 AnalyticsParameterItemName: name])
@@ -101,7 +101,7 @@ import Firebase
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent("remove_from_wishlist", parameters: [
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterPrice: price,
                 "screen": screenName,
                 AnalyticsParameterItemName: name])
@@ -114,9 +114,21 @@ import Firebase
            let price = product.payablePrice {
             Analytics.logEvent(AnalyticsEventAddToCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 "screen": screenName
             ])
+        }
+    }
+    
+    func buyNowTapped(attributes: EventAttributeType) {
+        if let screenName = attributes[kEventScreenName] as? String,
+            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+            let price = product.payablePrice {
+            Analytics.logEvent("buy_now", parameters: [
+                AnalyticsParameterPrice: price,
+                AnalyticsParameterItemID: product.sku ?? "",
+                "screen": screenName
+                ])
         }
     }
     
@@ -125,7 +137,7 @@ import Firebase
             let price = product.payablePrice {
             Analytics.logEvent(AnalyticsEventRemoveFromCart, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku
+                AnalyticsParameterItemID: product.sku ?? ""
             ])
         }
     }
@@ -136,7 +148,7 @@ import Firebase
             let name = product.name {
             Analytics.logEvent(AnalyticsEventViewItem, parameters: [
                 AnalyticsParameterPrice: price,
-                AnalyticsParameterItemID: product.sku,
+                AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterItemName: name,
                 AnalyticsParameterItemBrand: product.brand ?? ""
             ])
@@ -144,7 +156,36 @@ import Firebase
     }
     
     func itemTapped(attributes: EventAttributeType) {
+        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+            let labelEventName = attributes[kGAEventLabel] as? String {
+            Analytics.logEvent("tap_teaser", parameters: [
+                AnalyticsParameterCampaign: categoryEventName,
+                AnalyticsParameterItemName: labelEventName,
+                
+            ])
+        }
+    }
+    
+    func purchased(attributes: EventAttributeType) {
+        //becasues we have the checkout finish it's not necessary
         
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            Analytics.logEvent("fail_checkout", parameters: [
+                AnalyticsParameterItemID: cart.orderNr,
+                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
+            ])
+        }
+    }
+    
+    func purchaseBehaviour(attributes: EventAttributeType) {
+        if let category = attributes[kGAEventCategory] as? String,
+            let label = attributes[kGAEventLabel] as? String {
+            Analytics.logEvent("purchase_teaser", parameters: [
+                AnalyticsParameterCampaign: category,
+                AnalyticsParameterItemName: label
+            ])
+        }
     }
     
     func signup(attributes: EventAttributeType) {
@@ -184,9 +225,6 @@ import Firebase
                 ])
             }
         }
-    }
-    
-    func purchaseBehaviour(attributes: EventAttributeType) {
     }
     
     func searchSuggestionTapped(attributes: EventAttributeType) {

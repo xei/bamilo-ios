@@ -11,7 +11,9 @@ import Crashlytics
 
 @objcMembers class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate, DataServiceProtocol {
     
+    private var animator: ZFModalTransitionAnimator? //modal presentation for optional udpate
     private static var previousSelectedViewController: JACenterNavigationController?
+    static var appConfig: AppConfigurations?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,7 @@ import Crashlytics
         self.tabBar.isTranslucent = false
         self.delegate = self
         
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomePageViewController.self)
         
         self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 9), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkBlue)], for: .selected)
@@ -38,12 +40,20 @@ import Crashlytics
             self.tabBar.items?.first?.setBadgeTextAttributes(attributes, for: .normal)
             UITabBarItem.appearance().badgeColor = Theme.color(kColorOrange)
         } else {}
-        
+    
         self.updateUserSessionAndCart()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateUserSessionAndCart), name: NSNotification.Name(NotificationKeys.EnterForground), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(updateCartListener(notification:)), name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil)
+        
+        //wait for tabbar to be rendered
+        Utility.delay(duration: 0.1) {
+            self.requestTheAppConfiguration()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func updateCartListener(notification: Notification) {
@@ -54,10 +64,9 @@ import Crashlytics
     
     func updateUserSessionAndCart() {
         //Get user and cart to refresh from server
-        if let currentUser = RICustomer.getCurrent() {
-            EmarsysPredictManager.setCustomer(currentUser)
-            PushWooshTracker.setUserID(currentUser.customerId.stringValue)
-            Crashlytics.sharedInstance().setUserName(currentUser.email)
+        if let userID = CurrentUserManager.user.userID, userID != 0 {
+            Crashlytics.sharedInstance().setUserName(CurrentUserManager.user.email)
+            Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
         }
         self.getAndUpdateCart()
     }
@@ -82,16 +91,32 @@ import Crashlytics
     }
     
     //MARk: - UITabBarControllerDelegate
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        CurrentUserManager.loadLocal()
+        if let rootViewController = (viewController as? JACenterNavigationController)?.viewControllers.first, rootViewController.isKind(of: WishListViewController.self), !CurrentUserManager.isUserLoggedIn() {
+            MainTabBarViewController.topNavigationController()?.performProtectedBlock({ (success) in
+                MainTabBarViewController.showWishList()
+            })
+            return false
+        }
+        return true
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let centerNav = viewController as? JACenterNavigationController, centerNav != MainTabBarViewController.previousSelectedViewController {
-            MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
-            centerNav.registerObservingOnNotifications()
-            MainTabBarViewController.previousSelectedViewController = centerNav
-            
-            
-            //Whenever we go to cart tab bar item, we need to go to the root of this tab bar item
-            if centerNav.viewControllers.first is CartViewController {
-               centerNav.popToRootViewController(animated: false)
+        if let centerNav = viewController as? JACenterNavigationController {
+            if centerNav != MainTabBarViewController.previousSelectedViewController {
+                MainTabBarViewController.previousSelectedViewController?.removeObservingNotifications()
+                centerNav.registerObservingOnNotifications()
+                MainTabBarViewController.previousSelectedViewController = centerNav
+                
+                //Whenever we go to cart tab bar item, we need to go to the root of this tab bar item
+                if centerNav.viewControllers.first is CartViewController {
+                    centerNav.popToRootViewController(animated: false)
+                }
+            } else {
+                if let homePage = centerNav.topViewController as? HomePageViewController {
+                    homePage.scrollToTop()
+                }
             }
         }
     }
@@ -134,6 +159,8 @@ import Crashlytics
     class func updateCartValue(cart: RICart) {
         if let cartItemsCount = cart.cartEntity?.cartCount?.intValue {
             MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = cartItemsCount == 0 ? nil : "\(cartItemsCount)" //.convertTo(language: .arabic)
+        } else {
+            MainTabBarViewController.sharedInstance()?.tabBar.items?.last?.badgeValue = nil
         }
         
         MainTabBarViewController.sharedInstance()?.viewControllers?.forEach {
@@ -159,7 +186,7 @@ import Crashlytics
     
     //TODO: Temprory helper functions (for objective c codes)
     class func showHome() {
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        MainTabBarViewController.activateTabItem(rootViewClassType: HomePageViewController.self)
     }
     
     class func showWishList() {
@@ -185,4 +212,56 @@ import Crashlytics
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: [NotificationKeys.NotificationCart : cart])
         }
     }
+}
+
+
+//MARK: force udpate
+extension MainTabBarViewController {
+    
+    private func requestTheAppConfiguration() {
+        AuthenticationDataManager.sharedInstance.getConfigure(self) { (data, error) in
+            if let config = data as? AppConfigurations {
+                MainTabBarViewController.appConfig = config
+                self.checkForUpdate(config: config)
+            }
+        }
+    }
+    
+    private func checkForUpdate(config: AppConfigurations) {
+        if let status = config.status {
+            switch status {
+            case .forceUpdate:
+                presentForcedUpdate(configs: config)
+            case .optionalUpdate:
+                presentOptionalUpdate(configs: config)
+            case .normal :
+                break
+            }
+        }
+    }
+    
+    private func presentOptionalUpdate(configs: AppConfigurations) {
+        if animator == nil, let optionalUpdate = ViewControllerManager.sharedInstance().loadViewController("OptionalUpdateViewController", resetCache: false) as? OptionalUpdateViewController {
+            optionalUpdate.configs = configs
+            animator = ZFModalTransitionAnimator(modalViewController: optionalUpdate)
+            animator?.isDragable = true
+            animator?.bounces = true
+            animator?.behindViewAlpha = 0.8
+            animator?.behindViewScale = 1.0
+            animator?.transitionDuration = 0.7
+            animator?.direction = .bottom
+            optionalUpdate.modalPresentationStyle = .overCurrentContext
+            optionalUpdate.transitioningDelegate = animator
+            
+            self.present(optionalUpdate, animated: true, completion: nil)
+        }
+    }
+    
+    private func presentForcedUpdate(configs: AppConfigurations) {
+        if let forceViewCtrl = ViewControllerManager.sharedInstance().loadViewController("ForceUpdateViewController", resetCache: true) as? ForceUpdateViewController {
+            forceViewCtrl.configs = configs
+            self.present(forceViewCtrl, animated: true, completion: nil)
+        }
+    }
+
 }

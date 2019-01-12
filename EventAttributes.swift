@@ -18,13 +18,13 @@ public typealias EventAttributeType = [String:Any]
             kEventConnection: DeviceStatusManager.getConnectionType(),
             kEventDate:  Date()
         ] as [String: Any]
-        if let userGender = RICustomer.getGender() {
-            attributes[kEventUserGender] = userGender
+        if let userID = CurrentUserManager.user.userID, userID != 0, let userGender = CurrentUserManager.user.gender {
+            attributes[kEventUserGender] = userGender.rawValue
         }
         return attributes
     }
     
-    class func login(loginMethod: String, user: RICustomer?, success: Bool) -> EventAttributeType {
+    class func login(loginMethod: String, user: User?, success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = loginMethod
         if let user = user { attributes[kEventUser] = user }
@@ -38,7 +38,7 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    class func signup(method: String, user: RICustomer?,success: Bool) -> EventAttributeType {
+    class func signup(method: String, user: User?,success: Bool) -> EventAttributeType {
         var attributes = self.getCommonAttributes()
         attributes[kEventMethod] = method
         attributes[kEventUser] = user
@@ -191,5 +191,17 @@ public typealias EventAttributeType = [String:Any]
     
     class func callToOrderTapped() -> EventAttributeType {
         return self.getCommonAttributes()
+    }
+    
+    class func shareApp() -> EventAttributeType {
+        return self.getCommonAttributes()
+    }
+    
+    class func buyNowTapped(product: TrackableProductProtocol, screenName: String, success: Bool) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventScreenName] = screenName
+        attributes[kEventSuccess] = success
+        attributes[kEventProduct] = product
+        return attributes
     }
 }

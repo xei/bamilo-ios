@@ -150,7 +150,7 @@
 }
 
 -(NSString *)getPerformanceTrackerLabel {
-    return [RICustomer getCustomerId];
+    return [[CurrentUserManager.user getID] stringValue];
 }
 
 

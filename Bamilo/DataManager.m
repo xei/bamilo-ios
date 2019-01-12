@@ -10,7 +10,6 @@
 #import "RICart.h"
 #import "RIForm.h"
 #import "RICategory.h"
-#import "RICustomer.h"
 #import "OrderList.h"
 
 @implementation DataManager

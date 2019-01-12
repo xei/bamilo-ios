@@ -9,7 +9,6 @@
 #import "JACampaignsViewController.h"
 #import "RICart.h"
 #import "RICampaign.h"
-#import "RICustomer.h"
 #import "JAUtils.h"
 #import "RITeaserComponent.h"
 

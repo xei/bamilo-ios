@@ -11,22 +11,22 @@ import Foundation
 @objcMembers class DataAggregator: NSObject {
     
 //######## MARK: - AuthenticationDataManager
-    class func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
-        AuthenticationDataManager.sharedInstance.loginUser(target, username: username, password: password, completion: completion)
-    }
-    
-    class func signupUser(_ target:DataServiceProtocol?, with fields: [String : String], completion: @escaping DataClosure) {
-        var fields = fields //Hack!
-        AuthenticationDataManager.sharedInstance.signupUser(target, with: &fields, completion: completion)
-    }
-    
-    class func forgetPassword(_ target:DataServiceProtocol?, with fields:[String : String], completion: @escaping DataClosure) {
-        AuthenticationDataManager.sharedInstance.forgetPassword(target, with: fields, completion: completion)
-    }
-    
-    class func logoutUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
-        AuthenticationDataManager.sharedInstance.logoutUser(target, completion: completion)
-    }
+//    class func loginUser(_ target:DataServiceProtocol?, username:String, password:String, completion: @escaping DataClosure) {
+//        AuthenticationDataManager.sharedInstance.loginUser(target, username: username, password: password, completion: completion)
+//    }
+//    
+//    class func signupUser(_ target:DataServiceProtocol?, with fields: [String : String], completion: @escaping DataClosure) {
+//        var fields = fields //Hack!
+//        AuthenticationDataManager.sharedInstance.signupUser(target, with: &fields, completion: completion)
+//    }
+//    
+//    class func forgetPassword(_ target:DataServiceProtocol?, with fields:[String : String], completion: @escaping DataClosure) {
+//        AuthenticationDataManager.sharedInstance.forgetPassword(target, with: fields, completion: completion)
+//    }
+//    
+//    class func logoutUser(_ target:DataServiceProtocol?, completion: @escaping DataClosure) {
+//        AuthenticationDataManager.sharedInstance.logoutUser(target, completion: completion)
+//    }
     
 //######## MARK: - AddressDataManager
     class func getUserAddressList(_ target: DataServiceProtocol, completion: @escaping DataClosure) {

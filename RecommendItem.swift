@@ -8,7 +8,7 @@
 
 import UIKit
 import ObjectMapper
-import EmarsysPredictSDK
+//import EmarsysPredictSDK
 
 @objcMembers class RecommendItem: NSObject, Mappable {
     
@@ -34,9 +34,9 @@ import EmarsysPredictSDK
     required init?(map: Map) {
     }
     
-    convenience init?(item: EMRecommendationItem) {
-        self.init(JSON: item.data)
-    }
+//    convenience init?(item: EMRecommendationItem) {
+//        self.init(JSON: item.data)
+//    }
     
     func mapping(map: Map) {
         self.sku <- map["item"]

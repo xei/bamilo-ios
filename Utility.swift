@@ -32,9 +32,11 @@ import Adjust
     }
     
     class func openExternalUrlOnBrowser(urlString: String) {
-        guard let url = URL(string: urlString) else {
+        let validUrlString = urlString.contains("http") ? urlString : "http://\(urlString)"
+        guard let url = URL(string: validUrlString) else {
             return
         }
+        
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
@@ -44,8 +46,14 @@ import Adjust
     
     class func shareUrl(url: String, message: String, viewController: BaseViewController) {
         let textToShare = message
-        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),let myWebsite = NSURL(string: encodeUrl) {
-            let objectsToShare: [Any] = ["\(encodeUrl)\n\(textToShare)", myWebsite]
+        if let encodeUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),var myWebsite = NSURL(string: encodeUrl) {
+            if myWebsite.scheme == nil {
+                myWebsite = NSURL(string: "https://\(encodeUrl)")!
+            } else if let schema = myWebsite.scheme, !schema.hasPrefix("http") && !schema.hasPrefix("https") {
+                myWebsite = NSURL(string: "https://\(encodeUrl)")!
+            }
+            
+            let objectsToShare: [Any] = ["\(textToShare)", myWebsite]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             viewController.present(activityVC, animated: true, completion: nil)
         }
@@ -70,16 +78,44 @@ import Adjust
     
     class func resetUserBehaviours() {
         //Reset some actions
-        EmarsysPredictManager.userLoggedOut()
-        RICustomer.cleanFromDB()
+//        EmarsysPredictManager.userLoggedOut()
+        CurrentUserManager.cleanFromDB()
         RICart.sharedInstance().cartEntity?.cartItems = []
         RICart.sharedInstance().cartEntity?.cartCount = nil
         LocalSearchSuggestion().clearAllHistories()
+        RICommunicationWrapper.deleteSessionCookie()
+        ViewControllerManager.sharedInstance().clearCache()
+        removeAllCookies()
+        
+        MainTabBarViewController.showHome()
+    }
+    
+    static func removeAllCookies() {
+        let cstorage = HTTPCookieStorage.shared
+        if let baseUrlString = AppUtility.getInfoConfigs(for: AppKeys.APIBaseUrl) as? String,
+            let url = URL(string: baseUrlString),
+            let cookies = cstorage.cookies(for: url) {
+            for cookie in cookies {
+                cstorage.deleteCookie(cookie)
+            }
+        }
     }
     
     class func delay (duration: TimeInterval, completion: @escaping ()->() ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             completion()
         }
+    }
+    
+    class func createModalBounceAnimator(viewCtrl: UIViewController) -> ZFModalTransitionAnimator? {
+        let animator = ZFModalTransitionAnimator(modalViewController: viewCtrl)
+        animator?.isDragable = true
+        animator?.bounces = true
+        animator?.behindViewAlpha = 0.8
+        animator?.behindViewScale = 1.0
+        animator?.transitionDuration = 0.7
+        animator?.direction = .bottom
+        viewCtrl.modalPresentationStyle = .overCurrentContext
+        return animator
     }
 }

@@ -37,7 +37,7 @@ class WishListCollectionViewCell: BaseCatallogCollectionViewCell {
         
         self.addToCartButton.applyStyle(font: Theme.font(kFontVariationRegular, size: 12), color: .white)
         self.addToCartButton.backgroundColor = Theme.color(kColorOrange1)
-        self.addToCartButton.setTitle(STRING_BUY_NOW, for: .normal)
+        self.addToCartButton.setTitle(STRING_ADD_TO_SHOPPING_CART, for: .normal)
         self.addToCartButton.contentEdgeInsets = UIEdgeInsets(top: verticalAddToCartPadding, left: horizontalAddToCartPadding, bottom: verticalAddToCartPadding, right: horizontalAddToCartPadding)
         
         self.bottomBadgeContainerView.isUserInteractionEnabled = false

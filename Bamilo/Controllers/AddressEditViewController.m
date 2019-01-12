@@ -22,7 +22,7 @@
 
 @implementation AddressEditViewController {
 @private
-    FormItemModel *region, *city, *vicinity;
+    FormItemModel *region, *city, *vicinity, *gender;
 }
 
 - (void)viewDidLoad {
@@ -56,7 +56,6 @@
     self.formController.submitTitle = @"ذخیره آدرس";
     self.formController.delegate = self;
     self.formController.tableView = self.tableView;
-    self.formController.submissionButtonColor = [Theme color:kColorDarkGreen];
     
     self.formController.formModelList = [NSMutableArray new];
     
@@ -83,8 +82,9 @@
     FormItemModel *phone = [FormItemModel phoneWithFieldName:@"address_form[phone]"];
     
     if(self.address == nil) {
+        [CurrentUserManager loadLocal];
         //Adding a new address. Try to pre-fill user info
-        RICustomer *customer = [RICustomer getCurrentCustomer];
+        User *customer = CurrentUserManager.user;
         
         [firstName setInputTextValue:customer.firstName];
         [lastName setInputTextValue:customer.lastName];
@@ -92,11 +92,11 @@
     }
     
     [self.formController.formModelList addObjectsFromArray:@[ personalInfoHeader, firstName, lastName, phone ]];
-    
-    if (![RICustomer getCustomerGender] && self.address == nil) {
-        FormItemModel *gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
-        [self.formController.formModelList addObject:gender];
+    if (![CurrentUserManager.user getGender] && self.address == nil) {
+        gender = [FormItemModel genderWithFieldName:@"address_form[gender]"];
+        [self.formController.formModelList addObject: gender];
     }
+    [self.formController.formModelList addObject:@"submit"];
     [self.formController setupTableView];
     if (!self.address.uid) {
         // Get regions and citiies for region defualt value (if exists)
@@ -120,7 +120,7 @@
         [self getAddressByID:self.address.uid];
     }
     //pop this view controller if user is not logged in
-    if (![RICustomer checkIfUserIsLogged]) {
+    if (![CurrentUserManager isUserLoggedIn]) {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -136,6 +136,15 @@
         [self.formController showAnyErrorInForm];
         return;
     }
+    
+    if (VALID_NOTEMPTY(gender, [FormItemModel class])) {
+        //update local user object's gender
+        if (VALID_NOTEMPTY(CurrentUserManager.user.password, [NSString class])) {
+            [CurrentUserManager.user setGenderWithGender:[gender getValue]];
+            [CurrentUserManager saveUserWithUser:CurrentUserManager.user plainPassword:CurrentUserManager.user.password];
+        }
+    }
+    
     NSMutableDictionary *params = [self.formController getMutableDictionaryOfForm];
     if(self.address.uid) {
         //EDIT / UPDATE ADDRESS
@@ -161,6 +170,8 @@
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
+        params[@"address_form[is_default_shipping]"] = @"1";
+        params[@"address_form[is_default_billing]"] = @"1";
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [self.navigationController popViewControllerAnimated:YES];

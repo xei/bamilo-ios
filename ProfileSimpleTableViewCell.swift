@@ -24,6 +24,10 @@ class ProfileSimpleTableViewCell: BaseProfileTableViewCell {
             self.titleLabel.text = dataModel.title
             if let iconName = dataModel.iconName {
                 self.iconImage.image = UIImage(named: iconName)
+                
+                if iconName == "" {
+                    
+                }
             }
         }
     }

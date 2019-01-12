@@ -35,6 +35,7 @@ import SwiftyJSON
     var shareURL: String?
     var loadedComprehensively: Bool = false
     var seller: Seller?
+    var badge: String?
     var specifications: [ProductSpecificsTableSection]?
     var shortDescription: String?
     var productDescription: String?
@@ -67,6 +68,7 @@ import SwiftyJSON
         
         ratings               <- map["rating"]
         reviews               <- map["reviews"]
+        badge                 <- map["badge"]
         
         //get rating/review counts from other places in json
         //TODO: this code should be removed when the api has been revised in all endpoints for product entity

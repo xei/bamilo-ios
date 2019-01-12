@@ -55,7 +55,6 @@
 		611C19141F5E88DD0073940C /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19131F5E88DD0073940C /* SearchBarView.swift */; };
 		611C19161F5E89010073940C /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611C19151F5E89010073940C /* SearchBarView.xib */; };
 		611C19181F5EA1DA0073940C /* SearchBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C19171F5EA1DA0073940C /* SearchBarControl.swift */; };
-		611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C191F1F5FCEEB0073940C /* HomeViewController.swift */; };
 		611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */; };
 		611C1B321F0BAA0900C57E4D /* SearchBarSearchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C1B311F0BAA0900C57E4D /* SearchBarSearchEvent.m */; };
 		611C1BD6204A8758007C409C /* ReviewSurveyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C1BD5204A8758007C409C /* ReviewSurveyManager.swift */; };
@@ -84,6 +83,12 @@
 		612AC4CC2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */; };
 		612AC4D0210766CD00A14B3C /* SellerSortingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612AC4CE210766CC00A14B3C /* SellerSortingTableViewCell.swift */; };
 		612AC4D1210766CD00A14B3C /* SellerSortingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612AC4CF210766CC00A14B3C /* SellerSortingTableViewCell.xib */; };
+		612B5E882158CBD800751E36 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E872158CBD800751E36 /* AuthenticationViewController.swift */; };
+		612B5E8A215A20B800751E36 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E89215A20B800751E36 /* SignInViewController.swift */; };
+		612B5E8C215A20C500751E36 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E8B215A20C500751E36 /* SignUpViewController.swift */; };
+		612B5E8E215A43EE00751E36 /* ForgetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E8D215A43EE00751E36 /* ForgetPassViewController.swift */; };
+		612B5E90215A44A500751E36 /* PhoneVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E8F215A44A500751E36 /* PhoneVerifyViewController.swift */; };
+		612B5E92215A514900751E36 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B5E91215A514900751E36 /* User.swift */; };
 		612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */; };
 		612FDC381E45E0A900A9D0BD /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */; };
 		612FE5171EDC062500C2AFA0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */; };
@@ -136,8 +141,6 @@
 		6151787320944D1E0049907F /* SimpleProgressBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6151787220944D1E0049907F /* SimpleProgressBar.xib */; };
 		61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61517874209451CC0049907F /* SimpleProgressBarControl.swift */; };
 		61540C822006482300D2F03F /* Ext+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61540C812006482300D2F03F /* Ext+Array.swift */; };
-		6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */; };
-		6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */; };
 		6157A3F31F83974100B8D501 /* MyBamiloModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A3F21F83974100B8D501 /* MyBamiloModel.swift */; };
 		6157A73D20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6157A73B20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift */; };
 		6157A73E20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6157A73C20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib */; };
@@ -214,6 +217,9 @@
 		61840B631EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B621EA397FF006739EB /* EmarsysRecommendationGridWidgetView.m */; };
 		61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */; };
 		61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */; };
+		6184CDC8216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */; };
+		6184CDCA216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */; };
+		6184CDCC216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */; };
 		6187ABAE207B451600B08EE5 /* Ext+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */; };
 		6189438620D652C9007D6526 /* SellerViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438520D652C9007D6526 /* SellerViewControl.swift */; };
 		6189438A20D65541007D6526 /* ProductOldSellerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */; };
@@ -243,6 +249,7 @@
 		6194224C20D7E9BC00445845 /* ProductVariationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6194224B20D7E9BC00445845 /* ProductVariationView.xib */; };
 		6199B8331FF8EC36008C62A6 /* LoadingCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */; };
 		6199B8351FF8EC47008C62A6 /* LoadingCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */; };
+		619A4615214941F2005565D6 /* AppConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619A4614214941F2005565D6 /* AppConfigurations.swift */; };
 		619BAD9F20D9317300467C3D /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 619BAD9D20D9317300467C3D /* ZFModalTransitionAnimator.m */; };
 		619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */; };
 		619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619CC2DC1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift */; };
@@ -261,6 +268,8 @@
 		619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */; };
 		619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */; };
 		61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A166B91FB6A7AA003FBA56 /* TourManager.swift */; };
+		61A2FE43216A56AA0041645B /* FormButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */; };
+		61A2FE44216A56AA0041645B /* FormButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */; };
 		61A4D1AB1EA6256A003E203C /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A4D1AA1EA6256A003E203C /* EmptyViewController.m */; };
 		61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A62CAC1E98FB0600E78D81 /* NSArray+Extension.m */; };
 		61A93A282131907A00C9B113 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61A93A272131907A00C9B113 /* GoogleService-Info.plist */; };
@@ -343,13 +352,16 @@
 		61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */; };
 		61CC6AD21FC187B800355B78 /* SimpleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CC6AD11FC187B800355B78 /* SimpleProduct.swift */; };
 		61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */; };
+		61CCEAAF2149529C00BC842F /* ForceUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */; };
+		61CCEAB121495A1500BC842F /* OptionalUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */; };
+		61CD2C372156605400493D43 /* Ext+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CD2C362156605400493D43 /* Ext+UIImageView.swift */; };
 		61D10E6C1EAE22C6009A0865 /* SuccessPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */; };
 		61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */; };
+		61D25BA02160CBCE00C958FD /* FormCustomFiled.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D25B9F2160CBCE00C958FD /* FormCustomFiled.m */; };
 		61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */; };
 		61D474821F6FD17E001DA6A6 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474811F6FD17E001DA6A6 /* HomePage.swift */; };
 		61D474841F6FD371001DA6A6 /* HomePageTeaserBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474831F6FD371001DA6A6 /* HomePageTeaserBox.swift */; };
 		61D4748B1F6FDF7A001DA6A6 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */; };
-		61D4748C1F6FDF7A001DA6A6 /* HomePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61D4748A1F6FDF7A001DA6A6 /* HomePageViewController.xib */; };
 		61D474901F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4748E1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift */; };
 		61D474911F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61D4748F1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib */; };
 		61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D474931F7019BF001DA6A6 /* HomeDataManager.swift */; };
@@ -412,7 +424,6 @@
 		61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC466F201DC044000141FA /* EditProfileViewController.swift */; };
 		61FC4673201F3CCC000141FA /* CMSTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */; };
 		61FC4675201F4042000141FA /* CMSTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61FC4674201F4042000141FA /* CMSTableViewHeader.xib */; };
-		61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */; };
 		61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FC467C201F75BF000141FA /* BaseNavigationController.m */; };
 		61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FCF0811FD69DF900084872 /* Ext+Error.swift */; };
 		61FDE3331F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FDE3321F72705D00153A74 /* BaseHomePageTeaserBoxTableViewCell.swift */; };
@@ -425,7 +436,34 @@
 		6C18BD741AB87E0A00905FD2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A301BB19811D0700F71726 /* Images.xcassets */; };
 		6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */; };
 		6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */; };
-		841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E81A81D1680F300A35AAF /* MPCoachMarks.m */; };
+		791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */; };
+		791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */; };
+		795D7C32218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */; };
+		7982014321998E7400625CB3 /* BlackFriday-40x40@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982012F21998E6F00625CB3 /* BlackFriday-40x40@1x.png */; };
+		7982014421998E7400625CB3 /* BlackFriday-72x72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013021998E6F00625CB3 /* BlackFriday-72x72@2x.png */; };
+		7982014521998E7400625CB3 /* BlackFriday-29x29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013121998E6F00625CB3 /* BlackFriday-29x29@3x.png */; };
+		7982014621998E7400625CB3 /* BlackFriday-76x76@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013221998E7000625CB3 /* BlackFriday-76x76@1x.png */; };
+		7982014721998E7400625CB3 /* BlackFriday-60x60@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013321998E7000625CB3 /* BlackFriday-60x60@1x.png */; };
+		7982014821998E7400625CB3 /* BlackFriday@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013421998E7000625CB3 /* BlackFriday@2x.png */; };
+		7982014921998E7400625CB3 /* BlackFriday-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013521998E7000625CB3 /* BlackFriday-76x76@2x.png */; };
+		7982014A21998E7400625CB3 /* BlackFriday-20x20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013621998E7000625CB3 /* BlackFriday-20x20@2x.png */; };
+		7982014B21998E7400625CB3 /* BlackFriday-72x72@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013721998E7100625CB3 /* BlackFriday-72x72@1x.png */; };
+		7982014C21998E7400625CB3 /* BlackFriday-40x40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013821998E7100625CB3 /* BlackFriday-40x40@3x.png */; };
+		7982014D21998E7400625CB3 /* BlackFriday-29x29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013921998E7100625CB3 /* BlackFriday-29x29@2x.png */; };
+		7982014E21998E7400625CB3 /* BlackFriday-20x20@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013A21998E7100625CB3 /* BlackFriday-20x20@1x.png */; };
+		7982014F21998E7400625CB3 /* BlackFriday-40x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013B21998E7200625CB3 /* BlackFriday-40x40@2x.png */; };
+		7982015021998E7400625CB3 /* BlackFriday-76x76@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013C21998E7200625CB3 /* BlackFriday-76x76@3x.png */; };
+		7982015121998E7400625CB3 /* BlackFriday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013D21998E7200625CB3 /* BlackFriday@3x.png */; };
+		7982015221998E7400625CB3 /* BlackFriday-83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013E21998E7200625CB3 /* BlackFriday-83.5x83.5@2x.png */; };
+		7982015321998E7400625CB3 /* BlackFriday-29x29@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982013F21998E7300625CB3 /* BlackFriday-29x29@1x.png */; };
+		7982015421998E7400625CB3 /* BlackFriday-20x20@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982014021998E7300625CB3 /* BlackFriday-20x20@3x.png */; };
+		7982015521998E7400625CB3 /* BlackFriday@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982014121998E7300625CB3 /* BlackFriday@1x.png */; };
+		7982015621998E7400625CB3 /* BlackFriday-60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7982014221998E7400625CB3 /* BlackFriday-60x60@2x.png */; };
+		79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B02FB12172FE0E009D51F8 /* FormCustomField.m */; };
+		79F5BA782184456B00705209 /* WebEnganeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F5BA772184456B00705209 /* WebEnganeTracker.swift */; };
+		79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */; };
+		79F743B521771BB4004D7155 /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F743B421771BB4004D7155 /* ChangePassViewController.swift */; };
+		79FEC0AD2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */; };
 		8702FBB61E98E720001D1AA9 /* LoginEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB51E98E720001D1AA9 /* LoginEvent.m */; };
 		8702FBBA1E98FE3A001D1AA9 /* EmailUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBB91E98FE3A001D1AA9 /* EmailUtility.m */; };
 		8702FBBE1E9901AE001D1AA9 /* EventFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8702FBBD1E9901AE001D1AA9 /* EventFactory.m */; };
@@ -475,7 +513,6 @@
 		8720C33C1EE2829300404378 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C33B1EE2829300404378 /* DataManager.swift */; };
 		8720C33E1EE2A8CC00404378 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C33D1EE2A8CC00404378 /* App.swift */; };
 		8720C3411EE2CD2700404378 /* LoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720C3401EE2CD2700404378 /* LoadingManager.swift */; };
-		872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E51E6A9851000748E9 /* CAPSPageMenu.m */; };
 		872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230E91E6A989D000748E9 /* SettingsManager.m */; };
 		872230EE1E6A98BC000748E9 /* ThreadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 872230ED1E6A98BC000748E9 /* ThreadManager.m */; };
 		873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 873369B91E582D0100B0B5E5 /* MultistepEntity.m */; };
@@ -651,7 +688,6 @@
 		875744651EA60E8E001B518A /* Yalda-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 875744561EA60E8D001B518A /* Yalda-60@3x.png */; };
 		875744661EA60E8E001B518A /* Yalda-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 875744571EA60E8D001B518A /* Yalda-60@2x.png */; };
 		875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD48C1E38C0C800584ABF /* RIConfiguration.m */; };
-		875AD5401E38C0C800584ABF /* RIAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4901E38C0C800584ABF /* RIAddress.m */; };
 		875AD5411E38C0C900584ABF /* RIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4921E38C0C800584ABF /* RIApi.m */; };
 		875AD5421E38C0C900584ABF /* RICategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4941E38C0C800584ABF /* RICategory.m */; };
 		875AD5431E38C0C900584ABF /* RICountryConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 875AD4961E38C0C800584ABF /* RICountryConfiguration.m */; };
@@ -801,7 +837,6 @@
 		9A0F9BAD1B5E801800569DF2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */; };
 		9A0F9BAE1B5E802000569DF2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BA41B5E7D0000569DF2 /* CoreMedia.framework */; };
 		9A0F9BAF1B5E803300569DF2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */; };
-		9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */; };
 		9A189E611BB31AC70039BC14 /* JAProductInfoHeaderLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E5C1BB31AC70039BC14 /* JAProductInfoHeaderLine.m */; };
 		9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E631BB31AF70039BC14 /* JAProductInfoRatingLine.m */; };
 		9A189E6F1BB31AF70039BC14 /* JAProductInfoSingleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E651BB31AF70039BC14 /* JAProductInfoSingleLine.m */; };
@@ -810,29 +845,16 @@
 		9A189E811BB54C2D0039BC14 /* JAScrolledImageGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E4F1BB1A5780039BC14 /* JAScrolledImageGalleryView.m */; };
 		9A189E8F1BB5630C0039BC14 /* JAProductInfoSubLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A189E8A1BB5630C0039BC14 /* JAProductInfoSubLine.m */; };
 		9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */; };
-		9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */; };
-		9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876511BCD0DBE0088B186 /* JAProductDescriptionView.m */; };
-		9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876581BCD0DE00088B186 /* JAProductSpecificationView.m */; };
-		9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A38765F1BCD0DFD0088B186 /* JAProductReviewsView.m */; };
 		9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3876661BCD121A0088B186 /* JATabButton.m */; };
 		9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */; };
-		9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3D217C1CA3041A00FE41B6 /* JAChooseCountryViewController.m */; };
 		9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3D21831CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m */; };
 		9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077201CE0CDA600313D20 /* NSString+Size.m */; };
 		9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077271CE0CF5200313D20 /* UILabel+Size.m */; };
 		9A4077331CE0CFD700313D20 /* UIButton+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40772E1CE0CFD700313D20 /* UIButton+Size.m */; };
-		9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */; };
 		9A4077411CE60E3300313D20 /* JABottomSubmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */; };
-		9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */; };
 		9A4ADF6C1C2AF1010019F439 /* JADropdownControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4ADF671C2AF1010019F439 /* JADropdownControl.m */; };
 		9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */; };
 		9A55A68B1BBECB09008EF4A6 /* JABottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A55A6861BBE9E07008EF4A6 /* JABottomBar.m */; };
-		9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A55A68D1BC2E88C008EF4A6 /* JAPDVVariationsViewController.m */; };
-		9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A55A6941BC2E8AA008EF4A6 /* JABundlesViewController.m */; };
-		9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */; };
-		9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CB01B3411AD00F23057 /* JANewSellerRatingViewController.xib */; };
-		9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CB61B34273800F23057 /* JASellerRatingsViewController~ipad.xib */; };
-		9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */; };
 		9A6BC07C1C40132100DD9492 /* JAOrderItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */; };
 		9A6BC0831C43CBB900DD9492 /* JAMyOrderResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC07E1C43CBB900DD9492 /* JAMyOrderResumeView.m */; };
 		9A6BC08A1C4907BB00DD9492 /* JAMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6BC0851C4907BA00DD9492 /* JAMessageView.m */; };
@@ -848,29 +870,21 @@
 		9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D69B1B4699B800036F1C /* JACatalogCollectionViewCell.m */; };
 		9AC4D6A71B4A926800036F1C /* JACatalogGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4D6A21B4A903100036F1C /* JACatalogGridCollectionViewCell.m */; };
 		9ADEA09F1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */; };
-		9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */; };
-		9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */; };
-		9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */; };
-		9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766C81CBCF31400B63D8E /* JACartResumeView.m */; };
 		9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */; };
 		9AE766E21CBFF31D00B63D8E /* JACartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AE766DD1CBFF31D00B63D8E /* JACartTableViewCell.m */; };
 		9AEA3B291B15DD9C00771EEA /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */; };
-		9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AED082F1C74CA0E00B5FDF0 /* JASuccessPageViewController.m */; };
 		9AEF73F41CD20E1C00A5D574 /* JACheckoutStepByStepModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF73EB1CD20E1C00A5D574 /* JACheckoutStepByStepModel.m */; };
 		9AEF73F91CD20E1C00A5D574 /* JAReturnStepByStepModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF73ED1CD20E1C00A5D574 /* JAReturnStepByStepModel.m */; };
 		9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF73EF1CD20E1C00A5D574 /* JAStepByStepModel.m */; };
 		9AEF74051CD20E5700A5D574 /* JAScreenTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74001CD20E5700A5D574 /* JAScreenTarget.m */; };
 		9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */; };
 		9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */; };
-		9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */; };
-		9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */; };
 		9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */; };
 		CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0F130C1AF277F700F99356 /* JAKickoutView.m */; };
 		CE28A7A31BDA30B400B1FADA /* JAGenericMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */; };
 		CE28A7AA1BDE987400B1FADA /* JATabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE28A7A51BDE987400B1FADA /* JATabBarButton.m */; };
 		CE8C92B01B8B555600C77706 /* JAMainFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */; };
 		CE9ADF2A1AB6D78200D56481 /* JACartListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B542546919AE9F7500C792FF /* JACartListHeaderView.m */; };
-		CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03A5198A544A002046DF /* JAShippingViewController.m */; };
 		CE9ADF311AB6D78200D56481 /* JACheckBoxComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00619AE466B00A9754A /* JACheckBoxComponent.m */; };
 		CE9ADF361AB6D78200D56481 /* JAGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B57822591A37516800B4DD8B /* JAGradientLayer.m */; };
 		CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */; };
@@ -881,15 +895,11 @@
 		CE9ADF451AB6D78200D56481 /* JAPickupStationInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */; };
 		CE9ADF471AB6D78200D56481 /* JAOfferCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E741A72B42000F3E92D /* JAOfferCollectionViewCell.m */; };
 		CE9ADF4C1AB6D78200D56481 /* UIImageView+JA.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1E33619BA1E73009C422C /* UIImageView+JA.m */; };
-		CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */; };
 		CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376D219EBCA5800558B98 /* JAClickableView.m */; };
 		CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */; };
 		CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF51A49D247000032AD /* JACampaignBannerCell.m */; };
-		CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */; };
-		CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */; };
 		CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBE1A122BEA000D0CF8 /* JAGenericFiltersView.m */; };
 		CE9ADF601AB6D78200D56481 /* JANoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51819D01ABE0070D194 /* JANoConnectionView.m */; };
-		CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */; };
 		CE9ADF681AB6D78200D56481 /* JAShippingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58767FC19BB62B3001651D6 /* JAShippingCell.m */; };
 		CE9ADF6B1AB6D78200D56481 /* JAFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4848961A161979003C3D53 /* JAFiltersView.m */; };
 		CE9ADF6F1AB6D78200D56481 /* JAPDVProductInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2FD840199119D900C65C1D /* JAPDVProductInfo.m */; };
@@ -897,9 +907,7 @@
 		CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47291A7B973B006D9CE7 /* JAPDVBundleSingleItem.m */; };
 		CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DFF1A49D247000032AD /* JAPercentageBarView.m */; };
 		CE9ADF7D1AB6D78200D56481 /* JAPDVImageSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */; };
-		CE9ADF831AB6D78200D56481 /* JAHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242E41986570500E37C90 /* JAHomeViewController.m */; };
 		CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C29199CC8F200C67F4B /* JAColorFilterCell.m */; };
-		CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B039F198A5434002046DF /* JAAddressesViewController.m */; };
 		CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1892D119939A0C0036F327 /* JAReviewCell.m */; };
 		CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06FCB61A88C3A5002FCD25 /* JACatalogTopView.m */; };
 		CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */ = {isa = PBXBuildFile; fileRef = CEED47261A7B973B006D9CE7 /* JAPDVBundles.m */; };
@@ -907,7 +915,6 @@
 		CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C2B0671A0911AB00B4872D /* JAPicker.m */; };
 		CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9193BC19F503FB00F89840 /* JAFallbackView.m */; };
 		CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */; };
-		CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */; };
 		CE9ADF9E1AB6D78200D56481 /* JAOtherOffersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E671A714D4900F3E92D /* JAOtherOffersView.m */; };
 		CE9ADF9F1AB6D78200D56481 /* JACampaignsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE3AF8FF19DBF4FB00D8C51B /* JACampaignsViewController.m */; };
 		CE9ADFA11AB6D78200D56481 /* JACatalogWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376E519F015C600558B98 /* JACatalogWizardView.m */; };
@@ -917,10 +924,8 @@
 		CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86D9D1A3756C2000032AD /* JASizeGuideViewController.m */; };
 		CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE97D2ED19AE1ED50090D01C /* JANavigationBarLayout.m */; };
 		CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AC8FDB1A4056CB00E7C874 /* JASizeGuideWizardView.m */; };
-		CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */; };
 		CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44586F198BD21A00CE7E8D /* JATeaserView.m */; };
 		CE9ADFBA1AB6D78200D56481 /* JAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B50B03AA198A8861002046DF /* JAUtils.m */; };
-		CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */; };
 		CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = CED30C26199CBF0E00C67F4B /* JAColorView.m */; };
 		CE9ADFBE1AB6D78200D56481 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9C7031A1A5E6F0065AFD4 /* JADatePicker.m */; };
 		CE9ADFBF1AB6D78200D56481 /* JACheckoutForms.m in Sources */ = {isa = PBXBuildFile; fileRef = B530D57019C1998B0052FEDA /* JACheckoutForms.m */; };
@@ -928,7 +933,6 @@
 		CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEABEEBB1A1119AB000D0CF8 /* JAPriceFiltersView.m */; };
 		CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */; };
 		CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CFE9991A0CE3BC004CE545 /* JAAddRatingView.m */; };
-		CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */; };
 		CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE33CA0019AB36FA00333B1A /* JAPriceView.m */; };
 		CE9ADFD61AB6D78200D56481 /* JAFilteredNoResultsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */; };
 		CE9ADFD71AB6D78200D56481 /* JAProductListFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */; };
@@ -946,16 +950,13 @@
 		CE9ADFF11AB6D78200D56481 /* JARecentSearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */; };
 		CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A18856319B8A368003337FC /* JAActivityViewController.m */; };
 		CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */; };
-		CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE242D91986547C00E37C90 /* JASidePanelController.m */; };
 		CE9ADFFF1AB6D78200D56481 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A19C51319D019100070D194 /* Reachability.m */; };
-		CE9AE0021AB6D78200D56481 /* JAAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59DCA6D19B8712500DE7960 /* JAAddressCell.m */; };
 		CE9AE0041AB6D78200D56481 /* JAOtherOffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE283E701A7296CD00F3E92D /* JAOtherOffersViewController.m */; };
 		CE9AE0051AB6D78200D56481 /* JAMyOrderDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5240E471A496E59006264E9 /* JAMyOrderDetailView.m */; };
 		CE9AE0081AB6D78200D56481 /* JAMaintenancePage.m in Sources */ = {isa = PBXBuildFile; fileRef = B524311E19EC1163001E532C /* JAMaintenancePage.m */; };
 		CE9AE00C1AB6D78200D56481 /* JAWizardView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC376DC19EFC1E800558B98 /* JAWizardView.m */; };
 		CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA86DF81A49D247000032AD /* JACampaignPageView.m */; };
 		CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = B510B00319AE466B00A9754A /* JABirthDateComponent.m */; };
-		CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */; };
 		CE9AE0181AB6D78200D56481 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FBD58919CAF26800BD9510 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE9AE01A1AB6D78200D56481 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A302E919811ECB00F71726 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE9AE01B1AB6D78200D56481 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5007AC719A4E92F0024035A /* Security.framework */; };
@@ -986,7 +987,6 @@
 		CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC3F71A19A5FDDA00DE12F6 /* JAGrayButtonCell.xib */; };
 		CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58DBF3819C0AF9600D4678A /* JAPaymentCell.xib */; };
 		CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */; };
-		CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */; };
 		CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */; };
 		CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */; };
 		CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */ = {isa = PBXBuildFile; fileRef = B510B00719AE466B00A9754A /* JACheckBoxComponent.xib */; };
@@ -1005,7 +1005,6 @@
 		CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106F41BD003EC00EF88B1 /* JACategoriesSideMenuCell.m */; };
 		CEA107011BD78CE500EF88B1 /* JATabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA106FC1BD78CE500EF88B1 /* JATabBarView.m */; };
 		CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA2A1B21B25D20C00E5973F /* JADynamicField.m */; };
-		CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */; };
 		CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D471BE3F45400DD60DD /* JACollectionSeparator.m */; };
 		CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */; };
 		CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED620571BEB526B00FA8403 /* JAFiltersViewController.m */; };
@@ -1016,19 +1015,12 @@
 		CEDBF8971B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF88D1B0DF5D00073971A /* JANewsletterComponent~iPad_RTL.xib */; };
 		CEE558661AFCC2FB00FC87D4 /* JARadioRelatedComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE558611AFCC2FB00FC87D4 /* JARadioRelatedComponent.m */; };
 		CEE5F4E41B1CB6B500556150 /* JARecentSearchesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE5F4DF1B1CB6B500556150 /* JARecentSearchesViewController.xib */; };
-		CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */; };
-		CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */; };
 		DC0F60F13340D2E91FB1AA4F /* Pods_Bamilo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6AD3F04437DCA923FD6F759 /* Pods_Bamilo.framework */; };
 		E3F6D82EE09161E1EDCE109F /* Pods_BamiloUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42377D674E3AAC5BA2FE0522 /* Pods_BamiloUITests.framework */; };
 		FF4383E31C6CD4AC003BA957 /* JASwitchRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383DE1C6CD4AC003BA957 /* JASwitchRadioComponent.m */; };
 		FF4383EA1C6E1F49003BA957 /* JAScreenRadioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383E51C6E1F49003BA957 /* JAScreenRadioComponent.m */; };
 		FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */; };
-		FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465161CEB4FD7003A65EA /* JAORProductView.m */; };
-		FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */; };
-		FF4465291CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */; };
-		FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */; };
 		FF6BDCA71CE34ACB002BFE11 /* JAListNumberComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6BDCA21CE34ACB002BFE11 /* JAListNumberComponent.m */; };
-		FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */; };
 		FFB1B0951CE61D96000F60AD /* JARadioExpandableComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */; };
 		FFC9C0C71C984E7900DD5851 /* JATopTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC9C0C21C984E7900DD5851 /* JATopTabsView.m */; };
 		FFF900721C6A5CC700DDF538 /* JATextFieldComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF9006D1C6A5CC700DDF538 /* JATextFieldComponent.m */; };
@@ -1094,9 +1086,6 @@
 		4A2FD84419912BC500C65C1D /* JAPDVSingleRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVSingleRelatedItem.h; sourceTree = "<group>"; };
 		4A2FD84519912BC500C65C1D /* JAPDVSingleRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVSingleRelatedItem.m; sourceTree = "<group>"; };
 		4A2FD84919913FCA00C65C1D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		4A3719BB19C05F52002D4199 /* JAUndefinedSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAUndefinedSearchView.h; sourceTree = "<group>"; };
-		4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAUndefinedSearchView.m; sourceTree = "<group>"; };
-		4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAUndefinedSearchView.xib; sourceTree = "<group>"; };
 		4A3921191988E27A00B70A9C /* JAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAConstants.h; sourceTree = "<group>"; };
 		4A39212B19891F6D00B70A9C /* JARecentSearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentSearchesViewController.h; sourceTree = "<group>"; };
 		4A39212C19891F6D00B70A9C /* JARecentSearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentSearchesViewController.m; sourceTree = "<group>"; };
@@ -1104,18 +1093,12 @@
 		4A7F747F198A4EDA00621C0D /* JACenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACenterNavigationController.h; sourceTree = "<group>"; };
 		4A7F7480198A4EDA00621C0D /* JACenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACenterNavigationController.m; sourceTree = "<group>"; };
 		4A862226198FA00D007FD76A /* JAPDVVariations.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAPDVVariations.xib; sourceTree = "<group>"; };
-		4AE242D81986547C00E37C90 /* JASidePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASidePanelController.h; sourceTree = "<group>"; };
-		4AE242D91986547C00E37C90 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
-		4AE242E31986570500E37C90 /* JAHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAHomeViewController.h; sourceTree = "<group>"; };
-		4AE242E41986570500E37C90 /* JAHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAHomeViewController.m; sourceTree = "<group>"; };
 		4AE730B6198F8ACA000CA1DD /* JAPDVImageSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVImageSection.h; sourceTree = "<group>"; };
 		4AE730B7198F8ACA000CA1DD /* JAPDVImageSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVImageSection.m; sourceTree = "<group>"; };
 		4AE730B9198F8AD6000CA1DD /* JAPDVVariations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVVariations.h; sourceTree = "<group>"; };
 		4AE730BA198F8AD6000CA1DD /* JAPDVVariations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVVariations.m; sourceTree = "<group>"; };
 		4AE730BC198F8ADF000CA1DD /* JAPDVRelatedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVRelatedItem.h; sourceTree = "<group>"; };
 		4AE730BD198F8ADF000CA1DD /* JAPDVRelatedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVRelatedItem.m; sourceTree = "<group>"; };
-		4AE730C5198F8B05000CA1DD /* JAPDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVViewController.h; sourceTree = "<group>"; };
-		4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVViewController.m; sourceTree = "<group>"; };
 		520A37C61A4444CC0046C8B1 /* JAFilteredNoResultsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFilteredNoResultsView.h; sourceTree = "<group>"; };
 		520A37C71A4444CC0046C8B1 /* JAFilteredNoResultsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAFilteredNoResultsView.m; sourceTree = "<group>"; };
 		52AC8FDA1A4056CB00E7C874 /* JASizeGuideWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASizeGuideWizardView.h; sourceTree = "<group>"; };
@@ -1174,7 +1157,6 @@
 		611C19131F5E88DD0073940C /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		611C19151F5E89010073940C /* SearchBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		611C19171F5EA1DA0073940C /* SearchBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarControl.swift; sourceTree = "<group>"; };
-		611C191F1F5FCEEB0073940C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		611C1B2C1F0B757E00C57E4D /* FilterSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterSearchEvent.h; sourceTree = "<group>"; };
 		611C1B2D1F0B757E00C57E4D /* FilterSearchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterSearchEvent.m; sourceTree = "<group>"; };
 		611C1B301F0BAA0900C57E4D /* SearchBarSearchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchBarSearchEvent.h; sourceTree = "<group>"; };
@@ -1213,6 +1195,12 @@
 		612AC4CA2106019000A14B3C /* ProductBreadCrumbTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductBreadCrumbTableViewCell.xib; sourceTree = "<group>"; };
 		612AC4CE210766CC00A14B3C /* SellerSortingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerSortingTableViewCell.swift; sourceTree = "<group>"; };
 		612AC4CF210766CC00A14B3C /* SellerSortingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SellerSortingTableViewCell.xib; sourceTree = "<group>"; };
+		612B5E872158CBD800751E36 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		612B5E89215A20B800751E36 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		612B5E8B215A20C500751E36 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		612B5E8D215A43EE00751E36 /* ForgetPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassViewController.swift; sourceTree = "<group>"; };
+		612B5E8F215A44A500751E36 /* PhoneVerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerifyViewController.swift; sourceTree = "<group>"; };
+		612B5E91215A514900751E36 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		612FDC341E45E0A900A9D0BD /* CartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTableViewCell.h; sourceTree = "<group>"; };
 		612FDC351E45E0A900A9D0BD /* CartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTableViewCell.m; sourceTree = "<group>"; };
 		612FDC361E45E0A900A9D0BD /* CartTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
@@ -1275,8 +1263,6 @@
 		6151787220944D1E0049907F /* SimpleProgressBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleProgressBar.xib; sourceTree = "<group>"; };
 		61517874209451CC0049907F /* SimpleProgressBarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProgressBarControl.swift; sourceTree = "<group>"; };
 		61540C812006482300D2F03F /* Ext+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Array.swift"; sourceTree = "<group>"; };
-		6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloViewController.swift; sourceTree = "<group>"; };
-		6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBamiloViewController.xib; sourceTree = "<group>"; };
 		6157A3F21F83974100B8D501 /* MyBamiloModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBamiloModel.swift; sourceTree = "<group>"; };
 		6157A73B20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpecificsTableViewCell.swift; sourceTree = "<group>"; };
 		6157A73C20E0FB54001B8361 /* ProductSpecificsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductSpecificsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1367,6 +1353,9 @@
 		61840B641EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmarsysRecommendationGridWidgetView.xib; sourceTree = "<group>"; };
 		61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmarsysRecommendationGridWidget.h; sourceTree = "<group>"; };
 		61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmarsysRecommendationGridWidget.m; sourceTree = "<group>"; };
+		6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsPurchaseView.swift; sourceTree = "<group>"; };
+		6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsPurchaseControl.swift; sourceTree = "<group>"; };
+		6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TwoButtonsPurchaseView.xib; sourceTree = "<group>"; };
 		6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImage.swift"; sourceTree = "<group>"; };
 		6189438520D652C9007D6526 /* SellerViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SellerViewControl.swift; sourceTree = "<group>"; };
 		6189438820D65541007D6526 /* ProductOldSellerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOldSellerViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -1396,6 +1385,7 @@
 		6194224B20D7E9BC00445845 /* ProductVariationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductVariationView.xib; sourceTree = "<group>"; };
 		6199B8321FF8EC36008C62A6 /* LoadingCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCoverView.swift; sourceTree = "<group>"; };
 		6199B8341FF8EC47008C62A6 /* LoadingCoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCoverView.xib; sourceTree = "<group>"; };
+		619A4614214941F2005565D6 /* AppConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurations.swift; sourceTree = "<group>"; };
 		619BAD9B20D9317300467C3D /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		619BAD9D20D9317300467C3D /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		619CC2D91F8E56BF008E4B86 /* HomePageTileTeaser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTileTeaser.swift; sourceTree = "<group>"; };
@@ -1420,6 +1410,8 @@
 		619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyDealsCollectionViewCell.xib; sourceTree = "<group>"; };
 		619E92D11F8A1093003885BC /* BaseCollectionViewCellSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCellSwift.swift; sourceTree = "<group>"; };
 		61A166B91FB6A7AA003FBA56 /* TourManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourManager.swift; sourceTree = "<group>"; };
+		61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormButtonTableViewCell.swift; sourceTree = "<group>"; };
+		61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormButtonTableViewCell.xib; sourceTree = "<group>"; };
 		61A4D1A91EA6256A003E203C /* EmptyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		61A4D1AA1EA6256A003E203C /* EmptyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		61A62CAB1E98FB0600E78D81 /* NSArray+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Extension.h"; sourceTree = "<group>"; };
@@ -1523,14 +1515,18 @@
 		61CBA88B1F696013009F0EEF /* SearchSuggestionDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSuggestionDataManager.swift; sourceTree = "<group>"; };
 		61CC6AD11FC187B800355B78 /* SimpleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleProduct.swift; sourceTree = "<group>"; };
 		61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmarsysMobileEngageTracker.swift; sourceTree = "<group>"; };
+		61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateViewController.swift; sourceTree = "<group>"; };
+		61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalUpdateViewController.swift; sourceTree = "<group>"; };
+		61CD2C362156605400493D43 /* Ext+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImageView.swift"; sourceTree = "<group>"; };
 		61D10E6A1EAE22C6009A0865 /* SuccessPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessPaymentViewController.h; sourceTree = "<group>"; };
 		61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessPaymentViewController.m; sourceTree = "<group>"; };
 		61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustTracker.swift; sourceTree = "<group>"; };
+		61D25B9E2160CBCE00C958FD /* FormCustomFiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormCustomFiled.h; sourceTree = "<group>"; };
+		61D25B9F2160CBCE00C958FD /* FormCustomFiled.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormCustomFiled.m; sourceTree = "<group>"; };
 		61D4747F1F6FC622001DA6A6 /* HomePageSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSlider.swift; sourceTree = "<group>"; };
 		61D474811F6FD17E001DA6A6 /* HomePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		61D474831F6FD371001DA6A6 /* HomePageTeaserBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageTeaserBox.swift; sourceTree = "<group>"; };
 		61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
-		61D4748A1F6FDF7A001DA6A6 /* HomePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomePageViewController.xib; sourceTree = "<group>"; };
 		61D4748E1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageSliderTableViewCell.swift; sourceTree = "<group>"; };
 		61D4748F1F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomePageSliderTableViewCell.xib; sourceTree = "<group>"; };
 		61D474931F7019BF001DA6A6 /* HomeDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataManager.swift; sourceTree = "<group>"; };
@@ -1599,7 +1595,6 @@
 		61FC466F201DC044000141FA /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		61FC4672201F3CCC000141FA /* CMSTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSTableViewHeader.swift; sourceTree = "<group>"; };
 		61FC4674201F4042000141FA /* CMSTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CMSTableViewHeader.xib; sourceTree = "<group>"; };
-		61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
 		61FC467B201F75BF000141FA /* BaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
 		61FC467C201F75BF000141FA /* BaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		61FCF0811FD69DF900084872 /* Ext+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Error.swift"; sourceTree = "<group>"; };
@@ -1614,8 +1609,35 @@
 		6CF4AE7E1ADEAA290024EC34 /* JACatalogBannerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JACatalogBannerCell.xib; sourceTree = "<group>"; };
 		6CF4AE831ADEABBB0024EC34 /* JACatalogBannerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogBannerCell.h; sourceTree = "<group>"; };
 		6CF4AE841ADEABBB0024EC34 /* JACatalogBannerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogBannerCell.m; sourceTree = "<group>"; };
-		841E81A71D1680F300A35AAF /* MPCoachMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPCoachMarks.h; path = ../MPCoachMarks.h; sourceTree = "<group>"; };
-		841E81A81D1680F300A35AAF /* MPCoachMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPCoachMarks.m; path = ../MPCoachMarks.m; sourceTree = "<group>"; };
+		791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLinkButtonTableViewCell.swift; sourceTree = "<group>"; };
+		791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormLinkButtonTableViewCell.xib; sourceTree = "<group>"; };
+		795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductReturnPolicyViewController.swift; sourceTree = "<group>"; };
+		7982012F21998E6F00625CB3 /* BlackFriday-40x40@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-40x40@1x.png"; sourceTree = "<group>"; };
+		7982013021998E6F00625CB3 /* BlackFriday-72x72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-72x72@2x.png"; sourceTree = "<group>"; };
+		7982013121998E6F00625CB3 /* BlackFriday-29x29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-29x29@3x.png"; sourceTree = "<group>"; };
+		7982013221998E7000625CB3 /* BlackFriday-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-76x76@1x.png"; sourceTree = "<group>"; };
+		7982013321998E7000625CB3 /* BlackFriday-60x60@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-60x60@1x.png"; sourceTree = "<group>"; };
+		7982013421998E7000625CB3 /* BlackFriday@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday@2x.png"; sourceTree = "<group>"; };
+		7982013521998E7000625CB3 /* BlackFriday-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-76x76@2x.png"; sourceTree = "<group>"; };
+		7982013621998E7000625CB3 /* BlackFriday-20x20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-20x20@2x.png"; sourceTree = "<group>"; };
+		7982013721998E7100625CB3 /* BlackFriday-72x72@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-72x72@1x.png"; sourceTree = "<group>"; };
+		7982013821998E7100625CB3 /* BlackFriday-40x40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-40x40@3x.png"; sourceTree = "<group>"; };
+		7982013921998E7100625CB3 /* BlackFriday-29x29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-29x29@2x.png"; sourceTree = "<group>"; };
+		7982013A21998E7100625CB3 /* BlackFriday-20x20@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-20x20@1x.png"; sourceTree = "<group>"; };
+		7982013B21998E7200625CB3 /* BlackFriday-40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-40x40@2x.png"; sourceTree = "<group>"; };
+		7982013C21998E7200625CB3 /* BlackFriday-76x76@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-76x76@3x.png"; sourceTree = "<group>"; };
+		7982013D21998E7200625CB3 /* BlackFriday@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday@3x.png"; sourceTree = "<group>"; };
+		7982013E21998E7200625CB3 /* BlackFriday-83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-83.5x83.5@2x.png"; sourceTree = "<group>"; };
+		7982013F21998E7300625CB3 /* BlackFriday-29x29@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-29x29@1x.png"; sourceTree = "<group>"; };
+		7982014021998E7300625CB3 /* BlackFriday-20x20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-20x20@3x.png"; sourceTree = "<group>"; };
+		7982014121998E7300625CB3 /* BlackFriday@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday@1x.png"; sourceTree = "<group>"; };
+		7982014221998E7400625CB3 /* BlackFriday-60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackFriday-60x60@2x.png"; sourceTree = "<group>"; };
+		79B02FB02172FE0E009D51F8 /* FormCustomField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormCustomField.h; sourceTree = "<group>"; };
+		79B02FB12172FE0E009D51F8 /* FormCustomField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormCustomField.m; sourceTree = "<group>"; };
+		79F5BA772184456B00705209 /* WebEnganeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebEnganeTracker.swift; sourceTree = "<group>"; };
+		79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneChangeViewController.swift; sourceTree = "<group>"; };
+		79F743B421771BB4004D7155 /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassViewController.swift; sourceTree = "<group>"; };
+		79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthenticationViewCtrl.swift; sourceTree = "<group>"; };
 		8702FBB41E98E720001D1AA9 /* LoginEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginEvent.h; sourceTree = "<group>"; };
 		8702FBB51E98E720001D1AA9 /* LoginEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginEvent.m; sourceTree = "<group>"; };
 		8702FBB81E98FE3A001D1AA9 /* EmailUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailUtility.h; sourceTree = "<group>"; };
@@ -1710,8 +1732,6 @@
 		8720C33D1EE2A8CC00404378 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		8720C3401EE2CD2700404378 /* LoadingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingManager.swift; sourceTree = "<group>"; };
 		872230E01E6A97E0000748E9 /* DataTrackerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTrackerProtocol.h; sourceTree = "<group>"; };
-		872230E41E6A9851000748E9 /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPSPageMenu.h; path = Bamilo/CAPSPageMenu.h; sourceTree = SOURCE_ROOT; };
-		872230E51E6A9851000748E9 /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPSPageMenu.m; path = Bamilo/CAPSPageMenu.m; sourceTree = SOURCE_ROOT; };
 		872230E81E6A989D000748E9 /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
 		872230E91E6A989D000748E9 /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		872230EC1E6A98BC000748E9 /* ThreadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadManager.h; sourceTree = "<group>"; };
@@ -1915,8 +1935,6 @@
 		875744571EA60E8D001B518A /* Yalda-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yalda-60@2x.png"; sourceTree = "<group>"; };
 		875AD48B1E38C0C800584ABF /* RIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIConfiguration.h; sourceTree = "<group>"; };
 		875AD48C1E38C0C800584ABF /* RIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIConfiguration.m; sourceTree = "<group>"; };
-		875AD48F1E38C0C800584ABF /* RIAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIAddress.h; sourceTree = "<group>"; };
-		875AD4901E38C0C800584ABF /* RIAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIAddress.m; sourceTree = "<group>"; };
 		875AD4911E38C0C800584ABF /* RIApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RIApi.h; sourceTree = "<group>"; };
 		875AD4921E38C0C800584ABF /* RIApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RIApi.m; sourceTree = "<group>"; };
 		875AD4931E38C0C800584ABF /* RICategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RICategory.h; sourceTree = "<group>"; };
@@ -2201,8 +2219,6 @@
 		8976FB281C0F323700483651 /* JARatingFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingFilterCell.m; sourceTree = "<group>"; };
 		8976FB2D1C0F3F4300483651 /* JATextFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextFilterCell.h; sourceTree = "<group>"; };
 		8976FB2E1C0F3F4300483651 /* JATextFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextFilterCell.m; sourceTree = "<group>"; };
-		898A24BE1BCE9EAF00BBEE31 /* JASellerDeliveryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerDeliveryView.h; sourceTree = "<group>"; };
-		898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerDeliveryView.m; sourceTree = "<group>"; };
 		89AB5C2D1BC2B01B00BA38E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		89C7AF4E1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACatalogPictureCollectionViewCell.h; sourceTree = "<group>"; };
 		89C7AF4F1BBC33C100F5D90D /* JACatalogPictureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACatalogPictureCollectionViewCell.m; sourceTree = "<group>"; };
@@ -2210,8 +2226,6 @@
 		9A0F9BA61B5E7D3600569DF2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9A0F9BA81B5E7DB400569DF2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		9A0F9BAA1B5E7DE600569DF2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutBottomView.h; path = ../Controllers/Checkout/JACheckoutBottomView.h; sourceTree = "<group>"; };
-		9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutBottomView.m; path = ../Controllers/Checkout/JACheckoutBottomView.m; sourceTree = "<group>"; };
 		9A17372D1B679740004905B4 /* UIImage+WithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+WithColor.h"; path = "Categories/UIImage+WithColor.h"; sourceTree = "<group>"; };
 		9A17372E1B679740004905B4 /* UIImage+WithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+WithColor.m"; path = "Categories/UIImage+WithColor.m"; sourceTree = "<group>"; };
 		9A189E4E1BB1A5780039BC14 /* JAScrolledImageGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScrolledImageGalleryView.h; sourceTree = "<group>"; };
@@ -2230,23 +2244,10 @@
 		9A189E8A1BB5630C0039BC14 /* JAProductInfoSubLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSubLine.m; path = Lines/JAProductInfoSubLine.m; sourceTree = "<group>"; };
 		9A1B7C401BFCF849000111D7 /* JACustomNavigationBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACustomNavigationBarView.h; sourceTree = "<group>"; };
 		9A1B7C411BFCF849000111D7 /* JACustomNavigationBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACustomNavigationBarView.m; sourceTree = "<group>"; };
-		9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewRatingViewController.xib; sourceTree = "<group>"; };
-		9A2CD0B51BD113D300A878D2 /* JAReviewCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAReviewCollectionCell.h; path = Details/Reviews/JAReviewCollectionCell.h; sourceTree = "<group>"; };
-		9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAReviewCollectionCell.m; path = Details/Reviews/JAReviewCollectionCell.m; sourceTree = "<group>"; };
-		9A3876481BCD0CDB0088B186 /* JATabNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATabNavigationViewController.h; sourceTree = "<group>"; };
-		9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATabNavigationViewController.m; sourceTree = "<group>"; };
-		9A3876501BCD0DBE0088B186 /* JAProductDescriptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductDescriptionView.h; path = Details/JAProductDescriptionView.h; sourceTree = "<group>"; };
-		9A3876511BCD0DBE0088B186 /* JAProductDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductDescriptionView.m; path = Details/JAProductDescriptionView.m; sourceTree = "<group>"; };
-		9A3876571BCD0DE00088B186 /* JAProductSpecificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductSpecificationView.h; path = Details/JAProductSpecificationView.h; sourceTree = "<group>"; };
-		9A3876581BCD0DE00088B186 /* JAProductSpecificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductSpecificationView.m; path = Details/JAProductSpecificationView.m; sourceTree = "<group>"; };
-		9A38765E1BCD0DFD0088B186 /* JAProductReviewsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductReviewsView.h; path = Details/JAProductReviewsView.h; sourceTree = "<group>"; };
-		9A38765F1BCD0DFD0088B186 /* JAProductReviewsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductReviewsView.m; path = Details/JAProductReviewsView.m; sourceTree = "<group>"; };
 		9A3876651BCD121A0088B186 /* JATabButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabButton.h; path = Details/JATabButton.h; sourceTree = "<group>"; };
 		9A3876661BCD121A0088B186 /* JATabButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JATabButton.m; path = Details/JATabButton.m; sourceTree = "<group>"; };
 		9A3C76111C285D9300EB0B11 /* JARecentlyViewedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARecentlyViewedCell.h; sourceTree = "<group>"; };
 		9A3C76121C285D9300EB0B11 /* JARecentlyViewedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARecentlyViewedCell.m; sourceTree = "<group>"; };
-		9A3D217B1CA3041A00FE41B6 /* JAChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAChooseCountryViewController.h; sourceTree = "<group>"; };
-		9A3D217C1CA3041A00FE41B6 /* JAChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAChooseCountryViewController.m; sourceTree = "<group>"; };
 		9A3D21821CA4057A00FE41B6 /* JAChooseCountryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAChooseCountryTableViewCell.h; sourceTree = "<group>"; };
 		9A3D21831CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAChooseCountryTableViewCell.m; sourceTree = "<group>"; };
 		9A40771F1CE0CDA600313D20 /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Size.h"; path = "Categories/NSString+Size.h"; sourceTree = "<group>"; };
@@ -2255,26 +2256,14 @@
 		9A4077271CE0CF5200313D20 /* UILabel+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILabel+Size.m"; path = "Categories/UILabel+Size.m"; sourceTree = "<group>"; };
 		9A40772D1CE0CFD700313D20 /* UIButton+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Size.h"; path = "Categories/UIButton+Size.h"; sourceTree = "<group>"; };
 		9A40772E1CE0CFD700313D20 /* UIButton+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Size.m"; path = "Categories/UIButton+Size.m"; sourceTree = "<group>"; };
-		9A4077341CE24DF800313D20 /* JAORCallToReturnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORCallToReturnViewController.h; path = OnlineReturns/JAORCallToReturnViewController.h; sourceTree = "<group>"; };
-		9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORCallToReturnViewController.m; path = OnlineReturns/JAORCallToReturnViewController.m; sourceTree = "<group>"; };
 		9A40773B1CE60E3300313D20 /* JABottomSubmitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABottomSubmitView.h; sourceTree = "<group>"; };
 		9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABottomSubmitView.m; sourceTree = "<group>"; };
-		9A40774A1CE61D1300313D20 /* JAOptionResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOptionResumeView.h; sourceTree = "<group>"; };
-		9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOptionResumeView.m; sourceTree = "<group>"; };
 		9A4ADF661C2AF1010019F439 /* JADropdownControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADropdownControl.h; sourceTree = "<group>"; };
 		9A4ADF671C2AF1010019F439 /* JADropdownControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADropdownControl.m; sourceTree = "<group>"; };
 		9A4F91121B3D5C3E00E34C0B /* JAPDVWizardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPDVWizardView.h; path = Wizard/JAPDVWizardView.h; sourceTree = "<group>"; };
 		9A4F91131B3D5C3E00E34C0B /* JAPDVWizardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPDVWizardView.m; path = Wizard/JAPDVWizardView.m; sourceTree = "<group>"; };
 		9A55A6851BBE9E06008EF4A6 /* JABottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABottomBar.h; sourceTree = "<group>"; };
 		9A55A6861BBE9E07008EF4A6 /* JABottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABottomBar.m; sourceTree = "<group>"; };
-		9A55A68C1BC2E88C008EF4A6 /* JAPDVVariationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPDVVariationsViewController.h; sourceTree = "<group>"; };
-		9A55A68D1BC2E88C008EF4A6 /* JAPDVVariationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPDVVariationsViewController.m; sourceTree = "<group>"; };
-		9A55A6931BC2E8AA008EF4A6 /* JABundlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABundlesViewController.h; sourceTree = "<group>"; };
-		9A55A6941BC2E8AA008EF4A6 /* JABundlesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JABundlesViewController.m; sourceTree = "<group>"; };
-		9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JASellerRatingsViewController.xib; sourceTree = "<group>"; };
-		9A564CB01B3411AD00F23057 /* JANewSellerRatingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JANewSellerRatingViewController.xib; sourceTree = "<group>"; };
-		9A564CB61B34273800F23057 /* JASellerRatingsViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JASellerRatingsViewController~ipad.xib"; sourceTree = "<group>"; };
-		9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANewSellerRatingViewController~ipad.xib"; sourceTree = "<group>"; };
 		9A6BC0761C40132100DD9492 /* JAOrderItemCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAOrderItemCollectionViewCell.h; sourceTree = "<group>"; };
 		9A6BC0771C40132100DD9492 /* JAOrderItemCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAOrderItemCollectionViewCell.m; sourceTree = "<group>"; };
 		9A6BC07D1C43CBB900DD9492 /* JAMyOrderResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMyOrderResumeView.h; sourceTree = "<group>"; };
@@ -2310,22 +2299,12 @@
 		9AD15D4A1BE7C21D00DD60DD /* JAProductCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductCollectionViewFlowLayout.m; path = CollectionViewLayouts/JAProductCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		9ADEA0991C9C0E6D00B2A605 /* JAProductInfoSizeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAProductInfoSizeLine.h; sourceTree = "<group>"; };
 		9ADEA09A1C9C0E6D00B2A605 /* JAProductInfoSizeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProductInfoSizeLine.m; sourceTree = "<group>"; };
-		9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAccountServicesView.h; sourceTree = "<group>"; };
-		9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAccountServicesView.m; sourceTree = "<group>"; };
-		9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartProductsView.h; path = ../Controllers/Checkout/Cart/JACartProductsView.h; sourceTree = "<group>"; };
-		9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartProductsView.m; path = ../Controllers/Checkout/Cart/JACartProductsView.m; sourceTree = "<group>"; };
-		9AE766B91CBBF01C00B63D8E /* JAEmptyCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAEmptyCartView.h; path = ../Controllers/Checkout/Cart/JAEmptyCartView.h; sourceTree = "<group>"; };
-		9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAEmptyCartView.m; path = ../Controllers/Checkout/Cart/JAEmptyCartView.m; sourceTree = "<group>"; };
-		9AE766C71CBCF31400B63D8E /* JACartResumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartResumeView.h; path = ../Controllers/Checkout/Cart/JACartResumeView.h; sourceTree = "<group>"; };
-		9AE766C81CBCF31400B63D8E /* JACartResumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartResumeView.m; path = ../Controllers/Checkout/Cart/JACartResumeView.m; sourceTree = "<group>"; };
 		9AE766CE1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoPriceDescriptionLine.h; path = Lines/JAProductInfoPriceDescriptionLine.h; sourceTree = "<group>"; };
 		9AE766CF1CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoPriceDescriptionLine.m; path = Lines/JAProductInfoPriceDescriptionLine.m; sourceTree = "<group>"; };
 		9AE766DC1CBFF31D00B63D8E /* JACartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartTableViewCell.h; path = ../../Controllers/Checkout/Cart/JACartTableViewCell.h; sourceTree = "<group>"; };
 		9AE766DD1CBFF31D00B63D8E /* JACartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartTableViewCell.m; path = ../../Controllers/Checkout/Cart/JACartTableViewCell.m; sourceTree = "<group>"; };
 		9AEA3B241B15D4AC00771EEA /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Frame.h"; path = "Categories/UIView+Frame.h"; sourceTree = "<group>"; };
 		9AEA3B251B15D4AC00771EEA /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Frame.m"; path = "Categories/UIView+Frame.m"; sourceTree = "<group>"; };
-		9AED082E1C74CA0E00B5FDF0 /* JASuccessPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASuccessPageViewController.h; path = Thanks/JASuccessPageViewController.h; sourceTree = "<group>"; };
-		9AED082F1C74CA0E00B5FDF0 /* JASuccessPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASuccessPageViewController.m; path = Thanks/JASuccessPageViewController.m; sourceTree = "<group>"; };
 		9AEF73EA1CD20E1C00A5D574 /* JACheckoutStepByStepModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACheckoutStepByStepModel.h; path = Models/JACheckoutStepByStepModel.h; sourceTree = "<group>"; };
 		9AEF73EB1CD20E1C00A5D574 /* JACheckoutStepByStepModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACheckoutStepByStepModel.m; path = Models/JACheckoutStepByStepModel.m; sourceTree = "<group>"; };
 		9AEF73EC1CD20E1C00A5D574 /* JAReturnStepByStepModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAReturnStepByStepModel.h; path = Models/JAReturnStepByStepModel.h; sourceTree = "<group>"; };
@@ -2338,10 +2317,6 @@
 		9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAStepByStepTabViewController.m; path = Checkout/JAStepByStepTabViewController.m; sourceTree = "<group>"; };
 		9AEF74161CD27C1400A5D574 /* JACheckoutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JACheckoutButton.h; sourceTree = "<group>"; };
 		9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JACheckoutButton.m; sourceTree = "<group>"; };
-		9AEF741F1CD8A86900A5D574 /* JAORConfirmConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORConfirmConditionsViewController.h; path = OnlineReturns/JAORConfirmConditionsViewController.h; sourceTree = "<group>"; };
-		9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORConfirmConditionsViewController.m; path = OnlineReturns/JAORConfirmConditionsViewController.m; sourceTree = "<group>"; };
-		9AEF74261CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORConfirmationScreenViewController.h; path = OnlineReturns/JAORConfirmationScreenViewController.h; sourceTree = "<group>"; };
-		9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORConfirmationScreenViewController.m; path = OnlineReturns/JAORConfirmationScreenViewController.m; sourceTree = "<group>"; };
 		9AF49A481B1DE1FF0028105D /* JANoConnectionView~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JANoConnectionView~iPad.xib"; sourceTree = "<group>"; };
 		9DBD0C1B1C7F1CBB00F60374 /* JAProductInfoSISLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductInfoSISLine.h; path = Lines/JAProductInfoSISLine.h; sourceTree = "<group>"; };
 		9DBD0C1C1C7F1CBB00F60374 /* JAProductInfoSISLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductInfoSISLine.m; path = Lines/JAProductInfoSISLine.m; sourceTree = "<group>"; };
@@ -2349,10 +2324,6 @@
 		B5007AC719A4E92F0024035A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B501E88A19BEF7DE00BE51DD /* JAPickupStationInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAPickupStationInfoCell.h; path = ShippingCell/JAPickupStationInfoCell.h; sourceTree = "<group>"; };
 		B501E88B19BEF7DE00BE51DD /* JAPickupStationInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAPickupStationInfoCell.m; path = ShippingCell/JAPickupStationInfoCell.m; sourceTree = "<group>"; };
-		B50B039E198A5434002046DF /* JAAddressesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddressesViewController.h; sourceTree = "<group>"; };
-		B50B039F198A5434002046DF /* JAAddressesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddressesViewController.m; sourceTree = "<group>"; };
-		B50B03A4198A544A002046DF /* JAShippingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAShippingViewController.h; sourceTree = "<group>"; };
-		B50B03A5198A544A002046DF /* JAShippingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAShippingViewController.m; sourceTree = "<group>"; };
 		B50B03A9198A8861002046DF /* JAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAUtils.h; path = Utils/JAUtils.h; sourceTree = "<group>"; };
 		B50B03AA198A8861002046DF /* JAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAUtils.m; path = Utils/JAUtils.m; sourceTree = "<group>"; };
 		B510B00219AE466B00A9754A /* JABirthDateComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JABirthDateComponent.h; sourceTree = "<group>"; };
@@ -2377,14 +2348,10 @@
 		B542546819AE9F7500C792FF /* JACartListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JACartListHeaderView.h; path = Bamilo/View/Headers/JACartListHeaderView.h; sourceTree = SOURCE_ROOT; };
 		B542546919AE9F7500C792FF /* JACartListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JACartListHeaderView.m; path = Bamilo/View/Headers/JACartListHeaderView.m; sourceTree = SOURCE_ROOT; };
 		B542546A19AE9F7500C792FF /* JACartListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACartListHeaderView.xib; path = Bamilo/View/Headers/JACartListHeaderView.xib; sourceTree = SOURCE_ROOT; };
-		B55BFB9319E6A83E0098467E /* JALoadCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JALoadCountryViewController.h; sourceTree = "<group>"; };
-		B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JALoadCountryViewController.m; sourceTree = "<group>"; };
 		B55CF28E19BE072800A6C6B6 /* JAShippingInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShippingInfoCell.m; path = ShippingCell/JAShippingInfoCell.m; sourceTree = "<group>"; };
 		B55CF28F19BE072800A6C6B6 /* JAShippingInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingInfoCell.h; path = ShippingCell/JAShippingInfoCell.h; sourceTree = "<group>"; };
 		B57822581A37516800B4DD8B /* JAGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGradientLayer.h; path = GradientLayer/JAGradientLayer.h; sourceTree = "<group>"; };
 		B57822591A37516800B4DD8B /* JAGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGradientLayer.m; path = GradientLayer/JAGradientLayer.m; sourceTree = "<group>"; };
-		B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAEditAddressViewController.h; sourceTree = "<group>"; };
-		B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAEditAddressViewController.m; sourceTree = "<group>"; };
 		B58767FB19BB62B3001651D6 /* JAShippingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAShippingCell.h; path = ShippingCell/JAShippingCell.h; sourceTree = "<group>"; };
 		B58767FC19BB62B3001651D6 /* JAShippingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAShippingCell.m; path = ShippingCell/JAShippingCell.m; sourceTree = "<group>"; };
 		B58DBF3619C0AF9600D4678A /* JAPaymentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPaymentCell.h; sourceTree = "<group>"; };
@@ -2394,12 +2361,8 @@
 		B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAExternalPaymentsViewController.m; sourceTree = "<group>"; };
 		B59DCA5719B70C2E00DE7960 /* JATextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATextField.h; sourceTree = "<group>"; };
 		B59DCA5819B70C2E00DE7960 /* JATextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATextField.m; sourceTree = "<group>"; };
-		B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAAddNewAddressViewController.m; sourceTree = "<group>"; };
-		B59DCA5B19B7109300DE7960 /* JAAddNewAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAAddNewAddressViewController.h; sourceTree = "<group>"; };
 		B59DCA6819B8521A00DE7960 /* JAButtonWithBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAButtonWithBlur.h; path = Buttons/JAButtonWithBlur.h; sourceTree = "<group>"; };
 		B59DCA6919B8521A00DE7960 /* JAButtonWithBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAButtonWithBlur.m; path = Buttons/JAButtonWithBlur.m; sourceTree = "<group>"; };
-		B59DCA6C19B8712500DE7960 /* JAAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAAddressCell.h; path = AddressCell/JAAddressCell.h; sourceTree = "<group>"; };
-		B59DCA6D19B8712500DE7960 /* JAAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAAddressCell.m; path = AddressCell/JAAddressCell.m; sourceTree = "<group>"; };
 		B59DCA7319B88DAD00DE7960 /* JASwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JASwitchCell.h; path = SwitchCell/JASwitchCell.h; sourceTree = "<group>"; };
 		B59DCA7419B88DAD00DE7960 /* JASwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JASwitchCell.m; path = SwitchCell/JASwitchCell.m; sourceTree = "<group>"; };
 		B59DCA7519B88DAD00DE7960 /* JASwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JASwitchCell.xib; path = SwitchCell/JASwitchCell.xib; sourceTree = "<group>"; };
@@ -2446,8 +2409,6 @@
 		CE06FCBA1A88CA7D002FCD25 /* JACatalogTopView_iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JACatalogTopView_iphone.xib; path = Catalog/JACatalogTopView_iphone.xib; sourceTree = "<group>"; };
 		CE0F130B1AF277F700F99356 /* JAKickoutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAKickoutView.h; path = KickoutView/JAKickoutView.h; sourceTree = "<group>"; };
 		CE0F130C1AF277F700F99356 /* JAKickoutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAKickoutView.m; path = KickoutView/JAKickoutView.m; sourceTree = "<group>"; };
-		CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewRatingViewController.h; sourceTree = "<group>"; };
-		CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewRatingViewController.m; sourceTree = "<group>"; };
 		CE283E661A714D4900F3E92D /* JAOtherOffersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOtherOffersView.h; path = OtherOffers/JAOtherOffersView.h; sourceTree = "<group>"; };
 		CE283E671A714D4900F3E92D /* JAOtherOffersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOtherOffersView.m; path = OtherOffers/JAOtherOffersView.m; sourceTree = "<group>"; };
 		CE283E691A714FD300F3E92D /* JAOtherOffersView_Landscape~iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "JAOtherOffersView_Landscape~iPad.xib"; path = "OtherOffers/JAOtherOffersView_Landscape~iPad.xib"; sourceTree = "<group>"; };
@@ -2455,8 +2416,6 @@
 		CE283E701A7296CD00F3E92D /* JAOtherOffersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOtherOffersViewController.m; path = OtherOffers/JAOtherOffersViewController.m; sourceTree = "<group>"; };
 		CE283E731A72B42000F3E92D /* JAOfferCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOfferCollectionViewCell.h; path = OfferCell/JAOfferCollectionViewCell.h; sourceTree = "<group>"; };
 		CE283E741A72B42000F3E92D /* JAOfferCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOfferCollectionViewCell.m; path = OfferCell/JAOfferCollectionViewCell.m; sourceTree = "<group>"; };
-		CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASellerRatingsViewController.h; sourceTree = "<group>"; };
-		CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASellerRatingsViewController.m; sourceTree = "<group>"; };
 		CE28A79D1BDA30B400B1FADA /* JAGenericMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAGenericMenuCell.h; path = GenericMenuCell/JAGenericMenuCell.h; sourceTree = "<group>"; };
 		CE28A79E1BDA30B400B1FADA /* JAGenericMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAGenericMenuCell.m; path = GenericMenuCell/JAGenericMenuCell.m; sourceTree = "<group>"; };
 		CE28A7A41BDE987400B1FADA /* JATabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATabBarButton.h; path = GlobalTabBar/JATabBarButton.h; sourceTree = "<group>"; };
@@ -2478,16 +2437,12 @@
 		CE55A4E61993672600EE75DE /* JARatingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARatingsView.m; sourceTree = "<group>"; };
 		CE55A4E819936B6300EE75DE /* JARatingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JARatingsView.xib; sourceTree = "<group>"; };
 		CE59BF1E1AE906180057F4E2 /* JATopSellersTeaserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATopSellersTeaserView.h; sourceTree = "<group>"; };
-		CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANewSellerRatingViewController.h; sourceTree = "<group>"; };
-		CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JANewSellerRatingViewController.m; sourceTree = "<group>"; };
 		CE88F7A31A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAOrangeButtonCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F7A41A1DFFCD00A3A586 /* JAOrangeButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAOrangeButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
 		CE88F7AA1A1E33F000A3A586 /* JAProductListFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAProductListFlowLayout.h; path = CollectionViewLayouts/JAProductListFlowLayout.h; sourceTree = "<group>"; };
 		CE88F7AB1A1E33F000A3A586 /* JAProductListFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAProductListFlowLayout.m; path = CollectionViewLayouts/JAProductListFlowLayout.m; sourceTree = "<group>"; };
 		CE88F7B41A1F88FB00A3A586 /* JAGrayButtonCell_ipad_landscape.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_landscape.xib; sourceTree = "<group>"; };
 		CE88F7B51A1F88FB00A3A586 /* JAGrayButtonCell_ipad_portrait.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JAGrayButtonCell_ipad_portrait.xib; sourceTree = "<group>"; };
-		CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAOrderSummaryView.h; path = OrderSummaryView/JAOrderSummaryView.h; sourceTree = "<group>"; };
-		CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAOrderSummaryView.m; path = OrderSummaryView/JAOrderSummaryView.m; sourceTree = "<group>"; };
 		CE8C92AA1B8B555600C77706 /* JAMainFilterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAMainFilterCell.h; sourceTree = "<group>"; };
 		CE8C92AB1B8B555600C77706 /* JAMainFilterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAMainFilterCell.m; sourceTree = "<group>"; };
 		CE9193BB19F503FB00F89840 /* JAFallbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAFallbackView.h; sourceTree = "<group>"; };
@@ -2566,18 +2521,8 @@
 		FF4383E51C6E1F49003BA957 /* JAScreenRadioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenRadioComponent.m; sourceTree = "<group>"; };
 		FF4383F21C71EEEB003BA957 /* JAScreenTitleComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAScreenTitleComponent.h; sourceTree = "<group>"; };
 		FF4383F31C71EEEB003BA957 /* JAScreenTitleComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAScreenTitleComponent.m; sourceTree = "<group>"; };
-		FF4465151CEB4FD7003A65EA /* JAORProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORProductView.h; path = ORProductView/JAORProductView.h; sourceTree = "<group>"; };
-		FF4465161CEB4FD7003A65EA /* JAORProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORProductView.m; path = ORProductView/JAORProductView.m; sourceTree = "<group>"; };
-		FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORPaymentViewController.h; path = OnlineReturns/JAORPaymentViewController.h; sourceTree = "<group>"; };
-		FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORPaymentViewController.m; path = OnlineReturns/JAORPaymentViewController.m; sourceTree = "<group>"; };
-		FF4465231CEF1375003A65EA /* JAORPickupStationWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORPickupStationWebViewController.h; path = OnlineReturns/JAORPickupStationWebViewController.h; sourceTree = "<group>"; };
-		FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORPickupStationWebViewController.m; path = OnlineReturns/JAORPickupStationWebViewController.m; sourceTree = "<group>"; };
-		FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORReasonsViewController.h; path = OnlineReturns/JAORReasonsViewController.h; sourceTree = "<group>"; };
-		FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORReasonsViewController.m; path = OnlineReturns/JAORReasonsViewController.m; sourceTree = "<group>"; };
 		FF6BDCA11CE34ACB002BFE11 /* JAListNumberComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAListNumberComponent.h; sourceTree = "<group>"; };
 		FF6BDCA21CE34ACB002BFE11 /* JAListNumberComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAListNumberComponent.m; sourceTree = "<group>"; };
-		FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JAORWaysViewController.h; path = OnlineReturns/JAORWaysViewController.h; sourceTree = "<group>"; };
-		FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JAORWaysViewController.m; path = OnlineReturns/JAORWaysViewController.m; sourceTree = "<group>"; };
 		FFB1B08F1CE61D96000F60AD /* JARadioExpandableComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JARadioExpandableComponent.h; sourceTree = "<group>"; };
 		FFB1B0901CE61D96000F60AD /* JARadioExpandableComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JARadioExpandableComponent.m; sourceTree = "<group>"; };
 		FFC9C0C11C984E7900DD5851 /* JATopTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JATopTabsView.h; path = TopTabsView/JATopTabsView.h; sourceTree = "<group>"; };
@@ -2681,25 +2626,6 @@
 			path = NoConnectionView;
 			sourceTree = "<group>";
 		};
-		4A3719BA19C05F3C002D4199 /* UndefinedSearchView */ = {
-			isa = PBXGroup;
-			children = (
-				4A3719BB19C05F52002D4199 /* JAUndefinedSearchView.h */,
-				4A3719BC19C05F52002D4199 /* JAUndefinedSearchView.m */,
-				4A3719BE19C05F5D002D4199 /* JAUndefinedSearchView.xib */,
-			);
-			path = UndefinedSearchView;
-			sourceTree = "<group>";
-		};
-		4A39211A19891F1500B70A9C /* ChooseCountry */ = {
-			isa = PBXGroup;
-			children = (
-				9A3D217B1CA3041A00FE41B6 /* JAChooseCountryViewController.h */,
-				9A3D217C1CA3041A00FE41B6 /* JAChooseCountryViewController.m */,
-			);
-			path = ChooseCountry;
-			sourceTree = "<group>";
-		};
 		4A39211D19891F1500B70A9C /* RecentlyViewed */ = {
 			isa = PBXGroup;
 			children = (
@@ -2742,7 +2668,6 @@
 				B58DBF3519C0AF9600D4678A /* PaymentCell */,
 				B58767FA19BB6284001651D6 /* ShippingCell */,
 				B59DCA7219B88D9000DE7960 /* SwitchCell */,
-				B59DCA6B19B870EA00DE7960 /* AddressCell */,
 				CEC3F71719A5FDDA00DE12F6 /* ButtonCell */,
 				CE2F576B19913B33000A9E09 /* Catalog */,
 				4A4ABF09198B902600342D92 /* CountryCell */,
@@ -2757,33 +2682,6 @@
 				9A3D21831CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m */,
 			);
 			path = CountryCell;
-			sourceTree = "<group>";
-		};
-		4A944FF2199273E000C02734 /* Ratings */ = {
-			isa = PBXGroup;
-			children = (
-				CE283E901A77899F00F3E92D /* JASellerRatingsViewController.h */,
-				CE283E911A77899F00F3E92D /* JASellerRatingsViewController.m */,
-				9A564CAA1B332EBE00F23057 /* JASellerRatingsViewController.xib */,
-				9A564CB61B34273800F23057 /* JASellerRatingsViewController~ipad.xib */,
-				CE73BB751AA60426002336B3 /* JANewSellerRatingViewController.h */,
-				CE73BB761AA60426002336B3 /* JANewSellerRatingViewController.m */,
-				9A564CB01B3411AD00F23057 /* JANewSellerRatingViewController.xib */,
-				9A564CBC1B38187100F23057 /* JANewSellerRatingViewController~ipad.xib */,
-				CE283E4B1A6515F600F3E92D /* JANewRatingViewController.h */,
-				CE283E4C1A6515F600F3E92D /* JANewRatingViewController.m */,
-				9A2036AD1B21DE0F00F36F55 /* JANewRatingViewController.xib */,
-			);
-			path = Ratings;
-			sourceTree = "<group>";
-		};
-		4AE242D71986547C00E37C90 /* JASidePanel */ = {
-			isa = PBXGroup;
-			children = (
-				4AE242D81986547C00E37C90 /* JASidePanelController.h */,
-				4AE242D91986547C00E37C90 /* JASidePanelController.m */,
-			);
-			path = JASidePanel;
 			sourceTree = "<group>";
 		};
 		4AE242DB198655D900E37C90 /* Views */ = {
@@ -2817,27 +2715,12 @@
 			path = JARootViewController;
 			sourceTree = "<group>";
 		};
-		4AE242E1198656F500E37C90 /* HomeViewController */ = {
-			isa = PBXGroup;
-			children = (
-				4AE242E31986570500E37C90 /* JAHomeViewController.h */,
-				4AE242E41986570500E37C90 /* JAHomeViewController.m */,
-			);
-			path = HomeViewController;
-			sourceTree = "<group>";
-		};
 		4AE730AF198F88CB000CA1DD /* PDV */ = {
 			isa = PBXGroup;
 			children = (
 				9A38764F1BCD0D500088B186 /* Details DescSpecReviews */,
-				4AE730C5198F8B05000CA1DD /* JAPDVViewController.h */,
-				4AE730C6198F8B05000CA1DD /* JAPDVViewController.m */,
 				4A18856219B8A368003337FC /* JAActivityViewController.h */,
 				4A18856319B8A368003337FC /* JAActivityViewController.m */,
-				9A55A68C1BC2E88C008EF4A6 /* JAPDVVariationsViewController.h */,
-				9A55A68D1BC2E88C008EF4A6 /* JAPDVVariationsViewController.m */,
-				9A55A6931BC2E8AA008EF4A6 /* JABundlesViewController.h */,
-				9A55A6941BC2E8AA008EF4A6 /* JABundlesViewController.m */,
 			);
 			path = PDV;
 			sourceTree = "<group>";
@@ -3033,6 +2916,7 @@
 		610C689E1EC7423B008FB66C /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				6184CDC4216B5B2300A4AD7E /* TwoButtonsPurchaseView */,
 				6192F70920E7C3770048E543 /* ProductReviewCarouselView */,
 				6194224420D7E90200445845 /* ProductVariationView */,
 				61E6EE5E209DCF5A0007ED5F /* Pager */,
@@ -3437,6 +3321,7 @@
 		612FE5181EDC0A8400C2AFA0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				61A2FE3F216A56730041645B /* Authentication */,
 				615E44AC2115BBB000210C41 /* Checkout */,
 				61B80E6520F61AAA0028FA87 /* OtherSellerView */,
 				614927B820EB8DCA00B16B27 /* ProductReviewListView */,
@@ -3528,10 +3413,12 @@
 		613A7E8A1EBF033400E1AB3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				79FEC0AB2175A066008A69F1 /* Authentications */,
 				6194224020D7E67700445845 /* ProductDetailView */,
 				61B2C7FB1F9CA42300930435 /* OrderDetail */,
 				6157A3DD1F8376B700B8D501 /* Home */,
 				61C5BAF01EC1F40300F3A796 /* CatalogViewController.swift */,
+				61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */,
 				61143A631ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift */,
 				612FE5161EDC062500C2AFA0 /* ProfileViewController.swift */,
 				61EA566B1EDEC75E0093EAD4 /* MainTabBarViewController.swift */,
@@ -3544,11 +3431,12 @@
 				617D4EF01FEA661400A00799 /* SubCategoryLandingPageViewController.swift */,
 				6164F54C201762910009ED19 /* PhoneVerificationViewController.swift */,
 				61FC466F201DC044000141FA /* EditProfileViewController.swift */,
-				61FC4676201F65C2000141FA /* PhoneChangeViewController.swift */,
 				6192B2BF204E9AAD00376D84 /* ReviewSurveyViewController.swift */,
 				614927BE20EBAD5200B16B27 /* ProductReviewListViewController.swift */,
 				61BB83F920F0B24A00758F30 /* SubmitProductReviewViewController.swift */,
 				61813B8A20FB2202002E9F46 /* OtherSellerViewController.swift */,
+				61CCEAAE2149529C00BC842F /* ForceUpdateViewController.swift */,
+				61CCEAB021495A1500BC842F /* OptionalUpdateViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -3581,15 +3469,6 @@
 				613D37761E6EE19E001B2852 /* NSDate+Extensions.m */,
 			);
 			name = "NSDate+Extensions";
-			sourceTree = "<group>";
-		};
-		613FF2AC1E4B24CD008660CF /* CAPSPageMenu */ = {
-			isa = PBXGroup;
-			children = (
-				872230E41E6A9851000748E9 /* CAPSPageMenu.h */,
-				872230E51E6A9851000748E9 /* CAPSPageMenu.m */,
-			);
-			name = CAPSPageMenu;
 			sourceTree = "<group>";
 		};
 		613FF2B01E4B281A008660CF /* SignInViewController */ = {
@@ -3769,29 +3648,8 @@
 		6157A3DD1F8376B700B8D501 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				6157A3EB1F83863D00B8D501 /* MyBamiloViewController */,
-				6157A3DE1F8376C500B8D501 /* HomePageViewController */,
-				611C191F1F5FCEEB0073940C /* HomeViewController.swift */,
 			);
 			name = Home;
-			sourceTree = "<group>";
-		};
-		6157A3DE1F8376C500B8D501 /* HomePageViewController */ = {
-			isa = PBXGroup;
-			children = (
-				61D474891F6FDF7A001DA6A6 /* HomePageViewController.swift */,
-				61D4748A1F6FDF7A001DA6A6 /* HomePageViewController.xib */,
-			);
-			name = HomePageViewController;
-			sourceTree = "<group>";
-		};
-		6157A3EB1F83863D00B8D501 /* MyBamiloViewController */ = {
-			isa = PBXGroup;
-			children = (
-				6157A3EC1F83865800B8D501 /* MyBamiloViewController.swift */,
-				6157A3ED1F83865800B8D501 /* MyBamiloViewController.xib */,
-			);
-			name = MyBamiloViewController;
 			sourceTree = "<group>";
 		};
 		6157A3F01F8390F700B8D501 /* Home */ = {
@@ -3993,6 +3851,7 @@
 			isa = PBXGroup;
 			children = (
 				87EA030D1E6D44CC00B1E062 /* Base */,
+				61D25B9D2160CB7D00C958FD /* FormCustomFiled */,
 				61CBA04E1E51E245005673F7 /* FormValidationType */,
 				87EA030C1E6D44B200B1E062 /* FormHeaderModel */,
 				617AAA411E503A86004D9430 /* FormItemModel */,
@@ -4049,6 +3908,8 @@
 				61AA6B4520E8FA5C00706F9A /* ProductRate.swift */,
 				61AA6B4720E8FBC900706F9A /* ProductReview.swift */,
 				6170AECC20FA03C3007A4905 /* SellerDeliveryTime.swift */,
+				619A4614214941F2005565D6 /* AppConfigurations.swift */,
+				612B5E91215A514900751E36 /* User.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -4194,6 +4055,32 @@
 			children = (
 				61840B661EA39941006739EB /* EmarsysRecommendationGridWidget.h */,
 				61840B671EA39941006739EB /* EmarsysRecommendationGridWidget.m */,
+			);
+			name = Control;
+			sourceTree = "<group>";
+		};
+		6184CDC4216B5B2300A4AD7E /* TwoButtonsPurchaseView */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC6216B5B4D00A4AD7E /* Control */,
+				6184CDC5216B5B4900A4AD7E /* View */,
+			);
+			name = TwoButtonsPurchaseView;
+			sourceTree = "<group>";
+		};
+		6184CDC5216B5B4900A4AD7E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC7216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift */,
+				6184CDCB216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		6184CDC6216B5B4D00A4AD7E /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				6184CDC9216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -4384,6 +4271,7 @@
 				61D24A7B1FD4134700DDA283 /* AdjustTracker.swift */,
 				61CCB308202EE0A8002D922B /* EmarsysMobileEngageTracker.swift */,
 				61E17E6F2129799A00481794 /* FirebaseTracker.swift */,
+				79F5BA772184456B00705209 /* WebEnganeTracker.swift */,
 			);
 			name = Trackers;
 			sourceTree = "<group>";
@@ -4429,6 +4317,7 @@
 				6157A73F20E22C23001B8361 /* ProductMoreInfoViewController.swift */,
 				6157A74120E24C02001B8361 /* ProductDescriptionsViewController.swift */,
 				6157A74320E24D0B001B8361 /* ProductSpecificsTableViewController.swift */,
+				795D7C31218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift */,
 			);
 			name = ProductDetailView;
 			sourceTree = "<group>";
@@ -4598,6 +4487,24 @@
 				619E92CE1F8A1044003885BC /* DailyDealsCollectionViewCell.xib */,
 			);
 			name = DailyDealsCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		61A2FE3F216A56730041645B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				791856BF21745AF400E05A26 /* FormLinkButtonTableViewCell */,
+				61A2FE40216A567F0041645B /* FormButtonTableViewCell */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		61A2FE40216A567F0041645B /* FormButtonTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				61A2FE41216A56AA0041645B /* FormButtonTableViewCell.swift */,
+				61A2FE42216A56AA0041645B /* FormButtonTableViewCell.xib */,
+			);
+			name = FormButtonTableViewCell;
 			sourceTree = "<group>";
 		};
 		61A4D1A81EA62541003E203C /* EmptyViewController */ = {
@@ -4972,6 +4879,7 @@
 				61540C812006482300D2F03F /* Ext+Array.swift */,
 				61FC466D201DBBC9000141FA /* Ext+UINavigationViewController.swift */,
 				6187ABAD207B451600B08EE5 /* Ext+UIImage.swift */,
+				61CD2C362156605400493D43 /* Ext+UIImageView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -5006,6 +4914,7 @@
 		61CBA0461E51D169005673F7 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				79B02FAF2172FDBB009D51F8 /* FormCustomFiled */,
 				87EA03181E6D6F8700B1E062 /* FormHeaderTableViewCell */,
 				61CBA04C1E51D563005673F7 /* FormItem */,
 			);
@@ -5049,6 +4958,15 @@
 				61D10E6B1EAE22C6009A0865 /* SuccessPaymentViewController.m */,
 			);
 			name = SuccessPaymentViewController;
+			sourceTree = "<group>";
+		};
+		61D25B9D2160CB7D00C958FD /* FormCustomFiled */ = {
+			isa = PBXGroup;
+			children = (
+				61D25B9E2160CBCE00C958FD /* FormCustomFiled.h */,
+				61D25B9F2160CBCE00C958FD /* FormCustomFiled.m */,
+			);
+			name = FormCustomFiled;
 			sourceTree = "<group>";
 		};
 		61D4747E1F6FBC0B001DA6A6 /* HomePage */ = {
@@ -5533,13 +5451,64 @@
 			name = Bundles;
 			sourceTree = "<group>";
 		};
-		84A7B54F1D101D9F00CA9754 /* OnBoardingView */ = {
+		791856BF21745AF400E05A26 /* FormLinkButtonTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				841E81A71D1680F300A35AAF /* MPCoachMarks.h */,
-				841E81A81D1680F300A35AAF /* MPCoachMarks.m */,
+				791856C021745B2200E05A26 /* FormLinkButtonTableViewCell.swift */,
+				791856C121745B2200E05A26 /* FormLinkButtonTableViewCell.xib */,
 			);
-			name = OnBoardingView;
+			name = FormLinkButtonTableViewCell;
+			sourceTree = "<group>";
+		};
+		7982012E21998E2F00625CB3 /* BlackFriday */ = {
+			isa = PBXGroup;
+			children = (
+				7982013A21998E7100625CB3 /* BlackFriday-20x20@1x.png */,
+				7982013621998E7000625CB3 /* BlackFriday-20x20@2x.png */,
+				7982014021998E7300625CB3 /* BlackFriday-20x20@3x.png */,
+				7982013F21998E7300625CB3 /* BlackFriday-29x29@1x.png */,
+				7982013921998E7100625CB3 /* BlackFriday-29x29@2x.png */,
+				7982013121998E6F00625CB3 /* BlackFriday-29x29@3x.png */,
+				7982012F21998E6F00625CB3 /* BlackFriday-40x40@1x.png */,
+				7982013B21998E7200625CB3 /* BlackFriday-40x40@2x.png */,
+				7982013821998E7100625CB3 /* BlackFriday-40x40@3x.png */,
+				7982014121998E7300625CB3 /* BlackFriday@1x.png */,
+				7982013421998E7000625CB3 /* BlackFriday@2x.png */,
+				7982013D21998E7200625CB3 /* BlackFriday@3x.png */,
+				7982013321998E7000625CB3 /* BlackFriday-60x60@1x.png */,
+				7982014221998E7400625CB3 /* BlackFriday-60x60@2x.png */,
+				7982013721998E7100625CB3 /* BlackFriday-72x72@1x.png */,
+				7982013021998E6F00625CB3 /* BlackFriday-72x72@2x.png */,
+				7982013221998E7000625CB3 /* BlackFriday-76x76@1x.png */,
+				7982013521998E7000625CB3 /* BlackFriday-76x76@2x.png */,
+				7982013C21998E7200625CB3 /* BlackFriday-76x76@3x.png */,
+				7982013E21998E7200625CB3 /* BlackFriday-83.5x83.5@2x.png */,
+			);
+			name = BlackFriday;
+			sourceTree = "<group>";
+		};
+		79B02FAF2172FDBB009D51F8 /* FormCustomFiled */ = {
+			isa = PBXGroup;
+			children = (
+				79B02FB02172FE0E009D51F8 /* FormCustomField.h */,
+				79B02FB12172FE0E009D51F8 /* FormCustomField.m */,
+			);
+			name = FormCustomFiled;
+			sourceTree = "<group>";
+		};
+		79FEC0AB2175A066008A69F1 /* Authentications */ = {
+			isa = PBXGroup;
+			children = (
+				612B5E872158CBD800751E36 /* AuthenticationViewController.swift */,
+				612B5E89215A20B800751E36 /* SignInViewController.swift */,
+				612B5E8B215A20C500751E36 /* SignUpViewController.swift */,
+				612B5E8D215A43EE00751E36 /* ForgetPassViewController.swift */,
+				612B5E8F215A44A500751E36 /* PhoneVerifyViewController.swift */,
+				79FEC0AC2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift */,
+				79F743B2217714E3004D7155 /* PhoneChangeViewController.swift */,
+				79F743B421771BB4004D7155 /* ChangePassViewController.swift */,
+			);
+			name = Authentications;
 			sourceTree = "<group>";
 		};
 		8702FBB21E98E6F2001D1AA9 /* SearchEvent */ = {
@@ -5758,6 +5727,7 @@
 		870BF7DB1EA4F10100A0982E /* Alternatives */ = {
 			isa = PBXGroup;
 			children = (
+				7982012E21998E2F00625CB3 /* BlackFriday */,
 				875743CC1EA60E06001B518A /* Spring */,
 				875743EB1EA60E1C001B518A /* Summer */,
 				870BF7DC1EA4F10B00A0982E /* Autumn */,
@@ -6684,8 +6654,6 @@
 		875AD48E1E38C0C800584ABF /* CoreDataEntities */ = {
 			isa = PBXGroup;
 			children = (
-				875AD48F1E38C0C800584ABF /* RIAddress.h */,
-				875AD4901E38C0C800584ABF /* RIAddress.m */,
 				875AD4911E38C0C800584ABF /* RIApi.h */,
 				875AD4921E38C0C800584ABF /* RIApi.m */,
 				875AD4931E38C0C800584ABF /* RICategory.h */,
@@ -7221,20 +7189,14 @@
 			isa = PBXGroup;
 			children = (
 				B5A303001981218E00F71726 /* JABaseViewController */,
-				9AEF741E1CD8A81700A5D574 /* OnlineReturns */,
 				9AEF741D1CD8A7FB00A5D574 /* StepByStep */,
 				CEBE2A7D1A9E31E800F457FA /* Web */,
 				CE283E6E1A7296AE00F3E92D /* OtherOffers */,
 				CE3AF8FD19DBF4FB00D8C51B /* Campaigns */,
 				CE3FC5AB1990E25C003B4A27 /* Catalog */,
 				B5225E281989475E00C18F1E /* Checkout */,
-				4A39211A19891F1500B70A9C /* ChooseCountry */,
-				4AE242E1198656F500E37C90 /* HomeViewController */,
 				4AE242DD1986567800E37C90 /* JARootViewController */,
-				4AE242D71986547C00E37C90 /* JASidePanel */,
-				B55BFB9219E6A83E0098467E /* LoadCountryViewController */,
 				4AE730AF198F88CB000CA1DD /* PDV */,
-				4A944FF2199273E000C02734 /* Ratings */,
 				4A39211D19891F1500B70A9C /* RecentlyViewed */,
 				4A39211E19891F1500B70A9C /* RecentSearches */,
 				CEA86D9B1A3756A6000032AD /* SizeGuide */,
@@ -7246,10 +7208,6 @@
 			isa = PBXGroup;
 			children = (
 				870F8CD11E3357340021F87B /* GradientLayer */,
-				84A7B54F1D101D9F00CA9754 /* OnBoardingView */,
-				FF4465141CEB4F59003A65EA /* ORProductView */,
-				9A4077491CE61CF700313D20 /* OnlineReturns */,
-				9AE7669B1CB3CF2300B63D8E /* Authentication */,
 				FFC9C0C01C984B1A00DD5851 /* TopTabsView */,
 				9A4ADF651C2AF0BD0019F439 /* CustomControls */,
 				CE06FCB41A88C374002FCD25 /* Catalog */,
@@ -7266,12 +7224,10 @@
 				4A39213B198921A100B70A9C /* GlobalNavigationBar */,
 				CEA106FA1BD78A7000EF88B1 /* GlobalTabBar */,
 				B51777AF19A78FEB00ED0AC7 /* Headers */,
-				CE88F7BA1A23882E00A3A586 /* OrderSummaryView */,
 				4AE730B0198F8A74000CA1DD /* PDVComponents */,
 				CE3AF90F19DD5D4B00D8C51B /* PromotionPopUp */,
 				4A1892CF199399EC0036F327 /* ReviewCell */,
 				CE69B58D19868B7A005CC699 /* Teasers */,
-				4A3719BA19C05F3C002D4199 /* UndefinedSearchView */,
 				CEC376DA19EFC1D500558B98 /* Wizard */,
 			);
 			name = JA;
@@ -7666,12 +7622,7 @@
 		9A17372C1B677A13004905B4 /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
-				9AE766E31CBFFDA700B63D8E /* Cart */,
 				B530D56E19C199690052FEDA /* CheckoutForms */,
-				9A1737291B669B0E004905B4 /* JACheckoutBottomView.h */,
-				9A17372A1B669B0E004905B4 /* JACheckoutBottomView.m */,
-				898A24BE1BCE9EAF00BBEE31 /* JASellerDeliveryView.h */,
-				898A24BF1BCE9EAF00BBEE31 /* JASellerDeliveryView.m */,
 				9AEF74161CD27C1400A5D574 /* JACheckoutButton.h */,
 				9AEF74171CD27C1400A5D574 /* JACheckoutButton.m */,
 			);
@@ -7703,40 +7654,13 @@
 			name = Lines;
 			sourceTree = "<group>";
 		};
-		9A2CD0B41BD1135C00A878D2 /* RatingsReviews */ = {
-			isa = PBXGroup;
-			children = (
-				9A2CD0B51BD113D300A878D2 /* JAReviewCollectionCell.h */,
-				9A2CD0B61BD113D300A878D2 /* JAReviewCollectionCell.m */,
-			);
-			name = RatingsReviews;
-			sourceTree = "<group>";
-		};
 		9A38764F1BCD0D500088B186 /* Details DescSpecReviews */ = {
 			isa = PBXGroup;
 			children = (
-				9A2CD0B41BD1135C00A878D2 /* RatingsReviews */,
-				9A3876481BCD0CDB0088B186 /* JATabNavigationViewController.h */,
-				9A3876491BCD0CDB0088B186 /* JATabNavigationViewController.m */,
-				9A3876501BCD0DBE0088B186 /* JAProductDescriptionView.h */,
-				9A3876511BCD0DBE0088B186 /* JAProductDescriptionView.m */,
-				9A3876571BCD0DE00088B186 /* JAProductSpecificationView.h */,
-				9A3876581BCD0DE00088B186 /* JAProductSpecificationView.m */,
-				9A38765E1BCD0DFD0088B186 /* JAProductReviewsView.h */,
-				9A38765F1BCD0DFD0088B186 /* JAProductReviewsView.m */,
 				9A3876651BCD121A0088B186 /* JATabButton.h */,
 				9A3876661BCD121A0088B186 /* JATabButton.m */,
 			);
 			name = "Details DescSpecReviews";
-			sourceTree = "<group>";
-		};
-		9A4077491CE61CF700313D20 /* OnlineReturns */ = {
-			isa = PBXGroup;
-			children = (
-				9A40774A1CE61D1300313D20 /* JAOptionResumeView.h */,
-				9A40774B1CE61D1300313D20 /* JAOptionResumeView.m */,
-			);
-			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
 		9A4ADF651C2AF0BD0019F439 /* CustomControls */ = {
@@ -7746,28 +7670,6 @@
 				9A4ADF671C2AF1010019F439 /* JADropdownControl.m */,
 			);
 			name = CustomControls;
-			sourceTree = "<group>";
-		};
-		9AE7669B1CB3CF2300B63D8E /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				9AE7669C1CB3CF5300B63D8E /* JAAccountServicesView.h */,
-				9AE7669D1CB3CF5300B63D8E /* JAAccountServicesView.m */,
-			);
-			name = Authentication;
-			sourceTree = "<group>";
-		};
-		9AE766E31CBFFDA700B63D8E /* Cart */ = {
-			isa = PBXGroup;
-			children = (
-				9AE766AB1CBBB28E00B63D8E /* JACartProductsView.h */,
-				9AE766AC1CBBB28E00B63D8E /* JACartProductsView.m */,
-				9AE766B91CBBF01C00B63D8E /* JAEmptyCartView.h */,
-				9AE766BA1CBBF01C00B63D8E /* JAEmptyCartView.m */,
-				9AE766C71CBCF31400B63D8E /* JACartResumeView.h */,
-				9AE766C81CBCF31400B63D8E /* JACartResumeView.m */,
-			);
-			name = Cart;
 			sourceTree = "<group>";
 		};
 		9AE766E41CBFFDE200B63D8E /* Cart */ = {
@@ -7821,27 +7723,6 @@
 				9AEF74101CD20F0C00A5D574 /* JAStepByStepTabViewController.m */,
 			);
 			name = StepByStep;
-			sourceTree = "<group>";
-		};
-		9AEF741E1CD8A81700A5D574 /* OnlineReturns */ = {
-			isa = PBXGroup;
-			children = (
-				9AEF741F1CD8A86900A5D574 /* JAORConfirmConditionsViewController.h */,
-				9AEF74201CD8A86900A5D574 /* JAORConfirmConditionsViewController.m */,
-				9AEF74261CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.h */,
-				9AEF74271CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m */,
-				FF6BDC9A1CE238F3002BFE11 /* JAORReasonsViewController.h */,
-				FF6BDC9B1CE238F3002BFE11 /* JAORReasonsViewController.m */,
-				9A4077341CE24DF800313D20 /* JAORCallToReturnViewController.h */,
-				9A4077351CE24DF800313D20 /* JAORCallToReturnViewController.m */,
-				FFB1B0881CE5E163000F60AD /* JAORWaysViewController.h */,
-				FFB1B0891CE5E163000F60AD /* JAORWaysViewController.m */,
-				FF44651C1CECB806003A65EA /* JAORPaymentViewController.h */,
-				FF44651D1CECB806003A65EA /* JAORPaymentViewController.m */,
-				FF4465231CEF1375003A65EA /* JAORPickupStationWebViewController.h */,
-				FF4465241CEF1375003A65EA /* JAORPickupStationWebViewController.m */,
-			);
-			name = OnlineReturns;
 			sourceTree = "<group>";
 		};
 		B50B03A8198A883D002046DF /* Utilities */ = {
@@ -7916,33 +7797,9 @@
 		B5225E281989475E00C18F1E /* Checkout */ = {
 			isa = PBXGroup;
 			children = (
-				B59D196419C333E2004843C3 /* Thanks */,
-				B5225E291989475E00C18F1E /* Account */,
-				B5225E2A1989475E00C18F1E /* Addresses */,
 				B5225E2C1989475E00C18F1E /* Payment */,
-				B5225E2D1989475E00C18F1E /* Shipping */,
 			);
 			path = Checkout;
-			sourceTree = "<group>";
-		};
-		B5225E291989475E00C18F1E /* Account */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
-		B5225E2A1989475E00C18F1E /* Addresses */ = {
-			isa = PBXGroup;
-			children = (
-				B50B039E198A5434002046DF /* JAAddressesViewController.h */,
-				B50B039F198A5434002046DF /* JAAddressesViewController.m */,
-				B59DCA5B19B7109300DE7960 /* JAAddNewAddressViewController.h */,
-				B59DCA5A19B7109300DE7960 /* JAAddNewAddressViewController.m */,
-				B57DC97C19B90AB10080C818 /* JAEditAddressViewController.h */,
-				B57DC97D19B90AB10080C818 /* JAEditAddressViewController.m */,
-			);
-			path = Addresses;
 			sourceTree = "<group>";
 		};
 		B5225E2C1989475E00C18F1E /* Payment */ = {
@@ -7952,15 +7809,6 @@
 				B59D196219C333CF004843C3 /* JAExternalPaymentsViewController.m */,
 			);
 			path = Payment;
-			sourceTree = "<group>";
-		};
-		B5225E2D1989475E00C18F1E /* Shipping */ = {
-			isa = PBXGroup;
-			children = (
-				B50B03A4198A544A002046DF /* JAShippingViewController.h */,
-				B50B03A5198A544A002046DF /* JAShippingViewController.m */,
-			);
-			path = Shipping;
 			sourceTree = "<group>";
 		};
 		B5240E451A496E59006264E9 /* MyOrderDetailView */ = {
@@ -8004,15 +7852,6 @@
 			name = CheckoutForms;
 			sourceTree = "<group>";
 		};
-		B55BFB9219E6A83E0098467E /* LoadCountryViewController */ = {
-			isa = PBXGroup;
-			children = (
-				B55BFB9319E6A83E0098467E /* JALoadCountryViewController.h */,
-				B55BFB9419E6A83E0098467E /* JALoadCountryViewController.m */,
-			);
-			path = LoadCountryViewController;
-			sourceTree = "<group>";
-		};
 		B58767FA19BB6284001651D6 /* ShippingCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -8036,15 +7875,6 @@
 			path = PaymentCell;
 			sourceTree = "<group>";
 		};
-		B59D196419C333E2004843C3 /* Thanks */ = {
-			isa = PBXGroup;
-			children = (
-				9AED082E1C74CA0E00B5FDF0 /* JASuccessPageViewController.h */,
-				9AED082F1C74CA0E00B5FDF0 /* JASuccessPageViewController.m */,
-			);
-			name = Thanks;
-			sourceTree = "<group>";
-		};
 		B59DCA6719B851F700DE7960 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -8058,15 +7888,6 @@
 				9A40773C1CE60E3300313D20 /* JABottomSubmitView.m */,
 			);
 			name = Buttons;
-			sourceTree = "<group>";
-		};
-		B59DCA6B19B870EA00DE7960 /* AddressCell */ = {
-			isa = PBXGroup;
-			children = (
-				B59DCA6C19B8712500DE7960 /* JAAddressCell.h */,
-				B59DCA6D19B8712500DE7960 /* JAAddressCell.m */,
-			);
-			name = AddressCell;
 			sourceTree = "<group>";
 		};
 		B59DCA7219B88D9000DE7960 /* SwitchCell */ = {
@@ -8169,7 +7990,6 @@
 		B5A301D219811E8900F71726 /* ExternalFrameworks */ = {
 			isa = PBXGroup;
 			children = (
-				613FF2AC1E4B24CD008660CF /* CAPSPageMenu */,
 				87A6ACE41E38919C00C0E7DC /* GTMNSString-HTML */,
 			);
 			name = ExternalFrameworks;
@@ -8411,15 +8231,6 @@
 			name = CollectionViewLayouts;
 			sourceTree = "<group>";
 		};
-		CE88F7BA1A23882E00A3A586 /* OrderSummaryView */ = {
-			isa = PBXGroup;
-			children = (
-				CE88F7BB1A23886100A3A586 /* JAOrderSummaryView.h */,
-				CE88F7BC1A23886100A3A586 /* JAOrderSummaryView.m */,
-			);
-			name = OrderSummaryView;
-			sourceTree = "<group>";
-		};
 		CE8C92A91B8B555600C77706 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -8575,15 +8386,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		FF4465141CEB4F59003A65EA /* ORProductView */ = {
-			isa = PBXGroup;
-			children = (
-				FF4465151CEB4FD7003A65EA /* JAORProductView.h */,
-				FF4465161CEB4FD7003A65EA /* JAORProductView.m */,
-			);
-			name = ORProductView;
-			sourceTree = "<group>";
-		};
 		FFC9C0C01C984B1A00DD5851 /* TopTabsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -8667,7 +8469,7 @@
 				TargetAttributes = {
 					615F96E81E9E11FD00614644 = {
 						CreatedOnToolsVersion = 8.3.1;
-						DevelopmentTeam = 3GCCEEQ32X;
+						DevelopmentTeam = 33W53692YU;
 						ProvisioningStyle = Manual;
 					};
 					870F8CF21E338D2C0021F87B = {
@@ -8750,6 +8552,7 @@
 				8757443F1EA60E71001B518A /* Winter-Small-50.png in Resources */,
 				8757436C1EA60DA5001B518A /* Birthday-72.png in Resources */,
 				875744591EA60E8D001B518A /* Yalda.png in Resources */,
+				7982014B21998E7400625CB3 /* BlackFriday-72x72@1x.png in Resources */,
 				61B80E6F20F62A670028FA87 /* SellerOfferItemTableViewCell.xib in Resources */,
 				875743CB1EA60DFD001B518A /* SpecialOffer-60@2x.png in Resources */,
 				6157A74820E25167001B8361 /* ProductSpecificItemTableViewCell.xib in Resources */,
@@ -8757,6 +8560,7 @@
 				875743811EA60DB9001B518A /* National-Small@3x.png in Resources */,
 				61338D021EACC63B0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.xib in Resources */,
 				6159574020BBF07700B8FDB8 /* ProductDetailPrimaryInfoTableViewCell.xib in Resources */,
+				7982014621998E7400625CB3 /* BlackFriday-76x76@1x.png in Resources */,
 				8757441F1EA60E48001B518A /* Tragedy-Small-50@2x.png in Resources */,
 				CE9AE03C1AB6D78200D56481 /* JANewsletterComponent~iPad.xib in Resources */,
 				875744261EA60E48001B518A /* Tragedy-72.png in Resources */,
@@ -8764,7 +8568,6 @@
 				8757445F1EA60E8D001B518A /* Yalda-Small-40@2x.png in Resources */,
 				6199B8351FF8EC47008C62A6 /* LoadingCoverView.xib in Resources */,
 				875744431EA60E71001B518A /* Winter-76.png in Resources */,
-				9A564CAF1B332FB200F23057 /* JASellerRatingsViewController.xib in Resources */,
 				8757445E1EA60E8D001B518A /* Yalda-Small-50.png in Resources */,
 				875743881EA60DB9001B518A /* National-76@2x.png in Resources */,
 				61EB3937200B5D3100F98C95 /* OrderCancellationResultTableViewCell.xib in Resources */,
@@ -8772,7 +8575,9 @@
 				875743FF1EA60E2D001B518A /* Summer-Small.png in Resources */,
 				87459C841E4EF37D00743120 /* CartListItemTableViewCell.xib in Resources */,
 				6174A42F2120283A0093E909 /* ProductBundleTableViewCell.xib in Resources */,
+				7982014A21998E7400625CB3 /* BlackFriday-20x20@2x.png in Resources */,
 				875744641EA60E8E001B518A /* Yalda-72.png in Resources */,
+				7982014C21998E7400625CB3 /* BlackFriday-40x40@3x.png in Resources */,
 				CE9AE0431AB6D78200D56481 /* JAMaintenancePage.xib in Resources */,
 				61AAC67C1FC08A10007FC21E /* CollectionViewLoadingFooter.xib in Resources */,
 				875744091EA60E2D001B518A /* Summer-60@2x.png in Resources */,
@@ -8781,11 +8586,13 @@
 				875743611EA60DA5001B518A /* Birthday.png in Resources */,
 				61E534471FA4919800CBDFED /* ProgressBarView.xib in Resources */,
 				875744281EA60E48001B518A /* Tragedy-60@2x.png in Resources */,
+				7982014F21998E7400625CB3 /* BlackFriday-40x40@2x.png in Resources */,
 				875744401EA60E71001B518A /* Winter-Small-40@2x.png in Resources */,
 				61F705411F766EB200DCD77C /* FeaturedStoresCollectionViewCell.xib in Resources */,
 				8757434F1EA60D8E001B518A /* Autumn-60@2x.png in Resources */,
 				CE9AE0441AB6D78200D56481 /* JAGenericFiltersView.xib in Resources */,
 				875743A01EA60DE0001B518A /* Ramadan-Small@3x.png in Resources */,
+				7982014D21998E7400625CB3 /* BlackFriday-29x29@2x.png in Resources */,
 				6CF4AE821ADEAA290024EC34 /* JACatalogBannerCell.xib in Resources */,
 				87EA032F1E6D994800B1E062 /* ProgressItemView.xib in Resources */,
 				875744271EA60E48001B518A /* Tragedy-60@3x.png in Resources */,
@@ -8796,8 +8603,8 @@
 				87459C9C1E4F0DCD00743120 /* RadioButtonView.xib in Resources */,
 				875744631EA60E8E001B518A /* Yalda-72@2x.png in Resources */,
 				875743661EA60DA5001B518A /* Birthday-Small-50.png in Resources */,
+				7982014821998E7400625CB3 /* BlackFriday@2x.png in Resources */,
 				619351A61ECAC9A900330E5C /* CatalogGridCollectionViewCell.xib in Resources */,
-				9A564CBB1B34273800F23057 /* JASellerRatingsViewController~ipad.xib in Resources */,
 				614927BD20EB8E7400B16B27 /* ProductOveralRateTableViewCell.xib in Resources */,
 				616A9FC920C402C100144E5B /* ProductVariationTableViewCell.xib in Resources */,
 				875743481EA60D8E001B518A /* Autumn-Small-40@2x.png in Resources */,
@@ -8806,6 +8613,7 @@
 				87B684EB1E49FE0B0042C09F /* ReceiptItemView.xib in Resources */,
 				8757438B1EA60DB9001B518A /* National-72.png in Resources */,
 				875743C91EA60DFD001B518A /* SpecialOffer-72.png in Resources */,
+				6184CDCC216B5BA200A4AD7E /* TwoButtonsPurchaseView.xib in Resources */,
 				61338CF61EACA1690017BB06 /* EmarsysRecommendationMinimalCarouselCollectionViewCell.xib in Resources */,
 				61DA163E1FEE5011001C5071 /* CategoryTableViewCell.xib in Resources */,
 				61FB2FDE1FA8CB92005FE3F6 /* OrderCMSMessageTableViewCell.xib in Resources */,
@@ -8825,7 +8633,6 @@
 				875743441EA60D8E001B518A /* Autumn-Small@2x.png in Resources */,
 				8757434D1EA60D8E001B518A /* Autumn-72.png in Resources */,
 				615E44B32115BE0F00210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.xib in Resources */,
-				6157A3EF1F83865800B8D501 /* MyBamiloViewController.xib in Resources */,
 				875743A21EA60DE0001B518A /* Ramadan-Small.png in Resources */,
 				875744251EA60E48001B518A /* Tragedy-72@2x.png in Resources */,
 				CE9AE0751AB6D78200D56481 /* JAFallbackView.xib in Resources */,
@@ -8833,6 +8640,7 @@
 				875743AA1EA60DE0001B518A /* Ramadan-72.png in Resources */,
 				875743FC1EA60E2D001B518A /* Summer.png in Resources */,
 				8757441B1EA60E48001B518A /* Tragedy.png in Resources */,
+				7982015121998E7400625CB3 /* BlackFriday@3x.png in Resources */,
 				875743491EA60D8E001B518A /* Autumn-Small-40.png in Resources */,
 				61FF70EF20CD1CE600B54077 /* ButtonCollectionViewCell.xib in Resources */,
 				8757434B1EA60D8E001B518A /* Autumn-76.png in Resources */,
@@ -8856,12 +8664,11 @@
 				875744011EA60E2D001B518A /* Summer-Small-50.png in Resources */,
 				61E5791520557CFB0092D0F8 /* SelectView.xib in Resources */,
 				CE9AE0931AB6D78200D56481 /* JAGrayButtonCell.xib in Resources */,
-				CEA2A1BB1B25D53B00E5973F /* JANewRatingViewController.xib in Resources */,
 				616A9FCE20C41A5600144E5B /* ImageCollectionViewCell.xib in Resources */,
 				61B5790D1F9E2B1C00C9F454 /* OrderInfoTableViewCell.xib in Resources */,
 				61840B651EA3981E006739EB /* EmarsysRecommendationGridWidgetView.xib in Resources */,
+				7982014921998E7400625CB3 /* BlackFriday-76x76@2x.png in Resources */,
 				875744611EA60E8E001B518A /* Yalda-76@2x.png in Resources */,
-				9A564CC11B38187100F23057 /* JANewSellerRatingViewController~ipad.xib in Resources */,
 				CE9AE09B1AB6D78200D56481 /* JAPaymentCell.xib in Resources */,
 				61CBA0571E51FF2F005673F7 /* ButtonTableViewCell.xib in Resources */,
 				6189438B20D65541007D6526 /* ProductOldSellerViewTableViewCell.xib in Resources */,
@@ -8871,21 +8678,23 @@
 				875743FE1EA60E2D001B518A /* Summer-Small@2x.png in Resources */,
 				CE9AE0A21AB6D78200D56481 /* JASwitchCell.xib in Resources */,
 				6190B4F920AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.xib in Resources */,
-				CE9AE0A31AB6D78200D56481 /* JAUndefinedSearchView.xib in Resources */,
 				875743A91EA60DE0001B518A /* Ramadan-72@2x.png in Resources */,
 				870680B91E62E1FA000368D5 /* AddressTableViewHeaderCell.xib in Resources */,
 				616A9FC420C3C56E00144E5B /* TransparentHeaderHeaderTableView.xib in Resources */,
 				875743601EA60DA5001B518A /* Birthday@2x.png in Resources */,
+				7982015221998E7400625CB3 /* BlackFriday-83.5x83.5@2x.png in Resources */,
+				7982014321998E7400625CB3 /* BlackFriday-40x40@1x.png in Resources */,
 				8757436B1EA60DA5001B518A /* Birthday-72@2x.png in Resources */,
 				875743C11EA60DFD001B518A /* SpecialOffer-Small.png in Resources */,
 				CE9AE0A81AB6D78200D56481 /* JACartListHeaderView.xib in Resources */,
+				791856C321745B2200E05A26 /* FormLinkButtonTableViewCell.xib in Resources */,
 				61C51E6F1FDC155500DC75EE /* ErrorControlView.xib in Resources */,
 				CE9AE0AC1AB6D78200D56481 /* JACatalogTopView_iphone.xib in Resources */,
 				8757436A1EA60DA5001B518A /* Birthday-76.png in Resources */,
+				7982015421998E7400625CB3 /* BlackFriday-20x20@3x.png in Resources */,
 				61BA9B501E9A04E1004E9DE8 /* EmarsysRecommendationCarouselView.xib in Resources */,
 				9A2036F51B25F39E00F36F55 /* JANoConnectionView~iPad.xib in Resources */,
 				613FF2BB1E4B2858008660CF /* SignUpViewController.xib in Resources */,
-				9A564CB51B3411AD00F23057 /* JANewSellerRatingViewController.xib in Resources */,
 				8757437F1EA60DB9001B518A /* National@2x.png in Resources */,
 				875743681EA60DA5001B518A /* Birthday-Small-40.png in Resources */,
 				6167C1AE1F431578009293B2 /* JANoConnectionView.xib in Resources */,
@@ -8895,11 +8704,13 @@
 				875743A71EA60DE0001B518A /* Ramadan-76@2x.png in Resources */,
 				61259BE51FC585360051CBD4 /* BreadcrumbsView.xib in Resources */,
 				615EBA7B1FEFE5F900FB58DE /* CategoryCoverTableViewCell.xib in Resources */,
+				61A2FE44216A56AA0041645B /* FormButtonTableViewCell.xib in Resources */,
 				875744621EA60E8E001B518A /* Yalda-76.png in Resources */,
 				8757441E1EA60E48001B518A /* Tragedy-Small.png in Resources */,
 				616F7D131F6D172100085B64 /* IconTableViewCell.xib in Resources */,
 				875743C01EA60DFD001B518A /* SpecialOffer-Small@2x.png in Resources */,
 				8757438C1EA60DB9001B518A /* National-60@3x.png in Resources */,
+				7982015621998E7400625CB3 /* BlackFriday-60x60@2x.png in Resources */,
 				8757443C1EA60E71001B518A /* Winter-Small@2x.png in Resources */,
 				CE9AE0B51AB6D78200D56481 /* JACheckBoxComponent.xib in Resources */,
 				CE9AE0B81AB6D78200D56481 /* JAPDVVariations~iPad.xib in Resources */,
@@ -8918,6 +8729,7 @@
 				875743DC1EA60E13001B518A /* Spring@2x.png in Resources */,
 				61E534431FA48D3400CBDFED /* ProgressBarItemView.xib in Resources */,
 				87EA031D1E6D706E00B1E062 /* FormHeaderTableViewCell.xib in Resources */,
+				7982014521998E7400625CB3 /* BlackFriday-29x29@3x.png in Resources */,
 				875744051EA60E2D001B518A /* Summer-76.png in Resources */,
 				875743A61EA60DE0001B518A /* Ramadan-Small-40.png in Resources */,
 				875743421EA60D8E001B518A /* Autumn.png in Resources */,
@@ -8963,12 +8775,14 @@
 				875743DF1EA60E13001B518A /* Spring-Small@2x.png in Resources */,
 				875AD5821E38C0C900584ABF /* RITracking_Bamilo.plist in Resources */,
 				875743E61EA60E13001B518A /* Spring-76.png in Resources */,
+				7982015321998E7400625CB3 /* BlackFriday-29x29@1x.png in Resources */,
 				CE9AE0E01AB6D78200D56481 /* JAPDVProductInfo~iPad_Portrait.xib in Resources */,
 				87B684DC1E49CE660042C09F /* BasicTableViewCell.xib in Resources */,
 				6150858E200CCEE400BC67B1 /* OrderDetailPackageHeaderTableViewHeader.xib in Resources */,
 				61E6EE7B209F2F050007ED5F /* RadioColoredButtonItemTableViewCell.xib in Resources */,
 				875743A81EA60DE0001B518A /* Ramadan-76.png in Resources */,
 				61AA6B4D20E904D100706F9A /* ProductReviewCollectionViewCell.xib in Resources */,
+				7982014721998E7400625CB3 /* BlackFriday-60x60@1x.png in Resources */,
 				619E92D01F8A1044003885BC /* DailyDealsCollectionViewCell.xib in Resources */,
 				61036B511E65897D006E12A9 /* MutualTitleHeaderCell.xib in Resources */,
 				CEDBF8921B0DF5D00073971A /* JANewsletterComponent_RTL.xib in Resources */,
@@ -9000,11 +8814,11 @@
 				611195831E3CB14B00D06690 /* PlainTableViewCell.xib in Resources */,
 				8757441A1EA60E48001B518A /* Tragedy@2x.png in Resources */,
 				CE9AE05B1AB6D78200D56481 /* RIStrings.strings in Resources */,
-				61D4748C1F6FDF7A001DA6A6 /* HomePageViewController.xib in Resources */,
 				61E099721E3E18F0004ED14E /* NotificationTableViewCell.xib in Resources */,
 				8757434E1EA60D8E001B518A /* Autumn-60@3x.png in Resources */,
 				875743431EA60D8E001B518A /* Autumn-Small@3x.png in Resources */,
 				6183DD1B210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.xib in Resources */,
+				7982015021998E7400625CB3 /* BlackFriday-76x76@3x.png in Resources */,
 				875744601EA60E8D001B518A /* Yalda-Small-40.png in Resources */,
 				8714E0681E478DF2004C9B1D /* CheckoutProgressView.xib in Resources */,
 				8757439F1EA60DE0001B518A /* Ramadan.png in Resources */,
@@ -9014,9 +8828,11 @@
 				875743CA1EA60DFD001B518A /* SpecialOffer-60@3x.png in Resources */,
 				875743DE1EA60E13001B518A /* Spring-Small@3x.png in Resources */,
 				8757438D1EA60DB9001B518A /* National-60@2x.png in Resources */,
+				7982014421998E7400625CB3 /* BlackFriday-72x72@2x.png in Resources */,
 				61E6EE76209F2B910007ED5F /* RadioColoredButtonsGroupView.xib in Resources */,
 				61036B5B1E6599FC006E12A9 /* OrderListTableViewCell.xib in Resources */,
 				616D5037204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.xib in Resources */,
+				7982015521998E7400625CB3 /* BlackFriday@1x.png in Resources */,
 				8757445C1EA60E8D001B518A /* Yalda-Small.png in Resources */,
 				1C71FC5E1E2CABAD007ACF02 /* Bamilosans Black.ttf in Resources */,
 				1C71FC601E2CABAD007ACF02 /* Bamilosans Light.ttf in Resources */,
@@ -9037,6 +8853,7 @@
 				875744451EA60E71001B518A /* Winter-72.png in Resources */,
 				875744031EA60E2D001B518A /* Summer-Small-40.png in Resources */,
 				619351AC1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.xib in Resources */,
+				7982014E21998E7400625CB3 /* BlackFriday-20x20@1x.png in Resources */,
 				87D07D6F1E40939100C00AC6 /* Checkout.storyboard in Resources */,
 				618B256E1F35D81800B39440 /* DeliveryTimeView.xib in Resources */,
 				875743C61EA60DFD001B518A /* SpecialOffer-76@2x.png in Resources */,
@@ -9127,21 +8944,17 @@
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/AnimatedCollectionViewLayout/AnimatedCollectionViewLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
-				"${BUILT_PRODUCTS_DIR}/CoreSDK/CoreSDK.framework",
-				"${BUILT_PRODUCTS_DIR}/EmarsysPredictSDK/EmarsysPredictSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
-				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageViewer/ImageViewer.framework",
-				"${BUILT_PRODUCTS_DIR}/JBWhatsAppActivity/JBWhatsAppActivity.framework",
 				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${BUILT_PRODUCTS_DIR}/MobileEngageSDK/MobileEngageSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/PinCodeTextField/PinCodeTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RAlertView/RAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/RGB/RGB.framework",
@@ -9152,6 +8965,8 @@
 				"${BUILT_PRODUCTS_DIR}/TBActionSheet/TBActionSheet.framework",
 				"${BUILT_PRODUCTS_DIR}/TTRangeSlider/TTRangeSlider.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
+				"${PODS_ROOT}/WebEngage/xc10/WebEngage.framework",
+				"${PODS_ROOT}/WebEngage/xc10/WebEngage.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -9161,21 +8976,17 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnimatedCollectionViewLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmarsysPredictSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageViewer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JBWhatsAppActivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileEngageSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinCodeTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RGB.framework",
@@ -9186,6 +8997,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TBActionSheet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTRangeSlider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebEngage.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/WebEngage.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9204,7 +9017,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nelif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"AdHoc\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run ddde4ad6ad210575fdac10a908040d1a93e74833\nelif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n./Pods/Fabric/iOS/Fabric.framework/run 93ef3db21e524147cf9702fd4dc34e7169e372d1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -9258,7 +9071,6 @@
 				61E17E702129799A00481794 /* FirebaseTracker.swift in Sources */,
 				611E23E01F10CFB500E5C3AC /* EventSelectors.swift in Sources */,
 				61B56D5F1F9B70240002BFF3 /* OrderPackage.swift in Sources */,
-				CE9ADF301AB6D78200D56481 /* JAShippingViewController.m in Sources */,
 				612FE51B1EDC0D6300C2AFA0 /* ProfileUserTableViewCell.swift in Sources */,
 				87CE1DCA1E6191FD000A2C9E /* DeliveryTimeTableViewCell.m in Sources */,
 				875AD56A1E38C0C900584ABF /* RIPhonePrefix.m in Sources */,
@@ -9271,9 +9083,9 @@
 				6164F54D201762910009ED19 /* PhoneVerificationViewController.swift in Sources */,
 				61E8441B1F0D16AE005D79EE /* ScreentTrackerProtocol.swift in Sources */,
 				61E0996C1E3E117F004ED14E /* BaseTableViewCell.m in Sources */,
-				9A38765D1BCD0DE00088B186 /* JAProductSpecificationView.m in Sources */,
 				9AEF74151CD20F0C00A5D574 /* JAStepByStepTabViewController.m in Sources */,
 				61BA9B4B1E9A009E004E9DE8 /* EmarsysRecommendationCarouselWidget.m in Sources */,
+				61CCEAB121495A1500BC842F /* OptionalUpdateViewController.swift in Sources */,
 				61A62CAD1E98FB0600E78D81 /* NSArray+Extension.m in Sources */,
 				6193F3E11F0CF9D600DA3CDE /* GoogleAnalyticsTracker.swift in Sources */,
 				875AD55B1E38C0C900584ABF /* RICartItem.m in Sources */,
@@ -9284,7 +9096,6 @@
 				CEA2A1B71B25D20C00E5973F /* JADynamicField.m in Sources */,
 				61FC466E201DBBC9000141FA /* Ext+UINavigationViewController.swift in Sources */,
 				61E5791C20569CDC0092D0F8 /* SelecctViewControl.swift in Sources */,
-				FF44651B1CEB4FD7003A65EA /* JAORProductView.m in Sources */,
 				875AD5741E38C0C900584ABF /* RIShippingMethodForm.m in Sources */,
 				CE9ADF371AB6D78200D56481 /* JAPDVSingleRelatedItem.m in Sources */,
 				873369BE1E58376900B0B5E5 /* ImageManager.m in Sources */,
@@ -9299,11 +9110,9 @@
 				61B56D611F9B835E0002BFF3 /* JATopSellersTeaserView.m in Sources */,
 				61D474901F6FE1B2001DA6A6 /* HomePageSliderTableViewCell.swift in Sources */,
 				875AD53F1E38C0C800584ABF /* RIConfiguration.m in Sources */,
-				9A1737331B68EBB0004905B4 /* JACheckoutBottomView.m in Sources */,
 				875AD56C1E38C0C900584ABF /* RIProductOffer.m in Sources */,
 				617F77AF1EB85BEC000A2A6C /* AddressDataManager.swift in Sources */,
 				CE9ADF3A1AB6D78200D56481 /* JAButtonCell.m in Sources */,
-				6157A3EE1F83865800B8D501 /* MyBamiloViewController.swift in Sources */,
 				61259BE11FC5819C0051CBD4 /* BreadcrumbsControl.swift in Sources */,
 				8720C33E1EE2A8CC00404378 /* App.swift in Sources */,
 				6157A74020E22C23001B8361 /* ProductMoreInfoViewController.swift in Sources */,
@@ -9321,12 +9130,10 @@
 				875AD57F1E38C0C900584ABF /* RILocalizationWrapper.m in Sources */,
 				CE9ADF3C1AB6D78200D56481 /* JAPageControl.m in Sources */,
 				6190B4F820AB31CB0028F1D4 /* AppreciateSurveyCollectionViewCell.swift in Sources */,
-				9A3876561BCD0DBE0088B186 /* JAProductDescriptionView.m in Sources */,
 				875AD5501E38C0C900584ABF /* RISection.m in Sources */,
 				61517875209451CC0049907F /* SimpleProgressBarControl.swift in Sources */,
 				6157A74420E24D0B001B8361 /* ProductSpecificsTableViewController.swift in Sources */,
 				61C51E6D1FDC151700DC75EE /* ErrorControlView.swift in Sources */,
-				9AE766CD1CBCF31400B63D8E /* JACartResumeView.m in Sources */,
 				61FC467D201F75BF000141FA /* BaseNavigationController.m in Sources */,
 				61BBFC8020038F500000FC8A /* OrderCancellation.swift in Sources */,
 				61420C921F9F03D3009D9ECD /* Utility.swift in Sources */,
@@ -9346,7 +9153,6 @@
 				8720C33A1EE2808800404378 /* ApiDataMessage.swift in Sources */,
 				61840B681EA39941006739EB /* EmarsysRecommendationGridWidget.m in Sources */,
 				6113E2B12055419D00CE20BE /* HPCollectionViewFlowlayout.swift in Sources */,
-				FF6BDCA01CE238F3002BFE11 /* JAORReasonsViewController.m in Sources */,
 				879F87EF1E5048790033FE87 /* NSMutableArray+Extensions.m in Sources */,
 				875AD54C1E38C0C900584ABF /* RIImageResolution.m in Sources */,
 				CE9ADF451AB6D78200D56481 /* JAPickupStationInfoCell.m in Sources */,
@@ -9373,6 +9179,7 @@
 				614927BC20EB8E7400B16B27 /* ProductOveralRateTableViewCell.swift in Sources */,
 				61D474941F7019BF001DA6A6 /* HomeDataManager.swift in Sources */,
 				879F88291E51CF140033FE87 /* CartEntity.m in Sources */,
+				612B5E92215A514900751E36 /* User.swift in Sources */,
 				61FFD5861EB8CE17004A3518 /* CatalogDataManager.swift in Sources */,
 				9A86F80A1C281F8F001A91D5 /* JARecentlyViewedViewController.m in Sources */,
 				61FE97D71EC9C19300DF233D /* ListCollectionViewFlowLayout.swift in Sources */,
@@ -9384,7 +9191,6 @@
 				6187ABAE207B451600B08EE5 /* Ext+UIImage.swift in Sources */,
 				61EE79901EC046D90036F93E /* CatalogCategoryFilterOption.swift in Sources */,
 				CED6205C1BEB526B00FA8403 /* JAFiltersViewController.m in Sources */,
-				61FC4677201F65C2000141FA /* PhoneChangeViewController.swift in Sources */,
 				61EB3932200B43AC00F98C95 /* OrderCancellationResultViewController.swift in Sources */,
 				613A7E8F1EBF0F6B00E1AB3F /* CategoryProduct.swift in Sources */,
 				875AD57E1E38C0C900584ABF /* RIDataBaseWrapper.m in Sources */,
@@ -9397,7 +9203,6 @@
 				611C1BED204D7B22007C409C /* ReviewImageSelectControl.swift in Sources */,
 				9A7EE9C91B5557C9004E2505 /* UIButton+Extensions.m in Sources */,
 				61036B501E65897D006E12A9 /* MutualTitleHeaderCell.m in Sources */,
-				CE9ADF531AB6D78200D56481 /* JALoadCountryViewController.m in Sources */,
 				CE9ADF541AB6D78200D56481 /* JAClickableView.m in Sources */,
 				CE9ADF561AB6D78200D56481 /* JASwitchCell.m in Sources */,
 				87DAABE91E55A1C400445EBB /* PaymentOptionTableViewCell.m in Sources */,
@@ -9405,6 +9210,7 @@
 				6113E2B22055419D00CE20BE /* HPCollectionVC.swift in Sources */,
 				87A681581E40F21B00D252AC /* BaseButton.m in Sources */,
 				619E92D21F8A1093003885BC /* BaseCollectionViewCellSwift.swift in Sources */,
+				6184CDCA216B5B8200A4AD7E /* TwoButtonsPurchaseControl.swift in Sources */,
 				614B8C691FA866EB00F7D3D4 /* MyBamiloHeaderView.swift in Sources */,
 				87459C821E4EF37200743120 /* CartListItemTableViewCell.m in Sources */,
 				6170AECB20F9F3C2007A4905 /* SellerList.swift in Sources */,
@@ -9412,10 +9218,10 @@
 				879F88351E51DFB90033FE87 /* CartForm.m in Sources */,
 				CE9ADF571AB6D78200D56481 /* JACampaignBannerCell.m in Sources */,
 				619351B01ECACA1F00330E5C /* CatalogListCollectionViewCell.swift in Sources */,
+				6184CDC8216B5B6C00A4AD7E /* TwoButtonsPurchaseView.swift in Sources */,
 				6147F74B1FB6ED9E000CBA85 /* TourSpotLight.swift in Sources */,
 				9A3D21881CA4057A00FE41B6 /* JAChooseCountryTableViewCell.m in Sources */,
 				61540C822006482300D2F03F /* Ext+Array.swift in Sources */,
-				CE9ADF581AB6D78200D56481 /* JAEditAddressViewController.m in Sources */,
 				6192B2C0204E9AAD00376D84 /* ReviewSurveyViewController.swift in Sources */,
 				61B2C7FD1F9CA44100930435 /* OrderDetailTableViewController.swift in Sources */,
 				61832FDE1ED2DC0D006F01FE /* RateStarControl.swift in Sources */,
@@ -9426,13 +9232,13 @@
 				8702FBD01E99FDD2001D1AA9 /* UserDefaultsManager.m in Sources */,
 				87AFF6831EE68018001EBC4D /* CartDataManager.swift in Sources */,
 				877762C91E9BB37C00B73140 /* ResponseData.m in Sources */,
-				CE9ADF5A1AB6D78200D56481 /* JANewRatingViewController.m in Sources */,
 				61B56D5D1F9B64FC0002BFF3 /* OrderProductHistory.swift in Sources */,
 				CE9ADF5B1AB6D78200D56481 /* JAGenericFiltersView.m in Sources */,
 				61AAC6771FC08296007FC21E /* WishList.swift in Sources */,
 				875AD5591E38C0C900584ABF /* RICampaign.m in Sources */,
 				6104C5CD1F5C24D300C0F5E3 /* ScrollerBarFollower.swift in Sources */,
 				61CCB309202EE0A8002D922B /* EmarsysMobileEngageTracker.swift in Sources */,
+				61CCEAAF2149529C00BC842F /* ForceUpdateViewController.swift in Sources */,
 				617585F91F8A088500D66541 /* Transformers.swift in Sources */,
 				61B603F220A0323A00D19DC7 /* RadioOptionQuestionView.swift in Sources */,
 				615E44B12115BDE800210C41 /* MutualTitleWithDescriptionHeaderTableViewCell.swift in Sources */,
@@ -9458,7 +9264,6 @@
 				8702FBC21E990C2D001D1AA9 /* OpenAppEvent.m in Sources */,
 				611BB3C31F3F4DBD00022906 /* NavBarUtility.swift in Sources */,
 				6190E9E61ED4263600163F6D /* BreadcrumbsItem.swift in Sources */,
-				CE9ADF621AB6D78200D56481 /* JASellerRatingsViewController.m in Sources */,
 				875081B31E532E400031ECBF /* AddressViewController.m in Sources */,
 				613A7E8D1EBF069100E1AB3F /* Product.swift in Sources */,
 				875AD58B1E38C0C900584ABF /* RIURLCacheWrapper.m in Sources */,
@@ -9482,6 +9287,7 @@
 				6147F7531FB73D31000CBA85 /* TourNames.swift in Sources */,
 				CE9ADF731AB6D78200D56481 /* JAPaymentCell.m in Sources */,
 				61B80E6920F61CB20028FA87 /* MinimalProductTableViewCell.swift in Sources */,
+				612B5E8E215A43EE00751E36 /* ForgetPassViewController.swift in Sources */,
 				CE9ADF741AB6D78200D56481 /* JAPDVBundleSingleItem.m in Sources */,
 				CE9ADF7A1AB6D78200D56481 /* JAPercentageBarView.m in Sources */,
 				6183DD1A210CAA4C00CD2339 /* ProductEmptyReviewTableViewCell.swift in Sources */,
@@ -9506,23 +9312,24 @@
 				619BAD9F20D9317300467C3D /* ZFModalTransitionAnimator.m in Sources */,
 				61C860411ECAF94400F2C571 /* AppUtitlity.swift in Sources */,
 				61F7053A1F76651000DCD77C /* HomePageFeaturedStoresTableViewCell.swift in Sources */,
-				CE9ADF831AB6D78200D56481 /* JAHomeViewController.m in Sources */,
 				875AD5791E38C0C900584ABF /* RISuccess.m in Sources */,
 				CE9ADF861AB6D78200D56481 /* JAColorFilterCell.m in Sources */,
 				61B603FE20A1C96500D19DC7 /* TextFieldQuestionView.swift in Sources */,
-				CE9ADF871AB6D78200D56481 /* JAAddressesViewController.m in Sources */,
 				CE9ADF891AB6D78200D56481 /* JAReviewCell.m in Sources */,
 				61D474821F6FD17E001DA6A6 /* HomePage.swift in Sources */,
 				9A189E7D1BB449CC0039BC14 /* JAProductInfoPriceLine.m in Sources */,
 				611195821E3CB14B00D06690 /* PlainTableViewCell.m in Sources */,
 				61BA9B4E1E9A00D7004E9DE8 /* EmarsysRecommendationCarouselView.m in Sources */,
 				CE9ADF8E1AB6D78200D56481 /* JACatalogTopView.m in Sources */,
+				791856C221745B2200E05A26 /* FormLinkButtonTableViewCell.swift in Sources */,
 				CE9ADF8F1AB6D78200D56481 /* JAPDVBundles.m in Sources */,
+				79B02FB22172FE0E009D51F8 /* FormCustomField.m in Sources */,
 				611BB3C11F3EDEEB00022906 /* UIBarButtonItem+Badge.m in Sources */,
 				87DAABF71E55EA9200445EBB /* BMLAlertView.m in Sources */,
 				CE9ADF911AB6D78200D56481 /* JAPDVRelatedItem.m in Sources */,
 				875AD5861E38C0C900584ABF /* RIAdjustTracker.m in Sources */,
 				CE0F13111AF277F700F99356 /* JAKickoutView.m in Sources */,
+				79F743B521771BB4004D7155 /* ChangePassViewController.swift in Sources */,
 				618D8B431FADEF5B0006A936 /* LoadingFooterView.swift in Sources */,
 				875AD5721E38C0C900584ABF /* RISellerReviewInfo.m in Sources */,
 				61B2C7F71F9C96B900930435 /* AccordionTableTableViewController.swift in Sources */,
@@ -9537,11 +9344,9 @@
 				CE9ADF941AB6D78200D56481 /* JAPicker.m in Sources */,
 				8714E0591E471E2F004C9B1D /* DataManager.m in Sources */,
 				CE9ADF971AB6D78200D56481 /* JAFallbackView.m in Sources */,
-				9AE766A21CB3CF5300B63D8E /* JAAccountServicesView.m in Sources */,
 				619D26C01F9CFDBA00167150 /* Ext+UIButton.swift in Sources */,
 				87459CA41E4F15AF00743120 /* PaymentTypeTableViewCell.m in Sources */,
 				8702FBB61E98E720001D1AA9 /* LoginEvent.m in Sources */,
-				9A3D21811CA3041A00FE41B6 /* JAChooseCountryViewController.m in Sources */,
 				611FF46E1E8BDBEF006F0064 /* EmarsysPredictManager.m in Sources */,
 				9DBD0C211C7F1CBB00F60374 /* JAProductInfoSISLine.m in Sources */,
 				61D474801F6FC622001DA6A6 /* HomePageSlider.swift in Sources */,
@@ -9551,7 +9356,6 @@
 				CE9ADF9B1AB6D78200D56481 /* JACenterNavigationController.m in Sources */,
 				875AD5621E38C0C900584ABF /* RIHtmlShop.m in Sources */,
 				61B80E6E20F62A670028FA87 /* SellerOfferItemTableViewCell.swift in Sources */,
-				9AE766BF1CBBF01C00B63D8E /* JAEmptyCartView.m in Sources */,
 				61FCF0821FD69DF900084872 /* Ext+Error.swift in Sources */,
 				610BC2911FBC5CBF00A7C343 /* RecommendItem.swift in Sources */,
 				61259BE31FC5851F0051CBD4 /* BreadcrumbsView.swift in Sources */,
@@ -9560,7 +9364,6 @@
 				61E534411FA48D2A00CBDFED /* ProgressBarItemView.swift in Sources */,
 				9AEF741C1CD27C1400A5D574 /* JACheckoutButton.m in Sources */,
 				616F7D121F6D172100085B64 /* IconTableViewCell.swift in Sources */,
-				CE9ADF9C1AB6D78200D56481 /* JAAddNewAddressViewController.m in Sources */,
 				875AD5481E38C0C900584ABF /* RIFieldOption.m in Sources */,
 				61DA16411FEE7E93001C5071 /* Links.swift in Sources */,
 				FFF900871C6B5BDF00DDF538 /* JARadioGroupComponent.m in Sources */,
@@ -9589,17 +9392,15 @@
 				CE9ADFA91AB6D78200D56481 /* JASizeGuideViewController.m in Sources */,
 				9AB517A61C934342007E1327 /* JAButton.m in Sources */,
 				619D0B071EA347DE00FDB255 /* BaseControlView.m in Sources */,
-				9A55A6911BC2E894008EF4A6 /* JAPDVVariationsViewController.m in Sources */,
 				872230EA1E6A989D000748E9 /* SettingsManager.m in Sources */,
 				CE9ADFAB1AB6D78200D56481 /* JANavigationBarLayout.m in Sources */,
 				87EA031B1E6D6F9900B1E062 /* FormHeaderTableViewCell.m in Sources */,
 				8708A1721E406C1100ABA7D8 /* ContactUsViewController.m in Sources */,
 				61338D001EACC61A0017BB06 /* EmarsysRecommendationMinimalCarouselWidgetView.m in Sources */,
+				79FEC0AD2175A524008A69F1 /* BaseAuthenticationViewCtrl.swift in Sources */,
 				CE9ADFAD1AB6D78200D56481 /* JASizeGuideWizardView.m in Sources */,
 				9A40772C1CE0CF5200313D20 /* UILabel+Size.m in Sources */,
-				CE9ADFB11AB6D78200D56481 /* JAUndefinedSearchView.m in Sources */,
 				6119576D2003C0A600B7B9D8 /* Ext+Dictionary.swift in Sources */,
-				9AED08341C74CA0E00B5FDF0 /* JASuccessPageViewController.m in Sources */,
 				CEA106F91BD003EC00EF88B1 /* JACategoriesSideMenuCell.m in Sources */,
 				6170AECD20FA03C3007A4905 /* SellerDeliveryTime.swift in Sources */,
 				877762CD1E9BB38800B73140 /* DataMessage.m in Sources */,
@@ -9608,9 +9409,11 @@
 				CE9ADFB81AB6D78200D56481 /* JATeaserView.m in Sources */,
 				87D07D7C1E4099C300C00AC6 /* CheckoutConfirmationViewController.m in Sources */,
 				61CBA8861F691D05009F0EEF /* SearchViewController.swift in Sources */,
+				79F743B3217714E3004D7155 /* PhoneChangeViewController.swift in Sources */,
 				9A3C76171C285D9300EB0B11 /* JARecentlyViewedCell.m in Sources */,
 				CED620511BEA5EE800FA8403 /* JACollectionSeparator.m in Sources */,
 				61BA9B3D1E99FDEE004E9DE8 /* WidgetBase.m in Sources */,
+				612B5E8C215A20C500751E36 /* SignUpViewController.swift in Sources */,
 				614927BF20EBAD5200B16B27 /* ProductReviewListViewController.swift in Sources */,
 				870680B81E62DF20000368D5 /* AddressTableViewHeaderCell.m in Sources */,
 				611C1B2E1F0B757E00C57E4D /* FilterSearchEvent.m in Sources */,
@@ -9624,18 +9427,19 @@
 				615EDF541F697DA600454A10 /* LocalSearchSuggestion.swift in Sources */,
 				613A7E981EBF692E00E1AB3F /* CatalogFilterOption.swift in Sources */,
 				6157A73D20E0FB54001B8361 /* ProductSpecificsTableViewCell.swift in Sources */,
-				9A3876641BCD0DFD0088B186 /* JAProductReviewsView.m in Sources */,
 				9A189E6A1BB31AF70039BC14 /* JAProductInfoRatingLine.m in Sources */,
+				79F5BA782184456B00705209 /* WebEnganeTracker.swift in Sources */,
 				87EA03231E6D987400B1E062 /* ProgressViewControl.m in Sources */,
 				61036B441E658329006E12A9 /* OrderListViewController.m in Sources */,
 				8702FBE91E9A3458001D1AA9 /* ViewProductEvent.m in Sources */,
-				CE9ADFBB1AB6D78200D56481 /* JAPDVViewController.m in Sources */,
+				61A2FE43216A56AA0041645B /* FormButtonTableViewCell.swift in Sources */,
 				617585F61F88FF8D00D66541 /* Ext+UIColor.swift in Sources */,
 				87DAABEF1E55BD9D00445EBB /* AddressTableViewController.m in Sources */,
 				870F8D061E33975A0021F87B /* IntUtility.m in Sources */,
 				875AD5751E38C0C900584ABF /* RIShippingMethodFormField.m in Sources */,
 				610C68A31EC74292008FB66C /* CatalogHeaderView.swift in Sources */,
 				CE9ADFBC1AB6D78200D56481 /* JAColorView.m in Sources */,
+				61CD2C372156605400493D43 /* Ext+UIImageView.swift in Sources */,
 				8720C3411EE2CD2700404378 /* LoadingManager.swift in Sources */,
 				618204A01E6DABFA00322937 /* SubCatFilterViewController.m in Sources */,
 				897460DE1C19DDFD00A38073 /* JACollectionHeaderView.m in Sources */,
@@ -9656,11 +9460,11 @@
 				87AFF6851EE686FE001EBC4D /* CheckoutDataManager.swift in Sources */,
 				619CC2DE1F8E58AC008E4B86 /* TileTeaserCollectionViewCell.swift in Sources */,
 				CE9ADFC21AB6D78200D56481 /* JAPriceFiltersView.m in Sources */,
+				795D7C32218F35DB00BCBA98 /* ProductReturnPolicyViewController.swift in Sources */,
 				9AEF73FE1CD20E1C00A5D574 /* JAStepByStepModel.m in Sources */,
 				61B161D01E6BF24E0032C5C6 /* SearchPriceFilter.m in Sources */,
 				9AE766D41CBD2E0300B63D8E /* JAProductInfoPriceDescriptionLine.m in Sources */,
 				614927C220ECC4AA00B16B27 /* ProductReviewItemTableViewCell.swift in Sources */,
-				9AE766B11CBBB28E00B63D8E /* JACartProductsView.m in Sources */,
 				61FC4670201DC044000141FA /* EditProfileViewController.swift in Sources */,
 				61B56D591F9B4EC30002BFF3 /* OrderItem.swift in Sources */,
 				619E92CF1F8A1044003885BC /* DailyDealsCollectionViewCell.swift in Sources */,
@@ -9679,13 +9483,12 @@
 				61E57919205582E40092D0F8 /* SelectItemViewCell.swift in Sources */,
 				61E6EE64209DD2FC0007ED5F /* CHIBasePageControl.swift in Sources */,
 				61A166BA1FB6A7AA003FBA56 /* TourManager.swift in Sources */,
+				619A4615214941F2005565D6 /* AppConfigurations.swift in Sources */,
 				875AD54F1E38C0C900584ABF /* RISearchSuggestion.m in Sources */,
 				87A681711E41FCF300D252AC /* CheckoutProgressView.m in Sources */,
 				6157A74220E24C02001B8361 /* ProductDescriptionsViewController.swift in Sources */,
 				CE9ADFC71AB6D78200D56481 /* JAButtonWithBlur.m in Sources */,
-				FFB1B08E1CE5E163000F60AD /* JAORWaysViewController.m in Sources */,
 				CE9ADFCB1AB6D78200D56481 /* JAAddRatingView.m in Sources */,
-				FF4465291CEF1376003A65EA /* JAORPickupStationWebViewController.m in Sources */,
 				617D7F3C1EDC2F3E00F36CF7 /* ProfileOrderTableViewCell.swift in Sources */,
 				61B4026C1FC0351400E57EF4 /* WishListCollectionViewCell.swift in Sources */,
 				618B25701F35D85900B39440 /* DeliveryTimeControl.swift in Sources */,
@@ -9702,7 +9505,6 @@
 				616A9FCD20C41A5600144E5B /* ImageCollectionViewCell.swift in Sources */,
 				61F946B31ED4502100F341A6 /* ProductDataManager.swift in Sources */,
 				9AB488891B727B2D00886A44 /* UIImage+WithColor.m in Sources */,
-				CE9ADFD11AB6D78200D56481 /* JAOrderSummaryView.m in Sources */,
 				61D24A7C1FD4134700DDA283 /* AdjustTracker.swift in Sources */,
 				87A6815C1E40F9C000D252AC /* BaseViewController.m in Sources */,
 				CE9ADFD21AB6D78200D56481 /* JAPriceView.m in Sources */,
@@ -9723,7 +9525,6 @@
 				6125534C1E4EF63000975C6F /* InputTextFieldControl.m in Sources */,
 				875AD5541E38C0C900584ABF /* RIURLCache.m in Sources */,
 				875AD5651E38C0C900584ABF /* RIOrder.m in Sources */,
-				FF4465221CECB806003A65EA /* JAORPaymentViewController.m in Sources */,
 				619E92CA1F8A0B61003885BC /* DailyDealsTableViewCell.swift in Sources */,
 				615EBA7A1FEFE5F900FB58DE /* CategoryCoverTableViewCell.swift in Sources */,
 				617D4EEF1FEA65CC00A00799 /* RootCategoryViewController.swift in Sources */,
@@ -9749,11 +9550,11 @@
 				879F88311E51D55A0033FE87 /* FormEntity.m in Sources */,
 				875AD5421E38C0C900584ABF /* RICategory.m in Sources */,
 				61338CF51EACA1690017BB06 /* EmarsysRecommendationMinimalCarouselCollectionViewCell.m in Sources */,
-				9A40773A1CE24DF800313D20 /* JAORCallToReturnViewController.m in Sources */,
-				875AD5401E38C0C800584ABF /* RIAddress.m in Sources */,
 				CE9ADFE01AB6D78200D56481 /* JATextField.m in Sources */,
 				619CC2E31F8E5A79008E4B86 /* HomePageTileTeaserTableViewCell.swift in Sources */,
 				CE9ADFE11AB6D78200D56481 /* JASortingView.m in Sources */,
+				612B5E8A215A20B800751E36 /* SignInViewController.swift in Sources */,
+				612B5E882158CBD800751E36 /* AuthenticationViewController.swift in Sources */,
 				61036B681E65B5F5006E12A9 /* OrderList.m in Sources */,
 				875AD5581E38C0C900584ABF /* RIBanner.m in Sources */,
 				6113E2B42055419D00CE20BE /* HorizontalPickerView.swift in Sources */,
@@ -9761,14 +9562,12 @@
 				CE9ADFE31AB6D78200D56481 /* JACheckBoxWithOptionsComponent.m in Sources */,
 				875AD57B1E38C0C900584ABF /* RIVariation.m in Sources */,
 				613A7E961EBF66B700E1AB3F /* CatalogPriceFilterItem.swift in Sources */,
-				9AEF74251CD8A86900A5D574 /* JAORConfirmConditionsViewController.m in Sources */,
 				6CF4AE881ADEABBB0024EC34 /* JACatalogBannerCell.m in Sources */,
 				61143A591ED55C2300C53BA8 /* Ext+Bool.swift in Sources */,
 				612AC4D0210766CD00A14B3C /* SellerSortingTableViewCell.swift in Sources */,
 				61CBA88C1F696013009F0EEF /* SearchSuggestionDataManager.swift in Sources */,
 				6194224A20D7E9B000445845 /* ProductVariationView.swift in Sources */,
 				6157A74720E25167001B8361 /* ProductSpecificItemTableViewCell.swift in Sources */,
-				9AEF742C1CD8A8BD00A5D574 /* JAORConfirmationScreenViewController.m in Sources */,
 				CE9ADFE51AB6D78200D56481 /* JANewsletterComponent.m in Sources */,
 				610C68A51EC742E3008FB66C /* CatalogHeaderControl.swift in Sources */,
 				874AAB691E3CEA0700B3F8FE /* AppManager.m in Sources */,
@@ -9782,7 +9581,6 @@
 				61E534491FA491D000CBDFED /* ProgressBar.swift in Sources */,
 				61B579081F9E2B0A00C9F454 /* OrderOwnerInfoTableViewCell.swift in Sources */,
 				8702FBD41E99FE0E001D1AA9 /* UserDefaultsConsts.m in Sources */,
-				841E81AA1D1680F300A35AAF /* MPCoachMarks.m in Sources */,
 				873369BA1E582D0100B0B5E5 /* MultistepEntity.m in Sources */,
 				612FDC371E45E0A900A9D0BD /* CartTableViewCell.m in Sources */,
 				CE9ADFEF1AB6D78200D56481 /* JAPickerScrollView.m in Sources */,
@@ -9796,12 +9594,10 @@
 				9A4077251CE0CDA600313D20 /* NSString+Size.m in Sources */,
 				879F87F51E5058060033FE87 /* PlainTableViewHeaderCell.m in Sources */,
 				61143A641ED5BCB000C53BA8 /* FilteredListNoResultViewController.swift in Sources */,
-				9A38764E1BCD0CDC0088B186 /* JATabNavigationViewController.m in Sources */,
 				CE9ADFF41AB6D78200D56481 /* JAActivityViewController.m in Sources */,
 				619351AB1ECAC9DD00330E5C /* CatalogCardCollectionViewCell.swift in Sources */,
 				CE9ADFF61AB6D78200D56481 /* JAShippingInfoCell.m in Sources */,
 				87459C8D1E4F04AD00743120 /* RadioButtonViewControl.m in Sources */,
-				611C19201F5FCEEB0073940C /* HomeViewController.swift in Sources */,
 				615052D61FB0758600E67571 /* FailPaymentViewController.swift in Sources */,
 				6127EA0020B2DB470064B291 /* ProductDetailViewController.swift in Sources */,
 				9AC4D6991B45A51A00036F1C /* JACatalogListCollectionViewCell.m in Sources */,
@@ -9812,7 +9608,6 @@
 				612544061EBA1075007F9350 /* OrderDataManager.swift in Sources */,
 				617585F41F88EEFE00D66541 /* HomePageDailyDeals.swift in Sources */,
 				613A7E941EBF651600E1AB3F /* BaseCatalogFilterItem.swift in Sources */,
-				CE9ADFF71AB6D78200D56481 /* JASidePanelController.m in Sources */,
 				9AC4D6A01B46A50000036F1C /* JACatalogCollectionViewCell.m in Sources */,
 				9A7A77321B2F182E002F530F /* JAPDVGallery.m in Sources */,
 				61036B5A1E6599FC006E12A9 /* OrderListTableViewCell.m in Sources */,
@@ -9823,7 +9618,6 @@
 				87B684F11E4A00C30042C09F /* ReceiptItemView.m in Sources */,
 				CEDBF8651B0A01B60073971A /* UIImage+Mirror.m in Sources */,
 				61B56D5B1F9B51390002BFF3 /* OrderProductItem.swift in Sources */,
-				9A55A6991BC2E8AA008EF4A6 /* JABundlesViewController.m in Sources */,
 				61C860491ECB370300F2C571 /* BaseCatallogCollectionViewCell.swift in Sources */,
 				87DAABF31E55DDF400445EBB /* AlertManager.m in Sources */,
 				8714E0491E45FDF9004C9B1D /* NSMutableString+Extensions.m in Sources */,
@@ -9842,7 +9636,6 @@
 				875AD54A1E38C0C900584ABF /* RIForm.m in Sources */,
 				875AD57D1E38C0C900584ABF /* RIOperation.m in Sources */,
 				875AD5671E38C0C900584ABF /* RIPaymentMethodForm.m in Sources */,
-				CE9AE0021AB6D78200D56481 /* JAAddressCell.m in Sources */,
 				FF6BDCA71CE34ACB002BFE11 /* JAListNumberComponent.m in Sources */,
 				FF4383F81C71EEEB003BA957 /* JAScreenTitleComponent.m in Sources */,
 				61D60FEC20D1028E00AAA55B /* ProductSellerTableViewCell.swift in Sources */,
@@ -9875,24 +9668,22 @@
 				875AD5611E38C0C900584ABF /* RIFilter.m in Sources */,
 				875AD5831E38C0C900584ABF /* RITrackingConfiguration.m in Sources */,
 				9A38766B1BCD121A0088B186 /* JATabButton.m in Sources */,
-				9A4077501CE61D1300313D20 /* JAOptionResumeView.m in Sources */,
 				CED620551BEA5EFC00FA8403 /* JAProductCollectionViewFlowLayout.m in Sources */,
 				61C5C40D1E545C6200F22130 /* CartEntitySummaryView.m in Sources */,
 				61CC6AD21FC187B800355B78 /* SimpleProduct.swift in Sources */,
-				872230E61E6A9851000748E9 /* CAPSPageMenu.m in Sources */,
 				CE9AE00E1AB6D78200D56481 /* JACampaignPageView.m in Sources */,
 				6125535B1E4F382100975C6F /* UIScrollView+Extension.m in Sources */,
 				6157A74C20E25E11001B8361 /* ProductSpecificsTitleTableHeaderView.swift in Sources */,
 				61AF00B91F402FE600543BA8 /* DOFavoriteButton.swift in Sources */,
 				8702FBC71E9919A8001D1AA9 /* SignUpEvent.m in Sources */,
 				8714E0901E48CD41004C9B1D /* DiscountSwitcherView.m in Sources */,
+				612B5E90215A44A500751E36 /* PhoneVerifyViewController.swift in Sources */,
+				61D25BA02160CBCE00C958FD /* FormCustomFiled.m in Sources */,
 				61338CFA1EACA26C0017BB06 /* BaseEmarsysRecommendationCollectionViewCell.m in Sources */,
 				875435171E77ECD000B5D6B4 /* BaseTracker.m in Sources */,
 				61AA6B4320E8DD0900706F9A /* ProductReviewSummeryTableViewCell.swift in Sources */,
 				CE9AE0101AB6D78200D56481 /* JABirthDateComponent.m in Sources */,
-				CE9AE0111AB6D78200D56481 /* JANewSellerRatingViewController.m in Sources */,
 				9A4F91181B3D5E7200E34C0B /* JAPDVWizardView.m in Sources */,
-				CEF0C48D1BE8EE44005B5B12 /* JAReviewCollectionCell.m in Sources */,
 				875AD5681E38C0C900584ABF /* RIPaymentMethodFormField.m in Sources */,
 				619CC2DA1F8E56BF008E4B86 /* HomePageTileTeaser.swift in Sources */,
 				616D5036204EAA6F00370C4E /* SurveyQuestionCollectionViewCell.swift in Sources */,
@@ -9900,7 +9691,6 @@
 				875AD55C1E38C0C900584ABF /* RICatalog.m in Sources */,
 				877762D11E9BB39300B73140 /* DataMessageList.m in Sources */,
 				8714E0441E45E247004C9B1D /* UILabel+Extensions.m in Sources */,
-				CEF0C48E1BE8EE56005B5B12 /* JASellerDeliveryView.m in Sources */,
 				875AD5491E38C0C900584ABF /* RIFieldRatingStars.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10012,7 +9802,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
+				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -10021,6 +9812,7 @@
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				INFOPLIST_FILE = "Bamilo/Bamilo-Staging-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "055a0505-d499-4975-ae4f-a765be139a88";
@@ -10042,8 +9834,9 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 33W53692YU;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -10069,8 +9862,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 33W53692YU;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -10092,8 +9886,9 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 33W53692YU;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = NotificationService/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -10291,7 +10086,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ramtin Monazahian (5GPRV57UKD)";
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10303,7 +10098,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
-				PROVISIONING_PROFILE = "f911c9a7-56d2-40f8-8ed1-200e62cfd6cb";
+				PROVISIONING_PROFILE = "67140e63-d5a4-4761-b1db-a1e2ae0bd360";
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -10324,7 +10119,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Bamilo/Bamilo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Ramtin Monazahian (33W53692YU)";
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 79;
 				DEVELOPMENT_TEAM = 33W53692YU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10333,11 +10128,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bamilo/Bamilo-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bamilo.app.ios;
 				PRODUCT_NAME = Bamilo;
 				PROVISIONING_PROFILE = "b8772c30-7dca-4728-b353-5733eed76f5f";
 				PROVISIONING_PROFILE_SPECIFIER = "BMLO Production";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bamilo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(PROJECT_DIR)/Bamilo/ExternalFrameworks/RICommunicationFramework/** $(PROJECT_DIR)/Bamilo/ExternalFrameworks/FXBlurView/**";

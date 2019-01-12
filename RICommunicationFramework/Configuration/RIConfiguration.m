@@ -64,12 +64,13 @@ NSString *const RI_UNIQUE_COUNTRY_NAME_BAMILO = @"Iran";
 NSString *const RI_UNIQUE_COUNTRY_ISO_BAMILO = @"IR";
 
 NSString *const RI_MOBAPI_PREFIX = @"mobapi/";
-NSString *const RI_API_VERSION = @"v2.10/"; // ||| DO NOT CHANGE |||
+NSString *const RI_API_VERSION = @"v2.12/";
 
 NSString *const RI_API_INFO = @"main/md5/";
 NSString *const RI_API_IMAGE_RESOLUTIONS = @"main/imageresolutions/";
 NSString *const RI_API_GET_TEASERS = @"main/home/";
 NSString *const RI_API_COUNTRY_CONFIGURATION = @"main/getconfigurations/";
+NSString *const RI_API_CONFIGURATION = @"configurations/";
 NSString *const RI_API_GET_STATICBLOCKS = @"main/getstaticblocks/"; //$$$ this one doesn't exist in android, does it have anything to do with the next one?
 NSString *const RI_API_PROMOTIONS_URL = @"main/getstatic/key/mobile_promotions/";
 
@@ -162,3 +163,8 @@ NSString *const RI_API_REVIEW_LIST = @"catalog/reviews/sku/";
 NSString *const RI_API_SPECIFICATION = @"catalog/specification/sku/";
 NSString *const RI_API_PRODUCT_DESCRIPTIONS = @"catalog/description/sku/";
 NSString *const RI_API_ADD_PRODUCT_REVIEW = @"rating/addproductreview/";
+
+NSString *const RI_API_FORGET_PASS_REQUEST = @"customer/forgotpasswordrequest/";
+NSString *const RI_API_FORGET_PASS_VERIFY = @"customer/forgotpasswordverify/";
+NSString *const RI_API_FORGET_PASS_RESET = @"customer/forgotpasswordreset/";
+NSString *const RI_API_RETURN_POLICY = @"catalog/returnpolicy/category/";

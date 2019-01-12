@@ -11,8 +11,6 @@
 #import "EmarsysPredictProtocol.h"
 #import "ThreadManager.h"
 #import "NSArray+Extension.h"
-#import "EventUtilities.h"
-#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
 // --- Legacy imports ---
@@ -20,13 +18,13 @@
 #import "RICartItem.h"
 #import "JAUtils.h"
 
-@interface SuccessPaymentViewController () <EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
-@property (nonatomic, weak) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
+@interface SuccessPaymentViewController () //*<EmarsysPredictProtocol, FeatureBoxCollectionViewWidgetViewDelegate>*//
+//@property (nonatomic, weak) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UIButton *orderDetailButton;
-@property (strong, nonatomic) NSArray<RecommendItem *>* recommendedProducts;
+//@property (strong, nonatomic) NSArray<RecommendItem *>* recommendedProducts;
 @end
 
 @implementation SuccessPaymentViewController
@@ -34,12 +32,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.carouselWidget hide];
+//    [self.carouselWidget hide];
     
-    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
-    self.carouselWidget.delegate = self;
+//    [self.carouselWidget setBackgroundColor:[Theme color:kColorVeryLightGray]];
+//    self.carouselWidget.delegate = self;
     [self setupView];
-    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
+//    [self.carouselWidget updateTitle:STRING_BAMILO_RECOMMENDATION_FOR_YOU];
     
     [self.tabBarController.tabBar setTranslucent:NO];
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -75,9 +73,9 @@
     }
 
     self.iconImageView.image = [UIImage imageNamed:@"successIcon"];
-    [self.carouselWidget hide];
+//    [self.carouselWidget hide];
     
-    [EmarsysPredictManager sendTransactionsOf:self];
+//    [EmarsysPredictManager sendTransactionsOf:self];
     [self.orderDetailButton setHidden:NO];
     
     if ([self.cart.orderNr isKindOfClass:[NSString class]] && [self.cart.orderNr length]) {
@@ -136,33 +134,33 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
-#pragma mark - EmarsysPredictProtocol
-- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
-    [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
-    return transaction;
-}
-
-
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    NSString *recommendationLogic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"; //Production requirement
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic: recommendationLogic];
-    recommend.limit = 100;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        if (!result.products.count) return;
-        [ThreadManager executeOnMainThread:^{
-            [self.carouselWidget fadeIn:0.15];
-            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
-                return [[RecommendItem alloc] initWithItem:item];
-            }];
-            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
-        }];
-    };
-    return @[recommend];
-}
-
-- (void)moreButtonTappedInWidgetView:(id)widgetView {
-    [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
-}
+//#pragma mark - EmarsysPredictProtocol
+//- (EMTransaction *)getDataCollection:(EMTransaction *)transaction {
+//    [transaction setPurchase:self.cart.orderNr ofItems: [self.cart convertItems]];
+//    return transaction;
+//}
+//
+//
+//- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+//    NSString *recommendationLogic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL"; //Production requirement
+//    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic: recommendationLogic];
+//    recommend.limit = 100;
+//    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+//        if (!result.products.count) return;
+//        [ThreadManager executeOnMainThread:^{
+//            [self.carouselWidget fadeIn:0.15];
+//            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+//                return [[RecommendItem alloc] initWithItem:item];
+//            }];
+//            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
+//        }];
+//    };
+//    return @[recommend];
+//}
+//
+//- (void)moreButtonTappedInWidgetView:(id)widgetView {
+//    [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
+//}
 
 
 #pragma mark - DataTrackerProtocol
@@ -170,25 +168,27 @@
     return @"CheckoutFinish";
 }
 
-- (BOOL)isPreventSendTransactionInViewWillAppear {
-    return YES;
-}
 - (IBAction)orderDetailButtonTapped:(id)sender {
     [self performSegueWithIdentifier:@"OrderDetailViewController" sender:sender];
 }
 
-#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
-- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
-    if ([item isKindOfClass:[RecommendItem class]]) {
-        
-        NSString *logic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL";
-        
-        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:logic]];
-        
-        //track behaviour journey from here
-        [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:[NSString stringWithFormat:@"%@-%@", [self getScreenName], logic]] currentScreenName:[self getScreenName]];
-    }
-}
+//#pragma mark - FeatureBoxCollectionViewWidgetViewDelegate
+//- (BOOL)isPreventSendTransactionInViewWillAppear {
+//    return YES;
+//}
+//
+//- (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
+//    if ([item isKindOfClass:[RecommendItem class]]) {
+//
+//        NSString *logic = self.cart.cartEntity.cartCount.integerValue == 1 ? @"ALSO_BOUGHT" : @"PERSONAL";
+//
+//        [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:[self getScreenName] logic:logic]];
+//        self.hidesBottomBarWhenPushed = YES;
+//        //track behaviour journey from here
+//        [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:[NSString stringWithFormat:@"%@-%@", [self getScreenName], logic]] currentScreenName:[self getScreenName]];
+//        self.hidesBottomBarWhenPushed = NO;
+//    }
+//}
 
 #pragma mark - hide tabbar in this view controller
 - (BOOL)hidesBottomBarWhenPushed {
@@ -200,10 +200,11 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
-        AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
-        viewCtrl.recommendItems = self.recommendedProducts;
-    } else if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
+//    if ([segue.identifier isEqualToString: @"showAllRecommendationView"]) {
+//        AllRecommendationViewController *viewCtrl = (AllRecommendationViewController *) [segue destinationViewController];
+//        viewCtrl.recommendItems = self.recommendedProducts;
+//    } else
+    if([segue.identifier isEqualToString: @"OrderDetailViewController"]) {
         self.hidesBottomBarWhenPushed = YES;
         OrderDetailViewController *orderDetailViewCtrl = (OrderDetailViewController *)segue.destinationViewController;
         self.hidesBottomBarWhenPushed = NO;

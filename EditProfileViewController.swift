@@ -9,11 +9,11 @@
 import UIKit
 
 struct EditProfileDataSource {
-    var customer: RICustomer?
+    var customer: User?
     var warningMsg: String?
 }
 
-class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol, PhoneChangeViewControllerDelegate {
+class EditProfileViewController: BaseViewController, FormViewControlDelegate, ProtectedViewControllerProtocol, DataServiceProtocol {
 
     @IBOutlet weak var tableview: UITableView!
     private var formController: FormViewControl?
@@ -21,6 +21,7 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     private var phoneFieldModel : FormItemModel?
     private var bankCartFieldModel : FormItemModel?
     private var previousBankCartNumber: String?
+    private var animator: ZFModalTransitionAnimator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +42,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
             let birthday = FormItemModel.birthdayFieldName("customer[birthday]"),
             let nationalID = FormItemModel.nationalID("customer[national_id]"),
             let bankCard = FormItemModel.bankAccountFieldName("customer[card_number]") {
-
+            phone.icon = nil
             email.disabled = true
+            nationalID.icon = nil
             self.birthdayFeildModel = birthday
             self.phoneFieldModel = phone
-            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard]
+            self.formController?.formModelList = [phone, firstName, lastName, gender, email, birthday, nationalID, bankCard, "submit"]
         }
         self.formController?.setupTableView()
         self.getContent()
@@ -71,7 +73,6 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.formController?.unregisterForKeyboardNotifications()
-        
         self.view.resignFirstResponder()
     }
     
@@ -105,30 +106,12 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     func fieldHasBeenFocuced(_ field: InputTextFieldControl!, inFieldIndex fieldIndex: UInt) {
         if field.model == self.phoneFieldModel {
             field.input.textField.resignFirstResponder()
-            self.performSegue(withIdentifier: "showPhoneChangeViewController", sender: nil)
-        }
-    }
-    
-    //MARK: - DataServiceProtocol
-    func bind(_ data: Any!, forRequestId rid: Int32) {
-        if rid == 0, let dataSource = data as? EditProfileDataSource, let customer = dataSource.customer {
-            ThreadManager.execute(onMainThread: {
-                self.updateFormWithCustomer(customer: customer)
-                if let warningMessage = dataSource.warningMsg, warningMessage.count > 0 {
-                    self.setHeaderMessage(message: warningMessage)
-                }
-            })
-        } else if rid == 1 {
-            if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
-                self.navigationController?.popViewController(animated: true)
-                viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
-            }
+            self.performSegue(withIdentifier: "presentPhoneChangeViewController", sender: nil)
         }
     }
     
     private func setHeaderMessage(message: String) {
         let headerView = self.tableview.dequeueReusableHeaderFooterView(withIdentifier: CMSTableViewHeader.nibName()) as! CMSTableViewHeader
-        
         //Auto dimenssion for tableview header (with dynamic height for dyamic content size)
         headerView.setMessage(message: message)
         headerView.setNeedsUpdateConstraints()
@@ -146,6 +129,37 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         self.tableview.tableHeaderView = headerView
     }
     
+    //MARK: - DataServiceProtocol
+    func bind(_ data: Any!, forRequestId rid: Int32) {
+        syncWithCurrentShareUser(data: data)
+        if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+            self.updateFormWithCustomer(customer: customer)
+            if let warningMessage = dataSource.warningMessage, warningMessage.count > 0 {
+                ThreadManager.execute(onMainThread: {
+                    self.setHeaderMessage(message: warningMessage)
+                })
+            }
+        } else if rid == 1 {
+            if let viewCtrl = self.navigationController?.previousViewController(step: 1) as? BaseViewController {
+                self.navigationController?.popViewController(animated: true)
+                (viewCtrl as? ProfileViewController)?.refreshContent()
+                viewCtrl.showNotificationBarMessage(STRING_INFO_SUBMISSION_SUCCESS, isSuccess: true)
+            }
+        }
+    }
+    
+    func syncWithCurrentShareUser(data: Any) {
+        if let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+            if let pass = CurrentUserManager.user.password {
+                CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+            }
+        } else if let dataDictionary = data as? [String: Any], let content = dataDictionary[DataManagerKeys.DataContent] as? CustomerEntity, let customer = content.entity {
+            if let pass = CurrentUserManager.user.password {
+                CurrentUserManager.saveUser(user: customer, plainPassword: pass)
+            }
+        }
+    }
+
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
         self.getContent { (success) in
             callBack(success)
@@ -175,9 +189,8 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
     }
     
     
-    private func updateFormWithCustomer(customer: RICustomer) {
+    private func updateFormWithCustomer(customer: User) {
         
-        if customer == nil { return }
         var fieldValues = [
             "customer[phone]": customer.phone ?? "",
             "customer[first_name]": customer.firstName ?? "",
@@ -188,38 +201,37 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         ]
         
         if let birthday = customer.birthday {
-            let dateFormatter = DateFormatter(withFormat: "yyyy-MM-dd", locale: "en_US")
-            dateFormatter.calendar = Calendar(identifier: .persian)
-            if let date = dateFormatter.date(from: birthday) {
-                fieldValues["customer[birthday]"] = birthdayFeildModel?.visibleDateFormat.string(from: date) ?? ""
-            }
+            fieldValues["customer[birthday]"] = birthdayFeildModel?.visibleDateFormat.string(from: birthday) ?? ""
         }
         
         if let gender = customer.gender {
-            let genderMapper = ["male": STRING_MALE, "female": STRING_FEMALE]
-            fieldValues["customer[gender]"] = genderMapper[gender] ?? ""
+            let genderMapper = [Gender.male.rawValue: STRING_MALE, Gender.female.rawValue: STRING_FEMALE]
+            fieldValues["customer[gender]"] = genderMapper[gender.rawValue] ?? ""
         }
         
-        if let modelList = self.formController?.formModelList {
-            for (index, model) in modelList.enumerated() {
-                if model is FormItemModel {
-                    self.formController?.updateFieldIndex(UInt(index), withUpdateModelBlock: { (model) -> FormItemModel? in
-                        if let fieldName = model?.fieldName {
-                            model?.inputTextValue = fieldValues[fieldName]
-                        }
-                        return model
-                    })
+        //udpate UI
+        ThreadManager.execute(onMainThread: {
+            if let modelList = self.formController?.formModelList {
+                for (index, model) in modelList.enumerated() {
+                    if model is FormItemModel {
+                        self.formController?.updateFieldIndex(UInt(index), withUpdateModelBlock: { (model) -> FormItemModel? in
+                            if let fieldName = model?.fieldName {
+                                model?.inputTextValue = fieldValues[fieldName]
+                            }
+                            return model
+                        })
+                    }
                 }
             }
-        }
-        
-        self.previousBankCartNumber = customer.bankCartNumber
-        self.formController?.refreshView()
+            
+            self.previousBankCartNumber = customer.bankCartNumber
+            self.formController?.refreshView()
+        })
     }
     
     //MARK: - DataTrackerProtocol
     override func getScreenName() -> String! {
-        return "Profile"
+        return "EditProfile"
     }
     
     //MARK: - NavigationBarPrtocol
@@ -227,17 +239,27 @@ class EditProfileViewController: BaseViewController, FormViewControlDelegate, Pr
         return STRING_PROFILE
     }
     
-    //MARK: - PhoneChangeViewControllerDelegate
-    func successfullyHasChangedPhone(phone: String) {
-        self.phoneFieldModel?.inputTextValue = phone
-        self.tableview.tableHeaderView = nil
-        self.formController?.refreshView()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
-        if segueName == "showPhoneChangeViewController", let navigationViewCtrl = segue.destination as? UINavigationController, let phoneChangeViewCtrl = navigationViewCtrl.viewControllers.first as? PhoneChangeViewController {
-            phoneChangeViewCtrl.delegate = self
+        if segueName == "presentPhoneChangeViewController", let athenticationViewCtrl = segue.destination as? AuthenticationViewController {
+            athenticationViewCtrl.viewMode = .changePhone
+            if animator == nil {
+                animator = Utility.createModalBounceAnimator(viewCtrl: athenticationViewCtrl)
+            }
+            athenticationViewCtrl.delegate = self
+            athenticationViewCtrl.transitioningDelegate = animator
+            athenticationViewCtrl.modalPresentationStyle = .overFullScreen
         }
+    }
+}
+
+//MARK: - PhoneChangeViewControllerDelegate
+extension EditProfileViewController: AuthenticationViewControllerDelegate {
+    func successfullyHasChangedPhone(phone: String) {
+        self.phoneFieldModel?.inputTextValue = phone
+        self.phoneFieldModel?.lastErrorMessage = nil
+        self.tableview.tableHeaderView = nil
+        self.formController?.refreshView()
+        self.formController?.tableView.layoutIfNeeded()
     }
 }

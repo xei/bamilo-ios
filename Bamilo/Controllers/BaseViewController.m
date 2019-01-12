@@ -11,7 +11,6 @@
 #import "BaseViewController.h"
 #import "ViewControllerManager.h"
 #import "NotificationBarView.h"
-#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 #import "DataServiceProtocol.h"
 
@@ -34,7 +33,7 @@
     [self recordStartLoadTime];
     self.title = nil;
     self.view.backgroundColor = JABackgroundGrey;
-    if ([self getScreenName].length) {
+    if (VALID_NOTEMPTY([self getScreenName], NSString)) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
     
@@ -79,15 +78,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
-        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
-            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
-                [EmarsysPredictManager sendTransactionsOf:self];
-            }
-        } else {
-            [EmarsysPredictManager sendTransactionsOf:self];
-        }
-    }
+//    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
+//        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
+//            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
+//                [EmarsysPredictManager sendTransactionsOf:self];
+//            }
+//        } else {
+//            [EmarsysPredictManager sendTransactionsOf:self];
+//        }
+//    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

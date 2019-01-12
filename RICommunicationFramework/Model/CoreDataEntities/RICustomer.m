@@ -7,13 +7,10 @@
 //
 
 #import "RICustomer.h"
-#import "RIAddress.h"
 #import "RIForm.h"
 #import "RIField.h"
 #import "ViewControllerManager.h"
-#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
-#import "PushWooshTracker.h"
 #import <Crashlytics/Crashlytics.h>
 
 #define kUserIsGuestFlagKey [NSString stringWithFormat:@"%@_user_is_guest", [RIApi getCountryIsoInUse]]
@@ -158,27 +155,28 @@
     if (customers.count > 0) {
         __block RICustomer *customerObject = [customers lastObject];
         if (customerObject && customerObject.email.length && customerObject.plainPassword.length) {
-            [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
-                if (error == nil) {
-                    if (returnBlock != nil) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(YES);
-                        });
-                    }
-                } else {
-                    [Utility resetUserBehaviours];
-                    if (returnBlock != nil) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            returnBlock(NO);
-                        });
-                    }
-                }
-            }];
+//            [DataAggregator loginUser:nil username:customerObject.email password:customerObject.plainPassword completion:^(id _Nullable data, NSError * _Nullable error) {
+//                if (error == nil) {
+//                    if (returnBlock != nil) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            returnBlock(YES);
+//                        });
+//                    }
+//                } else {
+//                    [Utility resetUserBehaviours];
+//                    if (returnBlock != nil) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            returnBlock(NO);
+//                        });
+//                    }
+//                }
+//            }];
             
             //Set auto logged in customer
-            [EmarsysPredictManager setCustomer:customerObject];
-            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
+//            [EmarsysPredictManager setCustomer:customerObject];
+//            [PushWooshTracker setUserID:[customerObject.customerId stringValue]];
             [[Crashlytics sharedInstance] setUserEmail:customerObject.email];
+            [[Crashlytics sharedInstance] setUserIdentifier: [NSString stringWithFormat:@"%ld", (long)customerObject.customerId.integerValue]];
             
         } else {
             [Utility resetUserBehaviours];
@@ -325,21 +323,6 @@
 
 + (BOOL)checkIfUserIsLoggedAsGuest {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserIsGuestFlagKey];
-}
-
-
-+ (BOOL)checkIfUserHasAddresses {
-    NSArray *customers = [[RIDataBaseWrapper sharedInstance] allEntriesOfType:NSStringFromClass([RICustomer class])];
-    if (VALID_NOTEMPTY(customers, NSArray)) {
-        RICustomer *customer = [customers lastObject];
-        if(VALID_NOTEMPTY(customer.addresses, NSOrderedSet)) {
-            return YES;
-        } else {
-            return NO;
-        }
-    } else {
-        return NO;
-    }
 }
 
 #pragma mark - Cancel requests

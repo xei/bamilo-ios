@@ -15,7 +15,7 @@
     @objc optional func rateProduct(attributes: EventAttributeType)
     @objc optional func search(attributes: EventAttributeType)
     @objc optional func purchased(attributes: EventAttributeType)
-    @objc optional func teaserPurchased(attributes: EventAttributeType)
+    @objc optional func purchaseBehaviour(attributes: EventAttributeType)
     @objc optional func itemTapped(attributes: EventAttributeType)
     @objc optional func addToCart(attributes: EventAttributeType)
     @objc optional func removeFromCart(attributes: EventAttributeType)
@@ -31,4 +31,8 @@
     @objc optional func callToOrderTapped(attributes: EventAttributeType)
     @objc optional func checkoutStart(attributes: EventAttributeType)
     @objc optional func checkoutFinished(attributes: EventAttributeType)
+    @objc optional func buyNowTapped(attributes: EventAttributeType)
+    @objc optional func shareApp(attributes: EventAttributeType)
+    @objc optional func searchSuggestionTapped(attributes: EventAttributeType)
+    @objc optional func phoneVerification(attributes: EventAttributeType)
 }

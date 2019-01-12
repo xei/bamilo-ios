@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *dropDownIcon;
 @property (weak, nonatomic) IBOutlet UILabel *errorMsg;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorMsgTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lettTextFieldToEyeIconButtonConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lefttextFieldToSuperViewConstraint;
 @property (weak, nonatomic) IBOutlet UIView *seperatorBorderView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTrailingConstraint;
 @property (weak, nonatomic) IBOutlet IconButton *eyeIconButton;
@@ -49,12 +51,20 @@
     self.eyeIconButton.backgroundColor = UIColor.clearColor;
     
     [self.eyeIconButton setImage:[UIImage imageNamed: @"btn_eye_closed"] forState:UIControlStateNormal];
+    [self updateTextFieldConstraints];
 }
 
 - (void)enableEyeIconButton:(BOOL)enable {
     [self.eyeIconButton setEnabled:enable];
     [self.eyeIconButton setHidden:!enable];
     [self.eyeIconButton setUserInteractionEnabled:enable];
+    [self updateTextFieldConstraints];
+}
+
+- (void)updateTextFieldConstraints {
+    BOOL wideTextField = self.dropDownIcon.isHidden && self.eyeIconButton.isHidden;
+    [self.lettTextFieldToEyeIconButtonConstraint setPriority:wideTextField ? UILayoutPriorityDefaultLow : UILayoutPriorityDefaultHigh];
+    [self.lefttextFieldToSuperViewConstraint setPriority: wideTextField ? UILayoutPriorityDefaultHigh: UILayoutPriorityDefaultLow];
 }
 
 -(void)setHasIcon:(BOOL)hasIcon {
@@ -90,6 +100,7 @@
 
 - (void)updateDropDownAppearance:(BOOL)isHidden {
     [self.dropDownIcon setHidden:isHidden];
+    [self updateTextFieldConstraints];
 }
 
 - (IBAction)eyeIconButtonTapped:(id)sender {

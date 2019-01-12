@@ -35,6 +35,7 @@ class NewProduct: NSObject, Mappable, TrackableProductProtocol {
     var variations: [ProdoctVariationItem]?
     var isSelected = false //for products of variations
     var returnPolicy: ProductReturnPolicy?
+    var returnPolicyContent: ProductReturnPolicyContent?
     var sizeVariaionProducts: [NewProduct]?
     var OtherVariaionProducts: [NewProduct]?
     var breadCrumbs: [BreadcrumbsItem]?
@@ -92,11 +93,13 @@ enum ProdoctVariationItemType: String {
 class ProductReturnPolicy:NSObject, Mappable {
     var title: String?
     var icon: URL?
+    var cmsKey: String?
     
     required init?(map: Map) {}
     
     func mapping(map: Map) {
         title <- map["title"]
+        cmsKey <- map["cms_key"]
         icon <- (map["icon"], URLTransform(shouldEncodeURLString: true, allowedCharacterSet: .urlQueryAllowed))
     }
 }
@@ -180,5 +183,19 @@ class ProductSpecifics: Mappable {
     required init?(map: Map) {}
     func mapping(map: Map) {
         items <- map["specifications"]
+    }
+}
+
+class ProductReturnPolicyContent: Mappable {
+    
+    var policy: String?
+    required init?(map: Map) {}
+    init() {}
+    convenience init(with policy: String) {
+        self.init()
+        self.policy = policy
+    }
+    func mapping(map: Map) {
+        policy <- map["returnPolicy"]
     }
 }

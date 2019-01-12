@@ -31,24 +31,21 @@
 
 @implementation JACatalogCollectionViewCell
 
-- (JAClickableView *)feedbackView
-{
+- (JAClickableView *)feedbackView {
     if (!VALID_NOTEMPTY(_feedbackView, JAClickableView)) {
         _feedbackView = [[JAClickableView alloc] initWithFrame:self.bounds];
     }
     return _feedbackView;
 }
 
-- (UIImageView *)productImageView
-{
+- (UIImageView *)productImageView {
     if (!VALID_NOTEMPTY(_productImageView, UIImageView)) {
         _productImageView = [[UIImageView alloc] init];
     }
     return _productImageView;
 }
 
-- (UILabel *)brandLabel
-{
+- (UILabel *)brandLabel {
     if (!VALID_NOTEMPTY(_brandLabel, UILabel)) {
         _brandLabel = [[UILabel alloc] init];
         [_brandLabel setFont:JACaptionFont];
@@ -58,8 +55,7 @@
     return _brandLabel;
 }
 
-- (UILabel *)nameLabel
-{
+- (UILabel *)nameLabel {
     if (!VALID_NOTEMPTY(_nameLabel, UILabel)) {
         _nameLabel = [[UILabel alloc] init];
         [_nameLabel setFont:JABodyFont];
@@ -69,8 +65,7 @@
     return _nameLabel;
 }
 
-- (UILabel *)discountLabel
-{
+- (UILabel *)discountLabel {
     if (!VALID_NOTEMPTY(_discountLabel, UILabel)) {
         _discountLabel = [[UILabel alloc] init];
         [_discountLabel setFont:JACaptionFont];
@@ -83,8 +78,7 @@
     return _discountLabel;
 }
 
-- (UIButton *)favoriteButton
-{
+- (UIButton *)favoriteButton {
     if (!VALID_NOTEMPTY(_favoriteButton, UIButton)) {
         _favoriteButtonRect = CGRectMake(16, 16, 18, 18);
         _favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,8 +90,7 @@
     return _favoriteButton;
 }
 
-- (UILabel *)recentProductBadgeLabel
-{
+- (UILabel *)recentProductBadgeLabel {
     if (!VALID_NOTEMPTY(_recentProductBadgeLabel, UILabel)) {
         _recentProductBadgeLabelRect = CGRectMake(0, 10, 200, 16);
         _recentProductBadgeLabel = [[UILabel alloc] initWithFrame:_recentProductBadgeLabelRect];
@@ -113,8 +106,7 @@
     return _recentProductBadgeLabel;
 }
 
-- (JAProductInfoPriceLine *)priceLine
-{
+- (JAProductInfoPriceLine *)priceLine {
     if (!VALID_NOTEMPTY(_priceLine, JAProductInfoPriceLine)) {
         _priceLine = [[JAProductInfoPriceLine alloc] initWithFrame:CGRectMake(0, 0, self.width, 15)];
         [_priceLine setPriceSize:JAPriceSizeSmall];
@@ -123,8 +115,7 @@
     return _priceLine;
 }
 
-- (JAProductInfoRatingLine *)ratingLine
-{
+- (JAProductInfoRatingLine *)ratingLine {
     if (!VALID_NOTEMPTY(_ratingLine, JAProductInfoRatingLine)) {
         _ratingLine = [[JAProductInfoRatingLine alloc] initWithFrame:CGRectZero];
         _ratingLine.imageRatingSize = kImageRatingSizeSmall;
@@ -135,14 +126,12 @@
     return _ratingLine;
 }
 
-- (void)setHideRating:(BOOL)hideRating
-{
+- (void)setHideRating:(BOOL)hideRating {
     _hideRating = hideRating;
     [self.nameLabel setNumberOfLines:2];
 }
 
-- (JADropdownControl *)sizeButton
-{
+- (JADropdownControl *)sizeButton {
     if (!VALID_NOTEMPTY(_sizeButton, UIButton)) {
         
         CGRect frame = CGRectMake(self.priceLine.frame.origin.x, self.priceLine.frame.origin.y+20.0f,
@@ -153,8 +142,7 @@
     return _sizeButton;
 }
 
-- (UIImageView*)shopFirstImageView
-{
+- (UIImageView*)shopFirstImageView {
     if (!VALID_NOTEMPTY(_shopFirstImageView, UIImageView)) {
         
         UIImage *shopFirstImage = [UIImage imageNamed:@"shop_first_logo"];
@@ -163,8 +151,7 @@
     return _shopFirstImageView;
 }
 
-- (void)setHideShopFirstLogo:(BOOL)hideShopFirstLogo
-{
+- (void)setHideShopFirstLogo:(BOOL)hideShopFirstLogo {
     _hideShopFirstLogo = hideShopFirstLogo;
 }
 
@@ -184,31 +171,26 @@
     [self setClipsToBounds:YES];
 }
 
-- (void)reloadViews
-{
+- (void)reloadViews {
     self.feedbackView.frame = self.bounds;
     _lastWidth = self.width;
 }
 
-- (void)reloadGridViews
-{
+- (void)reloadGridViews {
 }
 
-- (void)prepareForReuse
-{
+- (void)prepareForReuse {
     //    NSLog(@"prepareForReuse");
 }
 
-- (void)setTag:(NSInteger)tag
-{
+- (void)setTag:(NSInteger)tag {
     [super setTag:tag];
     [self.favoriteButton setTag:tag];
     [self.feedbackView setTag:tag];
     [self.sizeButton setTag:tag];
 }
 
-- (void)setProduct:(RIProduct*)product
-{
+- (void)setProduct:(RIProduct*)product {
     _product = product;
     [_brandLabel setText:product.brand];
     [_nameLabel setText:product.name];
@@ -280,8 +262,7 @@
     }
 }
 
-- (void)setVariation:(RIVariation *)variation
-{
+- (void)setVariation:(RIVariation *)variation {
     _variation = variation;
     [_brandLabel setText:variation.brand];
     [_nameLabel setText:variation.name];
@@ -314,8 +295,7 @@
 }
 
 
-- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice
-{
+- (void)setSimplePrice:(NSString *)price andOldPrice:(NSString *)oldPrice {
     if (!oldPrice) {
         [self.product setPriceFormatted:price];
         [self.product setSpecialPriceFormatted:nil];

@@ -10,8 +10,6 @@
 
 #define kAddress @"Address"
 
-@class RICustomer;
-
 @interface Address : BaseModel
 
 @property (copy, nonatomic) NSString *uid;

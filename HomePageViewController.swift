@@ -8,24 +8,23 @@
 
 import UIKit
 
-protocol HomePageViewControllerDelegate: class {
-    func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?)
-    func scrollViewDidScroll(_ scrollView: UIScrollView)
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-}
-
 class HomePageViewController:   BaseViewController,
                                 UITableViewDataSource,
                                 DataServiceProtocol,
                                 UITableViewDelegate,
                                 BaseHomePageTeaserBoxTableViewCellDelegate,
                                 TourPresenter,
-                                TourSpotLightViewDelegate {
+                                TourSpotLightViewDelegate,
+                                UITextFieldDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
-    weak var delegate: HomePageViewControllerDelegate?
+    @IBOutlet private weak var contentContainerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var artificialNavbar: UIView!
+    @IBOutlet weak private var artificialNavbarLogo: UIImageView!
+    @IBOutlet weak private var artificialNavBarViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var searchBar: SearchBarControl!
     
     private var timer: Timer?
     private var homePage: HomePage?
@@ -35,6 +34,7 @@ class HomePageViewController:   BaseViewController,
     private var tourHandler: TourPresentingHandler?
     private var isRefreshing: Bool = false
     private var errorView: ErrorControlView?
+    private var isLoaded = false
     
     private let cellTypeMapper: [HomePageTeaserType: String] = [
         .slider: HomePageSliderTableViewCell.nibName(),
@@ -47,6 +47,13 @@ class HomePageViewController:   BaseViewController,
         super.viewDidLoad()
         
         self.view.backgroundColor = Theme.color(kColorGray10)
+        self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
+        if let navBar = self.navigationController?.navigationBar {
+            self.artificialNavBarViewHeightConstraint.constant = navBar.frame.height
+        }
+        
+        self.searchBar.searchView?.textField.delegate = self
+        
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -72,6 +79,16 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        self.isLoaded = true
+        //start review survey if it's necessary
+        ReviewSurveyManager.runSurveyIfItsNeeded(target: self, executionType: .background)
+        //to start DeeplinkManager
+        DeepLinkManager.listenersReady()
+    }
+    
     @objc func handleRefresh() {
         self.loadingIndicator.stopAnimating()
         self.isRefreshing = true
@@ -86,6 +103,8 @@ class HomePageViewController:   BaseViewController,
         if self.homePage == nil {
             self.getHomePage()
         }
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,6 +114,12 @@ class HomePageViewController:   BaseViewController,
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
         }
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    func scrollToTop() {
+        self.tableView.setContentOffset(.zero, animated: true)
     }
     
     private func getHomePage(callBack: ((Bool)->Void)? = nil) {
@@ -153,18 +178,19 @@ class HomePageViewController:   BaseViewController,
         return 50
     }
     
-    //MARK: - UIScrollViewDelegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.delegate?.scrollViewDidScroll(scrollView)
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.delegate?.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-    }
-    
     //MARK: - BaseHomePageTeaserBoxTableViewCellDelegate
     func teaserItemTappedWithTargetString(target: String, teaserId: String, index: Int?) {
-        self.delegate?.teaserItemTappedWithTargetString(target: target, teaserId: teaserId, index: index)
+        if let screenName = self.getScreenName() {
+            var teaserName: String?
+            if let index = index {
+                teaserName = "\(screenName)_\(teaserId)_\(index)"
+            } else {
+                teaserName = "\(screenName)_\(teaserId)_moreButton"
+            }
+            if let teaserName = teaserName {
+                self.goToTrackableTarget(target: RITarget.parseTarget(target), category: teaserName, label: target, screenName: screenName)
+            }
+        }
     }
     
     func teaserMustBeRemoved(at indexPath: IndexPath) {
@@ -205,11 +231,6 @@ class HomePageViewController:   BaseViewController,
         if rid == 0 {
             self.handleGenericErrorCodesWithErrorControlView(Int32(error.code), forRequestID: rid)
         }
-    }
-    
-    //MARK: - NavigationBarProtocol
-    override func navBarTitleString() -> String! {
-        return STRING_HOME
     }
     
     //MARK: - helper functions for timer
@@ -277,5 +298,41 @@ class HomePageViewController:   BaseViewController,
     //MARK: - TourSpotLightViewDelegate
     func spotlightViewDidCleanup(_ spotlightView: TourSpotLightView) {
         self.tourHandler?(spotlightView.tourName!, self)
+    }
+    
+    
+    //MARK: - status bar style
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let segueName = segue.identifier
+        if segueName == "ShowSearchView", let destinationViewCtrl = segue.destination as? SearchViewController {
+            destinationViewCtrl.parentScreenName = self.getScreenName()
+        }
+    }
+    
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+        self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
+    }
+    
+    //MARK:- NavigationBarProtocol
+    override func navBarTitleView() -> UIView! {
+        return NavBarUtility.navBarLogo()
+    }
+    
+    override func navBarTitleString() -> String! {
+        return STRING_HOME
+    }
+    
+    private func goToTrackableTarget(target: RITarget, category: String, label: String, screenName: String) {
+        TrackerManager.postEvent(selector: EventSelectors.itemTappedSelector(), attributes: EventAttributes.itemTapped(categoryEvent: category, screenName: screenName, labelEvent: label))
+        MainTabBarViewController.topNavigationController()?.openTargetString(target.targetString, purchaseInfo: BehaviourTrackingInfo.trackingInfo(category: category, label: label), currentScreenName: screenName)
     }
 }

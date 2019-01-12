@@ -1,22 +1,22 @@
+////
+////  JAButtonWithBlur.h
+////  Jumia
+////
+////  Created by Pedro Lopes on 04/09/14.
+////  Copyright (c) 2014 Rocket Internet. All rights reserved.
+////
 //
-//  JAButtonWithBlur.h
-//  Jumia
+//#import <UIKit/UIKit.h>
+//#import "FXBlurView.h"
 //
-//  Created by Pedro Lopes on 04/09/14.
-//  Copyright (c) 2014 Rocket Internet. All rights reserved.
+//@interface JAButtonWithBlur : FXBlurView
 //
-
-#import <UIKit/UIKit.h>
-#import "FXBlurView.h"
-
-@interface JAButtonWithBlur : FXBlurView
-
-@property (assign, nonatomic) UIInterfaceOrientation orienation;
-
-- (instancetype)initWithFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
-
-- (void)reloadFrame:(CGRect)frame;
-
-- (void) addButton:(NSString*)name target:(id)target action:(SEL)action;
-
-@end
+//@property (assign, nonatomic) UIInterfaceOrientation orienation;
+//
+//- (instancetype)initWithFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation;
+//
+//- (void)reloadFrame:(CGRect)frame;
+//
+//- (void) addButton:(NSString*)name target:(id)target action:(SEL)action;
+//
+//@end

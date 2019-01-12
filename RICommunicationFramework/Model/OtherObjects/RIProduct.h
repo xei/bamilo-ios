@@ -11,7 +11,7 @@
 #import "RICatalog.h"
 #import "RIRecentlyViewedProductSku.h"
 #import "RICatalogSorting.h"
-#import <EmarsysPredictSDK/EmarsysPredictSDK.h>
+
 
 @class RIImage, RIProductSimple, RIVariation, RIBundle, Seller, RIUndefinedSearchTerm;
 @protocol TrackableProductProtocol;

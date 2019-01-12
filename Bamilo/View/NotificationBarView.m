@@ -88,6 +88,10 @@ static NotificationBarView *instance;
     if (viewController.extendedLayoutIncludesOpaqueBars) {
         startY = viewController.navigationController.navigationBar.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
     }
+    if (viewController.navigationController.navigationBar == nil) {
+        startY = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    
     [self setFrame:CGRectMake(0, startY, viewController.view.size.width, actualNumberOfLines * cLINE_HEIGHT + cVERTICAL_PADDING)];
     [self setY: startY-self.height];
     [self setHidden:NO];

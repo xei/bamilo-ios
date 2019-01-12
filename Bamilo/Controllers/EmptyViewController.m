@@ -12,10 +12,10 @@
 #import "OrangeButton.h"
 #import "ThreadManager.h"
 #import "NSArray+Extension.h"
-#import "EmarsysPredictManager.h"
+//#import "EmarsysPredictManager.h"
 #import "Bamilo-Swift.h"
 
-@interface EmptyViewController() <EmarsysRecommendationsProtocol, FeatureBoxCollectionViewWidgetViewDelegate>
+@interface EmptyViewController() <FeatureBoxCollectionViewWidgetViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
 @property (weak, nonatomic) IBOutlet EmarsysRecommendationMinimalCarouselWidget *carouselWidget;
@@ -53,30 +53,30 @@
 }
 
 - (void)getSuggestions {
-    [EmarsysPredictManager sendTransactionsOf:self];
+//    [EmarsysPredictManager sendTransactionsOf:self];
 }
 
 #pragma mark - EmarsysPredictProtocol
-- (BOOL)isPreventSendTransactionInViewWillAppear {
-    return YES;
-}
-
-- (NSArray<EMRecommendationRequest *> *)getRecommendations {
-    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:self.recommendationLogic ?: @"PERSONAL"];
-    recommend.limit = 100;
-    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
-        if (!result.products.count) return;
-        [ThreadManager executeOnMainThread:^{
-            [self.carouselWidget fadeIn:0.15];
-            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
-                return [[RecommendItem alloc] initWithItem:item];
-            }];
-            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
-        }];
-    };
-    
-    return @[recommend];
-}
+//- (BOOL)isPreventSendTransactionInViewWillAppear {
+//    return YES;
+//}
+//
+//- (NSArray<EMRecommendationRequest *> *)getRecommendations {
+//    EMRecommendationRequest *recommend = [EMRecommendationRequest requestWithLogic:self.recommendationLogic ?: @"PERSONAL"];
+//    recommend.limit = 100;
+//    recommend.completionHandler = ^(EMRecommendationResult *_Nonnull result) {
+//        if (!result.products.count) return;
+//        [ThreadManager executeOnMainThread:^{
+//            [self.carouselWidget fadeIn:0.15];
+//            self.recommendedProducts = [result.products map:^id(EMRecommendationItem *item) {
+//                return [[RecommendItem alloc] initWithItem:item];
+//            }];
+//            [self.carouselWidget updateWithModel: [self.recommendedProducts subarrayWithRange:NSMakeRange(0, MIN(self.recommendedProducts.count, 15))]];
+//        }];
+//    };
+//
+//    return @[recommend];
+//}
 
 - (void)moreButtonTappedInWidgetView:(id)widgetView {
     [self performSegueWithIdentifier:@"showAllRecommendationView" sender:nil];
@@ -86,7 +86,7 @@
 - (void)selectFeatureItem:(NSObject *)item widgetBox:(id)widgetBox {
     if ([item isKindOfClass:[RecommendItem class]]) {
         [TrackerManager postEventWithSelector:[EventSelectors recommendationTappedSelector] attributes:[EventAttributes tapEmarsysRecommendationWithScreenName:self.parentScreenName logic:self.recommendationLogic ?: @"PERSONAL"]];
-        
+
         //track behaviour journey from here
         [[MainTabBarViewController topNavigationController] openScreenTarget:[RITarget getTarget:PRODUCT_DETAIL node:((RecommendItem *)item).sku] purchaseInfo:[BehaviourTrackingInfo trackingInfoWithCategory:@"Emarsys" label:[NSString stringWithFormat:@"%@-%@", self.parentScreenName, self.recommendationLogic ?: @"PERSONAL"]] currentScreenName:self.parentScreenName];
     }

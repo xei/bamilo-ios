@@ -28,7 +28,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
         self.tableView.register(UINib(nibName: OrderCancellationTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCancellationTableViewCell.nibName())
         self.tableView.register(UINib(nibName: PlainTableViewHeaderCell.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: PlainTableViewHeaderCell.nibName())
         self.tableView.register(UINib(nibName: OrderCancellationFooterTableViewCell.nibName(), bundle: nil), forCellReuseIdentifier: OrderCancellationFooterTableViewCell.nibName())
-        
+
         //To remove floating header/footer of sections
         let dummyHeaderViewHeight = CGFloat(100)
         self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: dummyHeaderViewHeight))
@@ -39,7 +39,7 @@ class OrderDetailCancellationTableViewController: AccordionTableViewController {
     
     func bindOrder(order: OrderItem, selectedSimpleSku: String? = nil) {
         self.order = order
-        self.dataSource = self.order?.packages?.map { $0.products }.flatMap { $0 }.flatMap { $0.map { $0.convertToCancelling() } }
+        self.dataSource = self.order?.packages?.map { $0.products }.compactMap { $0 }.flatMap { $0.map { $0.convertToCancelling() } }
         
         //Brign up the selected item to the first of list
         if let selectedSimpleSku = selectedSimpleSku, let selectedIndex = self.dataSource?.index(where: { $0.simpleSku == selectedSimpleSku && $0.isCancelable }) {

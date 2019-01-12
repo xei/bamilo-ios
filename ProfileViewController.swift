@@ -48,22 +48,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         self.tableView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40))
         self.tableView.contentInset = UIEdgeInsetsMake(0, 0, -40, 0)
         
-        
+        CurrentUserManager.loadLocal()
         self.updateTableViewDataSource()
-        self.tableView.reloadData()
         
         //start tour if it's necessary
         TourManager.shared.onBoard(presenter: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if self.viewWillApearedOnceOrMore {
-            self.updateTableViewDataSource()
-            self.tableView.reloadData()
-        }
-        self.viewWillApearedOnceOrMore = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByLogin(notification:)), name: NSNotification.Name(NotificationKeys.UserLogin), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateByLogin(notification:)), name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,13 +74,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_RECENTLY_VIEWED, iconName: "recently_viewed", notificationName: "NOTIFICATION_SHOW_RECENTLY_VIEWED_SCREEN", selector: nil)
             ], [
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_CONTACT_US, iconName: "contact_us_profile", notificationName: nil, selector: #selector(callContctUs)),
+                ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_APP_SOCIAL, iconName: "share_vector", notificationName: nil, selector: #selector(shareApplication)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_SEND_IDEAS_AND_REPORT, iconName: "feedback_profile", notificationName: nil, selector: #selector(sendIdeaOrReport)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_EMAIL_TO_CS, iconName: "email_profile", notificationName: nil, selector: #selector(sendEmailToCS)),
                 ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_GUID, iconName: "faq_profile", notificationName: nil, selector: #selector(showFAQ))
             ]
         ]
         
-        if RICustomer.checkIfUserIsLogged() {
+        if CurrentUserManager.isUserLoggedIn() {
             self.tableViewDataSource?.append([ProfileViewDataModel(cellType: .profileSimpleTableViewCell, title: STRING_LOGOUT, iconName: "user_logout_profile", notificationName: nil, selector: #selector(logoutUser))])
         }
     }
@@ -101,7 +94,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
             switch cellType {
             case .profileUserTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileUserTableViewCell.nibName(), for: indexPath) as! ProfileUserTableViewCell
-                cell.update(withModel: RICustomer.getCurrent())
+                cell.update(withModel: CurrentUserManager.user)
             case .profileOrderTableViewCell:
                 cell = self.tableView.dequeueReusableCell(withIdentifier: ProfileOrderTableViewCell.nibName(), for: indexPath) as! ProfileOrderTableViewCell
                 cell.update(withModel: dataModel)
@@ -159,8 +152,18 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     }
     
     //MARK: - helper functions
+    @objc func shareApplication() {
+        TrackerManager.postEvent(selector: EventSelectors.shareAppSelector(), attributes: EventAttributes.shareApp())
+        var url = "https://app.adjust.com/eq8uike"
+        if CurrentUserManager.isUserLoggedIn(), let userID = CurrentUserManager.user.userID {
+            url += "?label=\(userID)"
+        }
+        
+        Utility.shareUrl(url: url, message: "اپلیکیشن بامیلو رو دانلود کن و تخفیف بگیر!", viewController: self)
+    }
+    
     @objc func showLogin() {
-        if !RICustomer.checkIfUserIsLogged() {
+        if !CurrentUserManager.isUserLoggedIn() {
             NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.ShowAthenticationScreen), object: nil, userInfo: nil)
         }
     }
@@ -168,19 +171,17 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     @objc func callContctUs() {
         AlertManager.sharedInstance().confirmAlert("", text: STRING_CALL_CUSTOMER_SERVICE, confirm: STRING_OK, cancel: STRING_CANCEL) { (didSelectOk) in
             if didSelectOk {
-                RICountry.getConfigurationWithSuccessBlock({ (configuration) in
-                    if let tel = configuration?.phoneNumber {
-                        if let url = URL(string: "tel://\(tel)"), UIApplication.shared.canOpenURL(url) {
-                            if #available(iOS 10, *) {
-                                UIApplication.shared.open(url)
-                            } else {
-                                UIApplication.shared.openURL(url)
-                            }
+                if let tel = MainTabBarViewController.appConfig?.phoneNumber {
+                    if let url = URL(string: "tel://\(tel)"), UIApplication.shared.canOpenURL(url) {
+                        if #available(iOS 10, *) {
+                            UIApplication.shared.open(url)
+                        } else {
+                            UIApplication.shared.openURL(url)
                         }
                     }
-                }, andFailureBlock: { (status, errorMessages) in
-                    
-                })
+                } else {
+                    self.showNotificationBar("متاسفانه شماره ای موجود نمیباشد، لطفا بعدا مجددا سعی نمایید", isSuccess: false)
+                }
             }
         }
     }
@@ -191,23 +192,43 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     @objc func logoutUser() {
         AuthenticationDataManager.sharedInstance.logoutUser(self) { (data, error) in
-            self.bind(data, forRequestId: 0)
             //EVENT: LOGOUT
             TrackerManager.postEvent(
                 selector: EventSelectors.logoutEventSelector(),
                 attributes: EventAttributes.logout(success: true)
             )
             
-            //Reset some actions
-            EmarsysPredictManager.userLoggedOut()
-            RICustomer.cleanFromDB()
-            RICart.sharedInstance().cartEntity?.cartItems = []
-            RICart.sharedInstance().cartEntity?.cartCount = nil
-            LocalSearchSuggestion().clearAllHistories()
-            
-            UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
+            self.cleanAllUserInformations()
+            self.bind(data, forRequestId: 0)
         }
-        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
+    }
+    
+    private func cleanAllUserInformations() {
+        UserDefaults.standard.removeObject(forKey: "SelectedAreaByUser")
+        CurrentUserManager.cleanFromDB()
+        RICart.sharedInstance().cartEntity?.cartItems = []
+        RICart.sharedInstance().cartEntity?.cartCount = nil
+        LocalSearchSuggestion().clearAllHistories()
+        RICommunicationWrapper.deleteSessionCookie()
+        ViewControllerManager.sharedInstance().clearCache()
+        Utility.removeAllCookies()
+        
+        MainTabBarViewController.updateCartValue(cart: RICart.sharedInstance())
+    }
+    
+    @objc func updateByLogin(notification: Notification) {
+        ThreadManager.execute {
+            CurrentUserManager.loadLocal()
+            self.updateTableViewDataSource()
+            self.tableView.reloadData()
+        }
+    }
+    
+    func refreshContent() {
+        ThreadManager.execute {
+            self.updateTableViewDataSource()
+            self.tableView.reloadData()
+        }
     }
     
     @objc func showFAQ() {
@@ -267,13 +288,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {
+        self.updateTableViewDataSource()
+        self.tableView.reloadData()
         
         //TODO: handle these legacy code with another way (when tab bar is ready)
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UpdateCart), object: nil, userInfo: nil)
-        MainTabBarViewController.activateTabItem(rootViewClassType: HomeViewController.self)
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLoggedOut), object: nil, userInfo: nil)
         
-        RICommunicationWrapper.deleteSessionCookie()
-        ViewControllerManager.sharedInstance().clearCache()
+        MainTabBarViewController.showHome()
     }
     
     //MARK: - DataTrackerProtocol & TourPresenter

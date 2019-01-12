@@ -8,6 +8,9 @@
 
 @objcMembers class LoadingManager: NSObject {
     
+    private static var isHiding = false
+    private static var hasStopedHiding = false
+    
     private static let loadingView: UIView? = {
         let loadingView = LoadingCoverView.nibInstance()
         loadingView?.alpha = 0
@@ -21,28 +24,36 @@
     
     class func showLoading(on viewcontroller: Any?) {
         if let targetViewController = viewcontroller as? UIViewController {
-            if let superview = self.loadingView?.superview, superview == targetViewController.view {
-                return
-            }
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            self.loadingView?.frame = targetViewController.view.bounds
-            if let loadingView = self.loadingView {
-                targetViewController.view.addSubview(loadingView)
-                loadingView.bindFrameToSuperviewBounds()
-            }
-            
-            UIView.animate(withDuration: 0.4, animations: {
+            if let superview = self.loadingView?.superview, superview == targetViewController.view, isHiding {
+                hasStopedHiding = true
+                self.loadingView?.layer.removeAllAnimations()
                 self.loadingView?.alpha = 1
-            })
-           
+            } else {
+                self.loadingView?.frame = targetViewController.view.bounds
+                if let loadingView = self.loadingView {
+                    targetViewController.view.addSubview(loadingView)
+                    loadingView.bindFrameToSuperviewBounds()
+                }
+                
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.loadingView?.alpha = 1
+                })
+            }
         }
     }
     
     class func hideLoading() {
-        UIView.animate(withDuration: 0.4, animations: {
+        isHiding = true
+        UIView.animate(withDuration: 0.15, animations: {
             self.loadingView?.alpha = 0
         }, completion: { (finished) in
-            self.loadingView?.removeFromSuperview()
+            if !hasStopedHiding {
+                self.loadingView?.removeFromSuperview()
+            }
+            
+            isHiding = false
+            hasStopedHiding = false //reset this value
         })
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
