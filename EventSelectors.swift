@@ -110,4 +110,7 @@ import Foundation
     class func submitProductReviewSelector() -> Selector  {
         return #selector(EventTrackerProtocol.submitProductReview(attributes:))
     }
+    class func applyVoucherSelector() -> Selector  {
+        return #selector(EventTrackerProtocol.applyVoucher(attributes:))
+    }
 }

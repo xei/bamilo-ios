@@ -310,6 +310,7 @@
         [DataAggregator applyVoucher:self voucher:discountCode completion:^(id data, NSError *error) {
             if(error == nil) {
                 [self bind:data forRequestId:2];
+                [TrackerManager postEventWithSelector:[EventSelectors applyVoucherSelector] attributes:[EventAttributes applyCouponCodeWithCoupon: discountCode]];
                 ((DiscountCodeView *)sender).state = DISCOUNT_CODE_VIEW_STATE_CONTAINS_CODE;
                 [self.tableView reloadData];
             } else {

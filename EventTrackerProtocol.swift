@@ -40,5 +40,6 @@
     @objc optional func editAddress(attributes: EventAttributeType)
     @objc optional func removeAddress(attributes: EventAttributeType)
     @objc optional func shareProduct(attributes: EventAttributeType)
+    @objc optional func applyVoucher(attributes: EventAttributeType)
     @objc optional func submitProductReview(attributes: EventAttributeType)
 }

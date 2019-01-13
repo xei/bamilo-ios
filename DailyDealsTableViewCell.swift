@@ -118,9 +118,9 @@ class DailyDealsTableViewCell: BaseHomePageTeaserBoxTableViewCell, UICollectionV
             })
             
             //Ecommerce
-            if let products = dailyDeals.products {
-                GoogleAnalyticsTracker.shared().trackProductImpression(products: products, impressionList: self.countDownLabel.isHidden ? "FeaturedBox" : "DailyDeals", impressionSource: "From HomePage")
-            }
+//            if let products = dailyDeals.products {
+//                GoogleAnalyticsTracker.shared().trackProductImpression(products: products, impressionList: self.countDownLabel.isHidden ? "FeaturedBox" : "DailyDeals", impressionSource: "From HomePage")
+//            }
         }
     }
     

@@ -237,4 +237,11 @@ public typealias EventAttributeType = [String:Any]
         attributes[kEventProduct] = product
         return attributes
     }
+    class func applyCouponCode(coupon: String) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventCoupon] = coupon
+        return attributes
+    }
+    
+    
 }

@@ -74,12 +74,18 @@
     
     //MARK: -EventTrackerProtocol
     func search(attributes: EventAttributeType) {
+        
+        //only send 40% of product views
+        let randomInt = Int.random(in: 0..<11)
+        if (randomInt > 4) { return }
+        
         let params = GAIDictionaryBuilder.createEvent(
             withCategory: "Catalog",
             action: "Search",
             label: (attributes[kEventSearchTarget] as? RITarget)?.node,
             value: nil
         )
+        
         self.sendParamsToGA(params: params)
     }
     
@@ -96,6 +102,11 @@
     }
     
     func searchFiltered(attributes: EventAttributeType) {
+        
+        //only send 40% of product views
+        let randomInt = Int.random(in: 0..<11)
+        if (randomInt > 4) { return }
+        
         if let filterQuery = attributes[kEventFilterQuery] as? String {
             let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
             let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
@@ -110,6 +121,11 @@
     }
     
     func catalogSortChanged(attributes: EventAttributeType) {
+        
+        //only send 40% of product views
+        let randomInt = Int.random(in: 0..<11)
+        if (randomInt > 4) { return }
+        
         if let sortMethod = attributes[kEventCatalogSortMethod] as? Catalog.CatalogSortType {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
@@ -122,6 +138,11 @@
     }
     
     func catalogViewChanged(attributes: EventAttributeType) {
+        
+        //only send 40% of product views
+        let randomInt = Int.random(in: 0..<11)
+        if (randomInt > 4) { return }
+        
         if let listType = attributes[kEventCatalogListViewType] as? String {
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "Catalog",
@@ -134,15 +155,15 @@
     }
     
     func recommendationTapped(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
-            let params = GAIDictionaryBuilder.createEvent(
-                withCategory: "Emarsys",
-                action: "Click",
-                label: "\(screenName)-\(logic)",
-                value: nil
-            )
-            self.sendParamsToGA(params: params)
-        }
+//        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
+//            let params = GAIDictionaryBuilder.createEvent(
+//                withCategory: "Emarsys",
+//                action: "Click",
+//                label: "\(screenName)-\(logic)",
+//                value: nil
+//            )
+//            self.sendParamsToGA(params: params)
+//        }
     }
     
     func addToWishList(attributes: EventAttributeType) {
@@ -220,6 +241,11 @@
     func viewProduct(attributes: EventAttributeType) {
         if let parentScreenName = attributes[kEventScreenName] as? String,
             let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            
+            //only send 40% of product views
+            let randomInt = Int.random(in: 0..<11)
+            if (randomInt > 4) { return }
+            
             let params = GAIDictionaryBuilder.createEvent(
                 withCategory: "\(parentScreenName)",
                 action: "ViewProduct",

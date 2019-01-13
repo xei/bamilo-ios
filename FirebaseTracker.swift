@@ -50,14 +50,6 @@ import Firebase
         }
     }
     
-    func search(attributes: EventAttributeType) {
-//        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
-//            Analytics.logEvent(AnalyticsEventSearch, parameters:
-//                [AnalyticsParameterItemCategory: target.node]
-//            )
-//        }
-    }
-    
     func editAddress(attributes: EventAttributeType) {
         Analytics.logEvent("edit_address", parameters: nil)
     }
@@ -70,42 +62,24 @@ import Firebase
         Analytics.logEvent("remove_address", parameters: nil)
     }
     
-    func searchbarSearched(attributes: EventAttributeType) {
-        if let searchString = attributes[kEventKeywords] as? String {
-            Analytics.logEvent(AnalyticsEventSearch, parameters:
-                [AnalyticsParameterSearchTerm: searchString]
-            )
-        }
-    }
-    
-    func searchFiltered(attributes: EventAttributeType) {
-//        if let filterQuery = attributes[kEventFilterQuery] as? String {
-//            let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
-//            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
-//            Analytics.logEvent(AnalyticsEventSearch, parameters: [
-//                "filters": filterKeys
-//            ])
-//        }
-    }
     
     func catalogSortChanged(attributes: EventAttributeType) {
+        
+        let sortKeyMapper: [Catalog.CatalogSortType: String] = [
+            .bestRating : "score",
+            .popularity : "popularity",
+            .newest : "newest",
+            .priceUp: "price-asc",
+            .priceDown:"price-desc",
+            .name: "name",
+            .brand: "brand"
+        ]
+        
         if let sortMethod = attributes[kEventCatalogSortMethod] as? Catalog.CatalogSortType {
-            Analytics.logEvent(AnalyticsEventSearch, parameters: [
-                "sort": sortMethod
+            Analytics.logEvent("sort_product_list", parameters: [
+                "sort_key": sortKeyMapper[sortMethod] ?? ""
             ])
         }
-    }
-    
-    func catalogViewChanged(attributes: EventAttributeType) {
-//        if let listType = attributes[kEventCatalogListViewType] as? String {
-//            Analytics.logEvent("change_catalog_view", parameters: [AnalyticsParameterContentType: listType])
-//        }
-    }
-    
-    func recommendationTapped(attributes: EventAttributeType) {
-//        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
-//            Analytics.logEvent("emarsys_click", parameters: ["screen": screenName, "logic": logic])
-//        }
     }
     
     func addToWishList(attributes: EventAttributeType) {
@@ -122,14 +96,12 @@ import Firebase
     }
     
     func removeFromWishList(attributes: EventAttributeType) {
-        if let screenName = attributes[kEventScreenName] as? String,
-            let product = attributes[kEventProduct] as? TrackableProductProtocol,
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol,
             let price = product.payablePrice,
             let name = product.name {
             Analytics.logEvent("remove_from_wishlist", parameters: [
                 AnalyticsParameterItemID: product.sku ?? "",
                 AnalyticsParameterPrice: price,
-                "screen": screenName,
                 AnalyticsParameterItemName: name])
         }
     }
@@ -191,38 +163,6 @@ import Firebase
         }
     }
     
-    func itemTapped(attributes: EventAttributeType) {
-//        if  let categoryEventName = attributes[kGAEventCategory] as? String,
-//            let labelEventName = attributes[kGAEventLabel] as? String {
-//            Analytics.logEvent("tap_teaser", parameters: [
-//                AnalyticsParameterCampaign: categoryEventName,
-//                AnalyticsParameterItemName: labelEventName,
-//
-//            ])
-//        }
-    }
-    
-    func purchased(attributes: EventAttributeType) {
-        //becasues we have the checkout finish it's not necessary
-        
-//        if let cart = attributes[kEventCart] as? RICart,
-//            let success = attributes[kEventSuccess] as? Bool, !success {
-//            Analytics.logEvent("fail_checkout", parameters: [
-//                AnalyticsParameterItemID: cart.orderNr,
-//                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
-//            ])
-//        }
-    }
-    
-    func purchaseBehaviour(attributes: EventAttributeType) {
-//        if let category = attributes[kGAEventCategory] as? String,
-//            let label = attributes[kGAEventLabel] as? String {
-//            Analytics.logEvent("purchase_teaser", parameters: [
-//                AnalyticsParameterCampaign: category,
-//                AnalyticsParameterItemName: label
-//            ])
-//        }
-    }
     
     func signup(attributes: EventAttributeType) {
         if let success = attributes[kEventSuccess] as? Bool, success {
@@ -238,44 +178,6 @@ import Firebase
         }
     }
     
-    func checkoutStart(attributes: EventAttributeType) {
-        if let cart = attributes[kEventCart] as? RICart {
-            let combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
-            if let combinedSku = combinedSkus, let cartValue = cart.cartEntity?.cartValue {
-                Analytics.logEvent(AnalyticsEventBeginCheckout, parameters: [
-                    AnalyticsParameterItemList: combinedSku,
-                    AnalyticsParameterValue: cartValue
-                ])
-            }
-        }
-    }
-    
-    func checkoutFinished(attributes: EventAttributeType) {
-        if let cart = attributes[kEventCart] as? RICart {
-            var combinedSkus: String?
-            if let cartItems = cart.cartEntity?.cartItems,  cartItems.count > 0 {
-                combinedSkus = cart.cartEntity?.cartItems?.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
-            } else if let packages = cart.cartEntity?.packages, packages.count > 0 {
-                combinedSkus = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map { $0.sku }.compactMap { $0 }.joined(separator: ",")
-            }
-            let combinedSkusFromPackages = cart.cartEntity?.packages?.map{$0.products}.compactMap{$0}.flatMap{$0}.map{$0.sku}.compactMap {$0}.joined(separator: ",")
-            if let itemList = combinedSkus ?? combinedSkusFromPackages, let cartValue = cart.cartEntity?.cartValue {
-                Analytics.logEvent("finish_checkout", parameters: [
-                    AnalyticsParameterItemList: itemList,
-                    AnalyticsParameterValue: cartValue
-                ])
-            }
-        }
-    }
-    
-    func searchSuggestionTapped(attributes: EventAttributeType) {
-//        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
-//            Analytics.logEvent("search_suggestion", parameters: [
-//                AnalyticsParameterSearchTerm: suggestionTitle
-//            ])
-//        }
-    }
-    
     func submitProductReview(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             Analytics.logEvent(AnalyticsEventViewItem, parameters: [
@@ -286,6 +188,121 @@ import Firebase
         }
     }
     
+    func shareProduct(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            Analytics.logEvent(AnalyticsEventShare, parameters: [
+                "item_sku": product.simpleSku ?? ""
+            ])
+        }
+    }
+    
+    func shareApp(attributes: EventAttributeType) {
+        Analytics.logEvent("invite_friends", parameters: nil)
+    }
+    
+    
+    func checkoutStart(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            if let cartEntity = cart.cartEntity {
+                Analytics.logEvent(AnalyticsEventBeginCheckout, parameters: [
+                    "number_of_items": cartEntity.cartCount,
+                    AnalyticsParameterValue: cartEntity.cartValue
+                ])
+            }
+        }
+    }
+    
+    func checkoutFinished(attributes: EventAttributeType) {
+        if let cart = attributes[kEventCart] as? RICart {
+            if let cartEntity = cart.cartEntity {
+                Analytics.logEvent("ecommerce_purchase", parameters: [
+                    "number_of_items": cartEntity.cartCount,
+                    AnalyticsParameterValue: cartEntity.cartValue,
+                    AnalyticsParameterCoupon: cartEntity.couponCode,
+                    AnalyticsParameterTransactionID: cart.orderNr,
+                    "payment_method": cart.cartEntity.paymentMethod, //Enum <'cod' or 'ipg' or 'mpg'>
+                    "city_name": cart.cartEntity.address.city,
+                ])
+            }
+        }
+    }
+    
+    func purchased(attributes: EventAttributeType) {
+        //becasues we have the checkout finish it's not necessary
+        if let cart = attributes[kEventCart] as? RICart,
+            let success = attributes[kEventSuccess] as? Bool, !success {
+            Analytics.logEvent("payment_failed", parameters: [
+                AnalyticsParameterValue: cart.cartEntity.cartValue ?? 0
+            ])
+        }
+    }
+    
+    func searchbarSearched(attributes: EventAttributeType) {
+        if let searchString = attributes[kEventKeywords] as? String {
+            Analytics.logEvent("view_search_results", parameters:[
+                AnalyticsParameterSearchTerm: searchString
+            ])
+        }
+    }
+    
+    func searchFiltered(attributes: EventAttributeType) {
+        //        if let filterQuery = attributes[kEventFilterQuery] as? String {
+        //            let arrayOfFilterKeysAndValues = filterQuery.components(separatedBy: "/")
+        //            let filterKeys = arrayOfFilterKeysAndValues.enumerated().compactMap { $0 % 2 == 0 ? $1 : nil}.joined(separator: ", ")
+        //            Analytics.logEvent(AnalyticsEventSearch, parameters: [
+        //                "filters": filterKeys
+        //            ])
+        //        }
+    }
+    
+    func searchSuggestionTapped(attributes: EventAttributeType) {
+        //        if let suggestionTitle = attributes[kEventSuggestionTitle] as? String {
+        //            Analytics.logEvent("search_suggestion", parameters: [
+        //                AnalyticsParameterSearchTerm: suggestionTitle
+        //            ])
+        //        }
+    }
+    
+    func itemTapped(attributes: EventAttributeType) {
+        //        if  let categoryEventName = attributes[kGAEventCategory] as? String,
+        //            let labelEventName = attributes[kGAEventLabel] as? String {
+        //            Analytics.logEvent("tap_teaser", parameters: [
+        //                AnalyticsParameterCampaign: categoryEventName,
+        //                AnalyticsParameterItemName: labelEventName,
+        //
+        //            ])
+        //        }
+    }
+    
+    func purchaseBehaviour(attributes: EventAttributeType) {
+        //        if let category = attributes[kGAEventCategory] as? String,
+        //            let label = attributes[kGAEventLabel] as? String {
+        //            Analytics.logEvent("purchase_teaser", parameters: [
+        //                AnalyticsParameterCampaign: category,
+        //                AnalyticsParameterItemName: label
+        //            ])
+        //        }
+    }
+    
+    func catalogViewChanged(attributes: EventAttributeType) {
+        //        if let listType = attributes[kEventCatalogListViewType] as? String {
+        //            Analytics.logEvent("change_catalog_view", parameters: [AnalyticsParameterContentType: listType])
+        //        }
+    }
+    
+    func recommendationTapped(attributes: EventAttributeType) {
+        //        if let screenName = attributes[kEventScreenName] as? String, let logic = attributes[kEventRecommendationLogic] as? String {
+        //            Analytics.logEvent("emarsys_click", parameters: ["screen": screenName, "logic": logic])
+        //        }
+    }
+    
+    func search(attributes: EventAttributeType) {
+        //        if let target = (attributes[kEventSearchTarget] as? RITarget), target.targetType == .CATALOG_CATEGORY  {
+        //            Analytics.logEvent(AnalyticsEventSearch, parameters:
+        //                [AnalyticsParameterItemCategory: target.node]
+        //            )
+        //        }
+    }
     
     //MARK: - ScreenTrackerProtocol
     func trackScreenName(screenName: String) {

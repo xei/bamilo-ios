@@ -158,7 +158,6 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         if CurrentUserManager.isUserLoggedIn(), let userID = CurrentUserManager.user.userID {
             url += "?label=\(userID)"
         }
-        
         Utility.shareUrl(url: url, message: "اپلیکیشن بامیلو رو دانلود کن و تخفیف بگیر!", viewController: self)
     }
     
