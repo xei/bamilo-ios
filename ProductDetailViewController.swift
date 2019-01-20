@@ -297,6 +297,11 @@ extension ProductDetailViewController: ProductDetailViewSliderTableViewCellDeleg
         let galleryViewController = GalleryViewController(startIndex: atIndex, itemsDataSource: self, displacedViewsDataSource: self, configuration: self.galleryConfiguration())
         galleryViewController.landedPageAtIndexCompletion = { self.sliderCell?.selectIndex(index: $0, animated: false) }
         self.presentImageGallery(galleryViewController)
+        
+        //track this action
+        if let product = self.product {
+            TrackerManager.postEvent(selector: EventSelectors.openProductGallerySelector(), attributes: EventAttributes.openProductGallery(product: product))
+        }
     }
     
     func shareButtonTapped() {

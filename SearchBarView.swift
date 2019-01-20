@@ -8,29 +8,25 @@
 
 import UIKit
 
-@objcMembers class SearchBarView: BaseControlView {
+protocol SearchBarViewDelegate: class {
+    func searchBarTapped()
+}
 
-    @IBOutlet weak var textField: UITextField!
-    
+
+@objcMembers class SearchBarView: BaseControlView {
+    weak var delegate: SearchBarViewDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setupView()
     }
     
     private func setupView() {
-        self.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        self.textField.backgroundColor = UIColor.white
-        self.textField.font = Theme.font(kFontVariationRegular, size: 13)
-        let searchIconView = UIImageView(image: #imageLiteral(resourceName: "searchIcon"))
-        searchIconView.contentMode = .scaleAspectFit
-        self.textField.leftViewMode = .always
-        searchIconView.frame = CGRect(x: 0, y: 0, width: 30, height: 20)
-        self.textField.leftView = searchIconView
-        self.textField.textAlignment = .right
-        self.textField.placeholder = STRING_SEARCH_PLACEHOLDER
-        self.textField.tintColor = .white
+        self.backgroundColor = .white
     }
     
+    @IBAction func searchBarButtonTapped(_ sender: Any) {
+        self.delegate?.searchBarTapped()
+    }
     
     //TODO: when we migrate all BaseControlView we need to use it as this function implementation
     override class func nibInstance() -> SearchBarView {

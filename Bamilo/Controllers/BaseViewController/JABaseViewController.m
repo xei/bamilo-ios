@@ -24,8 +24,6 @@
 }
 
 @property (assign, nonatomic) int requestNumber;
-//@property (strong, nonatomic) UIView *loadingView;
-//@property (nonatomic, strong) UIImageView *loadingAnimation;
 @property (strong, nonatomic) JANoConnectionView *noConnectionView;
 @property (strong, nonatomic) JAMessageView *messageView;
 @property (strong, nonatomic) JAMaintenancePage *maintenancePage;
@@ -107,33 +105,9 @@
     self.view.backgroundColor = JABackgroundGrey;
     self.requestNumber = 0;
     
-//    self.loadingView = [[UIImageView alloc] initWithFrame:((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view.frame];
-//    self.loadingView.backgroundColor = [UIColor blackColor];
-//    self.loadingView.alpha = 0.0f;
-//    self.loadingView.userInteractionEnabled = YES;
-    
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelLoading)];
-//    [self.loadingView addGestureRecognizer:tap];
-    
-//    UIImage *image = [UIImage imageNamed:@"loadingAnimationFrame1"];
-//    int lastFrame = 8;
-  
-//    self.loadingAnimation = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-//    self.loadingAnimation.animationDuration = 1.0f;
-//    NSMutableArray *animationFrames = [NSMutableArray new];
-//    for (int i = 1; i <= lastFrame; i++) {
-//        NSString *frameName = [NSString stringWithFormat:@"loadingAnimationFrame%d", i];
-//        UIImage *frame = [UIImage imageNamed:frameName];
-//        [animationFrames addObject:frame];
-//    }
-//    self.loadingAnimation.animationImages = [animationFrames copy];
-//    self.loadingAnimation.center = self.loadingView.center;
-    
-//    self.loadingView.alpha = 0.0f;
     if ([self getScreenName].length) {
         [TrackerManager trackScreenNameWithScreenName:[self getScreenName]];
     }
-//    [self.navigationController.interactivePopGestureRecognizer setEnabled:YES];
     
     //navigation bar configs
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
@@ -172,33 +146,9 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-//    if ([[UIApplication sharedApplication] statusBarOrientation] != self.orientation) {
-//        [self onOrientationChanged];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC/2), dispatch_get_main_queue(), ^{
-//            [self setOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-//        });
-//    }
 }
 
 - (void)changeLoadingFrame:(CGRect)frame orientation:(UIInterfaceOrientation)orientation {
-//    CGFloat screenWidth = frame.size.width;
-//    CGFloat screenHeight = frame.size.height;
-    
-//    if (UIInterfaceOrientationIsPortrait(orientation)) {
-//        if (screenWidth > screenHeight) {
-//            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-//        } else {
-//            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
-//        }
-//    } else {
-//        if (screenWidth > screenHeight) {
-//            self.loadingView.frame  = CGRectMake(0, 0, screenWidth, screenHeight);
-//        } else {
-//            self.loadingView.frame  = CGRectMake(0, 0, screenHeight, screenWidth);
-//        }
-//    }
-    
-//    self.loadingAnimation.center = self.loadingView.center;
 }
 
 - (void)dealloc {
@@ -214,13 +164,11 @@
          CGFloat screenHeight = viewFrame.size.height;
          
          if (self.noConnectionView) {
-             self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x,
-                                                      _noConnectionViewFrame.origin.y,
-                                                      screenWidth,
-                                                      screenHeight);
+             self.noConnectionView.frame = CGRectMake(_noConnectionViewFrame.origin.x, _noConnectionViewFrame.origin.y, screenWidth, screenHeight);
              [self.noConnectionView reDraw];
              [self.view bringSubviewToFront:self.noConnectionView];
          }
+        
          UIWindow *window = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window;
          if (self.maintenancePage) {
              [self.maintenancePage setupMaintenancePage:CGRectMake(0.0f, 0.0f, window.frame.size.width, window.frame.size.height) orientation:orientation];
@@ -234,32 +182,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sideMenuIsOpening) name:kOpenMenuNotification object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:kAppDidEnterBackground object:nil];
-    
-//    if ([self conformsToProtocol:@protocol(EmarsysPredictProtocolBase)]) {
-//        if ([self respondsToSelector:@selector(isPreventSendTransactionInViewWillAppear)]) {
-//            if (![((id<EmarsysPredictProtocolBase>)self) isPreventSendTransactionInViewWillAppear]) {
-//                [EmarsysPredictManager sendTransactionsOf:self];
-//            }
-//        } else {
-//            [EmarsysPredictManager sendTransactionsOf:self];
-//        }
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kOpenMenuNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppWillEnterForeground object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAppDidEnterBackground object:nil];
-}
-
-- (void)sideMenuIsOpening {
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -270,64 +201,9 @@
     return supportedInterfaceOrientations;
 }
 
-//- (void)reloadNavBar {
-//}
-
-//- (void)showSearchBar {
-//    if (self.searchBarBackground) return; //if has been shown previously
-//    self.searchBarBackground = [[UIView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, kSearchViewBarHeight)];
-//    
-//    self.searchBarBackground.backgroundColor = [Theme color:kColorExtraDarkBlue];
-//    [self.view addSubview:self.searchBarBackground];
-//    
-//    CGFloat horizontalMargin = 0.0f;
-//    
-//    //adjustment to native searchbar margin
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//        horizontalMargin = 10.0f;
-//    }
-//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(self.searchBarBackground.bounds.origin.x + horizontalMargin, self.searchBarBackground.bounds.origin.y, self.searchBarBackground.bounds.size.width, self.searchBarBackground.bounds.size.height)];
-//    
-//    self.searchBar.delegate = self;
-//    self.searchBar.barTintColor = [Theme color:kColorExtraDarkBlue];
-//    self.searchBar.placeholder = STRING_SEARCH_PLACEHOLDER;
-//    self.searchBar.showsCancelButton = NO;
-//    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor: [Theme color:kColorOrange]];
-//    
-//    UITextField *textFieldSearch = [self.searchBar valueForKey:@"_searchField"];
-//    textFieldSearch.font = [UIFont fontWithName:kFontRegularName size:textFieldSearch.font.pointSize];
-//    textFieldSearch.backgroundColor = JAWhiteColor;
-//    textFieldSearch.textAlignment = NSTextAlignmentRight;
-//    
-//    //remove magnifying lens
-//    [textFieldSearch setLeftViewMode:UITextFieldViewModeNever];
-//    [self.searchBarBackground addSubview:self.searchBar];
-//    UIImage *searchIcon = [UIImage imageNamed:@"searchIcon"];
-//    
-//    self.searchIconImageView = [[UIImageView alloc] initWithImage:searchIcon];
-//    self.searchIconImageView.frame = CGRectMake(self.searchBar.frame.size.width - horizontalMargin - searchIcon.size.width,(self.searchBar.frame.size.height - searchIcon.size.height) / 2, searchIcon.size.width, searchIcon.size.height);
-//    
-//    [self.searchBar addSubview:self.searchIconImageView];
-//    [self reloadSearchBar];
-//}
-
 - (void)setSearchBarText:(NSString*)text {
     _searchBarText = text;
 }
-
-
-//#pragma mark Search Bar && Search Results View Delegate
-//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-//    NSLog(@"%@", searchBar.text);
-//}
-//
-//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-//}
-//
-//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-////    [[MainTabBarViewController topNavigationController] showSearchView];
-//    return NO;
-//}
 
 # pragma mark - Loading View
 - (void)showLoading {
@@ -337,15 +213,6 @@
     
     if (1 == self.requestNumber) {
         [LoadingManager showLoading];
-//        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingView];
-//        [((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController.view addSubview:self.loadingAnimation];
-//
-//        [self.loadingAnimation startAnimating];
-//
-//        [UIView animateWithDuration:0.4f animations: ^{
-//             self.loadingView.alpha = 0.5f;
-//             self.loadingAnimation.alpha = 0.5f;
-//        }];
     }
 }
 
@@ -356,48 +223,21 @@
     }
     if (0 == self.requestNumber) {
         [LoadingManager hideLoading];
-//        [UIView animateWithDuration:0.4f animations: ^{
-//            self.loadingView.alpha = 0.0f;
-//            self.loadingAnimation.alpha = 0.0f;
-//        } completion: ^(BOOL finished) {
-//            [self.loadingView removeFromSuperview];
-//                             [self.loadingAnimation removeFromSuperview];
-//                         }];
     }
 }
 
 - (void)cancelLoading {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName
-                                                        object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCancelLoadingNotificationName object:nil];
 }
 
 # pragma mark Message View
 - (void)showMessage:(NSString *)message success:(BOOL)success {
     UIViewController *rootViewController = [ViewControllerManager topViewController];
-    
     [[NotificationBarView sharedInstance] show:rootViewController text:message isSuccess:success];
-    
-    /*
-    UIViewController *rootViewController = ((JAAppDelegate *)[[UIApplication sharedApplication] delegate]).window.rootViewController;
-    if (!VALID_NOTEMPTY(self.messageView, JAMessageView)) {
-        self.messageView = [[JAMessageView alloc] initWithFrame:CGRectMake(0, 64, self.bounds.size.width, kMessageViewHeight)];
-        [self.messageView setupView];
-    }else{
-        [self.messageView setFrame:CGRectMake(0, 64, self.bounds.size.width, kMessageViewHeight)];
-    }
-    
-    if (!VALID_NOTEMPTY([self.messageView superview], UIView)) {
-        [rootViewController.view addSubview:self.messageView];
-    }
-    [self.messageView setTitle:message success:success];*/
-    
 }
 
 - (void)removeMessageView {
     [[NotificationBarView sharedInstance] dismiss];
-
-    /*[self.messageView removeFromSuperview];*/
-    
 }
 
 # pragma mark Error Views
@@ -442,12 +282,10 @@
 - (void)showErrorView:(BOOL)isNoInternetConnection startingY:(CGFloat)startingY target:(id)target selector:(SEL)selector objects:(NSArray *)objects {
     
     if (self.noConnectionView) {
-        //        [self.noConnectionView removeFromSuperview];
-        
+        //[self.noConnectionView removeFromSuperview];
     } else {
         self.noConnectionView = [JANoConnectionView getNewJANoConnectionViewWithFrame:self.viewBounds];
-        
-        // This is to avoid a retain cycle
+        //This is to avoid a retain cycle
         __block id viewController = target;
         [self.noConnectionView setRetryBlock: ^(BOOL dismiss)
          {
@@ -468,11 +306,7 @@
     }
     
     [self.noConnectionView setupNoConnectionViewForNoInternetConnection:isNoInternetConnection];
-    
-    _noConnectionViewFrame = CGRectMake(0.0f,
-                                        0.0f,
-                                        [[UIScreen mainScreen] bounds].size.width,
-                                        [[UIScreen mainScreen] bounds].size.height);
+    _noConnectionViewFrame = CGRectMake(0.0f, 0.0f, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
     if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
         if (_noConnectionViewFrame.size.width > _noConnectionViewFrame.size.height) {
@@ -490,9 +324,7 @@
             _noConnectionViewFrame  = CGRectMake(0.0f, startingY, _noConnectionViewFrame.size.height, _noConnectionViewFrame.size.width - startingY);
         }
     }
-    
     [self.noConnectionView setFrame:_noConnectionViewFrame];
-    
     [self.view bringSubviewToFront:self.noConnectionView];
 }
 
@@ -708,7 +540,7 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 @end

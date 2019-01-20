@@ -30,7 +30,7 @@ class AddressDataManager: DataManagerSwift {
     }
     
     //MARK: - Address CRUD
-    func addAddress(_ target: DataServiceProtocol, params: [String:String], completion:@escaping DataClosure) {
+    func addAddress(_ target: DataServiceProtocol, params: [String: Any], completion:@escaping DataClosure) {
         AddressDataManager.requestManager.async(.post, target: target, path: RI_API_POST_CUSTOMER_ADDDRESS_CREATE, params: params, type: .foreground) { (responseType, data, errorMessages) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errorMessages, completion: completion)
         }

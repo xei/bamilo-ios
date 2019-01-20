@@ -42,4 +42,5 @@
     @objc optional func shareProduct(attributes: EventAttributeType)
     @objc optional func applyVoucher(attributes: EventAttributeType)
     @objc optional func submitProductReview(attributes: EventAttributeType)
+    @objc optional func openProductGallery(attributes: EventAttributeType)
 }

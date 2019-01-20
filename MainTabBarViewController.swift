@@ -18,16 +18,27 @@ import Crashlytics
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setRTL()
-        NavBarUtility.changeStatusBarColor(color: Theme.color(kColorExtraDarkBlue))
+        NavBarUtility.changeStatusBarColor(color: .white)
         
         self.tabBar.isTranslucent = false
         self.delegate = self
         
         MainTabBarViewController.activateTabItem(rootViewClassType: HomePageViewController.self)
         
-        self.tabBar.tintColor = Theme.color(kColorExtraDarkBlue)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 9), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkBlue)], for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 8), NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkGray)], for: UIControlState())
+        self.tabBar.tintColor = Theme.color(kColorBlue5)
+        if #available(iOS 10.0, *) {
+            self.tabBar.unselectedItemTintColor = Theme.color(kColorGray8)
+        } else {
+            // Fallback on earlier versions
+        }
+        UITabBarItem.appearance().setTitleTextAttributes([
+            NSAttributedStringKey.font: Theme.font(kFontVariationBold, size: 10),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorBlue5)
+        ], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([
+            NSAttributedStringKey.font: Theme.font(kFontVariationRegular, size: 10),
+            NSAttributedStringKey.foregroundColor: Theme.color(kColorExtraDarkGray)
+        ], for: UIControlState())
         
         self.tabBar.layer.borderWidth = 0.50
         self.tabBar.layer.borderColor = Theme.color(kColorLightGray).cgColor //UIColor.clear.cgColor

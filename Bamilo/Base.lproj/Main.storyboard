@@ -1041,11 +1041,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1q2-wY-O5J">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0qK-wc-Seo">
-                                <rect key="frame" x="197" y="390" width="20" height="20"/>
+                                <rect key="frame" x="197" y="365.66666666666669" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1080,11 +1080,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="r8W-fi-eb9">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F7n-Ry-Jdc" customClass="TwoButtonsPurchaseControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="10" y="679" width="394" height="47"/>
+                                <rect key="frame" x="10" y="630" width="394" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="a1Z-Wl-c0w"/>
@@ -1352,7 +1352,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIc-Nm-eqK">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Fu-CW-0lE" customClass="RateStarControl" customModule="Bamilo" customModuleProvider="target">
                                         <rect key="frame" x="82" y="104" width="250" height="50"/>
@@ -1411,7 +1411,7 @@
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="61D-LQ-X80" customClass="IconButton">
-                                <rect key="frame" x="10" y="678" width="394" height="48"/>
+                                <rect key="frame" x="10" y="629" width="394" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="dmA-vz-MCY"/>
                                 </constraints>
@@ -1466,11 +1466,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="y9P-mX-evs">
-                                <rect key="frame" x="0.0" y="74" width="414" height="662"/>
+                                <rect key="frame" x="0.0" y="74" width="414" height="613"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVo-m6-nwr" customClass="IconButton">
-                                <rect key="frame" x="10" y="678" width="394" height="48"/>
+                                <rect key="frame" x="10" y="629" width="394" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="kj1-ZA-lJF"/>
                                 </constraints>
@@ -1938,10 +1938,10 @@
                     </tabBar>
                     <connections>
                         <segue destination="cs8-hA-jLu" kind="relationship" relationship="viewControllers" id="IW9-1m-uEc"/>
-                        <segue destination="QoD-0G-T5X" kind="relationship" relationship="viewControllers" id="r38-AT-ytX"/>
                         <segue destination="LF3-PT-6bx" kind="relationship" relationship="viewControllers" id="E35-3l-VRN"/>
-                        <segue destination="UNH-3a-fvq" kind="relationship" relationship="viewControllers" id="tR9-2U-43H"/>
                         <segue destination="3lk-K0-wUO" kind="relationship" relationship="viewControllers" id="utH-Y6-xc2"/>
+                        <segue destination="QoD-0G-T5X" kind="relationship" relationship="viewControllers" id="r38-AT-ytX"/>
+                        <segue destination="UNH-3a-fvq" kind="relationship" relationship="viewControllers" id="tR9-2U-43H"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vk6-XN-Nt4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1952,7 +1952,7 @@
         <scene sceneID="9ps-59-SOz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3lk-K0-wUO" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" selectedImage="tabbar_button_cart_highlighted" id="vOP-LE-mfP"/>
+                    <tabBarItem key="tabBarItem" title="سبد خرید" image="tabbar_button_cart" id="vOP-LE-mfP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JSG-7a-gu8">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2309,7 +2309,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rhT-Rz-Tft">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -2364,19 +2364,19 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFc-6p-Nyp">
-                                <rect key="frame" x="0.0" y="125" width="414" height="554"/>
+                                <rect key="frame" x="0.0" y="125" width="414" height="505"/>
                                 <connections>
                                     <segue destination="Wvd-KZ-cDU" kind="embed" identifier="embedProductDescriptionsViewController" id="oVW-xf-18W"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m46-db-3Hh">
-                                <rect key="frame" x="0.0" y="125" width="414" height="611"/>
+                                <rect key="frame" x="0.0" y="125" width="414" height="562"/>
                                 <connections>
                                     <segue destination="OG6-Vy-q8q" kind="embed" identifier="embedProductSpecificsTableViewController" id="OPR-OY-NTR"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yay-tU-peJ" customClass="TwoButtonsPurchaseControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="10" y="679" width="394" height="47"/>
+                                <rect key="frame" x="10" y="630" width="394" height="47"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="HxL-uy-nUV"/>
@@ -2417,11 +2417,11 @@
             </objects>
             <point key="canvasLocation" x="895.6521739130435" y="1254.6195652173915"/>
         </scene>
-        <!--حساب کاربری-->
+        <!--پروفایل-->
         <scene sceneID="maa-G4-bvT">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UNH-3a-fvq" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="حساب کاربری" image="tabbar_button_user" selectedImage="tabbar_button_user_highlighted" id="kQT-G5-igf"/>
+                    <tabBarItem key="tabBarItem" title="پروفایل" image="tabbar_button_user" id="kQT-G5-igf"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j53-XG-u4H">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2434,11 +2434,11 @@
             </objects>
             <point key="canvasLocation" x="-3227" y="-4431"/>
         </scene>
-        <!--دسته بندی-->
+        <!--دسته‌بندی‌ها-->
         <scene sceneID="6GI-gm-hb3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LF3-PT-6bx" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="دسته بندی" image="tabbar_category" selectedImage="tabbar_category_highlighted" id="VQI-YI-REh"/>
+                    <tabBarItem key="tabBarItem" title="دسته‌بندی‌ها" image="tabbar_category" id="VQI-YI-REh"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="P9F-Ev-iJz">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2506,11 +2506,11 @@
             </objects>
             <point key="canvasLocation" x="-2275" y="-3451"/>
         </scene>
-        <!--علاقه مندی-->
+        <!--علاقه‌مندی‌ها-->
         <scene sceneID="lMW-tl-kMg">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QoD-0G-T5X" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="علاقه مندی" image="tabbar_button_wishlist" selectedImage="tabbar_button_wishlist_highlighted" id="4Pl-fC-rbr"/>
+                    <tabBarItem key="tabBarItem" title="علاقه‌مندی‌ها" image="tabbar_button_wishlist" id="4Pl-fC-rbr"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1fp-kM-BWq">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2527,7 +2527,7 @@
         <scene sceneID="i0f-Pj-fzK">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cs8-hA-jLu" customClass="JACenterNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" selectedImage="tabbar_button_home_highlighted" id="30f-xb-6Gv"/>
+                    <tabBarItem key="tabBarItem" title="خانه" image="tabbar_button_home" id="30f-xb-6Gv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ul-e7-QlM">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2606,14 +2606,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyL-OM-a0v" userLabel="Content container">
-                                <rect key="frame" x="0.0" y="153" width="414" height="534"/>
+                                <rect key="frame" x="0.0" y="112" width="414" height="575"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qiL-SP-zhe">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="534"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="575"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PCS-BU-aZ3">
-                                        <rect key="frame" x="197" y="257" width="20" height="20"/>
+                                        <rect key="frame" x="197" y="277.66666666666669" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2626,26 +2626,8 @@
                                     <constraint firstItem="PCS-BU-aZ3" firstAttribute="centerX" secondItem="qiL-SP-zhe" secondAttribute="centerX" id="kYk-bT-6Ry"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJO-8b-dU6">
-                                <rect key="frame" x="0.0" y="64" width="414" height="41"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_navbar_logo" translatesAutoresizingMaskIntoConstraints="NO" id="GQ4-2P-AAJ">
-                                        <rect key="frame" x="165.66666666666666" y="10.666666666666671" width="83" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="83" id="Il7-iV-Alg"/>
-                                            <constraint firstAttribute="height" constant="20" id="Qs8-vn-yCw"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="41" id="gyv-of-eP1"/>
-                                    <constraint firstItem="GQ4-2P-AAJ" firstAttribute="centerX" secondItem="DJO-8b-dU6" secondAttribute="centerX" id="hOi-6M-QIh"/>
-                                    <constraint firstItem="GQ4-2P-AAJ" firstAttribute="centerY" secondItem="DJO-8b-dU6" secondAttribute="centerY" id="ukn-eW-rN2"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-cT-GiY" customClass="SearchBarControl" customModule="Bamilo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="105" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Ma1-Pf-l5Q"/>
@@ -2657,21 +2639,15 @@
                             <constraint firstItem="XSt-cb-U18" firstAttribute="top" secondItem="dyL-OM-a0v" secondAttribute="bottom" id="4lm-5f-yjQ"/>
                             <constraint firstAttribute="right" secondItem="dyL-OM-a0v" secondAttribute="right" id="AzP-Rs-6TH"/>
                             <constraint firstAttribute="right" secondItem="VXG-cT-GiY" secondAttribute="right" id="J92-J5-07t"/>
-                            <constraint firstItem="DJO-8b-dU6" firstAttribute="top" secondItem="EsA-aZ-NPd" secondAttribute="bottom" id="QKI-ox-jhV"/>
-                            <constraint firstItem="DJO-8b-dU6" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="Wy8-kw-qRk"/>
                             <constraint firstItem="dyL-OM-a0v" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="bcb-5o-luW"/>
                             <constraint firstItem="VXG-cT-GiY" firstAttribute="left" secondItem="Oia-Vy-wkr" secondAttribute="left" id="itT-yM-F3M"/>
-                            <constraint firstItem="VXG-cT-GiY" firstAttribute="top" secondItem="DJO-8b-dU6" secondAttribute="bottom" id="rYr-kw-f3S"/>
+                            <constraint firstItem="VXG-cT-GiY" firstAttribute="top" secondItem="EsA-aZ-NPd" secondAttribute="bottom" id="qOI-jv-fIm"/>
                             <constraint firstItem="dyL-OM-a0v" firstAttribute="top" secondItem="VXG-cT-GiY" secondAttribute="bottom" id="vTA-9k-dM2"/>
-                            <constraint firstAttribute="right" secondItem="DJO-8b-dU6" secondAttribute="right" id="xGB-qQ-Vsd"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="Gyj-Lf-Oh9"/>
                     <connections>
-                        <outlet property="artificialNavBarViewHeightConstraint" destination="gyv-of-eP1" id="b9S-Dz-rSV"/>
-                        <outlet property="artificialNavbar" destination="DJO-8b-dU6" id="OFA-ax-cXa"/>
-                        <outlet property="artificialNavbarLogo" destination="GQ4-2P-AAJ" id="r0C-ze-qac"/>
                         <outlet property="contentContainerTopConstraint" destination="vTA-9k-dM2" id="f7G-5T-C4i"/>
                         <outlet property="loadingIndicator" destination="PCS-BU-aZ3" id="yFG-TU-kns"/>
                         <outlet property="searchBar" destination="VXG-cT-GiY" id="RTz-tO-seN"/>
@@ -2737,11 +2713,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Bl0-eG-ayZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mbD-dk-8nk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="554"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="505"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X4C-Il-Tw1">
-                                <rect key="frame" x="0.0" y="20" width="414" height="534"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="485"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -2770,11 +2746,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Vdt-Yp-bzD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5uW-Kd-3Ly">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="611"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="562"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cIE-w8-DUB">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="611"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="562"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -2973,27 +2949,21 @@
         <image name="btn_cart" width="66" height="66"/>
         <image name="filtered_list_no_result" width="120" height="120"/>
         <image name="img_emptyCart" width="102" height="92"/>
-        <image name="img_navbar_logo" width="249" height="60"/>
         <image name="noOrdersImage" width="120" height="57"/>
         <image name="pageNotFound" width="853" height="853"/>
         <image name="reload" width="170.66667175292969" height="170.66667175292969"/>
         <image name="subcatIcon" width="18" height="19"/>
-        <image name="tabbar_button_cart" width="66" height="66"/>
-        <image name="tabbar_button_cart_highlighted" width="66" height="66"/>
-        <image name="tabbar_button_home" width="66" height="66"/>
-        <image name="tabbar_button_home_highlighted" width="66" height="66"/>
-        <image name="tabbar_button_user" width="66" height="66"/>
-        <image name="tabbar_button_user_highlighted" width="66" height="66"/>
-        <image name="tabbar_button_wishlist" width="66" height="66"/>
-        <image name="tabbar_button_wishlist_highlighted" width="66" height="66"/>
-        <image name="tabbar_category" width="66" height="66"/>
-        <image name="tabbar_category_highlighted" width="66" height="66"/>
+        <image name="tabbar_button_cart" width="18" height="16"/>
+        <image name="tabbar_button_home" width="16" height="15"/>
+        <image name="tabbar_button_user" width="16" height="18"/>
+        <image name="tabbar_button_wishlist" width="18" height="16"/>
+        <image name="tabbar_category" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gXW-o4-ZxF"/>
         <segue reference="iB6-A7-uY0"/>
         <segue reference="Ned-FL-dUc"/>
-        <segue reference="khd-bm-9kJ"/>
+        <segue reference="tZ5-ei-wip"/>
         <segue reference="aMS-rc-aBM"/>
     </inferredMetricsTieBreakers>
 </document>

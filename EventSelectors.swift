@@ -113,4 +113,7 @@ import Foundation
     class func applyVoucherSelector() -> Selector  {
         return #selector(EventTrackerProtocol.applyVoucher(attributes:))
     }
+    class func openProductGallerySelector() -> Selector  {
+        return #selector(EventTrackerProtocol.openProductGallery(attributes:))
+    }
 }

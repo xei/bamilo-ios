@@ -15,15 +15,12 @@ class HomePageViewController:   BaseViewController,
                                 BaseHomePageTeaserBoxTableViewCellDelegate,
                                 TourPresenter,
                                 TourSpotLightViewDelegate,
-                                UITextFieldDelegate {
+                                SearchBarViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak private var loadingIndicator: UIActivityIndicatorView!
     
     @IBOutlet private weak var contentContainerTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var artificialNavbar: UIView!
-    @IBOutlet weak private var artificialNavbarLogo: UIImageView!
-    @IBOutlet weak private var artificialNavBarViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var searchBar: SearchBarControl!
     
     private var timer: Timer?
@@ -45,15 +42,10 @@ class HomePageViewController:   BaseViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         self.view.backgroundColor = Theme.color(kColorGray10)
-        self.artificialNavbar.backgroundColor = Theme.color(kColorExtraDarkBlue)
-        if let navBar = self.navigationController?.navigationBar {
-            self.artificialNavBarViewHeightConstraint.constant = navBar.frame.height
-        }
-        
-        self.searchBar.searchView?.textField.delegate = self
-        
+//        self.searchBar.searchView?.textField.delegate = self
+        self.searchBar.delegate = self
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -300,13 +292,10 @@ class HomePageViewController:   BaseViewController,
         self.tourHandler?(spotlightView.tourName!, self)
     }
     
-    
     //MARK: - status bar style
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let segueName = segue.identifier
@@ -315,12 +304,16 @@ class HomePageViewController:   BaseViewController,
         }
     }
     
-    
-    //MARK: - UITextFieldDelegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
+    //MARK: - SearchBarViewDelegate
+    func searchBarTapped() {
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
+    
+//    //MARK: - UITextFieldDelegate
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.resignFirstResponder()
+//        self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
+//    }
     
     //MARK:- NavigationBarProtocol
     override func navBarTitleView() -> UIView! {

@@ -39,7 +39,7 @@ import Foundation
         }
     }
     
-    class func addAddress(_ target: DataServiceProtocol, params: [String:String], completion:@escaping DataClosure) {
+    class func addAddress(_ target: DataServiceProtocol, params: [String: Any], completion:@escaping DataClosure) {
         AddressDataManager.sharedInstance.addAddress(target, params: params, completion: completion)
     }
     

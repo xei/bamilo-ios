@@ -1,4 +1,4 @@
-//
+   //
 //  NavBarUtility.swift
 //  Bamilo
 //
@@ -21,7 +21,7 @@ import Foundation
     
     class func navBarButton(type: NavBarButtonType, viewController: NavigationBarProtocol) -> UIBarButtonItem {
         let button = IconButton(type: .custom)
-        button.imageHeightToButtonHeightRatio = 0.8
+        button.imageHeightToButtonHeightRatio = 0.7
         
         let buttonNameMapper: [NavBarButtonType: String] = [
             .search : "btn_search",
@@ -30,7 +30,7 @@ import Foundation
             .darkClose: "GrayClose"
         ]
         if let buttonImageName = buttonNameMapper[type] {
-            button.setImage(UIImage(named: buttonImageName), for: UIControlState.normal)
+            button.setImage(UIImage(named: buttonImageName)?.withRenderingMode(.alwaysTemplate), for: UIControlState.normal)
         }
         
         let buttonSelectorMapper: [NavBarButtonType: Selector] = [

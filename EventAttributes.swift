@@ -243,5 +243,9 @@ public typealias EventAttributeType = [String:Any]
         return attributes
     }
     
-    
+    class func openProductGallery(product: TrackableProductProtocol) -> EventAttributeType {
+        var attributes = self.getCommonAttributes()
+        attributes[kEventProduct] = product
+        return attributes
+    }
 }

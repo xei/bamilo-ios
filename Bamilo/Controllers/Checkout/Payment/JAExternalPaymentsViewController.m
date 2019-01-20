@@ -63,7 +63,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString: @"showSuccessPaymentViewController"]) {
-        SuccessPaymentViewController *viewCtrl = (SuccessPaymentViewController *)segue.destinationViewController;
+        ThankYouViewController *viewCtrl = (ThankYouViewController *)segue.destinationViewController;
         viewCtrl.cart = self.cart;
     } else if ([segue.identifier isEqualToString: @"showFailPaymentViewController"]) {
         FailPaymentViewController *viewCtrl = (FailPaymentViewController *)segue.destinationViewController;
@@ -81,3 +81,4 @@
     return STRING_CHECKOUT;
 }
 @end
+

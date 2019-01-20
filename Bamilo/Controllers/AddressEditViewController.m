@@ -171,8 +171,8 @@
     } else {
         //ADD NEW ADDRESS
         params[@"address_form[id]"] = @"";
-        params[@"address_form[is_default_shipping]"] = @"1";
-        params[@"address_form[is_default_billing]"] = @"1";
+        params[@"address_form[is_default_shipping]"] = @YES;
+        params[@"address_form[is_default_billing]"] = @YES;
         [DataAggregator addAddress:self params:params completion:^(id data, NSError *error) {
             if (error == nil) {
                 [TrackerManager postEventWithSelector:[EventSelectors addAddressSelector] attributes:[EventAttributes addAddress]];

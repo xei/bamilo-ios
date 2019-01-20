@@ -11,6 +11,7 @@ import UIKit
 class ChangePassViewController: BaseAuthenticationViewCtrl {
     
     var identifier: String?
+    private var newPasswordField: FormItemModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,7 @@ class ChangePassViewController: BaseAuthenticationViewCtrl {
            let header = FormHeaderModel(headerTitle: "رمز عبور باید حداقل ۶ حرف و حداکثر ۱۲ حرف باشد") {
             header.alignMent = .center
             header.backgroundColor = .white
+            self.newPasswordField = password
             self.formController?.formModelList = [header, password, "submit"]
         }
         self.tableview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
@@ -49,9 +51,20 @@ extension ChangePassViewController: DataServiceProtocol {
     func bind(_ data: Any!, forRequestId rid: Int32) {
         (self.delegate as? BaseViewController)?.showNotificationBarMessage(STRING_SUCCESS_FORGET_PASS_CHANGE, isSuccess: true)
         self.formController?.canBeSubmited = false
-        Utility.delay(duration: 4, completion: {
-            (self.delegate as? AuthenticationViewController)?.dismiss(animated: true, completion: nil)
-        })
+        
+        if let identifier = identifier, let pass = self.newPasswordField?.getValue() {
+            let params = [
+                "login[identifier]": identifier,
+                "login[password]": pass
+            ]
+            AuthenticationDataManager.sharedInstance.signinUser(params: params, password: pass, in: self) { (user, pass) in
+                self.delegate?.successSignUpOrSignInWithUser(user: user, password: pass)
+            }
+        } else {
+            Utility.delay(duration: 4, completion: {
+                (self.delegate as? AuthenticationViewController)?.dismiss(animated: true, completion: nil)
+            })
+        }
     }
     
     func errorHandler(_ error: Error!, forRequestID rid: Int32) {

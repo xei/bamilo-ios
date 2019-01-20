@@ -35,7 +35,7 @@ class ProductWarrantyTableViewCell: BaseProductTableViewCell {
     
     override func update(withModel model: Any!) {
         if let product = model as? NewProduct {
-            warrantyTitleLabel.text = STRING_RETURN_POLICY //product.returnPolicy?.title
+            warrantyTitleLabel.text = product.returnPolicy?.title
             warrantyImageView.kf.setImage(with: product.returnPolicy?.icon, placeholder: #imageLiteral(resourceName: "homepage_slider_placeholder"),options: [.transition(.fade(0.20))])
             
             if let _ = product.returnPolicy?.cmsKey {

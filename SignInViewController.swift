@@ -76,16 +76,16 @@ class SignInViewController: BaseAuthenticationViewCtrl {
 extension SignInViewController: DataServiceProtocol {
     
     func bind(_ data: Any!, forRequestId rid: Int32) {
-        if let password = self.passwordFieldModel?.getValue() {
-            if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
-                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
-                self.trackSignIn(user: customer, success: true)
-            }
-            if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
-                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
-                self.trackSignIn(user: customer, success: true)
-            }
-        }
+//        if let password = self.passwordFieldModel?.getValue() {
+//            if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
+//                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+//                self.trackSignIn(user: customer, success: true)
+//            }
+//            if rid == 0, let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+//                self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
+//                self.trackSignIn(user: customer, success: true)
+//            }
+//        }
     }
     
     func retryAction(_ callBack: RetryHandler!, forRequestId rid: Int32) {
@@ -103,14 +103,9 @@ extension SignInViewController: FormViewControlDelegate {
                 self.formController?.showAnyErrorInForm()
                 return
             }
-            if let fields = self.formController?.getMutableDictionaryOfForm() as? [String: String] {
-                AuthenticationDataManager.sharedInstance.loginUser(self, fields: fields) { (data, error) in
-                    if error == nil {
-                        self.bind(data, forRequestId: 0)
-                        return
-                    }
-                    self.errorHandler(error, forRequestID: 0)
-                    self.trackSignIn(user: nil, success: false)
+            if let fields = self.formController?.getMutableDictionaryOfForm() as? [String: String], let password = self.passwordFieldModel?.getValue() {
+                AuthenticationDataManager.sharedInstance.signinUser(params: fields, password: password, in: self) { (customer, password) in
+                    self.delegate?.successSignUpOrSignInWithUser(user: customer, password: password)
                 }
             }
         }

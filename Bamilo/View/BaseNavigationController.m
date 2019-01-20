@@ -19,16 +19,19 @@
 }
 
 - (void)setNavigationBarConfigs {
-    self.navigationBar.titleTextAttributes = @{NSFontAttributeName: [Theme font:kFontVariationRegular size:13], NSForegroundColorAttributeName: self.navbarTintColor ?: [UIColor whiteColor]};
+    self.navigationBar.titleTextAttributes = @{
+       NSFontAttributeName: [Theme font:kFontVariationBold size:14],
+       NSForegroundColorAttributeName: self.navbarTintColor ?: [UIColor darkGrayColor]
+    };
     
     //To change back button icon
-    UIImage *myImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
-    UIImage *backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
+    UIImage *backImage = [UIImage imageNamed:@"btn_back"]; //set your backbutton imagename
     if (SYSTEM_VERSION_GREATER_THAN(@"11.0")) {
-        myImage = [UIImage imageNamed:@"left_btn_back"]; //set your backbutton imagename
-        backButtonImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        backImage = [UIImage imageNamed:@"left_btn_back"]; //set your backbutton imagename
     }
+    
+    UIImage *backButtonImage = [backImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
     //To remove navBar bottom border
     [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[UIImage new]];
@@ -39,12 +42,12 @@
     [[UINavigationBar appearance] setTranslucent:NO];
     
     //To set navigation bar background color
-    self.navigationBar.barTintColor = self.navbarColor ?: [Theme color:kColorExtraDarkBlue];
-    self.navigationBar.tintColor = self.navbarTintColor ?: [UIColor whiteColor];
+    self.navigationBar.barTintColor = self.navbarColor ?: [UIColor whiteColor];
+    self.navigationBar.tintColor = self.navbarTintColor ?: [UIColor darkGrayColor];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 @end

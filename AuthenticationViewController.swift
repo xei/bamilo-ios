@@ -39,7 +39,7 @@ class AuthenticationViewController: BaseViewController {
     @IBOutlet private weak var changePhoneViewContainer: UIView!
     @IBOutlet private weak var changePassViewContainer: UIView!
     
-    private var signInViewController: SignInViewController?
+    var signInViewController: SignInViewController?
     private var signUpViewController: SignUpViewController?
     private var forgetPassViewController: ForgetPassViewController?
     private var phoneVerifyViewController: PhoneVerifyViewController?
@@ -173,9 +173,8 @@ extension AuthenticationViewController: AuthenticationViewsDelegate {
     }
     
     func successSignUpOrSignInWithUser(user: User, password: String) {
-        CurrentUserManager.saveUser(user: user, plainPassword: password)
-        self.successCallBack?()
         
+        self.successCallBack?()
         NotificationCenter.default.post(name: NSNotification.Name(NotificationKeys.UserLogin), object: user.wishListSkus, userInfo: nil)
         dismiss(animated: true, completion: nil)
     }
@@ -258,5 +257,4 @@ extension AuthenticationViewController: PhoneVerifyViewControllerDelegate {
             self.forgetPassViewController?.verifyPhone(with: phoneVerifyViewCtrl, pinCode: pinCode)
         }
     }
-    
 }

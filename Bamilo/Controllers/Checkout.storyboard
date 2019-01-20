@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cPx-eU-fFb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DVB-m8-x5X">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -256,12 +256,30 @@
                         <outlet property="continueButtonHeightConstraint" destination="SIc-FD-Oua" id="MaM-vv-Nqo"/>
                         <outlet property="noPaymentLabel" destination="8Li-YY-i0n" id="IAr-4S-VmO"/>
                         <outlet property="tableView" destination="zc7-Vb-nIS" id="ghJ-n9-PSq"/>
-                        <segue destination="DJI-Ev-Zxb" kind="show" identifier="SuccessPaymentViewController" id="CTo-Jx-FjS"/>
+                        <segue destination="DVB-m8-x5X" kind="show" identifier="showSuccessPaymentViewController" id="qGr-Cu-I5P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3x-oZ-fdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1383" y="-70"/>
+        </scene>
+        <!--Thank You View Controller-->
+        <scene sceneID="1qP-ZJ-WkH">
+            <objects>
+                <viewController id="DVB-m8-x5X" customClass="ThankYouViewController" customModule="Bamilo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uxr-A5-WGk"/>
+                        <viewControllerLayoutGuide type="bottom" id="qre-Lw-MWy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z8R-Pk-wNU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1VX-Ie-a8f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2290" y="-71"/>
         </scene>
         <!--Success Payment View Controller-->
         <scene sceneID="iko-IL-kNl">
@@ -381,7 +399,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="78b-NQ-EYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2189.5999999999999" y="-72.413793103448285"/>
+            <point key="canvasLocation" x="3796" y="-72"/>
         </scene>
         <!--OrderDetailViewController-->
         <scene sceneID="uxT-0k-A2b">
@@ -389,7 +407,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="OrderDetailViewController" storyboardName="Main" referencedIdentifier="OrderDetailViewController" id="htN-Oo-jZ6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tvt-aO-HSO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2870" y="-113"/>
+            <point key="canvasLocation" x="4486" y="-106"/>
         </scene>
         <!--AllRecommendationViewController-->
         <scene sceneID="QJy-Zu-0bw">
@@ -397,7 +415,7 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="AllRecommendationViewController" id="0hS-tr-b0v" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jcJ-2Q-wQq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2911" y="-50"/>
+            <point key="canvasLocation" x="4537" y="-40"/>
         </scene>
     </scenes>
     <resources>

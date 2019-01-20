@@ -191,7 +191,7 @@ import Firebase
     func shareProduct(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             Analytics.logEvent(AnalyticsEventShare, parameters: [
-                "item_sku": product.simpleSku ?? ""
+                AnalyticsParameterItemID: product.sku ?? ""
             ])
         }
     }
@@ -241,6 +241,14 @@ import Firebase
         if let searchString = attributes[kEventKeywords] as? String {
             Analytics.logEvent("view_search_results", parameters:[
                 AnalyticsParameterSearchTerm: searchString
+            ])
+        }
+    }
+    
+    func openProductGallery(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            Analytics.logEvent("view_product_gallery", parameters: [
+                AnalyticsParameterItemID: product.sku ?? ""
             ])
         }
     }

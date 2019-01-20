@@ -13,7 +13,7 @@ class RootCategoryViewController: BaseViewController,
                                     UITableViewDataSource,
                                     UITableViewDelegate,
                                     UIScrollViewDelegate,
-                                    UITextFieldDelegate {
+                                    SearchBarViewDelegate {
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var tableview: UITableView!
@@ -58,8 +58,10 @@ class RootCategoryViewController: BaseViewController,
         self.tableview.dataSource = self
         self.tableview.separatorStyle = .singleLine
         
-        self.searchbar.searchView?.textField.delegate = self
+        self.searchbar.delegate = self
+//        self.searchbar.searchView?.textField.delegate = self
         //To remove extra seperators
+        
         self.tableview.tableFooterView = UIView(frame: .zero)
     }
     
@@ -198,8 +200,6 @@ class RootCategoryViewController: BaseViewController,
         return cell
     }
     
-    
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
@@ -233,11 +233,15 @@ class RootCategoryViewController: BaseViewController,
         return self.getModelOfSection(section: section)?.count ?? 0
     }
     
-    //MARK: - UITextFieldDelegate
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.endEditing(true)
+    //MARK: - SearchBarViewDelegate
+    func searchBarTapped() {
         self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
     }
+//    //MARK: - UITextFieldDelegate
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.endEditing(true)
+//        self.performSegue(withIdentifier: "ShowSearchView", sender: nil)
+//    }
     
     //MARK: - DataServiceProtocol
     func bind(_ data: Any!, forRequestId rid: Int32) {

@@ -196,7 +196,7 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
     func shareProduct(attributes: EventAttributeType) {
         if let product = attributes[kEventProduct] as? TrackableProductProtocol {
             analytics.trackEvent(withName: "product_shared", andValue: [
-                "item_sku": product.simpleSku ?? ""
+                "item_id": product.simpleSku ?? ""
             ])
         }
     }
@@ -246,6 +246,14 @@ class WebEnganeTracker: BaseTracker, EventTrackerProtocol, ScreenTrackerProtocol
         if let searchString = attributes[kEventKeywords] as? String {
             analytics.trackEvent(withName: "view_search_results", andValue: [
                 "search_term": searchString
+            ])
+        }
+    }
+    
+    func openProductGallery(attributes: EventAttributeType) {
+        if let product = attributes[kEventProduct] as? TrackableProductProtocol {
+            analytics.trackEvent(withName: "product_gallery_viewed", andValue: [
+                "item_id": product.sku ?? ""
             ])
         }
     }

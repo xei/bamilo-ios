@@ -61,7 +61,7 @@ import Kingfisher
     }
     
     func setupView() {
-        self.searchBarContainer.backgroundColor = Theme.color(kColorExtraDarkBlue)
+        self.searchBarContainer.backgroundColor = Theme.color(kColorGray10)
         self.searchTextField.backgroundColor = UIColor.white
         self.searchTextField.font = Theme.font(kFontVariationRegular, size: 13)
         let searchIconView = UIImageView(image: UIImage(named: "searchIcon"))
@@ -84,8 +84,7 @@ import Kingfisher
         self.returnButton.setTitle(STRING_BACK_LABEL, for: .normal)
         self.returnButton.setTitleColor(UIColor.white, for: .normal)
         self.returnButton.titleLabel?.font = Theme.font(kFontVariationRegular, size: 13)
-        
-        self.dummyStatusbarView.backgroundColor = Theme.color(kColorExtraDarkBlue)
+        self.dummyStatusbarView.backgroundColor = Theme.color(kColorGray10)
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -111,7 +110,7 @@ import Kingfisher
     
     //MARK: - status bar style
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     //MARK: - UITableViewDelegate, UITableViewDataSource

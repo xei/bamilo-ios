@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class AuthenticationDataManager: DataManagerSwift {
     static let sharedInstance = AuthenticationDataManager()
@@ -85,5 +86,47 @@ class AuthenticationDataManager: DataManagerSwift {
         AuthenticationDataManager.requestManager.async(.post, target: target, path: RI_API_FORGET_PASS_VERIFY, params: params, type: .foreground) { (responseType, data, errors) in
             self.processResponse(responseType, aClass: nil, data: data, errorMessages: errors, completion: completion)
         }
+    }
+    
+    
+    // helper functions
+    
+    func signinUser<T: BaseViewController & DataServiceProtocol>(params: [String: String], password: String, in viewCtrl: T, callBackHandler: (( _ user: User,_ pass: String ) -> Void )? = nil) {
+        AuthenticationDataManager.sharedInstance.loginUser(viewCtrl, fields: params) { (data, error) in
+            if error == nil {
+                var parsedCustomer: User?
+                if let dictionay = data as? [String: Any], let customerEntity = dictionay[kDataContent] as? CustomerEntity, let customer = customerEntity.entity {
+                    parsedCustomer = customer
+                }
+                if let dataSource = data as? CustomerEntity, let customer = dataSource.entity {
+                    parsedCustomer = customer
+                }
+                if let customer = parsedCustomer {
+                    CurrentUserManager.saveUser(user: customer, plainPassword: password)
+                    if let identifier = params["login[identifier]"] {
+                        self.trackSignIn(user: customer, identifier: identifier)
+                    }
+                    callBackHandler?(customer, password)
+                }
+                return
+            } else if let error = error {
+                viewCtrl.errorHandler?(error, forRequestID: 0)
+            }
+        }
+    }
+    
+    private func trackSignIn(user: User?, identifier: String) {
+        if let userID = user?.userID {
+            Crashlytics.sharedInstance().setUserIdentifier("\(userID)")
+        }
+        if let name = user?.firstName, let lastName = user?.lastName {
+            Crashlytics.sharedInstance().setUserName("\(name) \(lastName)")
+        }
+        if let email = user?.email {
+            Crashlytics.sharedInstance().setUserEmail(email)
+        }
+        let regex = try! NSRegularExpression(pattern: String.phoneRegx(), options: [])
+        let isMobile = regex.firstMatch(in: identifier, options: [], range: NSMakeRange(0, identifier.utf16.count)) != nil
+        TrackerManager.postEvent(selector: EventSelectors.loginEventSelector(), attributes: EventAttributes.login(loginMethod: isMobile ? "phone" : "email", user: user, success: true))
     }
 }
